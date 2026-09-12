@@ -17,6 +17,12 @@ partners, PE deal teams and portfolio company CFOs.
 |---|---|---|---|
 | 09 | [Revenue Decomposition](demos/09-revenue-decomposition/) | [Meridian Revenue Bridge](https://claude.ai/code/artifact/230bde63-86eb-44b4-a8fa-d86185f0a70f) | +18.6% reported growth is −1.8% underlying once passthrough pricing, a one-off contract and FX come out |
 
+## Also in this repo
+
+| Project | What it is |
+|---|---|
+| [NHS CIM text-to-action agent](nhs-cim-agent/) | An MCP server that turns NHS Registration Authority correspondence into validated Care Identity Management actions — evidence-bound extraction, policy guardrails, two-phase apply behind a confirmation token, and an append-only audit trail |
+
 ## Catalogue
 
 ### Pre-deal and commercial due diligence

@@ -1,0 +1,92 @@
+{
+  "_note": "Synthetic sandbox directory. No real Care IDs, UUIDs, smartcard serials or people. ODS codes are fictional and deliberately not live codes.",
+  "organisations": {
+    "ZZG01": {"name": "Northmoor Teaching Hospitals NHS Foundation Trust", "ra_authority": "ZZG"},
+    "ZZG02": {"name": "Northmoor Community Services", "ra_authority": "ZZG"},
+    "ZZJ61": {"name": "Eastvale Partnership NHS Trust", "ra_authority": "ZZJ"}
+  },
+  "operators": {
+    "j.parker": {
+      "uuid": "555100200300",
+      "name": "Joanne Parker",
+      "job_role": "R5090",
+      "scope_ods": ["ZZG01", "ZZG02"],
+      "may_approve_privileged": false
+    },
+    "s.adeyemi": {
+      "uuid": "555100200299",
+      "name": "Sade Adeyemi",
+      "job_role": "R5080",
+      "scope_ods": ["ZZG01", "ZZG02"],
+      "may_approve_privileged": true
+    }
+  },
+  "users": {
+    "555100200311": {
+      "uuid": "555100200311",
+      "given_name": "Priya",
+      "family_name": "Nair",
+      "email": "priya.nair@example-trust.nhs.uk",
+      "status": "active",
+      "positions": [
+        {"position_id": "P-0031", "ods_code": "ZZG01", "job_role": "R8001", "activities": ["B0825", "B0090"], "workgroup": "Ward B", "start_date": "2023-04-03", "end_date": null}
+      ],
+      "smartcard": {"serial": "SC-70041", "status": "active", "certificate_expiry": "2027-11-30"}
+    },
+    "555100200312": {
+      "uuid": "555100200312",
+      "given_name": "Tom",
+      "family_name": "Halloway",
+      "email": "tom.halloway@example-trust.nhs.uk",
+      "status": "active",
+      "positions": [
+        {"position_id": "P-0032", "ods_code": "ZZG01", "job_role": "R8004", "activities": ["B0825", "B0090"], "workgroup": "Outpatients Booking", "start_date": "2021-09-13", "end_date": null}
+      ],
+      "smartcard": {"serial": "SC-70042", "status": "active", "certificate_expiry": "2026-12-31"}
+    },
+    "555100200313": {
+      "uuid": "555100200313",
+      "given_name": "Daniel",
+      "family_name": "Osei",
+      "email": "daniel.osei@example-trust.nhs.uk",
+      "status": "active",
+      "positions": [
+        {"position_id": "P-0033", "ods_code": "ZZG01", "job_role": "R8000", "activities": ["B0825", "B0090", "B0100", "B0170"], "workgroup": "Emergency Department", "start_date": "2022-08-01", "end_date": null}
+      ],
+      "smartcard": {"serial": "SC-70043", "status": "locked", "certificate_expiry": "2027-02-28"}
+    },
+    "555100200314": {
+      "uuid": "555100200314",
+      "given_name": "Marcus",
+      "family_name": "Vaughn",
+      "email": "marcus.vaughn@example-trust.nhs.uk",
+      "status": "active",
+      "positions": [
+        {"position_id": "P-0034", "ods_code": "ZZG02", "job_role": "R8000", "activities": ["B0825", "B0090", "B0100"], "workgroup": "Community Paediatrics", "start_date": "2020-01-20", "end_date": null}
+      ],
+      "smartcard": {"serial": "SC-70044", "status": "active", "certificate_expiry": "2026-10-15"}
+    },
+    "555100200315": {
+      "uuid": "555100200315",
+      "given_name": "Elaine",
+      "family_name": "Whitcombe",
+      "email": "elaine.whitcombe@example-trust.nhs.uk",
+      "status": "active",
+      "positions": [
+        {"position_id": "P-0035", "ods_code": "ZZG01", "job_role": "R8004", "activities": ["B0090"], "workgroup": "Medical Records", "start_date": "2019-06-10", "end_date": null}
+      ],
+      "smartcard": {"serial": "SC-70045", "status": "active", "certificate_expiry": "2028-01-31"}
+    },
+    "555100200320": {
+      "uuid": "555100200320",
+      "given_name": "Rachel",
+      "family_name": "Boateng",
+      "email": "rachel.boateng@example-trust.nhs.uk",
+      "status": "active",
+      "positions": [
+        {"position_id": "P-0040", "ods_code": "ZZJ61", "job_role": "R8001", "activities": ["B0090"], "workgroup": "Ward 4", "start_date": "2024-02-05", "end_date": null}
+      ],
+      "smartcard": {"serial": "SC-70050", "status": "active", "certificate_expiry": "2027-07-31"}
+    }
+  }
+}

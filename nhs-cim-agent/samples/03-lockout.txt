@@ -1,0 +1,7 @@
+Service desk ticket INC-88213
+
+Caller: Daniel Osei, UUID 555100200313
+Summary: caller reports his smartcard is locked after three failed passcode attempts.
+He cannot log in to the ED system and is due on shift at 20:00.
+
+Please unlock.

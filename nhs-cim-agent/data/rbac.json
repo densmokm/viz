@@ -1,0 +1,50 @@
+{
+  "catalogue_source": "illustrative-subset",
+  "source_note": "ILLUSTRATIVE SUBSET - not an NRD extract. The National RBAC Database (NRD) is the source of truth for job roles, areas of work, activities and the national baseline policy. Replace this file with an NRD extract before any non-sandbox use; the loader refuses to run against a real backend while catalogue_source is 'illustrative-subset'.",
+  "version": "0.1.0",
+  "job_roles": {
+    "R8000": {
+      "name": "Clinical Practitioner Access Role",
+      "verified": true,
+      "synonyms": ["clinical practitioner", "clinician", "doctor", "consultant", "registrar", "sho", "locum doctor"],
+      "privileged": false,
+      "baseline_activities": ["B0825", "B0090", "B0100", "B0170"]
+    },
+    "R8001": {
+      "name": "Nurse Access Role",
+      "verified": false,
+      "synonyms": ["nurse", "staff nurse", "ward nurse", "sister", "charge nurse"],
+      "privileged": false,
+      "baseline_activities": ["B0825", "B0090", "B0100"]
+    },
+    "R8004": {
+      "name": "Healthcare Administrator Access Role",
+      "verified": false,
+      "synonyms": ["administrator", "admin", "ward clerk", "medical secretary", "receptionist", "booking clerk"],
+      "privileged": false,
+      "baseline_activities": ["B0825", "B0090"]
+    },
+    "R5080": {
+      "name": "Registration Authority Manager",
+      "verified": true,
+      "synonyms": ["ra manager", "registration authority manager"],
+      "privileged": true,
+      "baseline_activities": ["B0267", "B1300", "B0090"]
+    },
+    "R5090": {
+      "name": "Registration Authority Agent",
+      "verified": true,
+      "synonyms": ["ra agent", "registration authority agent"],
+      "privileged": true,
+      "baseline_activities": ["B0267", "B0090"]
+    }
+  },
+  "activities": {
+    "B0825": {"name": "Amend patient demographics", "verified": true, "sensitive": true},
+    "B0090": {"name": "View patient demographics", "verified": false, "sensitive": false},
+    "B0100": {"name": "View detailed health records", "verified": false, "sensitive": true},
+    "B0170": {"name": "Amend detailed health records", "verified": false, "sensitive": true},
+    "B0267": {"name": "Registration Authority ID checker", "verified": true, "sensitive": true, "privileged": true},
+    "B1300": {"name": "Sponsor", "verified": true, "sensitive": true, "privileged": true}
+  }
+}
