@@ -1,0 +1,1016 @@
+<title>Project Harrier Outside-In</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;450;500;600;700&display=swap">
+<style>
+:root{
+  --ground:#eef1f5; --surface:#ffffff; --surface-2:#e4e9ef; --surface-3:#f6f8fa;
+  --ink:#101519; --ink-2:#495568; --ink-3:#79869a; --rule:#d5dce5; --rule-2:#c0cad6;
+  --accent:#173a5e; --accent-soft:#dce8f5;
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a;
+  --pos:#2a78d6; --neg:#e34948; --total:#334155;
+  --good:#0ca30c; --warn:#fab219; --serious:#ec835a; --crit:#d03b3b;
+  --chip-good:#e3f4e3; --chip-warn:#fdf1d6; --chip-serious:#fbe7dd; --chip-neutral:#e7ebf1;
+  --shadow:0 1px 2px rgba(16,21,25,.06), 0 8px 24px -12px rgba(16,21,25,.18);
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --ground:#0f1318; --surface:#171c23; --surface-2:#232a34; --surface-3:#1b2129;
+  --ink:#eef2f7; --ink-2:#aab6c6; --ink-3:#78859a; --rule:#2a323d; --rule-2:#3a4450;
+  --accent:#8fb8e2; --accent-soft:#1d2c3d;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70;
+  --pos:#3987e5; --neg:#e66767; --total:#94a3b5;
+  --chip-good:#12301a; --chip-warn:#332709; --chip-serious:#33210f; --chip-neutral:#242b35;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --ground:#0f1318; --surface:#171c23; --surface-2:#232a34; --surface-3:#1b2129;
+  --ink:#eef2f7; --ink-2:#aab6c6; --ink-3:#78859a; --rule:#2a323d; --rule-2:#3a4450;
+  --accent:#8fb8e2; --accent-soft:#1d2c3d;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70;
+  --pos:#3987e5; --neg:#e66767; --total:#94a3b5;
+  --chip-good:#12301a; --chip-warn:#332709; --chip-serious:#33210f; --chip-neutral:#242b35;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--ground); color:var(--ink);
+  font-family:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  font-size:16px; line-height:1.6; -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1120px; margin:0 auto; padding-inline:clamp(16px,4vw,40px)}
+h1,h2,h3{text-wrap:balance; margin:0}
+h1{font-family:Newsreader,Georgia,serif; font-weight:500; font-size:clamp(2rem,4.6vw,2.9rem); line-height:1.1; letter-spacing:-.015em}
+h2{font-family:Newsreader,Georgia,serif; font-weight:500; font-size:clamp(1.4rem,3vw,1.85rem); line-height:1.2; letter-spacing:-.01em}
+h3{font-size:1rem; font-weight:600; letter-spacing:-.005em}
+p{margin:0}
+a{color:var(--accent)}
+.label{font-size:.7rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-3)}
+.lede{font-size:1.06rem; color:var(--ink-2); max-width:66ch}
+.small{font-size:.84rem; color:var(--ink-2)}
+.tiny{font-size:.76rem; color:var(--ink-3)}
+.num{font-family:"IBM Plex Mono",ui-monospace,monospace; font-variant-numeric:tabular-nums}
+
+/* ---------- top bar ---------- */
+.topbar{position:sticky; top:0; z-index:40; background:color-mix(in srgb,var(--ground) 88%,transparent);
+  backdrop-filter:blur(10px); border-bottom:1px solid var(--rule)}
+.topbar .wrap{display:flex; align-items:center; gap:20px; height:52px}
+.brandmark{display:flex; align-items:center; gap:9px; font-weight:600; font-size:.9rem; white-space:nowrap}
+.brandmark i{width:9px; height:9px; border-radius:2px; background:var(--s1); display:block}
+.navlinks{display:flex; gap:18px; margin-left:auto; overflow-x:auto; scrollbar-width:none}
+.navlinks::-webkit-scrollbar{display:none}
+.navlinks a{color:var(--ink-2); text-decoration:none; font-size:.83rem; white-space:nowrap; padding:4px 0; border-bottom:2px solid transparent}
+.navlinks a:hover{color:var(--ink); border-bottom-color:var(--rule-2)}
+@media (max-width:720px){ .navlinks{display:none} }
+
+/* ---------- header ---------- */
+header.hero{padding-block:clamp(34px,6vw,60px) 30px}
+.eyebrow{display:flex; align-items:center; gap:10px; margin-bottom:16px; flex-wrap:wrap}
+.eyebrow span{color:var(--ink-3)}
+.codename{background:var(--accent-soft); color:var(--accent); padding:2px 9px; border-radius:3px; font-weight:600}
+.metarow{display:flex; flex-wrap:wrap; gap:0; margin-top:26px; border-top:1px solid var(--rule); border-bottom:1px solid var(--rule)}
+.metarow div{flex:1 1 165px; padding:13px 18px 13px 0; border-right:1px solid var(--rule)}
+.metarow div:last-child{border-right:0}
+.metarow dt{font-size:.7rem; font-weight:600; letter-spacing:.09em; text-transform:uppercase; color:var(--ink-3); margin-bottom:3px}
+.metarow dd{margin:0; font-size:.9rem; font-weight:450}
+
+/* ---------- verdict ---------- */
+.verdict{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:1px; background:var(--rule);
+  border:1px solid var(--rule); border-radius:6px; overflow:hidden; margin-block:8px 26px}
+.verdict > div{background:var(--surface); padding:24px 26px 22px}
+.verdict .fig{font-size:clamp(2.4rem,6.5vw,3.4rem); font-weight:600; line-height:1; letter-spacing:-.03em; margin:10px 0 6px}
+.verdict .reported .fig{color:var(--ink)}
+.verdict .underlying .fig{color:var(--neg)}
+.verdict .cap{font-size:.85rem; color:var(--ink-2)}
+@media (max-width:620px){ .verdict{grid-template-columns:1fr} }
+.thesis{background:var(--surface); border:1px solid var(--rule); border-left:3px solid var(--s2);
+  border-radius:4px; padding:20px 24px; margin-bottom:40px; font-size:1.02rem; color:var(--ink-2); max-width:none}
+.thesis strong{color:var(--ink); font-weight:600}
+
+/* ---------- sections ---------- */
+section{padding-block:34px; border-top:1px solid var(--rule)}
+.sechead{display:flex; align-items:baseline; gap:16px; flex-wrap:wrap; margin-bottom:8px}
+.sechead .amt{font-family:"IBM Plex Mono",monospace; font-size:.82rem; font-weight:500; color:var(--ink-3);
+  background:var(--surface-2); padding:3px 9px; border-radius:3px; white-space:nowrap}
+.secintro{margin-block:12px 26px}
+
+/* ---------- panels & charts ---------- */
+.panel{background:var(--surface); border:1px solid var(--rule); border-radius:6px; padding:22px clamp(14px,2.4vw,24px)}
+.panelhead{display:flex; align-items:flex-start; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-bottom:6px}
+.chart{width:100%; min-height:60px}
+.chart svg{display:block; width:100%; height:auto; overflow:visible}
+figcaption{font-size:.78rem; color:var(--ink-3); margin-top:12px; line-height:1.5}
+.grid2{display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:18px}
+.grid3{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:18px}
+
+/* ---------- controls ---------- */
+.controls{display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-bottom:18px}
+.tabs{display:inline-flex; background:var(--surface-2); border-radius:5px; padding:3px; gap:2px}
+.tabs button{appearance:none; border:0; background:transparent; color:var(--ink-2); font:inherit; font-size:.84rem;
+  font-weight:500; padding:6px 13px; border-radius:3px; cursor:pointer; white-space:nowrap}
+.tabs button[aria-selected="true"]{background:var(--surface); color:var(--ink); box-shadow:0 1px 2px rgba(0,0,0,.10); font-weight:600}
+.tabs button:focus-visible, .toggle:focus-visible{outline:2px solid var(--s1); outline-offset:2px}
+.toggle{appearance:none; border:1px solid var(--rule-2); background:var(--surface); color:var(--ink-2); font:inherit;
+  font-size:.8rem; font-weight:500; padding:6px 12px; border-radius:5px; cursor:pointer; display:inline-flex; align-items:center; gap:7px}
+.toggle[aria-pressed="true"]{border-color:var(--s1); color:var(--ink); background:var(--accent-soft)}
+.toggle i{width:8px; height:8px; border-radius:50%; background:var(--rule-2); display:block}
+.toggle[aria-pressed="true"] i{background:var(--s1)}
+
+/* ---------- legend ---------- */
+.legend{display:flex; gap:16px; flex-wrap:wrap; align-items:center; font-size:.8rem; color:var(--ink-2); margin-top:14px}
+.legend span{display:inline-flex; align-items:center; gap:7px}
+.legend b{width:11px; height:11px; border-radius:2px; display:block}
+
+/* ---------- tables ---------- */
+.tablewrap{overflow-x:auto; margin-top:4px}
+table{border-collapse:collapse; width:100%; font-size:.85rem; min-width:480px}
+th,td{text-align:right; padding:9px 10px; border-bottom:1px solid var(--rule); white-space:nowrap}
+th:first-child,td:first-child{text-align:left; white-space:normal}
+thead th{font-size:.7rem; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-3);
+  border-bottom:1px solid var(--rule-2); vertical-align:bottom}
+tbody tr:last-child td{border-bottom:0}
+tbody tr.totalrow td{border-top:1px solid var(--rule-2); font-weight:600; background:var(--surface-3)}
+td.n{font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums}
+td.neg{color:var(--neg)}
+.bar-cell{position:relative; min-width:96px}
+.bar-cell i{position:absolute; left:10px; top:50%; transform:translateY(-50%); height:9px; border-radius:2px; display:block}
+
+/* ---------- chips ---------- */
+.chip{display:inline-flex; align-items:center; gap:6px; font-size:.74rem; font-weight:600; padding:2px 8px; border-radius:3px; white-space:nowrap}
+.chip i{width:7px; height:7px; border-radius:50%; display:block; flex:none}
+.chip.good{background:var(--chip-good); color:var(--good)} .chip.good i{background:var(--good)}
+.chip.warn{background:var(--chip-warn); color:#8a6200} .chip.warn i{background:var(--warn)}
+.chip.serious{background:var(--chip-serious); color:#a8501f} .chip.serious i{background:var(--serious)}
+.chip.neutral{background:var(--chip-neutral); color:var(--ink-2)} .chip.neutral i{background:var(--ink-3)}
+:root[data-theme="dark"] .chip.warn, :root[data-theme="dark"] .chip.serious{color:var(--ink)}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]) .chip.warn,
+  :root:not([data-theme="light"]) .chip.serious{color:var(--ink)} }
+
+/* ---------- stat tiles ---------- */
+.stats{display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:1px; background:var(--rule);
+  border:1px solid var(--rule); border-radius:6px; overflow:hidden}
+.stat{background:var(--surface); padding:16px 18px}
+.stat .v{font-size:1.6rem; font-weight:600; line-height:1.15; letter-spacing:-.02em; margin:6px 0 3px}
+.stat .k{font-size:.7rem; font-weight:600; letter-spacing:.09em; text-transform:uppercase; color:var(--ink-3)}
+.stat .d{font-size:.78rem; color:var(--ink-3); line-height:1.45}
+
+/* ---------- callout ---------- */
+.callout{border:1px solid var(--rule); border-left:3px solid var(--crit); background:var(--surface);
+  border-radius:4px; padding:18px 22px; display:grid; gap:8px}
+.callout.ok{border-left-color:var(--good)}
+.callout h3{display:flex; align-items:center; gap:9px}
+.callout h3::before{content:""; width:7px; height:7px; border-radius:50%; background:var(--crit); flex:none}
+.callout.ok h3::before{background:var(--good)}
+
+/* ---------- lists ---------- */
+ol.qs{counter-reset:q; list-style:none; padding:0; margin:0; display:grid; gap:14px}
+ol.qs li{counter-increment:q; display:grid; grid-template-columns:auto 1fr; gap:14px; align-items:start}
+ol.qs li::before{content:"Q" counter(q); font-family:"IBM Plex Mono",monospace; font-size:.74rem; font-weight:600;
+  color:var(--accent); background:var(--accent-soft); padding:3px 7px; border-radius:3px; margin-top:2px}
+ul.plain{list-style:none; padding:0; margin:0; display:grid; gap:10px}
+ul.plain li{display:grid; grid-template-columns:auto 1fr; gap:11px; align-items:start; font-size:.9rem; color:var(--ink-2)}
+ul.plain li::before{content:""; width:5px; height:5px; border-radius:50%; background:var(--rule-2); margin-top:9px}
+code{font-family:"IBM Plex Mono",monospace; font-size:.86em; background:var(--surface-2); padding:1px 5px; border-radius:3px}
+.formula{font-family:"IBM Plex Mono",monospace; font-size:.82rem; background:var(--surface-3); border:1px solid var(--rule);
+  border-radius:4px; padding:14px 16px; overflow-x:auto; white-space:pre; line-height:1.7; color:var(--ink-2)}
+
+/* ---------- tooltip ---------- */
+#tip{position:fixed; z-index:80; pointer-events:none; opacity:0; transition:opacity .1s;
+  background:var(--surface); color:var(--ink); border:1px solid var(--rule-2); border-radius:5px;
+  box-shadow:var(--shadow); padding:9px 12px; font-size:.8rem; line-height:1.5; max-width:270px}
+#tip .t{font-weight:600; margin-bottom:3px}
+#tip .r{display:flex; justify-content:space-between; gap:16px}
+#tip .r span:last-child{font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums}
+
+footer{padding-block:34px 60px; border-top:1px solid var(--rule); color:var(--ink-3); font-size:.82rem}
+[hidden]{display:none !important}
+@media (prefers-reduced-motion:reduce){ *{transition:none !important; animation:none !important} }
+
+/* ---------- verdict chips: critical state ---------- */
+.chip.crit{background:var(--chip-crit); color:var(--crit)} .chip.crit i{background:var(--crit)}
+:root{--chip-crit:#fbe3e3}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){--chip-crit:#3a1717} }
+:root[data-theme="dark"]{--chip-crit:#3a1717}
+
+/* ---------- claim scorecard ---------- */
+.claim{border-bottom:1px solid var(--rule)}
+.claim:last-child{border-bottom:0}
+.claimhead{width:100%; appearance:none; background:transparent; border:0; font:inherit; color:inherit;
+  text-align:left; cursor:pointer; display:grid; align-items:center; gap:16px; padding:15px 6px;
+  grid-template-columns:38px minmax(0,1fr) 150px 104px 132px}
+.claimhead:hover{background:var(--surface-3)}
+.claimhead:focus-visible{outline:2px solid var(--s1); outline-offset:-2px}
+.claimhead .cid{font-family:"IBM Plex Mono",monospace; font-size:.76rem; font-weight:600; color:var(--ink-3)}
+.claimhead .ctext{font-size:.93rem; line-height:1.45}
+.claimhead .ctext em{display:block; font-style:normal; font-size:.76rem; color:var(--ink-3); margin-top:3px}
+.divbar{display:block; position:relative; height:22px; background:var(--surface-2); border-radius:3px; overflow:hidden}
+.divbar::before{content:""; position:absolute; left:50%; top:0; bottom:0; width:1px; background:var(--rule-2)}
+.divbar i{position:absolute; top:4px; bottom:4px; border-radius:2px; display:block}
+.divbar b{position:absolute; right:6px; top:50%; transform:translateY(-50%); font-family:"IBM Plex Mono",monospace;
+  font-size:.72rem; font-weight:600; color:var(--ink-2)}
+.meter{display:flex; flex-direction:column; gap:4px}
+.meter u{height:6px; background:var(--surface-2); border-radius:3px; display:block; text-decoration:none; position:relative}
+.meter u i{position:absolute; left:0; top:0; bottom:0; border-radius:3px; background:var(--ink-3); display:block}
+.meter s{text-decoration:none; font-size:.7rem; color:var(--ink-3); font-family:"IBM Plex Mono",monospace}
+.claimbody{padding:2px 6px 20px 56px; display:grid; gap:14px}
+@media (max-width:860px){
+  .claimhead{grid-template-columns:34px minmax(0,1fr); gap:8px 12px}
+  .claimhead .cscore, .claimhead .cconf{grid-column:2}
+  .claimhead .cverdict{grid-column:2; justify-self:start}
+  .claimbody{padding-left:12px}
+}
+
+</style>
+
+<div class="topbar"><div class="wrap">
+  <div class="brandmark"><i></i> Project Harrier</div>
+  <nav class="navlinks">
+    <a href="#scorecard">Scorecard</a><a href="#matrix">Evidence matrix</a><a href="#growth">The growth claim</a>
+    <a href="#integration">Integration</a><a href="#findings">Findings</a><a href="#priority">Diligence plan</a><a href="#method">Method</a>
+  </nav>
+</div></div>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="eyebrow label"><span class="codename">Project Harrier</span><span>Pre-deal / commercial DD</span><span>&middot;</span><span>Alt data triangulation</span></div>
+  <h1>Kestrel Veterinary Group</h1>
+  <p class="lede" style="margin-top:14px">No data room, no management access beyond the information memorandum.
+     Seven claims from the IM, tested against eleven subscriptions and 23 outside-in signals.</p>
+  <dl class="metarow" id="metarow"></dl>
+</header>
+
+<div class="verdict">
+  <div class="reported">
+    <div class="label">Like-for-like growth, per the IM</div>
+    <div class="fig num" id="figClaimed">&mdash;</div>
+    <div class="cap">Stated as organic, driven by underlying clinical demand</div>
+  </div>
+  <div class="underlying">
+    <div class="label">What the filings imply</div>
+    <div class="fig num" id="figImplied">&mdash;</div>
+    <div class="cap" id="capImplied"></div>
+  </div>
+</div>
+
+<p class="thesis" id="thesis"></p>
+
+<section id="scorecard">
+  <div class="sechead"><h2>Seven claims, scored</h2><span class="amt" id="scoreAmt"></span></div>
+  <p class="secintro lede">Every claim gets two numbers, not one. <strong>Evidence</strong> is which way the
+     data points. <strong>Confidence</strong> is whether we are entitled to an opinion at all &mdash; which
+     depends on how much independent evidence there is, not how loud any single source is.
+     Select a claim to see what sits underneath it.</p>
+  <div class="panel" style="padding-block:6px">
+    <div id="claims"></div>
+  </div>
+  <div class="legend" style="margin-top:14px" id="scLegend"></div>
+</section>
+
+<section id="matrix">
+  <div class="sechead"><h2>Where the evidence actually comes from</h2></div>
+  <p class="secintro lede">Claims down the side, independent source families across the top. Two review
+     sites agreeing is one family, not two &mdash; which is why a row that looks well-evidenced can still
+     carry low confidence. The gaps matter as much as the colours.</p>
+  <div class="panel">
+    <figure style="margin:0"><div class="chart" id="matrixChart"></div>
+      <div class="legend" id="mxLegend"></div>
+      <figcaption>Cell value is the weighted direction of that family's evidence for that claim, from
+        &minus;1 (contradicts) to +1 (supports). A dash means the family has nothing to say.</figcaption></figure>
+  </div>
+</section>
+
+<section id="growth">
+  <div class="sechead"><h2>The growth claim, bounded from filings alone</h2><span class="amt" id="growthAmt"></span></div>
+  <p class="secintro lede">You cannot see same-store revenue from outside. But you can see filed group
+     accounts, and you can see every acquisition and its completion date at Companies House. That is
+     enough to bound the organic rate without a single line of management data.</p>
+
+  <div class="grid2" style="align-items:start">
+    <div class="panel">
+      <div class="panelhead"><h3>The arithmetic</h3></div>
+      <p class="small" style="margin-block:8px 12px">Let <code>r</code> be revenue per legacy practice-month
+        and <code>&alpha;</code> the size of an acquired practice relative to a legacy one. Then:</p>
+      <div class="formula">R&#8320; = r &middot; (LPM&#8320; + &alpha;&middot;APM&#8320;)
+R&#8321; = r &middot; (1+g) &middot; (LPM&#8321; + &alpha;&middot;APM&#8321;)
+
+        R&#8321;(LPM&#8320; + &alpha;&middot;APM&#8320;)
+1+g = ————————————————————
+        R&#8320;(LPM&#8321; + &alpha;&middot;APM&#8321;)</div>
+      <p class="small" style="margin-top:12px">Everything on the right is observable except <code>&alpha;</code>.
+        So the honest answer is a band, and the width of that band is itself a finding &mdash; it tells you
+        exactly which single number to ask management for first.</p>
+      <div class="tablewrap" id="pmTable" style="margin-top:14px"></div>
+    </div>
+    <div class="panel">
+      <div class="panelhead"><h3>Implied organic growth</h3><span class="tiny">by assumption on &alpha;</span></div>
+      <figure style="margin:0"><div class="chart" id="bandChart"></div>
+        <figcaption id="bandCap"></figcaption></figure>
+    </div>
+  </div>
+
+  <div class="callout ok" style="margin-top:18px">
+    <h3>Did the method work?</h3>
+    <p class="small" id="truthText"></p>
+  </div>
+</section>
+
+<section id="integration">
+  <div class="sechead"><h2>What happens to a practice after Kestrel buys it</h2></div>
+  <p class="secintro lede">A practice's Google profile does not reset when it changes hands. That makes an
+     event study possible: line up all <span id="nAcq"></span> acquired practices on their completion month
+     and watch what the reviews do, with the never-acquired estate as a control.</p>
+  <div class="panel">
+    <div class="panelhead"><h3>Google rating, months either side of completion</h3></div>
+    <figure style="margin:0"><div class="chart" id="eventChart"></div>
+      <div class="legend" id="evLegend"></div>
+      <figcaption id="eventCap"></figcaption></figure>
+  </div>
+  <div class="stats" style="margin-top:18px" id="eventStats"></div>
+</section>
+
+<section id="findings">
+  <div class="sechead"><h2>Three findings that carry into the model</h2></div>
+  <div class="grid2" style="align-items:start">
+    <div class="panel">
+      <div class="panelhead"><h3>The clinical engine is staffing-constrained</h3></div>
+      <figure style="margin:0"><div class="chart" id="gdChart"></div>
+        <div class="legend" id="gdLegend"></div>
+        <figcaption id="gdCap"></figcaption></figure>
+    </div>
+    <div class="panel">
+      <div class="panelhead"><h3>Days to fill a vet role</h3></div>
+      <figure style="margin:0"><div class="chart" id="ttfChart"></div>
+        <figcaption>You cannot grow clinical revenue faster than you can hire clinicians.
+          This is the binding constraint on the like-for-like claim, and it is getting tighter.</figcaption></figure>
+    </div>
+  </div>
+  <div class="grid2" style="margin-top:18px; align-items:start">
+    <div class="panel">
+      <div class="panelhead"><h3>Pricing complaints, versus peers</h3></div>
+      <figure style="margin:0"><div class="chart" id="priceChart"></div>
+        <div class="legend" id="prLegend"></div>
+        <figcaption id="priceCap"></figcaption></figure>
+    </div>
+    <div class="panel">
+      <div class="panelhead"><h3>Traffic is up; traffic per practice is not</h3></div>
+      <figure style="margin:0"><div class="chart" id="digitalChart"></div>
+        <div class="legend" id="dgLegend"></div>
+        <figcaption>Both series indexed to their own starting month, so they share one axis honestly.
+          Absolute sessions grow because the estate grows. Per practice, and on branded search, it is going
+          the other way &mdash; and paid is taking up the slack.</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section id="priority">
+  <div class="sechead"><h2>Where the diligence budget goes</h2></div>
+  <p class="secintro lede">Priority is materiality weighted by how badly the claim is doing <em>and</em> by how
+     little we can see. A claim we cannot test outside-in is not a claim we can ignore &mdash; it is a claim
+     that needs internal data, and knowing which is which is the deliverable.</p>
+  <div class="panel">
+    <figure style="margin:0"><div class="chart" id="prioChart"></div>
+      <figcaption>Higher is more deserving of diligence hours.</figcaption></figure>
+  </div>
+  <div class="panel" style="margin-top:18px">
+    <h3 style="margin-bottom:6px">What would settle it</h3>
+    <p class="small" style="margin-bottom:16px">The specific internal data that converts each open question
+      into a closed one. This is the first information request.</p>
+    <ol class="qs" id="irlist"></ol>
+  </div>
+</section>
+
+<section id="method">
+  <div class="sechead"><h2>How it is built</h2></div>
+  <div class="grid2" style="align-items:start">
+    <div class="panel">
+      <div class="panelhead"><h3>Source register</h3></div>
+      <p class="small" style="margin-block:6px 12px">Every source carries an explicit reliability prior and a
+        feed latency. Nothing is weighted by vibe, and the weights are visible so a client can argue with them.</p>
+      <div class="tablewrap" id="srcTable"></div>
+    </div>
+    <div class="panel">
+      <div class="panelhead"><h3>Scoring</h3></div>
+      <p class="small" style="margin-block:6px 12px">Each signal is compared over a six-month window against
+        the same window a year earlier, peer-adjusted where a peer series exists, then standardised by the
+        standard error of that difference &mdash; not by month-to-month noise, which is roughly six times too
+        large and would crush every signal toward zero.</p>
+      <div class="formula">w  = reliability &times; recency &times; sample adequacy
+E  = &Sigma;(w&middot;d) / &Sigma;w                    evidence, &minus;1 to +1
+C  = |&Sigma;(w&middot;d)| / &Sigma;(w&middot;|d|)            coherence
+F  = 1 &minus; e^(&minus;0.9(families&minus;1))         independence
+M  = 1 &minus; e^(&minus;&Sigma;w / 1.6)               evidence mass
+
+confidence = M &times; &radic;F &times; &radic;C</div>
+      <p class="small" style="margin-top:12px">All three must hold. A single authoritative source cannot
+        produce a confident verdict on its own, and two sources that disagree cannot either &mdash; which is
+        the whole reason the framework exists rather than a weighted average.</p>
+    </div>
+  </div>
+  <div class="panel" style="margin-top:18px">
+    <div class="panelhead"><h3>About this data</h3></div>
+    <p class="small" style="margin-top:8px">Kestrel Veterinary Group is synthetic. The generator models a real
+      estate of <span class="num" id="nPrac"></span> practices with dated acquisitions, integration disruption,
+      a staffing market and a pricing dynamic, then emits only what a subscription would actually return. The
+      engine never sees the practice-level truth &mdash; it is used once, at the end, to check that the
+      outside-in band actually contains the answer.</p>
+  </div>
+</section>
+
+<footer>
+  <strong style="color:var(--ink)">Technique 01 &mdash; Alt Data Triangulation.</strong>
+  Pre-deal stage of the D&amp;A technique series. All figures synthetic.
+</footer>
+
+</div>
+<div id="tip" role="status" aria-live="polite"></div>
+<script id="payload" type="application/json">{"meta":{"company":"Kestrel Veterinary Group","codename":"Project Harrier","sector":"UK veterinary practice consolidation","stage":"Pre-deal / commercial DD","sources":11,"signals":23,"families":8,"months":30,"practices":189,"acquisitions":47},"claims":[{"id":"C1","materiality":1.0,"text":"Like-for-like revenue growth of 9%, driven by underlying clinical demand","evidence":[{"signal":"implied_organic","label":"Acquisition-adjusted organic growth","source":"Companies House","family":"Regulatory filings","mode":"level","d":-0.9586041909152035,"relevance":1.0,"weight":0.607359677129304,"detail":"5.1% observed vs 9% claimed"},{"signal":"rev_vol_growth","label":"Review volume growth, legacy practices","source":"Google Reviews","family":"User reviews","mode":"level","d":-0.8928083793833299,"relevance":0.9,"weight":0.6337588213700212,"detail":"5.4% observed vs 9% claimed"},{"signal":"estate","label":"Practices in the estate","source":"Companies House","family":"Regulatory filings","mode":"trend","d":-0.9909508209198109,"relevance":0.8,"weight":0.4858877417034433,"detail":"184 vs 158, vs a year earlier"},{"signal":"sessions_pp_growth","label":"Sessions per practice, growth","source":"SimilarWeb","family":"Web panel","mode":"level","d":-0.9993229819550407,"relevance":0.6,"weight":0.3409630007008902,"detail":"-3.0% observed vs 9% claimed"},{"signal":"time_to_fill","label":"Median days to fill a vet role","source":"Indeed","family":"Labour market","mode":"trend","d":-0.9342738969467557,"relevance":0.5,"weight":0.3325277766447642,"detail":"66d vs 52d, vs a year earlier"}],"score":-0.9501939566196104,"confidence":0.7503778168464601,"coherence":1.0,"diversity":0.9327944872602503,"mass":0.7769391413404805,"families":4,"weight_total":2.400497017548423,"verdict":"Challenged","priority":0.8378155583256932},{"id":"C2","materiality":0.75,"text":"Our membership plan delivers 40% higher lifetime value per client","evidence":[{"signal":"tp_rating","label":"Trustpilot rating","source":"Trustpilot","family":"User reviews","mode":"trend","d":-0.8677597502348718,"relevance":0.35,"weight":0.1985386431143739,"detail":"3.44 vs 3.77 stars, vs a year earlier"},{"signal":"news_sent","label":"Media sentiment, net","source":"Quid","family":"Media","mode":"trend","d":-0.9402775954375363,"relevance":0.25,"weight":0.11929323578282539,"detail":"-0.46 vs -0.17, vs a year earlier"}],"score":-0.8949781917462785,"confidence":0.13878449934918452,"coherence":1.0,"diversity":0.5934303402594009,"mass":0.18015905275379762,"families":2,"weight_total":0.31783187889719927,"verdict":"Not testable outside-in","priority":0.4161126379465151},{"id":"C3","materiality":0.85,"text":"We are the employer of choice in the profession","evidence":[{"signal":"time_to_fill","label":"Median days to fill a vet role","source":"Indeed","family":"Labour market","mode":"trend","d":-0.9342738969467557,"relevance":0.8,"weight":0.5320444426316228,"detail":"66d vs 52d, vs a year earlier"},{"signal":"gd_rating","label":"Glassdoor overall rating","source":"Glassdoor","family":"Employee reviews","mode":"trend","d":-0.9820441558270693,"relevance":0.9,"weight":0.4045295580922057,"detail":"3.16 vs 3.51 stars, vs a year earlier"},{"signal":"gd_clinical","label":"Glassdoor clinical staff rating","source":"Glassdoor","family":"Employee reviews","mode":"trend","d":-0.9859825783308989,"relevance":0.8,"weight":0.30629190313724375,"detail":"2.81 vs 3.21 stars, vs a year earlier"},{"signal":"vacancies","label":"Open veterinary surgeon vacancies","source":"Indeed","family":"Labour market","mode":"trend","d":-0.6001505238752837,"relevance":0.7,"weight":0.46553888730266985,"detail":"142 vs 111, vs a year earlier"},{"signal":"staff_mentions","label":"Transcripts citing vet recruitment difficulty","source":"AlphaSense","family":"Expert network","mode":"trend","d":-0.8982652606619352,"relevance":0.5,"weight":0.23905710006143827,"detail":"39 vs 21, vs a year earlier"}],"score":-0.8680373703551609,"confidence":0.6431255427703011,"coherence":1.0,"diversity":0.8347011117784134,"mass":0.7039312778014999,"families":3,"weight_total":1.9474618912251802,"verdict":"Challenged","priority":0.6261900985340046},{"id":"C4","materiality":0.6,"text":"Our digital booking platform is driving new client acquisition","evidence":[{"signal":"branded_share","label":"Branded search share","source":"SimilarWeb","family":"Web panel","mode":"trend","d":-0.9821126541179456,"relevance":0.6,"weight":0.3409630007008902,"detail":"44.7% vs 51.8%, vs a year earlier"},{"signal":"paid_share","label":"Paid share of sessions","source":"SimilarWeb","family":"Web panel","mode":"trend","d":-0.7211434952631678,"relevance":0.7,"weight":0.39779016748437185,"detail":"31.8% vs 23.8%, vs a year earlier"},{"signal":"sessions","label":"Booking portal sessions","source":"SimilarWeb","family":"Web panel","mode":"trend","d":0.5992371100293594,"relevance":0.6,"weight":0.3409630007008902,"detail":"583,809 vs 514,442, vs a year earlier"},{"signal":"rev_vol_pp","label":"Review volume per practice","source":"Google Reviews","family":"User reviews","mode":"trend","d":0.3032541535254986,"relevance":0.5,"weight":0.35208823409445617,"detail":"18 vs 17, vs a year earlier"},{"signal":"sessions_pp","label":"Sessions per practice","source":"SimilarWeb","family":"Web panel","mode":"trend","d":-0.15144425031466774,"relevance":0.8,"weight":0.4546173342678536,"detail":"3,167 vs 3,264, vs a year earlier"}],"score":-0.20116771379744472,"confidence":0.3283145203769126,"coherence":0.37885561353730884,"diversity":0.5934303402594009,"mass":0.6924180077394259,"families":2,"weight_total":1.886421737248462,"verdict":"Contested","priority":0.24113341276936306},{"id":"C5","materiality":0.7,"text":"Consolidation runway remains substantial: 60% of the market is independent","evidence":[{"signal":"indep_level","label":"Independent share of the market","source":"Gain.Pro","family":"Market data","mode":"level","d":-0.9739247519385192,"relevance":0.9,"weight":0.4836586346373078,"detail":"51.3% observed vs 60% claimed"},{"signal":"comp_estate","label":"Largest competitor estate","source":"Companies House","family":"Regulatory filings","mode":"trend","d":-0.9999999879983831,"relevance":0.5,"weight":0.303679838564652,"detail":"122 vs 110, vs a year earlier"},{"signal":"peer_deals","label":"Sector transactions completed","source":"Preqin","family":"Market data","mode":"trend","d":-0.3036367264276838,"relevance":0.6,"weight":0.35821321808911716,"detail":"19 vs 16, vs a year earlier"}],"score":-0.771238562434527,"confidence":0.3938632360736023,"coherence":1.0,"diversity":0.5934303402594009,"mass":0.5112820801913459,"families":2,"weight_total":1.145551691291077,"verdict":"Challenged","priority":0.4247816285638903},{"id":"C6","materiality":0.9,"text":"Our pricing is in line with the market","evidence":[{"signal":"price_cmp","label":"Reviews mentioning price or billing","source":"Trustpilot","family":"User reviews","mode":"trend","d":-0.787168722380977,"relevance":0.9,"weight":0.5105279394369615,"detail":"11.7% vs 8.2%, vs a year earlier"},{"signal":"cma_mentions","label":"Transcripts citing CMA pricing review","source":"AlphaSense","family":"Expert network","mode":"trend","d":-0.7395173643182942,"relevance":0.7,"weight":0.30772577124491934,"detail":"40 vs 16, vs a year earlier"},{"signal":"news_sent","label":"Media sentiment, net","source":"Quid","family":"Media","mode":"trend","d":-0.9402775954375363,"relevance":0.5,"weight":0.23858647156565077,"detail":"-0.46 vs -0.17, vs a year earlier"},{"signal":"tp_rating","label":"Trustpilot rating","source":"Trustpilot","family":"User reviews","mode":"trend","d":-0.8677597502348718,"relevance":0.4,"weight":0.22690130641642733,"detail":"3.44 vs 3.77 stars, vs a year earlier"}],"score":-0.8184463314146544,"confidence":0.5040627946576997,"coherence":1.0,"diversity":0.8347011117784134,"mass":0.5517205328327617,"families":3,"weight_total":1.2837414886639589,"verdict":"Challenged","priority":0.5944652529852265},{"id":"C7","materiality":0.45,"text":"We operate at greater scale than any competitor in our core regions","evidence":[{"signal":"estate_lead","label":"Estate size vs largest competitor","source":"Companies House","family":"Regulatory filings","mode":"trend","d":0.6805905318451941,"relevance":0.9,"weight":0.5466237094163736,"detail":"1.52 vs 1.44, vs a year earlier"},{"signal":"corp_share","label":"Share of corporate-owned practices","source":"Gain.Pro","family":"Market data","mode":"trend","d":0.677896715837308,"relevance":0.8,"weight":0.4299187863442736,"detail":"38.7% vs 37.5%, vs a year earlier"},{"signal":"sessions","label":"Booking portal sessions","source":"SimilarWeb","family":"Web panel","mode":"trend","d":0.5992371100293594,"relevance":0.5,"weight":0.2841358339174085,"detail":"583,809 vs 514,442, vs a year earlier"}],"score":0.6613361797341201,"confidence":0.4981164924652143,"coherence":1.0,"diversity":0.8347011117784134,"mass":0.5452120242723342,"families":3,"weight_total":1.2606783296780557,"verdict":"Supported","priority":0.11292378919532679}],"families":["Employee reviews","Expert network","Labour market","Market data","Media","Regulatory filings","User reviews","Web panel"],"matrix":[{"claim":"C1","cells":[{"family":"Employee reviews","d":null,"n":0},{"family":"Expert network","d":null,"n":0},{"family":"Labour market","d":-0.9342738969467557,"n":1},{"family":"Market data","d":null,"n":0},{"family":"Media","d":null,"n":0},{"family":"Regulatory filings","d":-0.972980470917251,"n":2},{"family":"User reviews","d":-0.8928083793833299,"n":1},{"family":"Web panel","d":-0.9993229819550407,"n":1}]},{"claim":"C2","cells":[{"family":"Employee reviews","d":null,"n":0},{"family":"Expert network","d":null,"n":0},{"family":"Labour market","d":null,"n":0},{"family":"Market data","d":null,"n":0},{"family":"Media","d":-0.9402775954375363,"n":1},{"family":"Regulatory filings","d":null,"n":0},{"family":"User reviews","d":-0.8677597502348718,"n":1},{"family":"Web panel","d":null,"n":0}]},{"claim":"C3","cells":[{"family":"Employee reviews","d":-0.983741216185897,"n":2},{"family":"Expert network","d":-0.8982652606619352,"n":1},{"family":"Labour market","d":-0.7783496561800687,"n":2},{"family":"Market data","d":null,"n":0},{"family":"Media","d":null,"n":0},{"family":"Regulatory filings","d":null,"n":0},{"family":"User reviews","d":null,"n":0},{"family":"Web panel","d":null,"n":0}]},{"claim":"C4","cells":[{"family":"Employee reviews","d":null,"n":0},{"family":"Expert network","d":null,"n":0},{"family":"Labour market","d":null,"n":0},{"family":"Market data","d":null,"n":0},{"family":"Media","d":null,"n":0},{"family":"Regulatory filings","d":null,"n":0},{"family":"User reviews","d":0.3032541535254986,"n":1},{"family":"Web panel","d":-0.3169189531070753,"n":4}]},{"claim":"C5","cells":[{"family":"Employee reviews","d":null,"n":0},{"family":"Expert network","d":null,"n":0},{"family":"Labour market","d":null,"n":0},{"family":"Market data","d":-0.6887197888705099,"n":2},{"family":"Media","d":null,"n":0},{"family":"Regulatory filings","d":-0.9999999879983831,"n":1},{"family":"User reviews","d":null,"n":0},{"family":"Web panel","d":null,"n":0}]},{"claim":"C6","cells":[{"family":"Employee reviews","d":null,"n":0},{"family":"Expert network","d":-0.7395173643182942,"n":1},{"family":"Labour market","d":null,"n":0},{"family":"Market data","d":null,"n":0},{"family":"Media","d":-0.9402775954375363,"n":1},{"family":"Regulatory filings","d":null,"n":0},{"family":"User reviews","d":-0.811965961720637,"n":2},{"family":"Web panel","d":null,"n":0}]},{"claim":"C7","cells":[{"family":"Employee reviews","d":null,"n":0},{"family":"Expert network","d":null,"n":0},{"family":"Labour market","d":null,"n":0},{"family":"Market data","d":0.677896715837308,"n":1},{"family":"Media","d":null,"n":0},{"family":"Regulatory filings","d":0.6805905318451941,"n":1},{"family":"User reviews","d":null,"n":0},{"family":"Web panel","d":0.5992371100293594,"n":1}]}],"sources":[{"source":"Companies House","family":"Regulatory filings","reliability":0.95,"latency":2.5,"signals":4,"recency":0.7574651283969664},{"source":"S&P Capital IQ","family":"Market data","reliability":0.9,"latency":1.5,"signals":1,"recency":0.8464817248906141},{"source":"Preqin","family":"Market data","reliability":0.82,"latency":2.0,"signals":1,"recency":0.8007374029168081},{"source":"Gain.Pro","family":"Market data","reliability":0.75,"latency":3.0,"signals":2,"recency":0.7165313105737893},{"source":"Google Reviews","family":"User reviews","reliability":0.72,"latency":0.2,"signals":2,"recency":0.9780228724846005},{"source":"AlphaSense","family":"Expert network","reliability":0.7,"latency":0.5,"signals":2,"recency":0.9459594689067654},{"source":"Indeed","family":"Labour market","reliability":0.68,"latency":0.2,"signals":2,"recency":0.9780228724846005},{"source":"SimilarWeb","family":"Web panel","reliability":0.62,"latency":0.5,"signals":4,"recency":0.9459594689067654},{"source":"Trustpilot","family":"User reviews","reliability":0.58,"latency":0.2,"signals":2,"recency":0.9780228724846005},{"source":"Glassdoor","family":"Employee reviews","reliability":0.55,"latency":0.5,"signals":2,"recency":0.9459594689067654},{"source":"Quid","family":"Media","reliability":0.5,"latency":0.2,"signals":1,"recency":0.9780228724846005}],"growth":{"r0":142138984.0,"r1":169512907.0,"reported":0.1925856104332362,"claimed":0.09,"band":[{"alpha":0.65,"organic":0.07416880379102508},{"alpha":0.7,"organic":0.06642730221733117},{"alpha":0.75,"organic":0.05885006640611912},{"alpha":0.8,"organic":0.05143192294836507},{"alpha":0.85,"organic":0.04416791342087589},{"alpha":0.9,"organic":0.03705328333369362},{"alpha":0.95,"organic":0.030083471752428093},{"alpha":1.0,"organic":0.023254101547917294}],"lo":0.023254101547917294,"hi":0.07416880379102508,"mid":0.05143192294836507,"truth":0.05636555458873982,"estate0":143,"estate1":189,"lpm0":1704,"apm0":127,"lpm1":1704,"apm1":430,"acq_contribution":0.14115368748487112},"event":{"points":[{"k":-9,"n":42,"rating":4.455966257668711,"control":4.448372510854918,"reviews":14.523809523809524},{"k":-8,"n":46,"rating":4.449943181818182,"control":4.449143260694108,"reviews":14.304347826086957},{"k":-7,"n":46,"rating":4.435950069348128,"control":4.449360709380302,"reviews":14.673913043478262},{"k":-6,"n":47,"rating":4.441025991792066,"control":4.449766696552907,"reviews":14.553191489361701},{"k":-5,"n":47,"rating":4.423478260869566,"control":4.44905648571266,"reviews":15.148936170212766},{"k":-4,"n":47,"rating":4.417696551724139,"control":4.449526152793875,"reviews":14.425531914893616},{"k":-3,"n":47,"rating":4.4413497822931784,"control":4.449304416671379,"reviews":13.659574468085106},{"k":-2,"n":47,"rating":4.440943912448701,"control":4.449737782626689,"reviews":14.553191489361701},{"k":-1,"n":47,"rating":4.438721088435374,"control":4.449139298910292,"reviews":14.638297872340425},{"k":0,"n":47,"rating":4.425739795918368,"control":4.450601922575357,"reviews":15.680851063829786},{"k":1,"n":46,"rating":4.392181818181818,"control":4.449687945478334,"reviews":14.543478260869565},{"k":2,"n":43,"rating":4.331458646616541,"control":4.450267340890722,"reviews":14.465116279069768},{"k":3,"n":42,"rating":4.280887096774193,"control":4.450209853015268,"reviews":13.761904761904763},{"k":4,"n":39,"rating":4.233551088777219,"control":4.450813757209172,"reviews":14.307692307692308},{"k":5,"n":37,"rating":4.205530726256984,"control":4.450206426581775,"reviews":13.513513513513514},{"k":6,"n":36,"rating":4.1619201520912545,"control":4.450963929516831,"reviews":13.61111111111111},{"k":7,"n":34,"rating":4.097992277992279,"control":4.449985191513598,"reviews":14.235294117647058},{"k":8,"n":30,"rating":4.010397877984085,"control":4.4501435747953355,"reviews":11.566666666666666},{"k":9,"n":28,"rating":3.9829120879120876,"control":4.450906519351726,"reviews":12.0},{"k":10,"n":25,"rating":3.978867924528302,"control":4.450963681996014,"reviews":13.84},{"k":11,"n":23,"rating":3.975276073619632,"control":4.452453679302656,"reviews":13.173913043478262},{"k":12,"n":21,"rating":3.9715615615615607,"control":4.450545812537204,"reviews":14.857142857142858},{"k":13,"n":19,"rating":3.9784042553191483,"control":4.451419852066414,"reviews":13.842105263157896},{"k":14,"n":14,"rating":3.942582159624413,"control":4.450408554298782,"reviews":14.214285714285714},{"k":15,"n":14,"rating":3.9288596491228067,"control":4.452709192783696,"reviews":15.285714285714286}],"summary":{"rating_drop":-0.47284686142213905,"pre":4.438341677377561,"post":3.9654948159554215,"volume_change":-0.04209388654113122,"control_drift":0.002076419549976727,"n_practices":47}},"valuation":{"margin":0.182,"multiple":12.0,"hold":4,"fy25_revenue":169512907.0,"fy25_ebitda":30851349.074,"ev_claimed":522590363.9585873,"ev_lo":405872271.64348966,"ev_hi":492884938.43328613,"ev_mid":452459842.9614371,"gap":70130520.99715018},"series":{"gd_rating":{"label":"Glassdoor overall rating","source":"Glassdoor","unit":"stars","months":["Oct-22","Nov-22","Dec-22","Jan-23","Feb-23","Mar-23","Apr-23","May-23","Jun-23","Jul-23","Aug-23","Sep-23","Oct-23","Nov-23","Dec-23","Jan-24","Feb-24","Mar-24","Apr-24","May-24","Jun-24","Jul-24","Aug-24","Sep-24","Oct-24","Nov-24","Dec-24","Jan-25","Feb-25","Mar-25"],"values":[3.968076931402503,3.910408574211677,3.866412487910152,3.787007658103817,3.848527766646371,3.769883634609037,3.834962848562925,3.773690502383084,3.67862610018536,3.6635699574340665,3.658480794250951,3.598251503028819,3.572906714243817,3.523626745168522,3.5185526697885616,3.499303847153978,3.526353509648903,3.408711309224137,3.411684380794288,3.477473085820504,3.327693876306842,3.389253711322417,3.2874331174748286,3.329361956618507,3.197846983351793,3.159605110704778,3.189449591871885,3.1574297760907872,3.128824848123606,3.1444321594092277],"peer":[3.53145908525328,3.5684968180036445,3.577477000649396,3.548408101381816,3.5845789165000737,3.5227348051816083,3.534748666147137,3.566980541825516,3.5484574952234125,3.537699400354085,3.601969202377776,3.584513054993071,3.573089313651436,3.6580571664246655,3.581892666123395,3.538225680904796,3.54080262601676,3.4743702893995554,3.556676094122593,3.527979036100182,3.610547759399271,3.535897145243491,3.489903165678561,3.556832282963028,3.518679932855424,3.511627419557995,3.466614739802904,3.582446882512208,3.5276747739564485,3.53055384915516]},"gd_clinical":{"label":"Glassdoor clinical staff rating","source":"Glassdoor","unit":"stars","months":["Oct-22","Nov-22","Dec-22","Jan-23","Feb-23","Mar-23","Apr-23","May-23","Jun-23","Jul-23","Aug-23","Sep-23","Oct-23","Nov-23","Dec-23","Jan-24","Feb-24","Mar-24","Apr-24","May-24","Jun-24","Jul-24","Aug-24","Sep-24","Oct-24","Nov-24","Dec-24","Jan-25","Feb-25","Mar-25"],"values":[3.883997029385543,3.798611385069087,3.766988291606149,3.693027618021884,3.618376277778008,3.646784837853567,3.649672548061466,3.5368076396139725,3.4858916470890238,3.442499787162125,3.4342900338492197,3.396379557894144,3.283367630692549,3.25373667412897,3.3291823549261554,3.180147707011228,3.12765838638752,3.061970400828005,3.097877818927849,3.124082292887913,3.124389687856442,3.019295587377792,2.9729023496592144,2.8431474448643703,2.8808765740922992,2.874873554578841,2.849959632602996,2.829901003454724,2.701725947200321,2.699166569990368],"peer":[3.53145908525328,3.5684968180036445,3.577477000649396,3.548408101381816,3.5845789165000737,3.5227348051816083,3.534748666147137,3.566980541825516,3.5484574952234125,3.537699400354085,3.601969202377776,3.584513054993071,3.573089313651436,3.6580571664246655,3.581892666123395,3.538225680904796,3.54080262601676,3.4743702893995554,3.556676094122593,3.527979036100182,3.610547759399271,3.535897145243491,3.489903165678561,3.556832282963028,3.518679932855424,3.511627419557995,3.466614739802904,3.582446882512208,3.5276747739564485,3.53055384915516]},"vacancies":{"label":"Open veterinary surgeon vacancies","source":"Indeed","unit":"postings","months":["Oct-22","Nov-22","Dec-22","Jan-23","Feb-23","Mar-23","Apr-23","May-23","Jun-23","Jul-23","Aug-23","Sep-23","Oct-23","Nov-23","Dec-23","Jan-24","Feb-24","Mar-24","Apr-24","May-24","Jun-24","Jul-24","Aug-24","Sep-24","Oct-24","Nov-24","Dec-24","Jan-25","Feb-25","Mar-25"],"values":[65.33100262939574,78.18818625788437,71.87954889141872,75.83468613777212,84.08587581059425,83.9037301843339,70.49631077537794,78.52442043603718,99.07989759553683,82.07285670481178,74.49309200173286,98.0118221774408,108.2614067183746,103.81282681413312,105.74566215588848,118.9688649472106,110.24832292842626,120.61579851032542,103.14558747239722,131.61807958606855,146.4127652130793,137.7526831127367,124.0361668459584,137.40039705521733,135.24154012298462,144.6913612774151,114.01801001966216,142.33409265620173,158.39452198113025,157.75772226782576],"peer":null},"time_to_fill":{"label":"Median days to fill a vet role","source":"Indeed","unit":"days","months":["Oct-22","Nov-22","Dec-22","Jan-23","Feb-23","Mar-23","Apr-23","May-23","Jun-23","Jul-23","Aug-23","Sep-23","Oct-23","Nov-23","Dec-23","Jan-24","Feb-24","Mar-24","Apr-24","May-24","Jun-24","Jul-24","Aug-24","Sep-24","Oct-24","Nov-24","Dec-24","Jan-25","Feb-25","Mar-25"],"values":[37.13399995431048,34.64529670419047,34.822532799615054,36.000946601315405,41.62079575125883,40.41891450587884,42.20623172127544,43.52819123068379,42.142907983608765,42.58801238068457,48.47507579858107,47.11194233714139,48.33512096764249,49.83685696994376,48.91906791218744,55.14363324800983,54.03621879862533,54.23129862001519,53.70900632815108,58.556736382281706,61.10611837272174,60.97375819570463,64.60559325662372,61.39004924637744,61.817429693951645,66.95876968071971,67.68192075968123,67.80042033760343,64.90640328295085,69.33164305559511],"peer":null},"sessions":{"label":"Booking portal sessions","source":"SimilarWeb","unit":"per month","months":["Oct-22","Nov-22","Dec-22","Jan-23","Feb-23","Mar-23","Apr-23","May-23","Jun-23","Jul-23","Aug-23","Sep-23","Oct-23","Nov-23","Dec-23","Jan-24","Feb-24","Mar-24","Apr-24","May-24","Jun-24","Jul-24","Aug-24","Sep-24","Oct-24","Nov-24","Dec-24","Jan-25","Feb-25","Mar-25"],"values":[425223.1456180806,416000.61641006736,408838.3067400029,445711.802260772,428503.94198886334,458385.25858802535,461446.1626447967,420792.8225432533,423727.58673572494,451764.9467445626,437018.03639238,465229.53590546193,503312.61338357336,518644.7493729631,507022.1462952484,538977.377422638,499834.7902701694,518861.73962623545,476274.4788712216,527838.1984556805,502233.4827518079,477684.265361248,477791.7557049918,529260.8390807959,569993.0415409629,560051.029462274,591154.6130538807,582391.2768697075,591259.5361254427,608004.5314049051],"peer":null},"sessions_pp":{"label":"Sessions per practice","source":"SimilarWeb","unit":"per month","months":["Oct-22","Nov-22","Dec-22","Jan-23","Feb-23","Mar-23","Apr-23","May-23","Jun-23","Jul-23","Aug-23","Sep-23","Oct-23","Nov-23","Dec-23","Jan-24","Feb-24","Mar-24","Apr-24","May-24","Jun-24","Jul-24","Aug-24","Sep-24","Oct-24","Nov-24","Dec-24","Jan-25","Feb-25","Mar-25"],"values":[2994.5291944935257,2929.5818057047,2879.1430052112883,3138.815508878676,3017.63339428777,3228.065201324122,3226.8962422713053,2942.6071506521207,2882.500590038945,3073.23093023512,2894.15918140649,3020.9710123731293,3247.178150861764,3346.095157244923,3250.141963431079,3454.983188606654,3104.563914721549,3183.200856602672,2886.511993158919,3160.7077751837155,2954.3146044223995,2777.234100937488,2714.7258846874533,2973.3755004539094,3184.3186678266084,3094.2045826644976,3212.7968100754388,3148.060956052473,3144.997532582142,3216.955192618546],"peer":null},"paid_share":{"label":"Paid share of sessions","source":"SimilarWeb","unit":"%","months":["Oct-22","Nov-22","Dec-22","Jan-23","Feb-23","Mar-23","Apr-23","May-23","Jun-23","Jul-23","Aug-23","Sep-23","Oct-23","Nov-23","Dec-23","Jan-24","Feb-24","Mar-24","Apr-24","May-24","Jun-24","Jul-24","Aug-24","Sep-24","Oct-24","Nov-24","Dec-24","Jan-25","Feb-25","Mar-25"],"values":[0.0999823611098451,0.1243671601017869,0.1342409443335735,0.1271521827169987,0.1443954746570085,0.1465660648054438,0.1614150583491751,0.1831164459442305,0.1829941561929477,0.1939133469908569,0.2005502296737096,0.1657355736674285,0.2242417448493104,0.2278933402792692,0.2249484311036122,0.2281804303671521,0.2670082585159767,0.2555229946693047,0.2547681540002194,0.2850528968913767,0.2875384772183361,0.2874011365901436,0.2933459973356243,0.2846760502800824,0.2811972486930326,0.302372868059832,0.3135781502126241,0.3425276664925585,0.3180289585652725,0.3525988912692487],"peer":null},"branded_share":{"label":"Branded search share","source":"SimilarWeb","unit":"%","months":["Oct-22","Nov-22","Dec-22","Jan-23","Feb-23","Mar-23","Apr-23","May-23","Jun-23","Jul-23","Aug-23","Sep-23","Oct-23","Nov-23","Dec-23","Jan-24","Feb-24","Mar-24","Apr-24","May-24","Jun-24","Jul-24","Aug-24","Sep-24","Oct-24","Nov-24","Dec-24","Jan-25","Feb-25","Mar-25"],"values":[0.6193730000878418,0.6130464635939188,0.5879607118506562,0.598999211608861,0.5866146512299565,0.5842336188808884,0.585673770533354,0.5637036953864557,0.5696207634202832,0.5618148647918368,0.5531419026383112,0.5309414212141461,0.5275564022467539,0.523932531669803,0.5283534722391535,0.5107560633513557,0.4916664265443621,0.526012846098875,0.4737399048904942,0.4868334340038573,0.4867422907290606,0.4859253147375912,0.4696927823285124,0.4554966839622779,0.4661005758981992,0.4538232150078504,0.4451400935492217,0.443884457523219,0.437083636455998,0.4375138822408294],"peer":null},"price_cmp":{"label":"Reviews mentioning price or billing","source":"Trustpilot","unit":"%","months":["Oct-22","Nov-22","Dec-22","Jan-23","Feb-23","Mar-23","Apr-23","May-23","Jun-23","Jul-23","Aug-23","Sep-23","Oct-23","Nov-23","Dec-23","Jan-24","Feb-24","Mar-24","Apr-24","May-24","Jun-24","Jul-24","Aug-24","Sep-24","Oct-24","Nov-24","Dec-24","Jan-25","Feb-25","Mar-25"],"values":[0.0383245191753594,0.045491565935793,0.0443587497487577,0.0537446721437121,0.0508361032417788,0.0608033253004067,0.0602878105115495,0.0546255787284603,0.0622899409328322,0.067728983645048,0.0773412803253533,0.0644353568050344,0.0792225628649612,0.079250260756155,0.0672429705881108,0.0788360258753376,0.0903782728154875,0.097730810669922,0.1032155239021142,0.0976299829045506,0.1026432826617054,0.1139876935786845,0.1083825897399719,0.1198569624922691,0.1089147647630207,0.1111311946250138,0.1070586940697246,0.1204523579233583,0.1239822262542015,0.1304948201306595],"peer":[0.0559445127362003,0.0497552513491913,0.0521446457446877,0.0507194575758339,0.0437577981831346,0.0394353525785688,0.0445220497751724,0.0446736159959807,0.0470368530463165,0.0525922965533088,0.0502847041002917,0.0525414190912184,0.0420277013720457,0.0550335744198584,0.044563850455634,0.0519707206323174,0.0602212326371082,0.0576114803182449,0.0566323123626647,0.0573230181556884,0.0604882665114439,0.0542882521626781,0.0595572252274093,0.055692196352164,0.0494956627388726,0.0539663289044724,0.058102774945204,0.0516896094436584,0.0498410091164454,0.0544925270962152]},"cma_mentions":{"label":"Transcripts citing CMA pricing review","source":"AlphaSense","unit":"per month","months":["Oct-22","Nov-22","Dec-22","Jan-23","Feb-23","Mar-23","Apr-23","May-23","Jun-23","Jul-23","Aug-23","Sep-23","Oct-23","Nov-23","Dec-23","Jan-24","Feb-24","Mar-24","Apr-24","May-24","Jun-24","Jul-24","Aug-24","Sep-24","Oct-24","Nov-24","Dec-24","Jan-25","Feb-25","Mar-25"],"values":[4.0,5.0,4.0,2.0,2.0,7.0,6.0,8.0,7.0,9.0,12.0,12.0,13.0,14.0,14.0,14.0,22.0,20.0,23.0,22.0,27.0,26.0,29.0,30.0,34.0,37.0,38.0,41.0,44.0,45.0],"peer":null},"indep_share":{"label":"Independent share of UK practices","source":"Gain.Pro","unit":"%","months":["Oct-22","Nov-22","Dec-22","Jan-23","Feb-23","Mar-23","Apr-23","May-23","Jun-23","Jul-23","Aug-23","Sep-23","Oct-23","Nov-23","Dec-23","Jan-24","Feb-24","Mar-24","Apr-24","May-24","Jun-24","Jul-24","Aug-24","Sep-24","Oct-24","Nov-24","Dec-24","Jan-25","Feb-25","Mar-25"],"values":[0.6268744718892284,0.6235573748813458,0.6224568382437478,0.6137048132036149,0.609671468053979,0.6065235763756512,0.6069781972434658,0.589701152693317,0.5864294257095554,0.5986086364306853,0.5832109294550645,0.5802497386387913,0.5710464358468916,0.5798716881235326,0.5719321765070103,0.5654656409105021,0.5748453438125469,0.5534853213514227,0.5571677710888242,0.5422934204763374,0.5526339551368613,0.5469620794649942,0.5389892060963528,0.5279870434769157,0.5296958042923754,0.5153401290166209,0.5314326388283969,0.5202919525391089,0.5197380629566085,0.5134641482908762],"peer":null},"estate":{"label":"Practices in the estate","source":"Companies House","unit":"practices","months":["Oct-22","Nov-22","Dec-22","Jan-23","Feb-23","Mar-23","Apr-23","May-23","Jun-23","Jul-23","Aug-23","Sep-23","Oct-23","Nov-23","Dec-23","Jan-24","Feb-24","Mar-24","Apr-24","May-24","Jun-24","Jul-24","Aug-24","Sep-24","Oct-24","Nov-24","Dec-24","Jan-25","Feb-25","Mar-25"],"values":[142.0,142.0,142.0,142.0,142.0,142.0,143.0,143.0,147.0,147.0,151.0,154.0,155.0,155.0,156.0,156.0,161.0,163.0,165.0,167.0,170.0,172.0,176.0,178.0,179.0,181.0,184.0,185.0,188.0,189.0],"peer":null},"acq_filed":{"label":"Practice acquisitions filed","source":"Companies House","unit":"per month","months":["Oct-22","Nov-22","Dec-22","Jan-23","Feb-23","Mar-23","Apr-23","May-23","Jun-23","Jul-23","Aug-23","Sep-23","Oct-23","Nov-23","Dec-23","Jan-24","Feb-24","Mar-24","Apr-24","May-24","Jun-24","Jul-24","Aug-24","Sep-24","Oct-24","Nov-24","Dec-24","Jan-25","Feb-25","Mar-25"],"values":[0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,4.0,0.0,4.0,3.0,1.0,0.0,1.0,0.0,5.0,2.0,2.0,2.0,3.0,2.0,4.0,2.0,1.0,2.0,3.0,1.0,3.0,1.0],"peer":null},"rev_vol_pp":{"label":"Review volume per practice","source":"Google Reviews","unit":"per month","months":["Oct-22","Nov-22","Dec-22","Jan-23","Feb-23","Mar-23","Apr-23","May-23","Jun-23","Jul-23","Aug-23","Sep-23","Oct-23","Nov-23","Dec-23","Jan-24","Feb-24","Mar-24","Apr-24","May-24","Jun-24","Jul-24","Aug-24","Sep-24","Oct-24","Nov-24","Dec-24","Jan-25","Feb-25","Mar-25"],"values":[16.971830985915492,15.859154929577464,15.169014084507042,16.37323943661972,15.690140845070422,16.859154929577464,17.422535211267604,17.309859154929576,18.669014084507044,17.633802816901408,16.640845070422536,17.6056338028169,17.640845070422536,16.591549295774648,16.0,17.422535211267604,16.612676056338028,17.767605633802816,18.190140845070424,19.591549295774648,19.309859154929576,18.711267605633804,17.838028169014084,18.45774647887324,18.20422535211268,17.41549295774648,17.02112676056338,18.140845070422536,18.14788732394366,18.62676056338028],"peer":null},"estate_lead":{"label":"Estate size vs largest competitor","source":"Companies House","unit":"x","months":["Oct-22","Nov-22","Dec-22","Jan-23","Feb-23","Mar-23","Apr-23","May-23","Jun-23","Jul-23","Aug-23","Sep-23","Oct-23","Nov-23","Dec-23","Jan-24","Feb-24","Mar-24","Apr-24","May-24","Jun-24","Jul-24","Aug-24","Sep-24","Oct-24","Nov-24","Dec-24","Jan-25","Feb-25","Mar-25"],"values":[1.4791666666666667,1.4639175257731958,1.4489795918367347,1.4343434343434345,1.42,1.405940594059406,1.4019607843137254,1.3883495145631068,1.4134615384615383,1.4,1.4245283018867925,1.439252336448598,1.4351851851851851,1.4351851851851851,1.4311926605504588,1.4181818181818182,1.4504504504504503,1.4553571428571428,1.4601769911504423,1.4649122807017545,1.4782608695652173,1.4827586206896552,1.5042735042735045,1.5084745762711864,1.504201680672269,1.5083333333333333,1.5206611570247934,1.5163934426229508,1.5284552845528456,1.5241935483870968],"peer":null}}}</script>
+<script>/* House chart toolkit. Shared by every demo in this repo so the whole set reads
+   as one system: same scales, same marks, same tooltip, same validated palette.
+   Exposed as window.V; each demo destructures what it needs. */
+window.V = (() => {
+"use strict";
+const NS = "http://www.w3.org/2000/svg";
+const $ = s => document.querySelector(s);
+const el = (t, a = {}, kids = []) => { const e = document.createElementNS(NS, t);
+  for (const k in a) if (a[k] !== null && a[k] !== undefined) e.setAttribute(k, a[k]);
+  for (const c of [].concat(kids)) e.appendChild(typeof c === "string" ? document.createTextNode(c) : c);
+  return e; };
+const tok = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+
+/* ---------- formatting: deal-desk conventions ---------- */
+const MINUS = "−";
+const m2 = v => (v < 0 ? MINUS : "") + "£" + (Math.abs(v) / 1e6).toFixed(2) + "m";
+const m2s = v => (v < 0 ? MINUS : "+") + "£" + (Math.abs(v) / 1e6).toFixed(2) + "m";
+const m1 = v => (v < 0 ? MINUS : "") + "£" + (Math.abs(v) / 1e6).toFixed(1) + "m";
+const acct = (v, d = 2) => v < 0 ? "(" + (Math.abs(v) / 1e6).toFixed(d) + ")" : (v / 1e6).toFixed(d);
+const pc = (v, d = 1) => (v * 100).toFixed(d) + "%";
+const pcs = (v, d = 1) => (v < 0 ? MINUS : "+") + (Math.abs(v) * 100).toFixed(d) + "%";
+const pp = (v, d = 1) => (v < 0 ? MINUS : "+") + (Math.abs(v) * 100).toFixed(d) + "pp";
+const int = v => Math.round(v).toLocaleString("en-GB");
+
+/* ---------- tooltip ---------- */
+const tip = $("#tip");
+function showTip(e, title, rows) {
+  tip.innerHTML = '<div class="t"></div>' + rows.map(() => '<div class="r"><span></span><span></span></div>').join("");
+  tip.querySelector(".t").textContent = title;
+  tip.querySelectorAll(".r").forEach((r, i) => {
+    r.children[0].textContent = rows[i][0]; r.children[1].textContent = rows[i][1];
+  });
+  tip.style.opacity = 1; moveTip(e);
+}
+function moveTip(e) {
+  const b = tip.getBoundingClientRect();
+  let x = e.clientX + 14, y = e.clientY - b.height - 12;
+  if (x + b.width > innerWidth - 8) x = e.clientX - b.width - 14;
+  if (y < 8) y = e.clientY + 18;
+  tip.style.left = x + "px"; tip.style.top = y + "px";
+}
+const hideTip = () => { tip.style.opacity = 0; };
+function hit(target, title, rows) {
+  target.addEventListener("mouseenter", e => showTip(e, title, rows));
+  target.addEventListener("mousemove", moveTip);
+  target.addEventListener("mouseleave", hideTip);
+}
+
+/* ---------- scales & axes ---------- */
+const lin = (d0, d1, r0, r1) => v => r0 + (v - d0) / (d1 - d0) * (r1 - r0);
+function niceTicks(lo, hi, n = 5) {
+  const raw = (hi - lo) / n, mag = Math.pow(10, Math.floor(Math.log10(raw)));
+  const step = [1, 1.5, 2, 2.5, 3, 4, 5, 7.5, 10].map(x => x * mag).find(x => x >= raw) || 10 * mag;
+  const out = []; for (let t = Math.ceil(lo / step) * step; t <= hi + 1e-9; t += step) out.push(t);
+  return out;
+}
+/** Padded domain first, ticks second. Returns a scale that always contains the data. */
+function axisScale(lo, hi, r0, r1, o = {}) {
+  const span = (hi - lo) || Math.abs(hi) || 1;
+  const dlo = lo - span * (o.padLo ?? 0.08), dhi = hi + span * (o.padHi ?? 0.08);
+  return { y: lin(dlo, dhi, r0, r1), dlo, dhi,
+           ticks: niceTicks(dlo, dhi, o.n ?? 5).filter(t => t >= dlo && t <= dhi) };
+}
+function gridY(g, ticks, y, x0, x1, fmt) {
+  ticks.forEach(t => {
+    g.appendChild(el("line", { x1: x0, x2: x1, y1: y(t), y2: y(t), stroke: tok("--rule"), "stroke-width": 1 }));
+    g.appendChild(el("text", { x: x0 - 9, y: y(t) + 4, "text-anchor": "end", fill: tok("--ink-3"),
+      "font-size": 11, "font-family": "IBM Plex Mono, monospace" }, fmt(t)));
+  });
+}
+function xLabels(g, items, cx, yTop, slot) {
+  const rotate = slot < 94;
+  items.forEach((s, i) => {
+    const x = cx(i);
+    if (rotate) {
+      const t = el("text", { x: 0, y: 0, "text-anchor": "end", fill: tok("--ink-2"), "font-size": 11 }, s);
+      t.setAttribute("transform", `translate(${x},${yTop + 14}) rotate(-40)`); g.appendChild(t);
+    } else {
+      const words = s.split(" "); const lines = words.length > 2
+        ? [words.slice(0, Math.ceil(words.length / 2)).join(" "), words.slice(Math.ceil(words.length / 2)).join(" ")]
+        : [s];
+      lines.forEach((ln, j) => g.appendChild(el("text", { x, y: yTop + 16 + j * 13, "text-anchor": "middle",
+        fill: tok("--ink-2"), "font-size": 11.5 }, ln)));
+    }
+  });
+}
+
+/* ---------- waterfall ---------- */
+function waterfall(w, steps, opt = {}) {
+  const compact = !!opt.compact;
+  const rotate = (w - 66) / steps.length < 94;
+  const H = opt.height || (compact ? 250 : Math.max(330, Math.min(430, w * 0.46)));
+  const M = { t: 30, r: 8, b: rotate ? 74 : (compact ? 44 : 52), l: 58 };
+  const iw = Math.max(40, w - M.l - M.r), ih = H - M.t - M.b;
+  const svg = el("svg", { viewBox: `0 0 ${w} ${H}`, width: w, height: H, role: "img" });
+  const g = el("g", { transform: `translate(${M.l},${M.t})` });
+
+  let cum = 0; const bars = steps.map(s => {
+    if (s.kind === "total") { cum = s.value; return { ...s, lo: 0, hi: s.value, base: true }; }
+    const a = cum, b = cum + s.value; cum = b; return { ...s, lo: Math.min(a, b), hi: Math.max(a, b), end: b };
+  });
+  const vals = bars.flatMap(b => b.base ? [b.value] : [b.lo, b.hi]);
+  const sc = axisScale(Math.min(...vals), Math.max(...vals), ih, 0, { padLo: 0.16, padHi: 0.14, n: 5 });
+  const y = sc.y, floor = sc.dlo;
+  gridY(g, sc.ticks, y, 0, iw, t => (t / 1e6).toFixed(0));
+  g.appendChild(el("text", { x: -M.l + 2, y: -12, fill: tok("--ink-3"), "font-size": 10.5,
+    "font-weight": 600, "letter-spacing": ".06em" }, "£m"));
+
+  const slot = iw / steps.length, bw = Math.min(slot * 0.6, 62);
+  const cx = i => slot * i + slot / 2;
+
+  if (opt.hatch) {
+    const defs = el("defs"); const p = el("pattern", { id: opt.hatchId, width: 6, height: 6,
+      patternUnits: "userSpaceOnUse", patternTransform: "rotate(45)" });
+    p.appendChild(el("rect", { width: 6, height: 6, fill: tok("--surface") }));
+    p.appendChild(el("line", { x1: 0, y1: 0, x2: 0, y2: 6, stroke: "currentColor", "stroke-width": 3.4 }));
+    defs.appendChild(p); svg.appendChild(defs);
+  }
+
+  bars.forEach((b, i) => {
+    const x = cx(i) - bw / 2;
+    const top = y(b.base ? b.value : b.hi), bot = y(b.base ? floor : b.lo);
+    const col = b.base ? tok("--total") : (b.value >= 0 ? tok("--pos") : tok("--neg"));
+    const shade = opt.hatch && !b.base && opt.ratings && opt.ratings[b.label] && opt.ratings[b.label] !== "Recurring";
+    const h = Math.max(2, bot - top);
+    const r = el("rect", { x, y: top, width: bw, height: h, rx: 2.5,
+      fill: shade ? `url(#${opt.hatchId})` : col, color: col,
+      stroke: shade ? col : "none", "stroke-width": shade ? 1.2 : 0 });
+    g.appendChild(r);
+
+    if (i < bars.length - 1) {
+      const nx = cx(i + 1) - bw / 2, ly = y(b.base ? b.value : b.end);
+      g.appendChild(el("line", { x1: x + bw, x2: nx, y1: ly, y2: ly, stroke: tok("--rule-2"), "stroke-width": 1 }));
+    }
+    const lab = b.base ? m2(b.value) : m2s(b.value);
+    const ly = b.value >= 0 || b.base ? top - 9 : bot + 15;
+    g.appendChild(el("text", { x: cx(i), y: ly, "text-anchor": "middle", fill: tok("--ink"),
+      "font-size": compact ? 11 : 12, "font-weight": 600, "font-family": "IBM Plex Mono, monospace" }, lab));
+
+    const hitr = el("rect", { x: cx(i) - slot / 2, y: 0, width: slot, height: ih, fill: "transparent" });
+    const rows = [[b.base ? "Revenue" : "Movement", lab]];
+    if (!b.base) rows.push(["Running total", m2(b.end)]);
+    if (opt.ratings && opt.ratings[b.label]) rows.push(["Durability", opt.ratings[b.label]]);
+    hit(hitr, b.label, rows);
+    if (b.note) hitr.addEventListener("mouseenter", () => {
+      const n = document.createElement("div"); n.className = "tiny";
+      n.style.cssText = "margin-top:6px;padding-top:6px;border-top:1px solid var(--rule)";
+      n.textContent = b.note; tip.appendChild(n);
+    });
+    g.appendChild(hitr);
+  });
+
+  xLabels(g, steps.map(s => s.label), cx, ih, slot);
+  svg.appendChild(g); return svg;
+}
+
+/* ---------- multi-line chart ---------- */
+function lineChart(w, cfg) {
+  const H = cfg.height || Math.max(230, Math.min(320, w * 0.5));
+  const M = { t: 16, r: cfg.rightPad || 44, b: 34, l: 46 };
+  const iw = Math.max(40, w - M.l - M.r), ih = H - M.t - M.b;
+  const svg = el("svg", { viewBox: `0 0 ${w} ${H}`, width: w, height: H, role: "img" });
+  const g = el("g", { transform: `translate(${M.l},${M.t})` });
+  const n = cfg.labels.length;
+  const all = cfg.series.flatMap(s => s.values);
+  const sc = axisScale(Math.min(...all), Math.max(...all), ih, 0, { n: 4 });
+  const y = sc.y;
+  const x = i => n === 1 ? iw / 2 : i * (iw / (n - 1));
+  gridY(g, sc.ticks, y, 0, iw, cfg.fmtAxis);
+
+  cfg.labels.forEach((l, i) => { if (i % (cfg.every || 1) === 0)
+    g.appendChild(el("text", { x: x(i), y: ih + 20, "text-anchor": "middle", fill: tok("--ink-3"), "font-size": 10.5 }, l)); });
+
+  if (cfg.markIndex !== undefined && cfg.markIndex !== null) {
+    g.appendChild(el("line", { x1: x(cfg.markIndex), x2: x(cfg.markIndex), y1: 0, y2: ih,
+      stroke: tok("--rule-2"), "stroke-width": 1.5 }));
+    if (cfg.markLabel) g.appendChild(el("text", { x: x(cfg.markIndex) + 6, y: 11,
+      fill: tok("--ink-3"), "font-size": 10.5, "font-weight": 600 }, cfg.markLabel));
+  }
+  cfg.series.forEach(s => {
+    const col = tok(s.token);
+    g.appendChild(el("path", { d: s.values.map((v, i) => (i ? "L" : "M") + x(i) + "," + y(v)).join(" "),
+      fill: "none", stroke: col, "stroke-width": 2, "stroke-linejoin": "round", "stroke-linecap": "round" }));
+    const li = s.values.length - 1;
+    g.appendChild(el("circle", { cx: x(li), cy: y(s.values[li]), r: 4, fill: col,
+      stroke: tok("--surface"), "stroke-width": 2 }));
+    g.appendChild(el("text", { x: x(li) + 9, y: y(s.values[li]) + 4, fill: tok("--ink-2"),
+      "font-size": 11, "font-weight": 600, "font-family": "IBM Plex Mono, monospace" }, cfg.fmtEnd(s.values[li])));
+  });
+
+  const cross = el("line", { y1: 0, y2: ih, stroke: tok("--rule-2"), "stroke-width": 1, opacity: 0 });
+  g.appendChild(cross);
+  const dots = cfg.series.map(s => { const c = el("circle", { r: 4.5, fill: tok(s.token),
+    stroke: tok("--surface"), "stroke-width": 2, opacity: 0 }); g.appendChild(c); return c; });
+  const surface = el("rect", { x: 0, y: 0, width: iw, height: ih, fill: "transparent" });
+  surface.addEventListener("mousemove", e => {
+    const r = surface.getBoundingClientRect();
+    const i = Math.max(0, Math.min(n - 1, Math.round((e.clientX - r.left) / (iw / Math.max(n - 1, 1)))));
+    cross.setAttribute("x1", x(i)); cross.setAttribute("x2", x(i)); cross.setAttribute("opacity", 1);
+    cfg.series.forEach((s, k) => { dots[k].setAttribute("cx", x(i)); dots[k].setAttribute("cy", y(s.values[i]));
+      dots[k].setAttribute("opacity", 1); });
+    showTip(e, cfg.labels[i], cfg.series.map(s => [s.name, cfg.fmtEnd(s.values[i])]));
+  });
+  surface.addEventListener("mouseleave", () => { hideTip(); cross.setAttribute("opacity", 0);
+    dots.forEach(d => d.setAttribute("opacity", 0)); });
+  g.appendChild(surface);
+  svg.appendChild(g); return svg;
+}
+
+/* ---------- horizontal bars (signed) ---------- */
+function hBars(w, items, cfg) {
+  const rowH = cfg.rowH || 40, M = { t: 6, r: 58, b: 22, l: cfg.left || 128 };
+  const H = M.t + M.b + items.length * rowH;
+  const iw = Math.max(40, w - M.l - M.r);
+  const svg = el("svg", { viewBox: `0 0 ${w} ${H}`, width: w, height: H, role: "img" });
+  const g = el("g", { transform: `translate(${M.l},${M.t})` });
+  const vals = items.map(d => d.value);
+  const lo = Math.min(0, ...vals), hi = Math.max(0, ...vals), span = (hi - lo) || 1;
+  const x = lin(lo - span * 0.04, hi + span * 0.08, 0, iw);
+  const zero = x(0);
+  g.appendChild(el("line", { x1: zero, x2: zero, y1: -2, y2: items.length * rowH - 4,
+    stroke: tok("--rule-2"), "stroke-width": 1 }));
+  items.forEach((d, i) => {
+    const yy = i * rowH, bh = Math.min(19, rowH - 16);
+    const xa = Math.min(zero, x(d.value)), bw = Math.max(2, Math.abs(x(d.value) - zero));
+    const col = tok(d.token || cfg.token || (d.value >= 0 ? "--pos" : "--neg"));
+    g.appendChild(el("rect", { x: xa, y: yy + (rowH - bh) / 2 - 4, width: bw, height: bh, rx: 2.5, fill: col }));
+    g.appendChild(el("text", { x: -12, y: yy + rowH / 2 + 0, "text-anchor": "end", fill: tok("--ink"),
+      "font-size": 12, "font-weight": 500 }, d.label));
+    if (d.sub) g.appendChild(el("text", { x: -12, y: yy + rowH / 2 + 13, "text-anchor": "end",
+      fill: tok("--ink-3"), "font-size": 10.5 }, d.sub));
+    const tx = d.value >= 0 ? xa + bw + 8 : xa - 8;
+    g.appendChild(el("text", { x: tx, y: yy + rowH / 2 + 4, "text-anchor": d.value >= 0 ? "start" : "end",
+      fill: tok("--ink"), "font-size": 11.5, "font-weight": 600,
+      "font-family": "IBM Plex Mono, monospace" }, cfg.fmt(d.value)));
+    const hr = el("rect", { x: -M.l, y: yy - 2, width: w - 8, height: rowH, fill: "transparent" });
+    hit(hr, d.label, d.rows || [[cfg.valueName || "Value", cfg.fmt(d.value)]]); g.appendChild(hr);
+  });
+  svg.appendChild(g); return svg;
+}
+
+/* ---------- grouped bars ---------- */
+function groupBars(w, groups, series, cfg) {
+  const H = cfg.height || 260, M = { t: 24, r: 8, b: 42, l: 52 };
+  const iw = Math.max(40, w - M.l - M.r), ih = H - M.t - M.b;
+  const svg = el("svg", { viewBox: `0 0 ${w} ${H}`, width: w, height: H, role: "img" });
+  const g = el("g", { transform: `translate(${M.l},${M.t})` });
+  const all = series.flatMap(s => s.values);
+  const sc = axisScale(Math.min(0, ...all), Math.max(0, ...all), ih, 0, { n: 4 });
+  const y = sc.y;
+  gridY(g, sc.ticks, y, 0, iw, cfg.fmtAxis);
+  const slot = iw / groups.length, bw = Math.min((slot * 0.68) / series.length, 38);
+  groups.forEach((gr, i) => {
+    const cx0 = slot * i + slot / 2;
+    series.forEach((s, k) => {
+      const v = s.values[i];
+      const x = cx0 - (bw * series.length + 2 * (series.length - 1)) / 2 + k * (bw + 2);
+      const top = Math.min(y(v), y(0)), h = Math.max(2, Math.abs(y(v) - y(0)));
+      g.appendChild(el("rect", { x, y: top, width: bw, height: h, rx: 2.5, fill: tok(s.token) }));
+      g.appendChild(el("text", { x: x + bw / 2, y: v >= 0 ? top - 7 : top + h + 14, "text-anchor": "middle",
+        fill: tok("--ink-2"), "font-size": 10.5, "font-weight": 600,
+        "font-family": "IBM Plex Mono, monospace" }, cfg.fmt(v)));
+    });
+    g.appendChild(el("text", { x: cx0, y: ih + 20, "text-anchor": "middle", fill: tok("--ink-2"), "font-size": 11.5 }, gr));
+    const hr = el("rect", { x: slot * i, y: 0, width: slot, height: ih, fill: "transparent" });
+    hit(hr, gr, series.map(s => [s.name, cfg.fmt(s.values[i])])); g.appendChild(hr);
+  });
+  g.appendChild(el("line", { x1: 0, x2: iw, y1: y(0), y2: y(0), stroke: tok("--rule-2"), "stroke-width": 1 }));
+  svg.appendChild(g); return svg;
+}
+
+/* ---------- dumbbell ---------- */
+function dumbbell(w, items, cfg) {
+  const rowH = 44, M = { t: 20, r: 22, b: 26, l: cfg.left || 150 };
+  const H = M.t + M.b + items.length * rowH;
+  const iw = Math.max(40, w - M.l - M.r);
+  const svg = el("svg", { viewBox: `0 0 ${w} ${H}`, width: w, height: H, role: "img" });
+  const g = el("g", { transform: `translate(${M.l},${M.t})` });
+  const all = items.flatMap(d => [d.a, d.b]);
+  const sc = axisScale(Math.min(...all), Math.max(...all), 0, iw, { padLo: 0.14, padHi: 0.12, n: 4 });
+  const x = sc.y;
+  sc.ticks.forEach(t => {
+    g.appendChild(el("line", { x1: x(t), x2: x(t), y1: -8, y2: items.length * rowH - 10,
+      stroke: tok("--rule"), "stroke-width": 1 }));
+    g.appendChild(el("text", { x: x(t), y: items.length * rowH + 8, "text-anchor": "middle",
+      fill: tok("--ink-3"), "font-size": 10.5, "font-family": "IBM Plex Mono, monospace" }, pc(t, 0)));
+  });
+  items.forEach((d, i) => {
+    const yy = i * rowH + rowH / 2 - 12, up = d.b >= d.a;
+    const col = tok(up ? "--pos" : "--neg");
+    g.appendChild(el("line", { x1: x(d.a), x2: x(d.b), y1: yy, y2: yy, stroke: col,
+      "stroke-width": 2.5, "stroke-linecap": "round", opacity: .35 }));
+    g.appendChild(el("circle", { cx: x(d.a), cy: yy, r: 5, fill: tok("--surface"),
+      stroke: tok("--ink-3"), "stroke-width": 2 }));
+    g.appendChild(el("circle", { cx: x(d.b), cy: yy, r: 5.5, fill: col, stroke: tok("--surface"), "stroke-width": 2 }));
+    g.appendChild(el("text", { x: -12, y: yy + 4, "text-anchor": "end", fill: tok("--ink"), "font-size": 12 }, d.label));
+    g.appendChild(el("text", { x: -12, y: yy + 17, "text-anchor": "end", fill: tok("--ink-3"),
+      "font-size": 10.5, "font-family": "IBM Plex Mono, monospace" }, d.sub));
+    const hr = el("rect", { x: -M.l, y: i * rowH - 8, width: w - 8, height: rowH, fill: "transparent" });
+    hit(hr, d.label, d.rows); g.appendChild(hr);
+  });
+  svg.appendChild(g); return svg;
+}
+
+/* ---------- diverging heatmap ---------- */
+function heatmap(w, cfg) {
+  const cols = cfg.cols, rows = cfg.rows;
+  const M = { t: cfg.top || 86, r: 6, b: 6, l: cfg.left || 54 };
+  const cw = Math.max(30, (w - M.l - M.r) / cols.length);
+  const ch = cfg.cellH || 40;
+  const H = M.t + M.b + rows.length * ch;
+  const svg = el("svg", { viewBox: `0 0 ${w} ${H}`, width: w, height: H, role: "img" });
+  const g = el("g", { transform: `translate(${M.l},${M.t})` });
+
+  cols.forEach((c, j) => {
+    const t = el("text", { x: 0, y: 0, "text-anchor": "start", fill: tok("--ink-2"), "font-size": 11 }, c);
+    t.setAttribute("transform", `translate(${j * cw + cw / 2 - 4},${-10}) rotate(-42)`);
+    g.appendChild(t);
+  });
+  rows.forEach((r, i) => {
+    g.appendChild(el("text", { x: -10, y: i * ch + ch / 2 + 4, "text-anchor": "end",
+      fill: tok("--ink"), "font-size": 12, "font-weight": 500 }, r.label));
+    cols.forEach((c, j) => {
+      const cell = cfg.cell(i, j), x = j * cw + 1, y = i * ch + 1;
+      const wd = cw - 2, hd = ch - 2;
+      if (cell.d === null || cell.d === undefined) {
+        g.appendChild(el("rect", { x, y, width: wd, height: hd, rx: 3, fill: tok("--surface-2") }));
+        g.appendChild(el("text", { x: x + wd / 2, y: y + hd / 2 + 4, "text-anchor": "middle",
+          fill: tok("--ink-3"), "font-size": 11 }, "—"));
+      } else {
+        const col = tok(cell.d >= 0 ? "--pos" : "--neg");
+        g.appendChild(el("rect", { x, y, width: wd, height: hd, rx: 3, fill: tok("--surface-2") }));
+        g.appendChild(el("rect", { x, y, width: wd, height: hd, rx: 3, fill: col,
+          opacity: Math.max(0.14, Math.min(1, Math.abs(cell.d))) }));
+        if (wd > 44) g.appendChild(el("text", { x: x + wd / 2, y: y + hd / 2 + 4, "text-anchor": "middle",
+          fill: Math.abs(cell.d) > 0.55 ? "#fff" : tok("--ink"), "font-size": 10.5, "font-weight": 600,
+          "font-family": "IBM Plex Mono, monospace" }, cell.d.toFixed(2)));
+      }
+      const hr = el("rect", { x, y, width: wd, height: hd, fill: "transparent" });
+      hit(hr, cfg.title(i, j), cfg.rowsOf(i, j)); g.appendChild(hr);
+    });
+  });
+  svg.appendChild(g); return svg;
+}
+
+/* ---------- legends ---------- */
+function legend(id, items) {
+  const n = $(id); if (!n) return;
+  n.innerHTML = items.map(i => `<span><b style="background:${i.swatch}"></b>${i.name}</span>`).join("");
+}
+
+/* ---------- render registry: resize, theme change and font load all redraw ---------- */
+const charts = [], after = [];
+const reg = (id, fn) => charts.push({ id, fn });
+const onRender = fn => after.push(fn);
+function render() {
+  for (const { id, fn } of charts) {
+    const host = document.getElementById(id); if (!host) continue;
+    host.replaceChildren(fn(Math.max(260, Math.floor(host.clientWidth))));
+  }
+  after.forEach(f => f());
+}
+function boot() {
+  render();
+  let t; const redraw = () => { clearTimeout(t); t = setTimeout(render, 120); };
+  addEventListener("resize", redraw);
+  matchMedia("(prefers-color-scheme: dark)").addEventListener("change", redraw);
+  new MutationObserver(redraw).observe(document.documentElement,
+    { attributes: true, attributeFilter: ["data-theme"] });
+  if (document.fonts) document.fonts.ready.then(render);
+}
+
+return { el, tok, $, MINUS, m2, m2s, m1, acct, pc, pcs, pp, int,
+         showTip, moveTip, hideTip, hit, lin, niceTicks, axisScale, gridY, xLabels,
+         waterfall, lineChart, hBars, groupBars, dumbbell, heatmap, legend,
+         reg, onRender, render, boot };
+})();
+</script>
+<script>
+(() => {
+"use strict";
+const { el, tok, $, m1, pc, pcs, pp, int, hit, lineChart, hBars, heatmap, legend, reg, onRender } = window.V;
+const D = JSON.parse(document.getElementById("payload").textContent);
+const G = D.growth, EV = D.event, VAL = D.valuation;
+
+const VCLASS = { "Supported": "good", "Challenged": "crit", "Contested": "warn",
+                 "Mixed": "neutral", "Not testable outside-in": "neutral" };
+const m0 = v => "£" + Math.round(v / 1e6) + "m";
+
+/* ---------------- static ---------------- */
+$("#metarow").innerHTML = [
+  ["Stage", "Pre-deal, no data room"],
+  ["Sources", D.meta.sources + " subscriptions, " + D.meta.families + " independent families"],
+  ["Signals", D.meta.signals + " series over " + D.meta.months + " months"],
+  ["Estate observed", G.estate0 + " → " + G.estate1 + " practices, " + D.meta.acquisitions + " filings"]
+].map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join("");
+
+$("#figClaimed").textContent = pc(G.claimed, 1);
+$("#figImplied").textContent = pc(G.mid, 1);
+$("#capImplied").innerHTML = `Band of ${pc(G.lo)} to ${pc(G.hi)} depending on the size of an acquired
+  practice. Reported group growth was ${pc(G.reported)}; the estate grew ${pc(G.estate1 / G.estate0 - 1, 0)}.`;
+
+const counts = D.claims.reduce((a, c) => (a[c.verdict] = (a[c.verdict] || 0) + 1, a), {});
+$("#thesis").innerHTML = `Of seven claims in the IM, <strong>${counts["Challenged"] || 0} are challenged by the
+  outside-in evidence</strong>, one is contested, one is supported, and one cannot be tested from outside at all.
+  The headline is the growth claim: filings imply organic growth near <strong>${pc(G.mid)}</strong>, not the
+  <strong>${pc(G.claimed, 0)}</strong> in the memorandum. On a ${VAL.multiple.toFixed(0)}× entry multiple and a
+  ${VAL.hold}-year hold, that difference is worth about <strong>${m0(VAL.gap)}</strong> of enterprise value.`;
+$("#scoreAmt").textContent = `${counts["Challenged"] || 0} challenged · 1 contested · 1 supported`;
+$("#growthAmt").textContent = `${m0(VAL.gap)} of enterprise value`;
+$("#nAcq").textContent = EV.summary.n_practices;
+$("#nPrac").textContent = int(D.meta.practices);
+
+/* ---------------- claim scorecard ---------------- */
+const short = t => t.length > 62 ? t.slice(0, t.lastIndexOf(" ", 62)) + "…" : t;
+$("#claims").innerHTML = D.claims.map(c => {
+  const half = Math.abs(c.score) * 50, left = c.score < 0 ? 50 - half : 50;
+  const col = c.score < 0 ? "var(--neg)" : "var(--pos)";
+  const dim = c.verdict === "Not testable outside-in" ? "opacity:.35" : "";
+  return `<div class="claim">
+    <button class="claimhead" type="button" aria-expanded="false" data-id="${c.id}">
+      <span class="cid">${c.id}</span>
+      <span class="ctext">${c.text}<em>${c.families} independent ${c.families === 1 ? "family" : "families"} · coherence ${c.coherence.toFixed(2)}</em></span>
+      <span class="cscore"><span class="divbar" style="${dim}"><i style="left:${left}%;width:${half}%;background:${col}"></i><b>${c.score >= 0 ? "+" : "−"}${Math.abs(c.score).toFixed(2)}</b></span></span>
+      <span class="cconf meter"><u><i style="width:${(c.confidence * 100).toFixed(0)}%"></i></u><s>confidence ${(c.confidence * 100).toFixed(0)}%</s></span>
+      <span class="cverdict"><span class="chip ${VCLASS[c.verdict]}"><i></i>${c.verdict}</span></span>
+    </button>
+    <div class="claimbody" hidden id="body-${c.id}">
+      <div class="tablewrap"><table style="min-width:540px"><thead><tr><th>Signal</th><th>Source</th>
+        <th>Observed</th><th>Direction</th><th>Weight</th></tr></thead><tbody>
+        ${c.evidence.map(e => `<tr><td>${e.label}${e.mode === "level" ? ' <span class="tiny">· level test</span>' : ""}</td>
+          <td class="tiny">${e.source}<br><span style="color:var(--ink-3)">${e.family}</span></td>
+          <td class="n">${e.detail}</td>
+          <td class="n ${e.d < 0 ? "neg" : ""}">${e.d >= 0 ? "+" : "−"}${Math.abs(e.d).toFixed(2)}</td>
+          <td class="n">${e.weight.toFixed(2)}</td></tr>`).join("")}
+      </tbody></table></div>
+      ${c.verdict === "Not testable outside-in"
+        ? `<p class="tiny">Evidence mass ${c.mass.toFixed(2)} is below the threshold for a verdict. The two
+           sources here are both user-generated review platforms — they agree, but agreement between
+           correlated sources is not corroboration. This needs internal data.</p>` : ""}
+      ${c.verdict === "Contested"
+        ? `<p class="tiny">Coherence ${c.coherence.toFixed(2)}: the signals genuinely point in different
+           directions, which is a finding in itself rather than a gap in the data.</p>` : ""}
+    </div></div>`;
+}).join("");
+$("#claims").addEventListener("click", e => {
+  const b = e.target.closest(".claimhead"); if (!b) return;
+  const body = document.getElementById("body-" + b.dataset.id);
+  const open = b.getAttribute("aria-expanded") === "true";
+  b.setAttribute("aria-expanded", String(!open)); body.hidden = open;
+});
+
+/* ---------------- charts ---------------- */
+reg("matrixChart", w => heatmap(w, {
+  rows: D.claims.map(c => ({ label: c.id })), cols: D.families,
+  left: 46, cellH: w < 640 ? 34 : 42,
+  cell: (i, j) => D.matrix[i].cells[j],
+  title: (i, j) => `${D.claims[i].id} · ${D.families[j]}`,
+  rowsOf: (i, j) => {
+    const c = D.matrix[i].cells[j];
+    return c.d === null ? [["Coverage", "none"]]
+      : [["Direction", (c.d >= 0 ? "+" : "−") + Math.abs(c.d).toFixed(2)],
+         ["Signals", String(c.n)], ["Verdict", D.claims[i].verdict]];
+  }
+}));
+
+const bandItems = [{ label: "Claimed in the IM", sub: "organic like-for-like", value: G.claimed, token: "--s2",
+                     rows: [["Claimed", pc(G.claimed)]] }]
+  .concat([1.0, 0.9, 0.8, 0.7].map(a => {
+    const pt = G.band.reduce((b, x) => Math.abs(x.alpha - a) < Math.abs(b.alpha - a) ? x : b);
+    return { label: `If acquired = ${pc(pt.alpha, 0)} of legacy`, sub: "implied organic", value: pt.organic,
+             token: "--s1", rows: [["Implied organic", pc(pt.organic)], ["α", pt.alpha.toFixed(2)]] };
+  }))
+  .concat([{ label: "Actual, from the ledger", sub: "practice ledger", value: G.truth,
+             token: "--total", rows: [["Same-store growth", pc(G.truth)]] }]);
+reg("bandChart", w => hBars(w, bandItems, { fmt: v => pc(v), left: w < 560 ? 132 : 186, rowH: 44 }));
+
+reg("eventChart", w => lineChart(w, {
+  labels: EV.points.map(p => (p.k > 0 ? "+" : "") + p.k), every: 3, rightPad: 46, height: 280,
+  markIndex: EV.points.findIndex(p => p.k === 0), markLabel: "completion",
+  series: [{ name: "Acquired practices", token: "--s1", values: EV.points.map(p => p.rating) },
+           { name: "Never-acquired control", token: "--s2", values: EV.points.map(p => p.control) }],
+  fmtAxis: t => t.toFixed(1), fmtEnd: v => v.toFixed(2)
+}));
+
+const S = D.series;
+reg("gdChart", w => lineChart(w, {
+  labels: S.gd_rating.months, every: w < 520 ? 6 : 3, rightPad: 46, height: 230,
+  series: [{ name: "Kestrel", token: "--s1", values: S.gd_rating.values },
+           { name: "Peer group", token: "--s2", values: S.gd_rating.peer }],
+  fmtAxis: t => t.toFixed(1), fmtEnd: v => v.toFixed(2)
+}));
+reg("ttfChart", w => lineChart(w, {
+  labels: S.time_to_fill.months, every: w < 520 ? 6 : 3, rightPad: 40, height: 230,
+  series: [{ name: "Days to fill", token: "--s1", values: S.time_to_fill.values }],
+  fmtAxis: t => t.toFixed(0), fmtEnd: v => v.toFixed(0) + "d"
+}));
+reg("priceChart", w => lineChart(w, {
+  labels: S.price_cmp.months, every: w < 520 ? 6 : 3, rightPad: 46, height: 230,
+  series: [{ name: "Kestrel", token: "--s1", values: S.price_cmp.values },
+           { name: "Peer group", token: "--s2", values: S.price_cmp.peer }],
+  fmtAxis: t => pc(t, 0), fmtEnd: v => pc(v)
+}));
+const idx = a => a.map(v => 100 * v / a[0]);
+reg("digitalChart", w => lineChart(w, {
+  labels: S.sessions.months, every: w < 520 ? 6 : 3, rightPad: 46, height: 230,
+  series: [{ name: "Sessions", token: "--s1", values: idx(S.sessions.values) },
+           { name: "Sessions per practice", token: "--s2", values: idx(S.sessions_pp.values) },
+           { name: "Branded search share", token: "--s3", values: idx(S.branded_share.values) }],
+  fmtAxis: t => t.toFixed(0), fmtEnd: v => v.toFixed(0)
+}));
+
+reg("prioChart", w => hBars(w, [...D.claims].sort((a, b) => b.priority - a.priority).map(c => ({
+  label: c.id + " · " + short(c.text), value: c.priority, token: "--s1",
+  rows: [["Priority", c.priority.toFixed(2)], ["Materiality", c.materiality.toFixed(2)],
+         ["Confidence", pc(c.confidence, 0)], ["Verdict", c.verdict]]
+})), { fmt: v => v.toFixed(2), left: w < 620 ? 150 : 330, rowH: 40 }));
+
+/* ---------------- tables and captions ---------------- */
+$("#pmTable").innerHTML = `<table style="min-width:340px"><thead><tr><th></th><th>FY24</th><th>FY25</th></tr></thead>
+  <tbody>
+    <tr><td>Legacy practice-months</td><td class="n">${int(G.lpm0)}</td><td class="n">${int(G.lpm1)}</td></tr>
+    <tr><td>Acquired practice-months</td><td class="n">${int(G.apm0)}</td><td class="n">${int(G.apm1)}</td></tr>
+    <tr class="totalrow"><td>Group revenue</td><td class="n">${m1(G.r0)}</td><td class="n">${m1(G.r1)}</td></tr>
+  </tbody></table>
+  <p class="tiny" style="margin-top:8px">Practice-months from dated Companies House filings; revenue from
+    filed group accounts. No management input.</p>`;
+
+$("#bandCap").innerHTML = `Reported group growth of ${pc(G.reported)} splits into acquisition contribution and
+  organic. The band spans ${pc(G.lo)} to ${pc(G.hi)} — wide, but every value in it is below the ${pc(G.claimed, 0)} claimed.`;
+$("#truthText").innerHTML = `In this synthetic world the practice ledger exists, so the answer is knowable:
+  same-store growth was <strong>${pc(G.truth)}</strong>. The outside-in band of ${pc(G.lo)} to ${pc(G.hi)}
+  contains it, and the central estimate of ${pc(G.mid)} is within
+  ${((Math.abs(G.mid - G.truth)) * 100).toFixed(1)}pp. On a live deal you never get this check — which is why
+  the method reports a band and names its assumption rather than asserting a point estimate.`;
+
+$("#eventCap").innerHTML = `Ratings are review-weighted. The control estate drifts
+  ${EV.summary.control_drift >= 0 ? "+" : "−"}${Math.abs(EV.summary.control_drift).toFixed(2)} over the same
+  window, so the fall is not a platform-wide effect — it follows the transaction. Nine months after completion
+  the gap has not closed.`;
+$("#eventStats").innerHTML = [
+  ["Rating before completion", EV.summary.pre.toFixed(2), "Review-weighted, acquired cohort"],
+  ["Rating 9+ months after", EV.summary.post.toFixed(2), `A fall of ${Math.abs(EV.summary.rating_drop).toFixed(2)} stars`],
+  ["Control estate drift", (EV.summary.control_drift >= 0 ? "+" : "−") + Math.abs(EV.summary.control_drift).toFixed(2), "Never-acquired practices"],
+  ["Review volume", pcs(EV.summary.volume_change), "Throughput proxy, post vs pre"]
+].map(([k, v, d]) => `<div class="stat"><div class="k">${k}</div><div class="v num">${v}</div><div class="d">${d}</div></div>`).join("");
+
+$("#gdCap").innerHTML = `Glassdoor rating against a peer group of listed and sponsor-backed consolidators.
+  Kestrel falls while the peer group holds — this is company-specific, not a sector mood.`;
+$("#priceCap").innerHTML = `Share of reviews mentioning price or billing. Kestrel triples; the peer group is flat.
+  Read alongside the rise in expert-network transcripts citing the CMA's pricing review, this is a regulatory
+  exposure, not a customer-service one.`;
+
+$("#srcTable").innerHTML = `<table style="min-width:420px"><thead><tr><th>Source</th><th>Family</th>
+  <th>Reliability</th><th>Lag</th><th>Signals</th></tr></thead><tbody>
+  ${D.sources.map(s => `<tr><td>${s.source}</td><td class="tiny">${s.family}</td>
+    <td class="n">${s.reliability.toFixed(2)}</td><td class="n">${s.latency.toFixed(1)}m</td>
+    <td class="n">${s.signals}</td></tr>`).join("")}</tbody></table>`;
+
+const IR = {
+  C1: "Practice-level revenue, monthly, for 36 months with completion dates — so like-for-like can be cut on the same basis you present it.",
+  C2: "Membership enrolment by cohort with spend per client and lapse dates. Lifetime value is not observable from outside and we will not take it on trust.",
+  C3: "Clinician headcount, vacancies and leaver dates by practice, monthly, plus locum spend. The cost of a staffing gap shows up in locum cover before it shows up in revenue.",
+  C4: "Booking platform funnel by channel — sessions, registrations, first appointments — with paid media spend alongside.",
+  C5: "The acquisition pipeline with target names and status, and the market universe the 60% figure was sized from.",
+  C6: "Price list history by service line for three years, and any correspondence with the CMA.",
+  C7: "Nothing further. Confirmed by filings."
+};
+$("#irlist").innerHTML = [...D.claims].sort((a, b) => b.priority - a.priority)
+  .map(c => `<li><span><strong>${c.id}</strong> — ${IR[c.id]}</span></li>`).join("");
+
+/* ---------------- legends ---------------- */
+onRender(() => {
+  legend("#scLegend", [{ swatch: tok("--pos"), name: "Evidence supports the claim" },
+                       { swatch: tok("--neg"), name: "Evidence contradicts it" },
+                       { swatch: tok("--ink-3"), name: "Confidence: mass × independence × coherence" }]);
+  legend("#mxLegend", [{ swatch: tok("--pos"), name: "Supports" }, { swatch: tok("--neg"), name: "Contradicts" },
+                       { swatch: tok("--surface-2"), name: "No coverage" }]);
+  legend("#evLegend", [{ swatch: tok("--s1"), name: "Acquired practices" }, { swatch: tok("--s2"), name: "Never-acquired control" }]);
+  legend("#gdLegend", [{ swatch: tok("--s1"), name: "Kestrel" }, { swatch: tok("--s2"), name: "Peer group" }]);
+  legend("#prLegend", [{ swatch: tok("--s1"), name: "Kestrel" }, { swatch: tok("--s2"), name: "Peer group" }]);
+  legend("#dgLegend", [{ swatch: tok("--s1"), name: "Sessions" }, { swatch: tok("--s2"), name: "Per practice" },
+                       { swatch: tok("--s3"), name: "Branded search share" }]);
+});
+window.V.boot();
+})();
+</script>

@@ -1,0 +1,421 @@
+<title>Project Harrier Outside-In</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;450;500;600;700&display=swap">
+<style>
+__CSS__
+</style>
+
+<div class="topbar"><div class="wrap">
+  <div class="brandmark"><i></i> Project Harrier</div>
+  <nav class="navlinks">
+    <a href="#scorecard">Scorecard</a><a href="#matrix">Evidence matrix</a><a href="#growth">The growth claim</a>
+    <a href="#integration">Integration</a><a href="#findings">Findings</a><a href="#priority">Diligence plan</a><a href="#method">Method</a>
+  </nav>
+</div></div>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="eyebrow label"><span class="codename">Project Harrier</span><span>Pre-deal / commercial DD</span><span>&middot;</span><span>Alt data triangulation</span></div>
+  <h1>Kestrel Veterinary Group</h1>
+  <p class="lede" style="margin-top:14px">No data room, no management access beyond the information memorandum.
+     Seven claims from the IM, tested against eleven subscriptions and 23 outside-in signals.</p>
+  <dl class="metarow" id="metarow"></dl>
+</header>
+
+<div class="verdict">
+  <div class="reported">
+    <div class="label">Like-for-like growth, per the IM</div>
+    <div class="fig num" id="figClaimed">&mdash;</div>
+    <div class="cap">Stated as organic, driven by underlying clinical demand</div>
+  </div>
+  <div class="underlying">
+    <div class="label">What the filings imply</div>
+    <div class="fig num" id="figImplied">&mdash;</div>
+    <div class="cap" id="capImplied"></div>
+  </div>
+</div>
+
+<p class="thesis" id="thesis"></p>
+
+<section id="scorecard">
+  <div class="sechead"><h2>Seven claims, scored</h2><span class="amt" id="scoreAmt"></span></div>
+  <p class="secintro lede">Every claim gets two numbers, not one. <strong>Evidence</strong> is which way the
+     data points. <strong>Confidence</strong> is whether we are entitled to an opinion at all &mdash; which
+     depends on how much independent evidence there is, not how loud any single source is.
+     Select a claim to see what sits underneath it.</p>
+  <div class="panel" style="padding-block:6px">
+    <div id="claims"></div>
+  </div>
+  <div class="legend" style="margin-top:14px" id="scLegend"></div>
+</section>
+
+<section id="matrix">
+  <div class="sechead"><h2>Where the evidence actually comes from</h2></div>
+  <p class="secintro lede">Claims down the side, independent source families across the top. Two review
+     sites agreeing is one family, not two &mdash; which is why a row that looks well-evidenced can still
+     carry low confidence. The gaps matter as much as the colours.</p>
+  <div class="panel">
+    <figure style="margin:0"><div class="chart" id="matrixChart"></div>
+      <div class="legend" id="mxLegend"></div>
+      <figcaption>Cell value is the weighted direction of that family's evidence for that claim, from
+        &minus;1 (contradicts) to +1 (supports). A dash means the family has nothing to say.</figcaption></figure>
+  </div>
+</section>
+
+<section id="growth">
+  <div class="sechead"><h2>The growth claim, bounded from filings alone</h2><span class="amt" id="growthAmt"></span></div>
+  <p class="secintro lede">You cannot see same-store revenue from outside. But you can see filed group
+     accounts, and you can see every acquisition and its completion date at Companies House. That is
+     enough to bound the organic rate without a single line of management data.</p>
+
+  <div class="grid2" style="align-items:start">
+    <div class="panel">
+      <div class="panelhead"><h3>The arithmetic</h3></div>
+      <p class="small" style="margin-block:8px 12px">Let <code>r</code> be revenue per legacy practice-month
+        and <code>&alpha;</code> the size of an acquired practice relative to a legacy one. Then:</p>
+      <div class="formula">R&#8320; = r &middot; (LPM&#8320; + &alpha;&middot;APM&#8320;)
+R&#8321; = r &middot; (1+g) &middot; (LPM&#8321; + &alpha;&middot;APM&#8321;)
+
+        R&#8321;(LPM&#8320; + &alpha;&middot;APM&#8320;)
+1+g = ————————————————————
+        R&#8320;(LPM&#8321; + &alpha;&middot;APM&#8321;)</div>
+      <p class="small" style="margin-top:12px">Everything on the right is observable except <code>&alpha;</code>.
+        So the honest answer is a band, and the width of that band is itself a finding &mdash; it tells you
+        exactly which single number to ask management for first.</p>
+      <div class="tablewrap" id="pmTable" style="margin-top:14px"></div>
+    </div>
+    <div class="panel">
+      <div class="panelhead"><h3>Implied organic growth</h3><span class="tiny">by assumption on &alpha;</span></div>
+      <figure style="margin:0"><div class="chart" id="bandChart"></div>
+        <figcaption id="bandCap"></figcaption></figure>
+    </div>
+  </div>
+
+  <div class="callout ok" style="margin-top:18px">
+    <h3>Did the method work?</h3>
+    <p class="small" id="truthText"></p>
+  </div>
+</section>
+
+<section id="integration">
+  <div class="sechead"><h2>What happens to a practice after Kestrel buys it</h2></div>
+  <p class="secintro lede">A practice's Google profile does not reset when it changes hands. That makes an
+     event study possible: line up all <span id="nAcq"></span> acquired practices on their completion month
+     and watch what the reviews do, with the never-acquired estate as a control.</p>
+  <div class="panel">
+    <div class="panelhead"><h3>Google rating, months either side of completion</h3></div>
+    <figure style="margin:0"><div class="chart" id="eventChart"></div>
+      <div class="legend" id="evLegend"></div>
+      <figcaption id="eventCap"></figcaption></figure>
+  </div>
+  <div class="stats" style="margin-top:18px" id="eventStats"></div>
+</section>
+
+<section id="findings">
+  <div class="sechead"><h2>Three findings that carry into the model</h2></div>
+  <div class="grid2" style="align-items:start">
+    <div class="panel">
+      <div class="panelhead"><h3>The clinical engine is staffing-constrained</h3></div>
+      <figure style="margin:0"><div class="chart" id="gdChart"></div>
+        <div class="legend" id="gdLegend"></div>
+        <figcaption id="gdCap"></figcaption></figure>
+    </div>
+    <div class="panel">
+      <div class="panelhead"><h3>Days to fill a vet role</h3></div>
+      <figure style="margin:0"><div class="chart" id="ttfChart"></div>
+        <figcaption>You cannot grow clinical revenue faster than you can hire clinicians.
+          This is the binding constraint on the like-for-like claim, and it is getting tighter.</figcaption></figure>
+    </div>
+  </div>
+  <div class="grid2" style="margin-top:18px; align-items:start">
+    <div class="panel">
+      <div class="panelhead"><h3>Pricing complaints, versus peers</h3></div>
+      <figure style="margin:0"><div class="chart" id="priceChart"></div>
+        <div class="legend" id="prLegend"></div>
+        <figcaption id="priceCap"></figcaption></figure>
+    </div>
+    <div class="panel">
+      <div class="panelhead"><h3>Traffic is up; traffic per practice is not</h3></div>
+      <figure style="margin:0"><div class="chart" id="digitalChart"></div>
+        <div class="legend" id="dgLegend"></div>
+        <figcaption>Both series indexed to their own starting month, so they share one axis honestly.
+          Absolute sessions grow because the estate grows. Per practice, and on branded search, it is going
+          the other way &mdash; and paid is taking up the slack.</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section id="priority">
+  <div class="sechead"><h2>Where the diligence budget goes</h2></div>
+  <p class="secintro lede">Priority is materiality weighted by how badly the claim is doing <em>and</em> by how
+     little we can see. A claim we cannot test outside-in is not a claim we can ignore &mdash; it is a claim
+     that needs internal data, and knowing which is which is the deliverable.</p>
+  <div class="panel">
+    <figure style="margin:0"><div class="chart" id="prioChart"></div>
+      <figcaption>Higher is more deserving of diligence hours.</figcaption></figure>
+  </div>
+  <div class="panel" style="margin-top:18px">
+    <h3 style="margin-bottom:6px">What would settle it</h3>
+    <p class="small" style="margin-bottom:16px">The specific internal data that converts each open question
+      into a closed one. This is the first information request.</p>
+    <ol class="qs" id="irlist"></ol>
+  </div>
+</section>
+
+<section id="method">
+  <div class="sechead"><h2>How it is built</h2></div>
+  <div class="grid2" style="align-items:start">
+    <div class="panel">
+      <div class="panelhead"><h3>Source register</h3></div>
+      <p class="small" style="margin-block:6px 12px">Every source carries an explicit reliability prior and a
+        feed latency. Nothing is weighted by vibe, and the weights are visible so a client can argue with them.</p>
+      <div class="tablewrap" id="srcTable"></div>
+    </div>
+    <div class="panel">
+      <div class="panelhead"><h3>Scoring</h3></div>
+      <p class="small" style="margin-block:6px 12px">Each signal is compared over a six-month window against
+        the same window a year earlier, peer-adjusted where a peer series exists, then standardised by the
+        standard error of that difference &mdash; not by month-to-month noise, which is roughly six times too
+        large and would crush every signal toward zero.</p>
+      <div class="formula">w  = reliability &times; recency &times; sample adequacy
+E  = &Sigma;(w&middot;d) / &Sigma;w                    evidence, &minus;1 to +1
+C  = |&Sigma;(w&middot;d)| / &Sigma;(w&middot;|d|)            coherence
+F  = 1 &minus; e^(&minus;0.9(families&minus;1))         independence
+M  = 1 &minus; e^(&minus;&Sigma;w / 1.6)               evidence mass
+
+confidence = M &times; &radic;F &times; &radic;C</div>
+      <p class="small" style="margin-top:12px">All three must hold. A single authoritative source cannot
+        produce a confident verdict on its own, and two sources that disagree cannot either &mdash; which is
+        the whole reason the framework exists rather than a weighted average.</p>
+    </div>
+  </div>
+  <div class="panel" style="margin-top:18px">
+    <div class="panelhead"><h3>About this data</h3></div>
+    <p class="small" style="margin-top:8px">Kestrel Veterinary Group is synthetic. The generator models a real
+      estate of <span class="num" id="nPrac"></span> practices with dated acquisitions, integration disruption,
+      a staffing market and a pricing dynamic, then emits only what a subscription would actually return. The
+      engine never sees the practice-level truth &mdash; it is used once, at the end, to check that the
+      outside-in band actually contains the answer.</p>
+  </div>
+</section>
+
+<footer>
+  <strong style="color:var(--ink)">Technique 01 &mdash; Alt Data Triangulation.</strong>
+  Pre-deal stage of the D&amp;A technique series. All figures synthetic.
+</footer>
+
+</div>
+<div id="tip" role="status" aria-live="polite"></div>
+<script id="payload" type="application/json">__DATA__</script>
+<script>__VIZ__</script>
+<script>
+(() => {
+"use strict";
+const { el, tok, $, m1, pc, pcs, pp, int, hit, lineChart, hBars, heatmap, legend, reg, onRender } = window.V;
+const D = JSON.parse(document.getElementById("payload").textContent);
+const G = D.growth, EV = D.event, VAL = D.valuation;
+
+const VCLASS = { "Supported": "good", "Challenged": "crit", "Contested": "warn",
+                 "Mixed": "neutral", "Not testable outside-in": "neutral" };
+const m0 = v => "£" + Math.round(v / 1e6) + "m";
+
+/* ---------------- static ---------------- */
+$("#metarow").innerHTML = [
+  ["Stage", "Pre-deal, no data room"],
+  ["Sources", D.meta.sources + " subscriptions, " + D.meta.families + " independent families"],
+  ["Signals", D.meta.signals + " series over " + D.meta.months + " months"],
+  ["Estate observed", G.estate0 + " → " + G.estate1 + " practices, " + D.meta.acquisitions + " filings"]
+].map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join("");
+
+$("#figClaimed").textContent = pc(G.claimed, 1);
+$("#figImplied").textContent = pc(G.mid, 1);
+$("#capImplied").innerHTML = `Band of ${pc(G.lo)} to ${pc(G.hi)} depending on the size of an acquired
+  practice. Reported group growth was ${pc(G.reported)}; the estate grew ${pc(G.estate1 / G.estate0 - 1, 0)}.`;
+
+const counts = D.claims.reduce((a, c) => (a[c.verdict] = (a[c.verdict] || 0) + 1, a), {});
+$("#thesis").innerHTML = `Of seven claims in the IM, <strong>${counts["Challenged"] || 0} are challenged by the
+  outside-in evidence</strong>, one is contested, one is supported, and one cannot be tested from outside at all.
+  The headline is the growth claim: filings imply organic growth near <strong>${pc(G.mid)}</strong>, not the
+  <strong>${pc(G.claimed, 0)}</strong> in the memorandum. On a ${VAL.multiple.toFixed(0)}× entry multiple and a
+  ${VAL.hold}-year hold, that difference is worth about <strong>${m0(VAL.gap)}</strong> of enterprise value.`;
+$("#scoreAmt").textContent = `${counts["Challenged"] || 0} challenged · 1 contested · 1 supported`;
+$("#growthAmt").textContent = `${m0(VAL.gap)} of enterprise value`;
+$("#nAcq").textContent = EV.summary.n_practices;
+$("#nPrac").textContent = int(D.meta.practices);
+
+/* ---------------- claim scorecard ---------------- */
+const short = t => t.length > 62 ? t.slice(0, t.lastIndexOf(" ", 62)) + "…" : t;
+$("#claims").innerHTML = D.claims.map(c => {
+  const half = Math.abs(c.score) * 50, left = c.score < 0 ? 50 - half : 50;
+  const col = c.score < 0 ? "var(--neg)" : "var(--pos)";
+  const dim = c.verdict === "Not testable outside-in" ? "opacity:.35" : "";
+  return `<div class="claim">
+    <button class="claimhead" type="button" aria-expanded="false" data-id="${c.id}">
+      <span class="cid">${c.id}</span>
+      <span class="ctext">${c.text}<em>${c.families} independent ${c.families === 1 ? "family" : "families"} · coherence ${c.coherence.toFixed(2)}</em></span>
+      <span class="cscore"><span class="divbar" style="${dim}"><i style="left:${left}%;width:${half}%;background:${col}"></i><b>${c.score >= 0 ? "+" : "−"}${Math.abs(c.score).toFixed(2)}</b></span></span>
+      <span class="cconf meter"><u><i style="width:${(c.confidence * 100).toFixed(0)}%"></i></u><s>confidence ${(c.confidence * 100).toFixed(0)}%</s></span>
+      <span class="cverdict"><span class="chip ${VCLASS[c.verdict]}"><i></i>${c.verdict}</span></span>
+    </button>
+    <div class="claimbody" hidden id="body-${c.id}">
+      <div class="tablewrap"><table style="min-width:540px"><thead><tr><th>Signal</th><th>Source</th>
+        <th>Observed</th><th>Direction</th><th>Weight</th></tr></thead><tbody>
+        ${c.evidence.map(e => `<tr><td>${e.label}${e.mode === "level" ? ' <span class="tiny">· level test</span>' : ""}</td>
+          <td class="tiny">${e.source}<br><span style="color:var(--ink-3)">${e.family}</span></td>
+          <td class="n">${e.detail}</td>
+          <td class="n ${e.d < 0 ? "neg" : ""}">${e.d >= 0 ? "+" : "−"}${Math.abs(e.d).toFixed(2)}</td>
+          <td class="n">${e.weight.toFixed(2)}</td></tr>`).join("")}
+      </tbody></table></div>
+      ${c.verdict === "Not testable outside-in"
+        ? `<p class="tiny">Evidence mass ${c.mass.toFixed(2)} is below the threshold for a verdict. The two
+           sources here are both user-generated review platforms — they agree, but agreement between
+           correlated sources is not corroboration. This needs internal data.</p>` : ""}
+      ${c.verdict === "Contested"
+        ? `<p class="tiny">Coherence ${c.coherence.toFixed(2)}: the signals genuinely point in different
+           directions, which is a finding in itself rather than a gap in the data.</p>` : ""}
+    </div></div>`;
+}).join("");
+$("#claims").addEventListener("click", e => {
+  const b = e.target.closest(".claimhead"); if (!b) return;
+  const body = document.getElementById("body-" + b.dataset.id);
+  const open = b.getAttribute("aria-expanded") === "true";
+  b.setAttribute("aria-expanded", String(!open)); body.hidden = open;
+});
+
+/* ---------------- charts ---------------- */
+reg("matrixChart", w => heatmap(w, {
+  rows: D.claims.map(c => ({ label: c.id })), cols: D.families,
+  left: 46, cellH: w < 640 ? 34 : 42,
+  cell: (i, j) => D.matrix[i].cells[j],
+  title: (i, j) => `${D.claims[i].id} · ${D.families[j]}`,
+  rowsOf: (i, j) => {
+    const c = D.matrix[i].cells[j];
+    return c.d === null ? [["Coverage", "none"]]
+      : [["Direction", (c.d >= 0 ? "+" : "−") + Math.abs(c.d).toFixed(2)],
+         ["Signals", String(c.n)], ["Verdict", D.claims[i].verdict]];
+  }
+}));
+
+const bandItems = [{ label: "Claimed in the IM", sub: "organic like-for-like", value: G.claimed, token: "--s2",
+                     rows: [["Claimed", pc(G.claimed)]] }]
+  .concat([1.0, 0.9, 0.8, 0.7].map(a => {
+    const pt = G.band.reduce((b, x) => Math.abs(x.alpha - a) < Math.abs(b.alpha - a) ? x : b);
+    return { label: `If acquired = ${pc(pt.alpha, 0)} of legacy`, sub: "implied organic", value: pt.organic,
+             token: "--s1", rows: [["Implied organic", pc(pt.organic)], ["α", pt.alpha.toFixed(2)]] };
+  }))
+  .concat([{ label: "Actual, from the ledger", sub: "practice ledger", value: G.truth,
+             token: "--total", rows: [["Same-store growth", pc(G.truth)]] }]);
+reg("bandChart", w => hBars(w, bandItems, { fmt: v => pc(v), left: w < 560 ? 132 : 186, rowH: 44 }));
+
+reg("eventChart", w => lineChart(w, {
+  labels: EV.points.map(p => (p.k > 0 ? "+" : "") + p.k), every: 3, rightPad: 46, height: 280,
+  markIndex: EV.points.findIndex(p => p.k === 0), markLabel: "completion",
+  series: [{ name: "Acquired practices", token: "--s1", values: EV.points.map(p => p.rating) },
+           { name: "Never-acquired control", token: "--s2", values: EV.points.map(p => p.control) }],
+  fmtAxis: t => t.toFixed(1), fmtEnd: v => v.toFixed(2)
+}));
+
+const S = D.series;
+reg("gdChart", w => lineChart(w, {
+  labels: S.gd_rating.months, every: w < 520 ? 6 : 3, rightPad: 46, height: 230,
+  series: [{ name: "Kestrel", token: "--s1", values: S.gd_rating.values },
+           { name: "Peer group", token: "--s2", values: S.gd_rating.peer }],
+  fmtAxis: t => t.toFixed(1), fmtEnd: v => v.toFixed(2)
+}));
+reg("ttfChart", w => lineChart(w, {
+  labels: S.time_to_fill.months, every: w < 520 ? 6 : 3, rightPad: 40, height: 230,
+  series: [{ name: "Days to fill", token: "--s1", values: S.time_to_fill.values }],
+  fmtAxis: t => t.toFixed(0), fmtEnd: v => v.toFixed(0) + "d"
+}));
+reg("priceChart", w => lineChart(w, {
+  labels: S.price_cmp.months, every: w < 520 ? 6 : 3, rightPad: 46, height: 230,
+  series: [{ name: "Kestrel", token: "--s1", values: S.price_cmp.values },
+           { name: "Peer group", token: "--s2", values: S.price_cmp.peer }],
+  fmtAxis: t => pc(t, 0), fmtEnd: v => pc(v)
+}));
+const idx = a => a.map(v => 100 * v / a[0]);
+reg("digitalChart", w => lineChart(w, {
+  labels: S.sessions.months, every: w < 520 ? 6 : 3, rightPad: 46, height: 230,
+  series: [{ name: "Sessions", token: "--s1", values: idx(S.sessions.values) },
+           { name: "Sessions per practice", token: "--s2", values: idx(S.sessions_pp.values) },
+           { name: "Branded search share", token: "--s3", values: idx(S.branded_share.values) }],
+  fmtAxis: t => t.toFixed(0), fmtEnd: v => v.toFixed(0)
+}));
+
+reg("prioChart", w => hBars(w, [...D.claims].sort((a, b) => b.priority - a.priority).map(c => ({
+  label: c.id + " · " + short(c.text), value: c.priority, token: "--s1",
+  rows: [["Priority", c.priority.toFixed(2)], ["Materiality", c.materiality.toFixed(2)],
+         ["Confidence", pc(c.confidence, 0)], ["Verdict", c.verdict]]
+})), { fmt: v => v.toFixed(2), left: w < 620 ? 150 : 330, rowH: 40 }));
+
+/* ---------------- tables and captions ---------------- */
+$("#pmTable").innerHTML = `<table style="min-width:340px"><thead><tr><th></th><th>FY24</th><th>FY25</th></tr></thead>
+  <tbody>
+    <tr><td>Legacy practice-months</td><td class="n">${int(G.lpm0)}</td><td class="n">${int(G.lpm1)}</td></tr>
+    <tr><td>Acquired practice-months</td><td class="n">${int(G.apm0)}</td><td class="n">${int(G.apm1)}</td></tr>
+    <tr class="totalrow"><td>Group revenue</td><td class="n">${m1(G.r0)}</td><td class="n">${m1(G.r1)}</td></tr>
+  </tbody></table>
+  <p class="tiny" style="margin-top:8px">Practice-months from dated Companies House filings; revenue from
+    filed group accounts. No management input.</p>`;
+
+$("#bandCap").innerHTML = `Reported group growth of ${pc(G.reported)} splits into acquisition contribution and
+  organic. The band spans ${pc(G.lo)} to ${pc(G.hi)} — wide, but every value in it is below the ${pc(G.claimed, 0)} claimed.`;
+$("#truthText").innerHTML = `In this synthetic world the practice ledger exists, so the answer is knowable:
+  same-store growth was <strong>${pc(G.truth)}</strong>. The outside-in band of ${pc(G.lo)} to ${pc(G.hi)}
+  contains it, and the central estimate of ${pc(G.mid)} is within
+  ${((Math.abs(G.mid - G.truth)) * 100).toFixed(1)}pp. On a live deal you never get this check — which is why
+  the method reports a band and names its assumption rather than asserting a point estimate.`;
+
+$("#eventCap").innerHTML = `Ratings are review-weighted. The control estate drifts
+  ${EV.summary.control_drift >= 0 ? "+" : "−"}${Math.abs(EV.summary.control_drift).toFixed(2)} over the same
+  window, so the fall is not a platform-wide effect — it follows the transaction. Nine months after completion
+  the gap has not closed.`;
+$("#eventStats").innerHTML = [
+  ["Rating before completion", EV.summary.pre.toFixed(2), "Review-weighted, acquired cohort"],
+  ["Rating 9+ months after", EV.summary.post.toFixed(2), `A fall of ${Math.abs(EV.summary.rating_drop).toFixed(2)} stars`],
+  ["Control estate drift", (EV.summary.control_drift >= 0 ? "+" : "−") + Math.abs(EV.summary.control_drift).toFixed(2), "Never-acquired practices"],
+  ["Review volume", pcs(EV.summary.volume_change), "Throughput proxy, post vs pre"]
+].map(([k, v, d]) => `<div class="stat"><div class="k">${k}</div><div class="v num">${v}</div><div class="d">${d}</div></div>`).join("");
+
+$("#gdCap").innerHTML = `Glassdoor rating against a peer group of listed and sponsor-backed consolidators.
+  Kestrel falls while the peer group holds — this is company-specific, not a sector mood.`;
+$("#priceCap").innerHTML = `Share of reviews mentioning price or billing. Kestrel triples; the peer group is flat.
+  Read alongside the rise in expert-network transcripts citing the CMA's pricing review, this is a regulatory
+  exposure, not a customer-service one.`;
+
+$("#srcTable").innerHTML = `<table style="min-width:420px"><thead><tr><th>Source</th><th>Family</th>
+  <th>Reliability</th><th>Lag</th><th>Signals</th></tr></thead><tbody>
+  ${D.sources.map(s => `<tr><td>${s.source}</td><td class="tiny">${s.family}</td>
+    <td class="n">${s.reliability.toFixed(2)}</td><td class="n">${s.latency.toFixed(1)}m</td>
+    <td class="n">${s.signals}</td></tr>`).join("")}</tbody></table>`;
+
+const IR = {
+  C1: "Practice-level revenue, monthly, for 36 months with completion dates — so like-for-like can be cut on the same basis you present it.",
+  C2: "Membership enrolment by cohort with spend per client and lapse dates. Lifetime value is not observable from outside and we will not take it on trust.",
+  C3: "Clinician headcount, vacancies and leaver dates by practice, monthly, plus locum spend. The cost of a staffing gap shows up in locum cover before it shows up in revenue.",
+  C4: "Booking platform funnel by channel — sessions, registrations, first appointments — with paid media spend alongside.",
+  C5: "The acquisition pipeline with target names and status, and the market universe the 60% figure was sized from.",
+  C6: "Price list history by service line for three years, and any correspondence with the CMA.",
+  C7: "Nothing further. Confirmed by filings."
+};
+$("#irlist").innerHTML = [...D.claims].sort((a, b) => b.priority - a.priority)
+  .map(c => `<li><span><strong>${c.id}</strong> — ${IR[c.id]}</span></li>`).join("");
+
+/* ---------------- legends ---------------- */
+onRender(() => {
+  legend("#scLegend", [{ swatch: tok("--pos"), name: "Evidence supports the claim" },
+                       { swatch: tok("--neg"), name: "Evidence contradicts it" },
+                       { swatch: tok("--ink-3"), name: "Confidence: mass × independence × coherence" }]);
+  legend("#mxLegend", [{ swatch: tok("--pos"), name: "Supports" }, { swatch: tok("--neg"), name: "Contradicts" },
+                       { swatch: tok("--surface-2"), name: "No coverage" }]);
+  legend("#evLegend", [{ swatch: tok("--s1"), name: "Acquired practices" }, { swatch: tok("--s2"), name: "Never-acquired control" }]);
+  legend("#gdLegend", [{ swatch: tok("--s1"), name: "Kestrel" }, { swatch: tok("--s2"), name: "Peer group" }]);
+  legend("#prLegend", [{ swatch: tok("--s1"), name: "Kestrel" }, { swatch: tok("--s2"), name: "Peer group" }]);
+  legend("#dgLegend", [{ swatch: tok("--s1"), name: "Sessions" }, { swatch: tok("--s2"), name: "Per practice" },
+                       { swatch: tok("--s3"), name: "Branded search share" }]);
+});
+window.V.boot();
+})();
+</script>

@@ -1,0 +1,691 @@
+signal,label,source,family,reliability,unit,month,fiscal_year,value,peer_value,n,latency
+acq_filed,Practice acquisitions filed,Companies House,Regulatory filings,0.95,per month,2022-10,FY23,0.0,,47,2.5
+acq_filed,Practice acquisitions filed,Companies House,Regulatory filings,0.95,per month,2022-11,FY23,0.0,,47,2.5
+acq_filed,Practice acquisitions filed,Companies House,Regulatory filings,0.95,per month,2022-12,FY23,0.0,,47,2.5
+acq_filed,Practice acquisitions filed,Companies House,Regulatory filings,0.95,per month,2023-01,FY23,0.0,,47,2.5
+acq_filed,Practice acquisitions filed,Companies House,Regulatory filings,0.95,per month,2023-02,FY23,0.0,,47,2.5
+acq_filed,Practice acquisitions filed,Companies House,Regulatory filings,0.95,per month,2023-03,FY23,0.0,,47,2.5
+acq_filed,Practice acquisitions filed,Companies House,Regulatory filings,0.95,per month,2023-04,FY24,1.0,,47,2.5
+acq_filed,Practice acquisitions filed,Companies House,Regulatory filings,0.95,per month,2023-05,FY24,0.0,,47,2.5
+acq_filed,Practice acquisitions filed,Companies House,Regulatory filings,0.95,per month,2023-06,FY24,4.0,,47,2.5
+acq_filed,Practice acquisitions filed,Companies House,Regulatory filings,0.95,per month,2023-07,FY24,0.0,,47,2.5
+acq_filed,Practice acquisitions filed,Companies House,Regulatory filings,0.95,per month,2023-08,FY24,4.0,,47,2.5
+acq_filed,Practice acquisitions filed,Companies House,Regulatory filings,0.95,per month,2023-09,FY24,3.0,,47,2.5
+acq_filed,Practice acquisitions filed,Companies House,Regulatory filings,0.95,per month,2023-10,FY24,1.0,,47,2.5
+acq_filed,Practice acquisitions filed,Companies House,Regulatory filings,0.95,per month,2023-11,FY24,0.0,,47,2.5
+acq_filed,Practice acquisitions filed,Companies House,Regulatory filings,0.95,per month,2023-12,FY24,1.0,,47,2.5
+acq_filed,Practice acquisitions filed,Companies House,Regulatory filings,0.95,per month,2024-01,FY24,0.0,,47,2.5
+acq_filed,Practice acquisitions filed,Companies House,Regulatory filings,0.95,per month,2024-02,FY24,5.0,,47,2.5
+acq_filed,Practice acquisitions filed,Companies House,Regulatory filings,0.95,per month,2024-03,FY24,2.0,,47,2.5
+acq_filed,Practice acquisitions filed,Companies House,Regulatory filings,0.95,per month,2024-04,FY25,2.0,,47,2.5
+acq_filed,Practice acquisitions filed,Companies House,Regulatory filings,0.95,per month,2024-05,FY25,2.0,,47,2.5
+acq_filed,Practice acquisitions filed,Companies House,Regulatory filings,0.95,per month,2024-06,FY25,3.0,,47,2.5
+acq_filed,Practice acquisitions filed,Companies House,Regulatory filings,0.95,per month,2024-07,FY25,2.0,,47,2.5
+acq_filed,Practice acquisitions filed,Companies House,Regulatory filings,0.95,per month,2024-08,FY25,4.0,,47,2.5
+acq_filed,Practice acquisitions filed,Companies House,Regulatory filings,0.95,per month,2024-09,FY25,2.0,,47,2.5
+acq_filed,Practice acquisitions filed,Companies House,Regulatory filings,0.95,per month,2024-10,FY25,1.0,,47,2.5
+acq_filed,Practice acquisitions filed,Companies House,Regulatory filings,0.95,per month,2024-11,FY25,2.0,,47,2.5
+acq_filed,Practice acquisitions filed,Companies House,Regulatory filings,0.95,per month,2024-12,FY25,3.0,,47,2.5
+acq_filed,Practice acquisitions filed,Companies House,Regulatory filings,0.95,per month,2025-01,FY25,1.0,,47,2.5
+acq_filed,Practice acquisitions filed,Companies House,Regulatory filings,0.95,per month,2025-02,FY25,3.0,,47,2.5
+acq_filed,Practice acquisitions filed,Companies House,Regulatory filings,0.95,per month,2025-03,FY25,1.0,,47,2.5
+estate,Practices in the estate,Companies House,Regulatory filings,0.95,practices,2022-10,FY23,142.0,,189,2.5
+estate,Practices in the estate,Companies House,Regulatory filings,0.95,practices,2022-11,FY23,142.0,,189,2.5
+estate,Practices in the estate,Companies House,Regulatory filings,0.95,practices,2022-12,FY23,142.0,,189,2.5
+estate,Practices in the estate,Companies House,Regulatory filings,0.95,practices,2023-01,FY23,142.0,,189,2.5
+estate,Practices in the estate,Companies House,Regulatory filings,0.95,practices,2023-02,FY23,142.0,,189,2.5
+estate,Practices in the estate,Companies House,Regulatory filings,0.95,practices,2023-03,FY23,142.0,,189,2.5
+estate,Practices in the estate,Companies House,Regulatory filings,0.95,practices,2023-04,FY24,143.0,,189,2.5
+estate,Practices in the estate,Companies House,Regulatory filings,0.95,practices,2023-05,FY24,143.0,,189,2.5
+estate,Practices in the estate,Companies House,Regulatory filings,0.95,practices,2023-06,FY24,147.0,,189,2.5
+estate,Practices in the estate,Companies House,Regulatory filings,0.95,practices,2023-07,FY24,147.0,,189,2.5
+estate,Practices in the estate,Companies House,Regulatory filings,0.95,practices,2023-08,FY24,151.0,,189,2.5
+estate,Practices in the estate,Companies House,Regulatory filings,0.95,practices,2023-09,FY24,154.0,,189,2.5
+estate,Practices in the estate,Companies House,Regulatory filings,0.95,practices,2023-10,FY24,155.0,,189,2.5
+estate,Practices in the estate,Companies House,Regulatory filings,0.95,practices,2023-11,FY24,155.0,,189,2.5
+estate,Practices in the estate,Companies House,Regulatory filings,0.95,practices,2023-12,FY24,156.0,,189,2.5
+estate,Practices in the estate,Companies House,Regulatory filings,0.95,practices,2024-01,FY24,156.0,,189,2.5
+estate,Practices in the estate,Companies House,Regulatory filings,0.95,practices,2024-02,FY24,161.0,,189,2.5
+estate,Practices in the estate,Companies House,Regulatory filings,0.95,practices,2024-03,FY24,163.0,,189,2.5
+estate,Practices in the estate,Companies House,Regulatory filings,0.95,practices,2024-04,FY25,165.0,,189,2.5
+estate,Practices in the estate,Companies House,Regulatory filings,0.95,practices,2024-05,FY25,167.0,,189,2.5
+estate,Practices in the estate,Companies House,Regulatory filings,0.95,practices,2024-06,FY25,170.0,,189,2.5
+estate,Practices in the estate,Companies House,Regulatory filings,0.95,practices,2024-07,FY25,172.0,,189,2.5
+estate,Practices in the estate,Companies House,Regulatory filings,0.95,practices,2024-08,FY25,176.0,,189,2.5
+estate,Practices in the estate,Companies House,Regulatory filings,0.95,practices,2024-09,FY25,178.0,,189,2.5
+estate,Practices in the estate,Companies House,Regulatory filings,0.95,practices,2024-10,FY25,179.0,,189,2.5
+estate,Practices in the estate,Companies House,Regulatory filings,0.95,practices,2024-11,FY25,181.0,,189,2.5
+estate,Practices in the estate,Companies House,Regulatory filings,0.95,practices,2024-12,FY25,184.0,,189,2.5
+estate,Practices in the estate,Companies House,Regulatory filings,0.95,practices,2025-01,FY25,185.0,,189,2.5
+estate,Practices in the estate,Companies House,Regulatory filings,0.95,practices,2025-02,FY25,188.0,,189,2.5
+estate,Practices in the estate,Companies House,Regulatory filings,0.95,practices,2025-03,FY25,189.0,,189,2.5
+comp_estate,Largest competitor estate,Companies House,Regulatory filings,0.95,practices,2022-10,FY23,96.0,,189,2.5
+comp_estate,Largest competitor estate,Companies House,Regulatory filings,0.95,practices,2022-11,FY23,97.0,,189,2.5
+comp_estate,Largest competitor estate,Companies House,Regulatory filings,0.95,practices,2022-12,FY23,98.0,,189,2.5
+comp_estate,Largest competitor estate,Companies House,Regulatory filings,0.95,practices,2023-01,FY23,99.0,,189,2.5
+comp_estate,Largest competitor estate,Companies House,Regulatory filings,0.95,practices,2023-02,FY23,100.0,,189,2.5
+comp_estate,Largest competitor estate,Companies House,Regulatory filings,0.95,practices,2023-03,FY23,101.0,,189,2.5
+comp_estate,Largest competitor estate,Companies House,Regulatory filings,0.95,practices,2023-04,FY24,102.0,,189,2.5
+comp_estate,Largest competitor estate,Companies House,Regulatory filings,0.95,practices,2023-05,FY24,103.0,,189,2.5
+comp_estate,Largest competitor estate,Companies House,Regulatory filings,0.95,practices,2023-06,FY24,104.0,,189,2.5
+comp_estate,Largest competitor estate,Companies House,Regulatory filings,0.95,practices,2023-07,FY24,105.0,,189,2.5
+comp_estate,Largest competitor estate,Companies House,Regulatory filings,0.95,practices,2023-08,FY24,106.0,,189,2.5
+comp_estate,Largest competitor estate,Companies House,Regulatory filings,0.95,practices,2023-09,FY24,107.0,,189,2.5
+comp_estate,Largest competitor estate,Companies House,Regulatory filings,0.95,practices,2023-10,FY24,108.0,,189,2.5
+comp_estate,Largest competitor estate,Companies House,Regulatory filings,0.95,practices,2023-11,FY24,108.0,,189,2.5
+comp_estate,Largest competitor estate,Companies House,Regulatory filings,0.95,practices,2023-12,FY24,109.0,,189,2.5
+comp_estate,Largest competitor estate,Companies House,Regulatory filings,0.95,practices,2024-01,FY24,110.0,,189,2.5
+comp_estate,Largest competitor estate,Companies House,Regulatory filings,0.95,practices,2024-02,FY24,111.0,,189,2.5
+comp_estate,Largest competitor estate,Companies House,Regulatory filings,0.95,practices,2024-03,FY24,112.0,,189,2.5
+comp_estate,Largest competitor estate,Companies House,Regulatory filings,0.95,practices,2024-04,FY25,113.0,,189,2.5
+comp_estate,Largest competitor estate,Companies House,Regulatory filings,0.95,practices,2024-05,FY25,114.0,,189,2.5
+comp_estate,Largest competitor estate,Companies House,Regulatory filings,0.95,practices,2024-06,FY25,115.0,,189,2.5
+comp_estate,Largest competitor estate,Companies House,Regulatory filings,0.95,practices,2024-07,FY25,116.0,,189,2.5
+comp_estate,Largest competitor estate,Companies House,Regulatory filings,0.95,practices,2024-08,FY25,117.0,,189,2.5
+comp_estate,Largest competitor estate,Companies House,Regulatory filings,0.95,practices,2024-09,FY25,118.0,,189,2.5
+comp_estate,Largest competitor estate,Companies House,Regulatory filings,0.95,practices,2024-10,FY25,119.0,,189,2.5
+comp_estate,Largest competitor estate,Companies House,Regulatory filings,0.95,practices,2024-11,FY25,120.0,,189,2.5
+comp_estate,Largest competitor estate,Companies House,Regulatory filings,0.95,practices,2024-12,FY25,121.0,,189,2.5
+comp_estate,Largest competitor estate,Companies House,Regulatory filings,0.95,practices,2025-01,FY25,122.0,,189,2.5
+comp_estate,Largest competitor estate,Companies House,Regulatory filings,0.95,practices,2025-02,FY25,123.0,,189,2.5
+comp_estate,Largest competitor estate,Companies House,Regulatory filings,0.95,practices,2025-03,FY25,124.0,,189,2.5
+estate_lead,Estate size vs largest competitor,Companies House,Regulatory filings,0.95,x,2022-10,FY23,1.4791666666666667,,189,2.5
+estate_lead,Estate size vs largest competitor,Companies House,Regulatory filings,0.95,x,2022-11,FY23,1.4639175257731958,,189,2.5
+estate_lead,Estate size vs largest competitor,Companies House,Regulatory filings,0.95,x,2022-12,FY23,1.4489795918367347,,189,2.5
+estate_lead,Estate size vs largest competitor,Companies House,Regulatory filings,0.95,x,2023-01,FY23,1.4343434343434343,,189,2.5
+estate_lead,Estate size vs largest competitor,Companies House,Regulatory filings,0.95,x,2023-02,FY23,1.42,,189,2.5
+estate_lead,Estate size vs largest competitor,Companies House,Regulatory filings,0.95,x,2023-03,FY23,1.4059405940594059,,189,2.5
+estate_lead,Estate size vs largest competitor,Companies House,Regulatory filings,0.95,x,2023-04,FY24,1.4019607843137254,,189,2.5
+estate_lead,Estate size vs largest competitor,Companies House,Regulatory filings,0.95,x,2023-05,FY24,1.3883495145631068,,189,2.5
+estate_lead,Estate size vs largest competitor,Companies House,Regulatory filings,0.95,x,2023-06,FY24,1.4134615384615385,,189,2.5
+estate_lead,Estate size vs largest competitor,Companies House,Regulatory filings,0.95,x,2023-07,FY24,1.4,,189,2.5
+estate_lead,Estate size vs largest competitor,Companies House,Regulatory filings,0.95,x,2023-08,FY24,1.4245283018867925,,189,2.5
+estate_lead,Estate size vs largest competitor,Companies House,Regulatory filings,0.95,x,2023-09,FY24,1.439252336448598,,189,2.5
+estate_lead,Estate size vs largest competitor,Companies House,Regulatory filings,0.95,x,2023-10,FY24,1.4351851851851851,,189,2.5
+estate_lead,Estate size vs largest competitor,Companies House,Regulatory filings,0.95,x,2023-11,FY24,1.4351851851851851,,189,2.5
+estate_lead,Estate size vs largest competitor,Companies House,Regulatory filings,0.95,x,2023-12,FY24,1.4311926605504588,,189,2.5
+estate_lead,Estate size vs largest competitor,Companies House,Regulatory filings,0.95,x,2024-01,FY24,1.4181818181818182,,189,2.5
+estate_lead,Estate size vs largest competitor,Companies House,Regulatory filings,0.95,x,2024-02,FY24,1.4504504504504505,,189,2.5
+estate_lead,Estate size vs largest competitor,Companies House,Regulatory filings,0.95,x,2024-03,FY24,1.4553571428571428,,189,2.5
+estate_lead,Estate size vs largest competitor,Companies House,Regulatory filings,0.95,x,2024-04,FY25,1.4601769911504425,,189,2.5
+estate_lead,Estate size vs largest competitor,Companies House,Regulatory filings,0.95,x,2024-05,FY25,1.4649122807017543,,189,2.5
+estate_lead,Estate size vs largest competitor,Companies House,Regulatory filings,0.95,x,2024-06,FY25,1.4782608695652173,,189,2.5
+estate_lead,Estate size vs largest competitor,Companies House,Regulatory filings,0.95,x,2024-07,FY25,1.4827586206896552,,189,2.5
+estate_lead,Estate size vs largest competitor,Companies House,Regulatory filings,0.95,x,2024-08,FY25,1.5042735042735043,,189,2.5
+estate_lead,Estate size vs largest competitor,Companies House,Regulatory filings,0.95,x,2024-09,FY25,1.5084745762711864,,189,2.5
+estate_lead,Estate size vs largest competitor,Companies House,Regulatory filings,0.95,x,2024-10,FY25,1.504201680672269,,189,2.5
+estate_lead,Estate size vs largest competitor,Companies House,Regulatory filings,0.95,x,2024-11,FY25,1.5083333333333333,,189,2.5
+estate_lead,Estate size vs largest competitor,Companies House,Regulatory filings,0.95,x,2024-12,FY25,1.5206611570247934,,189,2.5
+estate_lead,Estate size vs largest competitor,Companies House,Regulatory filings,0.95,x,2025-01,FY25,1.5163934426229508,,189,2.5
+estate_lead,Estate size vs largest competitor,Companies House,Regulatory filings,0.95,x,2025-02,FY25,1.5284552845528456,,189,2.5
+estate_lead,Estate size vs largest competitor,Companies House,Regulatory filings,0.95,x,2025-03,FY25,1.5241935483870968,,189,2.5
+corp_share,Share of corporate-owned practices,Gain.Pro,Market data,0.75,%,2022-10,FY23,0.38131041890440387,,4100,3.0
+corp_share,Share of corporate-owned practices,Gain.Pro,Market data,0.75,%,2022-11,FY23,0.3788687299893277,,4100,3.0
+corp_share,Share of corporate-owned practices,Gain.Pro,Market data,0.75,%,2022-12,FY23,0.37645811240721105,,4100,3.0
+corp_share,Share of corporate-owned practices,Gain.Pro,Market data,0.75,%,2023-01,FY23,0.37407797681770283,,4100,3.0
+corp_share,Share of corporate-owned practices,Gain.Pro,Market data,0.75,%,2023-02,FY23,0.3717277486910995,,4100,3.0
+corp_share,Share of corporate-owned practices,Gain.Pro,Market data,0.75,%,2023-03,FY23,0.3694068678459938,,4100,3.0
+corp_share,Share of corporate-owned practices,Gain.Pro,Market data,0.75,%,2023-04,FY24,0.368746776689015,,4100,3.0
+corp_share,Share of corporate-owned practices,Gain.Pro,Market data,0.75,%,2023-05,FY24,0.36647872885699645,,4100,3.0
+corp_share,Share of corporate-owned practices,Gain.Pro,Market data,0.75,%,2023-06,FY24,0.3706505295007564,,4100,3.0
+corp_share,Share of corporate-owned practices,Gain.Pro,Market data,0.75,%,2023-07,FY24,0.3684210526315789,,4100,3.0
+corp_share,Share of corporate-owned practices,Gain.Pro,Market data,0.75,%,2023-08,FY24,0.3724716329551061,,4100,3.0
+corp_share,Share of corporate-owned practices,Gain.Pro,Market data,0.75,%,2023-09,FY24,0.3748782862706913,,4100,3.0
+corp_share,Share of corporate-owned practices,Gain.Pro,Market data,0.75,%,2023-10,FY24,0.374215354901014,,4100,3.0
+corp_share,Share of corporate-owned practices,Gain.Pro,Market data,0.75,%,2023-11,FY24,0.374215354901014,,4100,3.0
+corp_share,Share of corporate-owned practices,Gain.Pro,Market data,0.75,%,2023-12,FY24,0.37356321839080464,,4100,3.0
+corp_share,Share of corporate-owned practices,Gain.Pro,Market data,0.75,%,2024-01,FY24,0.37142857142857144,,4100,3.0
+corp_share,Share of corporate-owned practices,Gain.Pro,Market data,0.75,%,2024-02,FY24,0.37669630322882547,,4100,3.0
+corp_share,Share of corporate-owned practices,Gain.Pro,Market data,0.75,%,2024-03,FY24,0.3774895785085688,,4100,3.0
+corp_share,Share of corporate-owned practices,Gain.Pro,Market data,0.75,%,2024-04,FY25,0.3782668500687758,,4100,3.0
+corp_share,Share of corporate-owned practices,Gain.Pro,Market data,0.75,%,2024-05,FY25,0.37902859736722655,,4100,3.0
+corp_share,Share of corporate-owned practices,Gain.Pro,Market data,0.75,%,2024-06,FY25,0.3811659192825112,,4100,3.0
+corp_share,Share of corporate-owned practices,Gain.Pro,Market data,0.75,%,2024-07,FY25,0.3818827708703375,,4100,3.0
+corp_share,Share of corporate-owned practices,Gain.Pro,Market data,0.75,%,2024-08,FY25,0.38528896672504376,,4100,3.0
+corp_share,Share of corporate-owned practices,Gain.Pro,Market data,0.75,%,2024-09,FY25,0.38594969644405897,,4100,3.0
+corp_share,Share of corporate-owned practices,Gain.Pro,Market data,0.75,%,2024-10,FY25,0.3852776582006027,,4100,3.0
+corp_share,Share of corporate-owned practices,Gain.Pro,Market data,0.75,%,2024-11,FY25,0.3859275053304904,,4100,3.0
+corp_share,Share of corporate-owned practices,Gain.Pro,Market data,0.75,%,2024-12,FY25,0.38785834738617203,,4100,3.0
+corp_share,Share of corporate-owned practices,Gain.Pro,Market data,0.75,%,2025-01,FY25,0.3871912934282126,,4100,3.0
+corp_share,Share of corporate-owned practices,Gain.Pro,Market data,0.75,%,2025-02,FY25,0.3890728476821192,,4100,3.0
+corp_share,Share of corporate-owned practices,Gain.Pro,Market data,0.75,%,2025-03,FY25,0.38840937114673246,,4100,3.0
+staff_mentions,Transcripts citing vet recruitment difficulty,AlphaSense,Expert network,0.7,per month,2022-10,FY23,8.0,,88,0.5
+staff_mentions,Transcripts citing vet recruitment difficulty,AlphaSense,Expert network,0.7,per month,2022-11,FY23,7.0,,88,0.5
+staff_mentions,Transcripts citing vet recruitment difficulty,AlphaSense,Expert network,0.7,per month,2022-12,FY23,7.0,,88,0.5
+staff_mentions,Transcripts citing vet recruitment difficulty,AlphaSense,Expert network,0.7,per month,2023-01,FY23,12.0,,88,0.5
+staff_mentions,Transcripts citing vet recruitment difficulty,AlphaSense,Expert network,0.7,per month,2023-02,FY23,10.0,,88,0.5
+staff_mentions,Transcripts citing vet recruitment difficulty,AlphaSense,Expert network,0.7,per month,2023-03,FY23,9.0,,88,0.5
+staff_mentions,Transcripts citing vet recruitment difficulty,AlphaSense,Expert network,0.7,per month,2023-04,FY24,9.0,,88,0.5
+staff_mentions,Transcripts citing vet recruitment difficulty,AlphaSense,Expert network,0.7,per month,2023-05,FY24,13.0,,88,0.5
+staff_mentions,Transcripts citing vet recruitment difficulty,AlphaSense,Expert network,0.7,per month,2023-06,FY24,12.0,,88,0.5
+staff_mentions,Transcripts citing vet recruitment difficulty,AlphaSense,Expert network,0.7,per month,2023-07,FY24,15.0,,88,0.5
+staff_mentions,Transcripts citing vet recruitment difficulty,AlphaSense,Expert network,0.7,per month,2023-08,FY24,13.0,,88,0.5
+staff_mentions,Transcripts citing vet recruitment difficulty,AlphaSense,Expert network,0.7,per month,2023-09,FY24,14.0,,88,0.5
+staff_mentions,Transcripts citing vet recruitment difficulty,AlphaSense,Expert network,0.7,per month,2023-10,FY24,13.0,,88,0.5
+staff_mentions,Transcripts citing vet recruitment difficulty,AlphaSense,Expert network,0.7,per month,2023-11,FY24,19.0,,88,0.5
+staff_mentions,Transcripts citing vet recruitment difficulty,AlphaSense,Expert network,0.7,per month,2023-12,FY24,17.0,,88,0.5
+staff_mentions,Transcripts citing vet recruitment difficulty,AlphaSense,Expert network,0.7,per month,2024-01,FY24,24.0,,88,0.5
+staff_mentions,Transcripts citing vet recruitment difficulty,AlphaSense,Expert network,0.7,per month,2024-02,FY24,26.0,,88,0.5
+staff_mentions,Transcripts citing vet recruitment difficulty,AlphaSense,Expert network,0.7,per month,2024-03,FY24,26.0,,88,0.5
+staff_mentions,Transcripts citing vet recruitment difficulty,AlphaSense,Expert network,0.7,per month,2024-04,FY25,25.0,,88,0.5
+staff_mentions,Transcripts citing vet recruitment difficulty,AlphaSense,Expert network,0.7,per month,2024-05,FY25,26.0,,88,0.5
+staff_mentions,Transcripts citing vet recruitment difficulty,AlphaSense,Expert network,0.7,per month,2024-06,FY25,30.0,,88,0.5
+staff_mentions,Transcripts citing vet recruitment difficulty,AlphaSense,Expert network,0.7,per month,2024-07,FY25,30.0,,88,0.5
+staff_mentions,Transcripts citing vet recruitment difficulty,AlphaSense,Expert network,0.7,per month,2024-08,FY25,28.0,,88,0.5
+staff_mentions,Transcripts citing vet recruitment difficulty,AlphaSense,Expert network,0.7,per month,2024-09,FY25,33.0,,88,0.5
+staff_mentions,Transcripts citing vet recruitment difficulty,AlphaSense,Expert network,0.7,per month,2024-10,FY25,35.0,,88,0.5
+staff_mentions,Transcripts citing vet recruitment difficulty,AlphaSense,Expert network,0.7,per month,2024-11,FY25,36.0,,88,0.5
+staff_mentions,Transcripts citing vet recruitment difficulty,AlphaSense,Expert network,0.7,per month,2024-12,FY25,39.0,,88,0.5
+staff_mentions,Transcripts citing vet recruitment difficulty,AlphaSense,Expert network,0.7,per month,2025-01,FY25,38.0,,88,0.5
+staff_mentions,Transcripts citing vet recruitment difficulty,AlphaSense,Expert network,0.7,per month,2025-02,FY25,43.0,,88,0.5
+staff_mentions,Transcripts citing vet recruitment difficulty,AlphaSense,Expert network,0.7,per month,2025-03,FY25,43.0,,88,0.5
+sector_lfl,Listed comparable like-for-like growth,S&P Capital IQ,Market data,0.9,%,2022-10,FY23,0.06057820084264125,,3,1.5
+sector_lfl,Listed comparable like-for-like growth,S&P Capital IQ,Market data,0.9,%,2022-11,FY23,0.05108913430186491,,3,1.5
+sector_lfl,Listed comparable like-for-like growth,S&P Capital IQ,Market data,0.9,%,2022-12,FY23,0.05122082497770788,,3,1.5
+sector_lfl,Listed comparable like-for-like growth,S&P Capital IQ,Market data,0.9,%,2023-01,FY23,0.0541878051460529,,3,1.5
+sector_lfl,Listed comparable like-for-like growth,S&P Capital IQ,Market data,0.9,%,2023-02,FY23,0.05385426070362737,,3,1.5
+sector_lfl,Listed comparable like-for-like growth,S&P Capital IQ,Market data,0.9,%,2023-03,FY23,0.05469367905078045,,3,1.5
+sector_lfl,Listed comparable like-for-like growth,S&P Capital IQ,Market data,0.9,%,2023-04,FY24,0.048754207467533235,,3,1.5
+sector_lfl,Listed comparable like-for-like growth,S&P Capital IQ,Market data,0.9,%,2023-05,FY24,0.05745355423194224,,3,1.5
+sector_lfl,Listed comparable like-for-like growth,S&P Capital IQ,Market data,0.9,%,2023-06,FY24,0.04889954868354956,,3,1.5
+sector_lfl,Listed comparable like-for-like growth,S&P Capital IQ,Market data,0.9,%,2023-07,FY24,0.053320304227494016,,3,1.5
+sector_lfl,Listed comparable like-for-like growth,S&P Capital IQ,Market data,0.9,%,2023-08,FY24,0.056917015899642945,,3,1.5
+sector_lfl,Listed comparable like-for-like growth,S&P Capital IQ,Market data,0.9,%,2023-09,FY24,0.05546162064521978,,3,1.5
+sector_lfl,Listed comparable like-for-like growth,S&P Capital IQ,Market data,0.9,%,2023-10,FY24,0.048658305300438354,,3,1.5
+sector_lfl,Listed comparable like-for-like growth,S&P Capital IQ,Market data,0.9,%,2023-11,FY24,0.043306590610200035,,3,1.5
+sector_lfl,Listed comparable like-for-like growth,S&P Capital IQ,Market data,0.9,%,2023-12,FY24,0.04843039572375451,,3,1.5
+sector_lfl,Listed comparable like-for-like growth,S&P Capital IQ,Market data,0.9,%,2024-01,FY24,0.044120846751154394,,3,1.5
+sector_lfl,Listed comparable like-for-like growth,S&P Capital IQ,Market data,0.9,%,2024-02,FY24,0.046742199803231486,,3,1.5
+sector_lfl,Listed comparable like-for-like growth,S&P Capital IQ,Market data,0.9,%,2024-03,FY24,0.047892029866823935,,3,1.5
+sector_lfl,Listed comparable like-for-like growth,S&P Capital IQ,Market data,0.9,%,2024-04,FY25,0.05245859590126545,,3,1.5
+sector_lfl,Listed comparable like-for-like growth,S&P Capital IQ,Market data,0.9,%,2024-05,FY25,0.059238553121934316,,3,1.5
+sector_lfl,Listed comparable like-for-like growth,S&P Capital IQ,Market data,0.9,%,2024-06,FY25,0.05093959383382716,,3,1.5
+sector_lfl,Listed comparable like-for-like growth,S&P Capital IQ,Market data,0.9,%,2024-07,FY25,0.06857570887773025,,3,1.5
+sector_lfl,Listed comparable like-for-like growth,S&P Capital IQ,Market data,0.9,%,2024-08,FY25,0.0523476367428181,,3,1.5
+sector_lfl,Listed comparable like-for-like growth,S&P Capital IQ,Market data,0.9,%,2024-09,FY25,0.05423606997457358,,3,1.5
+sector_lfl,Listed comparable like-for-like growth,S&P Capital IQ,Market data,0.9,%,2024-10,FY25,0.04863919166086175,,3,1.5
+sector_lfl,Listed comparable like-for-like growth,S&P Capital IQ,Market data,0.9,%,2024-11,FY25,0.06200659081853701,,3,1.5
+sector_lfl,Listed comparable like-for-like growth,S&P Capital IQ,Market data,0.9,%,2024-12,FY25,0.0509769802021468,,3,1.5
+sector_lfl,Listed comparable like-for-like growth,S&P Capital IQ,Market data,0.9,%,2025-01,FY25,0.06103167832989801,,3,1.5
+sector_lfl,Listed comparable like-for-like growth,S&P Capital IQ,Market data,0.9,%,2025-02,FY25,0.056977496671209486,,3,1.5
+sector_lfl,Listed comparable like-for-like growth,S&P Capital IQ,Market data,0.9,%,2025-03,FY25,0.05720265144446823,,3,1.5
+peer_deals,Sector transactions completed,Preqin,Market data,0.82,per month,2022-10,FY23,14.0,,284,2.0
+peer_deals,Sector transactions completed,Preqin,Market data,0.82,per month,2022-11,FY23,10.0,,284,2.0
+peer_deals,Sector transactions completed,Preqin,Market data,0.82,per month,2022-12,FY23,13.0,,284,2.0
+peer_deals,Sector transactions completed,Preqin,Market data,0.82,per month,2023-01,FY23,12.0,,284,2.0
+peer_deals,Sector transactions completed,Preqin,Market data,0.82,per month,2023-02,FY23,9.0,,284,2.0
+peer_deals,Sector transactions completed,Preqin,Market data,0.82,per month,2023-03,FY23,10.0,,284,2.0
+peer_deals,Sector transactions completed,Preqin,Market data,0.82,per month,2023-04,FY24,11.0,,284,2.0
+peer_deals,Sector transactions completed,Preqin,Market data,0.82,per month,2023-05,FY24,13.0,,284,2.0
+peer_deals,Sector transactions completed,Preqin,Market data,0.82,per month,2023-06,FY24,13.0,,284,2.0
+peer_deals,Sector transactions completed,Preqin,Market data,0.82,per month,2023-07,FY24,15.0,,284,2.0
+peer_deals,Sector transactions completed,Preqin,Market data,0.82,per month,2023-08,FY24,15.0,,284,2.0
+peer_deals,Sector transactions completed,Preqin,Market data,0.82,per month,2023-09,FY24,16.0,,284,2.0
+peer_deals,Sector transactions completed,Preqin,Market data,0.82,per month,2023-10,FY24,16.0,,284,2.0
+peer_deals,Sector transactions completed,Preqin,Market data,0.82,per month,2023-11,FY24,15.0,,284,2.0
+peer_deals,Sector transactions completed,Preqin,Market data,0.82,per month,2023-12,FY24,14.0,,284,2.0
+peer_deals,Sector transactions completed,Preqin,Market data,0.82,per month,2024-01,FY24,17.0,,284,2.0
+peer_deals,Sector transactions completed,Preqin,Market data,0.82,per month,2024-02,FY24,15.0,,284,2.0
+peer_deals,Sector transactions completed,Preqin,Market data,0.82,per month,2024-03,FY24,19.0,,284,2.0
+peer_deals,Sector transactions completed,Preqin,Market data,0.82,per month,2024-04,FY25,13.0,,284,2.0
+peer_deals,Sector transactions completed,Preqin,Market data,0.82,per month,2024-05,FY25,12.0,,284,2.0
+peer_deals,Sector transactions completed,Preqin,Market data,0.82,per month,2024-06,FY25,15.0,,284,2.0
+peer_deals,Sector transactions completed,Preqin,Market data,0.82,per month,2024-07,FY25,15.0,,284,2.0
+peer_deals,Sector transactions completed,Preqin,Market data,0.82,per month,2024-08,FY25,16.0,,284,2.0
+peer_deals,Sector transactions completed,Preqin,Market data,0.82,per month,2024-09,FY25,20.0,,284,2.0
+peer_deals,Sector transactions completed,Preqin,Market data,0.82,per month,2024-10,FY25,23.0,,284,2.0
+peer_deals,Sector transactions completed,Preqin,Market data,0.82,per month,2024-11,FY25,14.0,,284,2.0
+peer_deals,Sector transactions completed,Preqin,Market data,0.82,per month,2024-12,FY25,18.0,,284,2.0
+peer_deals,Sector transactions completed,Preqin,Market data,0.82,per month,2025-01,FY25,22.0,,284,2.0
+peer_deals,Sector transactions completed,Preqin,Market data,0.82,per month,2025-02,FY25,16.0,,284,2.0
+peer_deals,Sector transactions completed,Preqin,Market data,0.82,per month,2025-03,FY25,23.0,,284,2.0
+indep_share,Independent share of UK practices,Gain.Pro,Market data,0.75,%,2022-10,FY23,0.6268744718892284,,4100,3.0
+indep_share,Independent share of UK practices,Gain.Pro,Market data,0.75,%,2022-11,FY23,0.6235573748813458,,4100,3.0
+indep_share,Independent share of UK practices,Gain.Pro,Market data,0.75,%,2022-12,FY23,0.6224568382437478,,4100,3.0
+indep_share,Independent share of UK practices,Gain.Pro,Market data,0.75,%,2023-01,FY23,0.6137048132036149,,4100,3.0
+indep_share,Independent share of UK practices,Gain.Pro,Market data,0.75,%,2023-02,FY23,0.609671468053979,,4100,3.0
+indep_share,Independent share of UK practices,Gain.Pro,Market data,0.75,%,2023-03,FY23,0.6065235763756512,,4100,3.0
+indep_share,Independent share of UK practices,Gain.Pro,Market data,0.75,%,2023-04,FY24,0.6069781972434658,,4100,3.0
+indep_share,Independent share of UK practices,Gain.Pro,Market data,0.75,%,2023-05,FY24,0.589701152693317,,4100,3.0
+indep_share,Independent share of UK practices,Gain.Pro,Market data,0.75,%,2023-06,FY24,0.5864294257095554,,4100,3.0
+indep_share,Independent share of UK practices,Gain.Pro,Market data,0.75,%,2023-07,FY24,0.5986086364306853,,4100,3.0
+indep_share,Independent share of UK practices,Gain.Pro,Market data,0.75,%,2023-08,FY24,0.5832109294550645,,4100,3.0
+indep_share,Independent share of UK practices,Gain.Pro,Market data,0.75,%,2023-09,FY24,0.5802497386387913,,4100,3.0
+indep_share,Independent share of UK practices,Gain.Pro,Market data,0.75,%,2023-10,FY24,0.5710464358468916,,4100,3.0
+indep_share,Independent share of UK practices,Gain.Pro,Market data,0.75,%,2023-11,FY24,0.5798716881235326,,4100,3.0
+indep_share,Independent share of UK practices,Gain.Pro,Market data,0.75,%,2023-12,FY24,0.5719321765070103,,4100,3.0
+indep_share,Independent share of UK practices,Gain.Pro,Market data,0.75,%,2024-01,FY24,0.5654656409105021,,4100,3.0
+indep_share,Independent share of UK practices,Gain.Pro,Market data,0.75,%,2024-02,FY24,0.5748453438125469,,4100,3.0
+indep_share,Independent share of UK practices,Gain.Pro,Market data,0.75,%,2024-03,FY24,0.5534853213514227,,4100,3.0
+indep_share,Independent share of UK practices,Gain.Pro,Market data,0.75,%,2024-04,FY25,0.5571677710888242,,4100,3.0
+indep_share,Independent share of UK practices,Gain.Pro,Market data,0.75,%,2024-05,FY25,0.5422934204763374,,4100,3.0
+indep_share,Independent share of UK practices,Gain.Pro,Market data,0.75,%,2024-06,FY25,0.5526339551368613,,4100,3.0
+indep_share,Independent share of UK practices,Gain.Pro,Market data,0.75,%,2024-07,FY25,0.5469620794649942,,4100,3.0
+indep_share,Independent share of UK practices,Gain.Pro,Market data,0.75,%,2024-08,FY25,0.5389892060963528,,4100,3.0
+indep_share,Independent share of UK practices,Gain.Pro,Market data,0.75,%,2024-09,FY25,0.5279870434769157,,4100,3.0
+indep_share,Independent share of UK practices,Gain.Pro,Market data,0.75,%,2024-10,FY25,0.5296958042923754,,4100,3.0
+indep_share,Independent share of UK practices,Gain.Pro,Market data,0.75,%,2024-11,FY25,0.5153401290166209,,4100,3.0
+indep_share,Independent share of UK practices,Gain.Pro,Market data,0.75,%,2024-12,FY25,0.5314326388283969,,4100,3.0
+indep_share,Independent share of UK practices,Gain.Pro,Market data,0.75,%,2025-01,FY25,0.5202919525391089,,4100,3.0
+indep_share,Independent share of UK practices,Gain.Pro,Market data,0.75,%,2025-02,FY25,0.5197380629566085,,4100,3.0
+indep_share,Independent share of UK practices,Gain.Pro,Market data,0.75,%,2025-03,FY25,0.5134641482908762,,4100,3.0
+sessions,Booking portal sessions,SimilarWeb,Web panel,0.62,per month,2022-10,FY23,425223.1456180806,,412,0.5
+sessions,Booking portal sessions,SimilarWeb,Web panel,0.62,per month,2022-11,FY23,416000.61641006736,,412,0.5
+sessions,Booking portal sessions,SimilarWeb,Web panel,0.62,per month,2022-12,FY23,408838.30674000294,,412,0.5
+sessions,Booking portal sessions,SimilarWeb,Web panel,0.62,per month,2023-01,FY23,445711.80226077203,,412,0.5
+sessions,Booking portal sessions,SimilarWeb,Web panel,0.62,per month,2023-02,FY23,428503.94198886334,,412,0.5
+sessions,Booking portal sessions,SimilarWeb,Web panel,0.62,per month,2023-03,FY23,458385.25858802535,,412,0.5
+sessions,Booking portal sessions,SimilarWeb,Web panel,0.62,per month,2023-04,FY24,461446.16264479666,,412,0.5
+sessions,Booking portal sessions,SimilarWeb,Web panel,0.62,per month,2023-05,FY24,420792.82254325325,,412,0.5
+sessions,Booking portal sessions,SimilarWeb,Web panel,0.62,per month,2023-06,FY24,423727.58673572494,,412,0.5
+sessions,Booking portal sessions,SimilarWeb,Web panel,0.62,per month,2023-07,FY24,451764.9467445626,,412,0.5
+sessions,Booking portal sessions,SimilarWeb,Web panel,0.62,per month,2023-08,FY24,437018.03639238,,412,0.5
+sessions,Booking portal sessions,SimilarWeb,Web panel,0.62,per month,2023-09,FY24,465229.53590546193,,412,0.5
+sessions,Booking portal sessions,SimilarWeb,Web panel,0.62,per month,2023-10,FY24,503312.61338357336,,412,0.5
+sessions,Booking portal sessions,SimilarWeb,Web panel,0.62,per month,2023-11,FY24,518644.7493729631,,412,0.5
+sessions,Booking portal sessions,SimilarWeb,Web panel,0.62,per month,2023-12,FY24,507022.14629524836,,412,0.5
+sessions,Booking portal sessions,SimilarWeb,Web panel,0.62,per month,2024-01,FY24,538977.377422638,,412,0.5
+sessions,Booking portal sessions,SimilarWeb,Web panel,0.62,per month,2024-02,FY24,499834.7902701694,,412,0.5
+sessions,Booking portal sessions,SimilarWeb,Web panel,0.62,per month,2024-03,FY24,518861.73962623545,,412,0.5
+sessions,Booking portal sessions,SimilarWeb,Web panel,0.62,per month,2024-04,FY25,476274.4788712216,,412,0.5
+sessions,Booking portal sessions,SimilarWeb,Web panel,0.62,per month,2024-05,FY25,527838.1984556805,,412,0.5
+sessions,Booking portal sessions,SimilarWeb,Web panel,0.62,per month,2024-06,FY25,502233.4827518079,,412,0.5
+sessions,Booking portal sessions,SimilarWeb,Web panel,0.62,per month,2024-07,FY25,477684.265361248,,412,0.5
+sessions,Booking portal sessions,SimilarWeb,Web panel,0.62,per month,2024-08,FY25,477791.7557049918,,412,0.5
+sessions,Booking portal sessions,SimilarWeb,Web panel,0.62,per month,2024-09,FY25,529260.8390807959,,412,0.5
+sessions,Booking portal sessions,SimilarWeb,Web panel,0.62,per month,2024-10,FY25,569993.0415409629,,412,0.5
+sessions,Booking portal sessions,SimilarWeb,Web panel,0.62,per month,2024-11,FY25,560051.029462274,,412,0.5
+sessions,Booking portal sessions,SimilarWeb,Web panel,0.62,per month,2024-12,FY25,591154.6130538807,,412,0.5
+sessions,Booking portal sessions,SimilarWeb,Web panel,0.62,per month,2025-01,FY25,582391.2768697075,,412,0.5
+sessions,Booking portal sessions,SimilarWeb,Web panel,0.62,per month,2025-02,FY25,591259.5361254427,,412,0.5
+sessions,Booking portal sessions,SimilarWeb,Web panel,0.62,per month,2025-03,FY25,608004.5314049051,,412,0.5
+sessions_pp,Sessions per practice,SimilarWeb,Web panel,0.62,per month,2022-10,FY23,2994.5291944935257,,412,0.5
+sessions_pp,Sessions per practice,SimilarWeb,Web panel,0.62,per month,2022-11,FY23,2929.5818057047,,412,0.5
+sessions_pp,Sessions per practice,SimilarWeb,Web panel,0.62,per month,2022-12,FY23,2879.1430052112883,,412,0.5
+sessions_pp,Sessions per practice,SimilarWeb,Web panel,0.62,per month,2023-01,FY23,3138.815508878676,,412,0.5
+sessions_pp,Sessions per practice,SimilarWeb,Web panel,0.62,per month,2023-02,FY23,3017.63339428777,,412,0.5
+sessions_pp,Sessions per practice,SimilarWeb,Web panel,0.62,per month,2023-03,FY23,3228.065201324122,,412,0.5
+sessions_pp,Sessions per practice,SimilarWeb,Web panel,0.62,per month,2023-04,FY24,3226.8962422713053,,412,0.5
+sessions_pp,Sessions per practice,SimilarWeb,Web panel,0.62,per month,2023-05,FY24,2942.6071506521207,,412,0.5
+sessions_pp,Sessions per practice,SimilarWeb,Web panel,0.62,per month,2023-06,FY24,2882.500590038945,,412,0.5
+sessions_pp,Sessions per practice,SimilarWeb,Web panel,0.62,per month,2023-07,FY24,3073.2309302351196,,412,0.5
+sessions_pp,Sessions per practice,SimilarWeb,Web panel,0.62,per month,2023-08,FY24,2894.15918140649,,412,0.5
+sessions_pp,Sessions per practice,SimilarWeb,Web panel,0.62,per month,2023-09,FY24,3020.9710123731293,,412,0.5
+sessions_pp,Sessions per practice,SimilarWeb,Web panel,0.62,per month,2023-10,FY24,3247.1781508617637,,412,0.5
+sessions_pp,Sessions per practice,SimilarWeb,Web panel,0.62,per month,2023-11,FY24,3346.095157244923,,412,0.5
+sessions_pp,Sessions per practice,SimilarWeb,Web panel,0.62,per month,2023-12,FY24,3250.141963431079,,412,0.5
+sessions_pp,Sessions per practice,SimilarWeb,Web panel,0.62,per month,2024-01,FY24,3454.983188606654,,412,0.5
+sessions_pp,Sessions per practice,SimilarWeb,Web panel,0.62,per month,2024-02,FY24,3104.563914721549,,412,0.5
+sessions_pp,Sessions per practice,SimilarWeb,Web panel,0.62,per month,2024-03,FY24,3183.2008566026716,,412,0.5
+sessions_pp,Sessions per practice,SimilarWeb,Web panel,0.62,per month,2024-04,FY25,2886.511993158919,,412,0.5
+sessions_pp,Sessions per practice,SimilarWeb,Web panel,0.62,per month,2024-05,FY25,3160.7077751837155,,412,0.5
+sessions_pp,Sessions per practice,SimilarWeb,Web panel,0.62,per month,2024-06,FY25,2954.3146044223995,,412,0.5
+sessions_pp,Sessions per practice,SimilarWeb,Web panel,0.62,per month,2024-07,FY25,2777.234100937488,,412,0.5
+sessions_pp,Sessions per practice,SimilarWeb,Web panel,0.62,per month,2024-08,FY25,2714.7258846874533,,412,0.5
+sessions_pp,Sessions per practice,SimilarWeb,Web panel,0.62,per month,2024-09,FY25,2973.3755004539094,,412,0.5
+sessions_pp,Sessions per practice,SimilarWeb,Web panel,0.62,per month,2024-10,FY25,3184.3186678266084,,412,0.5
+sessions_pp,Sessions per practice,SimilarWeb,Web panel,0.62,per month,2024-11,FY25,3094.2045826644976,,412,0.5
+sessions_pp,Sessions per practice,SimilarWeb,Web panel,0.62,per month,2024-12,FY25,3212.7968100754388,,412,0.5
+sessions_pp,Sessions per practice,SimilarWeb,Web panel,0.62,per month,2025-01,FY25,3148.060956052473,,412,0.5
+sessions_pp,Sessions per practice,SimilarWeb,Web panel,0.62,per month,2025-02,FY25,3144.997532582142,,412,0.5
+sessions_pp,Sessions per practice,SimilarWeb,Web panel,0.62,per month,2025-03,FY25,3216.955192618546,,412,0.5
+paid_share,Paid share of sessions,SimilarWeb,Web panel,0.62,%,2022-10,FY23,0.09998236110984512,,412,0.5
+paid_share,Paid share of sessions,SimilarWeb,Web panel,0.62,%,2022-11,FY23,0.12436716010178694,,412,0.5
+paid_share,Paid share of sessions,SimilarWeb,Web panel,0.62,%,2022-12,FY23,0.13424094433357353,,412,0.5
+paid_share,Paid share of sessions,SimilarWeb,Web panel,0.62,%,2023-01,FY23,0.12715218271699877,,412,0.5
+paid_share,Paid share of sessions,SimilarWeb,Web panel,0.62,%,2023-02,FY23,0.1443954746570085,,412,0.5
+paid_share,Paid share of sessions,SimilarWeb,Web panel,0.62,%,2023-03,FY23,0.1465660648054438,,412,0.5
+paid_share,Paid share of sessions,SimilarWeb,Web panel,0.62,%,2023-04,FY24,0.16141505834917513,,412,0.5
+paid_share,Paid share of sessions,SimilarWeb,Web panel,0.62,%,2023-05,FY24,0.1831164459442305,,412,0.5
+paid_share,Paid share of sessions,SimilarWeb,Web panel,0.62,%,2023-06,FY24,0.18299415619294776,,412,0.5
+paid_share,Paid share of sessions,SimilarWeb,Web panel,0.62,%,2023-07,FY24,0.19391334699085694,,412,0.5
+paid_share,Paid share of sessions,SimilarWeb,Web panel,0.62,%,2023-08,FY24,0.20055022967370967,,412,0.5
+paid_share,Paid share of sessions,SimilarWeb,Web panel,0.62,%,2023-09,FY24,0.16573557366742858,,412,0.5
+paid_share,Paid share of sessions,SimilarWeb,Web panel,0.62,%,2023-10,FY24,0.22424174484931048,,412,0.5
+paid_share,Paid share of sessions,SimilarWeb,Web panel,0.62,%,2023-11,FY24,0.22789334027926922,,412,0.5
+paid_share,Paid share of sessions,SimilarWeb,Web panel,0.62,%,2023-12,FY24,0.2249484311036122,,412,0.5
+paid_share,Paid share of sessions,SimilarWeb,Web panel,0.62,%,2024-01,FY24,0.22818043036715213,,412,0.5
+paid_share,Paid share of sessions,SimilarWeb,Web panel,0.62,%,2024-02,FY24,0.26700825851597676,,412,0.5
+paid_share,Paid share of sessions,SimilarWeb,Web panel,0.62,%,2024-03,FY24,0.2555229946693047,,412,0.5
+paid_share,Paid share of sessions,SimilarWeb,Web panel,0.62,%,2024-04,FY25,0.2547681540002194,,412,0.5
+paid_share,Paid share of sessions,SimilarWeb,Web panel,0.62,%,2024-05,FY25,0.28505289689137675,,412,0.5
+paid_share,Paid share of sessions,SimilarWeb,Web panel,0.62,%,2024-06,FY25,0.28753847721833614,,412,0.5
+paid_share,Paid share of sessions,SimilarWeb,Web panel,0.62,%,2024-07,FY25,0.28740113659014366,,412,0.5
+paid_share,Paid share of sessions,SimilarWeb,Web panel,0.62,%,2024-08,FY25,0.29334599733562433,,412,0.5
+paid_share,Paid share of sessions,SimilarWeb,Web panel,0.62,%,2024-09,FY25,0.28467605028008247,,412,0.5
+paid_share,Paid share of sessions,SimilarWeb,Web panel,0.62,%,2024-10,FY25,0.2811972486930326,,412,0.5
+paid_share,Paid share of sessions,SimilarWeb,Web panel,0.62,%,2024-11,FY25,0.30237286805983205,,412,0.5
+paid_share,Paid share of sessions,SimilarWeb,Web panel,0.62,%,2024-12,FY25,0.31357815021262414,,412,0.5
+paid_share,Paid share of sessions,SimilarWeb,Web panel,0.62,%,2025-01,FY25,0.3425276664925585,,412,0.5
+paid_share,Paid share of sessions,SimilarWeb,Web panel,0.62,%,2025-02,FY25,0.3180289585652725,,412,0.5
+paid_share,Paid share of sessions,SimilarWeb,Web panel,0.62,%,2025-03,FY25,0.3525988912692487,,412,0.5
+branded_share,Branded search share,SimilarWeb,Web panel,0.62,%,2022-10,FY23,0.6193730000878418,,412,0.5
+branded_share,Branded search share,SimilarWeb,Web panel,0.62,%,2022-11,FY23,0.6130464635939188,,412,0.5
+branded_share,Branded search share,SimilarWeb,Web panel,0.62,%,2022-12,FY23,0.5879607118506562,,412,0.5
+branded_share,Branded search share,SimilarWeb,Web panel,0.62,%,2023-01,FY23,0.598999211608861,,412,0.5
+branded_share,Branded search share,SimilarWeb,Web panel,0.62,%,2023-02,FY23,0.5866146512299565,,412,0.5
+branded_share,Branded search share,SimilarWeb,Web panel,0.62,%,2023-03,FY23,0.5842336188808884,,412,0.5
+branded_share,Branded search share,SimilarWeb,Web panel,0.62,%,2023-04,FY24,0.585673770533354,,412,0.5
+branded_share,Branded search share,SimilarWeb,Web panel,0.62,%,2023-05,FY24,0.5637036953864557,,412,0.5
+branded_share,Branded search share,SimilarWeb,Web panel,0.62,%,2023-06,FY24,0.5696207634202832,,412,0.5
+branded_share,Branded search share,SimilarWeb,Web panel,0.62,%,2023-07,FY24,0.5618148647918368,,412,0.5
+branded_share,Branded search share,SimilarWeb,Web panel,0.62,%,2023-08,FY24,0.5531419026383112,,412,0.5
+branded_share,Branded search share,SimilarWeb,Web panel,0.62,%,2023-09,FY24,0.5309414212141461,,412,0.5
+branded_share,Branded search share,SimilarWeb,Web panel,0.62,%,2023-10,FY24,0.5275564022467539,,412,0.5
+branded_share,Branded search share,SimilarWeb,Web panel,0.62,%,2023-11,FY24,0.523932531669803,,412,0.5
+branded_share,Branded search share,SimilarWeb,Web panel,0.62,%,2023-12,FY24,0.5283534722391535,,412,0.5
+branded_share,Branded search share,SimilarWeb,Web panel,0.62,%,2024-01,FY24,0.5107560633513557,,412,0.5
+branded_share,Branded search share,SimilarWeb,Web panel,0.62,%,2024-02,FY24,0.49166642654436216,,412,0.5
+branded_share,Branded search share,SimilarWeb,Web panel,0.62,%,2024-03,FY24,0.526012846098875,,412,0.5
+branded_share,Branded search share,SimilarWeb,Web panel,0.62,%,2024-04,FY25,0.4737399048904942,,412,0.5
+branded_share,Branded search share,SimilarWeb,Web panel,0.62,%,2024-05,FY25,0.4868334340038573,,412,0.5
+branded_share,Branded search share,SimilarWeb,Web panel,0.62,%,2024-06,FY25,0.48674229072906067,,412,0.5
+branded_share,Branded search share,SimilarWeb,Web panel,0.62,%,2024-07,FY25,0.4859253147375912,,412,0.5
+branded_share,Branded search share,SimilarWeb,Web panel,0.62,%,2024-08,FY25,0.4696927823285124,,412,0.5
+branded_share,Branded search share,SimilarWeb,Web panel,0.62,%,2024-09,FY25,0.45549668396227794,,412,0.5
+branded_share,Branded search share,SimilarWeb,Web panel,0.62,%,2024-10,FY25,0.46610057589819925,,412,0.5
+branded_share,Branded search share,SimilarWeb,Web panel,0.62,%,2024-11,FY25,0.4538232150078504,,412,0.5
+branded_share,Branded search share,SimilarWeb,Web panel,0.62,%,2024-12,FY25,0.44514009354922174,,412,0.5
+branded_share,Branded search share,SimilarWeb,Web panel,0.62,%,2025-01,FY25,0.443884457523219,,412,0.5
+branded_share,Branded search share,SimilarWeb,Web panel,0.62,%,2025-02,FY25,0.437083636455998,,412,0.5
+branded_share,Branded search share,SimilarWeb,Web panel,0.62,%,2025-03,FY25,0.4375138822408294,,412,0.5
+rev_vol_pp,Review volume per practice,Google Reviews,User reviews,0.72,per month,2022-10,FY23,16.971830985915492,,28400,0.2
+rev_vol_pp,Review volume per practice,Google Reviews,User reviews,0.72,per month,2022-11,FY23,15.859154929577464,,28400,0.2
+rev_vol_pp,Review volume per practice,Google Reviews,User reviews,0.72,per month,2022-12,FY23,15.169014084507042,,28400,0.2
+rev_vol_pp,Review volume per practice,Google Reviews,User reviews,0.72,per month,2023-01,FY23,16.37323943661972,,28400,0.2
+rev_vol_pp,Review volume per practice,Google Reviews,User reviews,0.72,per month,2023-02,FY23,15.690140845070422,,28400,0.2
+rev_vol_pp,Review volume per practice,Google Reviews,User reviews,0.72,per month,2023-03,FY23,16.859154929577464,,28400,0.2
+rev_vol_pp,Review volume per practice,Google Reviews,User reviews,0.72,per month,2023-04,FY24,17.422535211267604,,28400,0.2
+rev_vol_pp,Review volume per practice,Google Reviews,User reviews,0.72,per month,2023-05,FY24,17.309859154929576,,28400,0.2
+rev_vol_pp,Review volume per practice,Google Reviews,User reviews,0.72,per month,2023-06,FY24,18.669014084507044,,28400,0.2
+rev_vol_pp,Review volume per practice,Google Reviews,User reviews,0.72,per month,2023-07,FY24,17.633802816901408,,28400,0.2
+rev_vol_pp,Review volume per practice,Google Reviews,User reviews,0.72,per month,2023-08,FY24,16.640845070422536,,28400,0.2
+rev_vol_pp,Review volume per practice,Google Reviews,User reviews,0.72,per month,2023-09,FY24,17.6056338028169,,28400,0.2
+rev_vol_pp,Review volume per practice,Google Reviews,User reviews,0.72,per month,2023-10,FY24,17.640845070422536,,28400,0.2
+rev_vol_pp,Review volume per practice,Google Reviews,User reviews,0.72,per month,2023-11,FY24,16.591549295774648,,28400,0.2
+rev_vol_pp,Review volume per practice,Google Reviews,User reviews,0.72,per month,2023-12,FY24,16.0,,28400,0.2
+rev_vol_pp,Review volume per practice,Google Reviews,User reviews,0.72,per month,2024-01,FY24,17.422535211267604,,28400,0.2
+rev_vol_pp,Review volume per practice,Google Reviews,User reviews,0.72,per month,2024-02,FY24,16.612676056338028,,28400,0.2
+rev_vol_pp,Review volume per practice,Google Reviews,User reviews,0.72,per month,2024-03,FY24,17.767605633802816,,28400,0.2
+rev_vol_pp,Review volume per practice,Google Reviews,User reviews,0.72,per month,2024-04,FY25,18.190140845070424,,28400,0.2
+rev_vol_pp,Review volume per practice,Google Reviews,User reviews,0.72,per month,2024-05,FY25,19.591549295774648,,28400,0.2
+rev_vol_pp,Review volume per practice,Google Reviews,User reviews,0.72,per month,2024-06,FY25,19.309859154929576,,28400,0.2
+rev_vol_pp,Review volume per practice,Google Reviews,User reviews,0.72,per month,2024-07,FY25,18.711267605633804,,28400,0.2
+rev_vol_pp,Review volume per practice,Google Reviews,User reviews,0.72,per month,2024-08,FY25,17.838028169014084,,28400,0.2
+rev_vol_pp,Review volume per practice,Google Reviews,User reviews,0.72,per month,2024-09,FY25,18.45774647887324,,28400,0.2
+rev_vol_pp,Review volume per practice,Google Reviews,User reviews,0.72,per month,2024-10,FY25,18.204225352112676,,28400,0.2
+rev_vol_pp,Review volume per practice,Google Reviews,User reviews,0.72,per month,2024-11,FY25,17.41549295774648,,28400,0.2
+rev_vol_pp,Review volume per practice,Google Reviews,User reviews,0.72,per month,2024-12,FY25,17.02112676056338,,28400,0.2
+rev_vol_pp,Review volume per practice,Google Reviews,User reviews,0.72,per month,2025-01,FY25,18.140845070422536,,28400,0.2
+rev_vol_pp,Review volume per practice,Google Reviews,User reviews,0.72,per month,2025-02,FY25,18.14788732394366,,28400,0.2
+rev_vol_pp,Review volume per practice,Google Reviews,User reviews,0.72,per month,2025-03,FY25,18.62676056338028,,28400,0.2
+g_rating,"Google rating, estate weighted",Google Reviews,User reviews,0.72,stars,2022-10,FY23,4.450877742946708,,28400,0.2
+g_rating,"Google rating, estate weighted",Google Reviews,User reviews,0.72,stars,2022-11,FY23,4.449887218045113,,28400,0.2
+g_rating,"Google rating, estate weighted",Google Reviews,User reviews,0.72,stars,2022-12,FY23,4.447900696864111,,28400,0.2
+g_rating,"Google rating, estate weighted",Google Reviews,User reviews,0.72,stars,2023-01,FY23,4.450174300770166,,28400,0.2
+g_rating,"Google rating, estate weighted",Google Reviews,User reviews,0.72,stars,2023-02,FY23,4.45232911392405,,28400,0.2
+g_rating,"Google rating, estate weighted",Google Reviews,User reviews,0.72,stars,2023-03,FY23,4.448710567823344,,28400,0.2
+g_rating,"Google rating, estate weighted",Google Reviews,User reviews,0.72,stars,2023-04,FY24,4.446183960471304,,28400,0.2
+g_rating,"Google rating, estate weighted",Google Reviews,User reviews,0.72,stars,2023-05,FY24,4.446651358591657,,28400,0.2
+g_rating,"Google rating, estate weighted",Google Reviews,User reviews,0.72,stars,2023-06,FY24,4.44759608665269,,28400,0.2
+g_rating,"Google rating, estate weighted",Google Reviews,User reviews,0.72,stars,2023-07,FY24,4.43857248247879,,28400,0.2
+g_rating,"Google rating, estate weighted",Google Reviews,User reviews,0.72,stars,2023-08,FY24,4.440841788801203,,28400,0.2
+g_rating,"Google rating, estate weighted",Google Reviews,User reviews,0.72,stars,2023-09,FY24,4.443066714490675,,28400,0.2
+g_rating,"Google rating, estate weighted",Google Reviews,User reviews,0.72,stars,2023-10,FY24,4.435524842547236,,28400,0.2
+g_rating,"Google rating, estate weighted",Google Reviews,User reviews,0.72,stars,2023-11,FY24,4.428096125186289,,28400,0.2
+g_rating,"Google rating, estate weighted",Google Reviews,User reviews,0.72,stars,2023-12,FY24,4.437497112052369,,28400,0.2
+g_rating,"Google rating, estate weighted",Google Reviews,User reviews,0.72,stars,2024-01,FY24,4.425247771836007,,28400,0.2
+g_rating,"Google rating, estate weighted",Google Reviews,User reviews,0.72,stars,2024-02,FY24,4.422358660424919,,28400,0.2
+g_rating,"Google rating, estate weighted",Google Reviews,User reviews,0.72,stars,2024-03,FY24,4.427713230355943,,28400,0.2
+g_rating,"Google rating, estate weighted",Google Reviews,User reviews,0.72,stars,2024-04,FY25,4.4146747303040215,,28400,0.2
+g_rating,"Google rating, estate weighted",Google Reviews,User reviews,0.72,stars,2024-05,FY25,4.411168594035301,,28400,0.2
+g_rating,"Google rating, estate weighted",Google Reviews,User reviews,0.72,stars,2024-06,FY25,4.406757403529763,,28400,0.2
+g_rating,"Google rating, estate weighted",Google Reviews,User reviews,0.72,stars,2024-07,FY25,4.411447124304267,,28400,0.2
+g_rating,"Google rating, estate weighted",Google Reviews,User reviews,0.72,stars,2024-08,FY25,4.405016991041087,,28400,0.2
+g_rating,"Google rating, estate weighted",Google Reviews,User reviews,0.72,stars,2024-09,FY25,4.401122141997593,,28400,0.2
+g_rating,"Google rating, estate weighted",Google Reviews,User reviews,0.72,stars,2024-10,FY25,4.392198133092442,,28400,0.2
+g_rating,"Google rating, estate weighted",Google Reviews,User reviews,0.72,stars,2024-11,FY25,4.394869126458531,,28400,0.2
+g_rating,"Google rating, estate weighted",Google Reviews,User reviews,0.72,stars,2024-12,FY25,4.382789094327797,,28400,0.2
+g_rating,"Google rating, estate weighted",Google Reviews,User reviews,0.72,stars,2025-01,FY25,4.388681220095694,,28400,0.2
+g_rating,"Google rating, estate weighted",Google Reviews,User reviews,0.72,stars,2025-02,FY25,4.3848850913376545,,28400,0.2
+g_rating,"Google rating, estate weighted",Google Reviews,User reviews,0.72,stars,2025-03,FY25,4.385059299971074,,28400,0.2
+tp_rating,Trustpilot rating,Trustpilot,User reviews,0.58,stars,2022-10,FY23,4.035457392358112,4.0575939551128855,3120,0.2
+tp_rating,Trustpilot rating,Trustpilot,User reviews,0.58,stars,2022-11,FY23,4.156252348588231,4.004275751661266,3120,0.2
+tp_rating,Trustpilot rating,Trustpilot,User reviews,0.58,stars,2022-12,FY23,4.09434012396958,4.024577911049968,3120,0.2
+tp_rating,Trustpilot rating,Trustpilot,User reviews,0.58,stars,2023-01,FY23,4.0714662575844995,4.144289922037967,3120,0.2
+tp_rating,Trustpilot rating,Trustpilot,User reviews,0.58,stars,2023-02,FY23,3.9900099161370255,4.07337405008846,3120,0.2
+tp_rating,Trustpilot rating,Trustpilot,User reviews,0.58,stars,2023-03,FY23,3.9754252444606744,4.048087967451151,3120,0.2
+tp_rating,Trustpilot rating,Trustpilot,User reviews,0.58,stars,2023-04,FY24,3.9886970249291784,4.002085648179074,3120,0.2
+tp_rating,Trustpilot rating,Trustpilot,User reviews,0.58,stars,2023-05,FY24,3.9587140232409763,4.042829194573181,3120,0.2
+tp_rating,Trustpilot rating,Trustpilot,User reviews,0.58,stars,2023-06,FY24,3.8709691992132362,4.01298263162621,3120,0.2
+tp_rating,Trustpilot rating,Trustpilot,User reviews,0.58,stars,2023-07,FY24,3.9658470628381517,4.048496647496169,3120,0.2
+tp_rating,Trustpilot rating,Trustpilot,User reviews,0.58,stars,2023-08,FY24,3.929225866164564,3.996367951072647,3120,0.2
+tp_rating,Trustpilot rating,Trustpilot,User reviews,0.58,stars,2023-09,FY24,3.915663823968016,3.9847470881548697,3120,0.2
+tp_rating,Trustpilot rating,Trustpilot,User reviews,0.58,stars,2023-10,FY24,3.7728846483448604,3.9840926490573665,3120,0.2
+tp_rating,Trustpilot rating,Trustpilot,User reviews,0.58,stars,2023-11,FY24,3.730129829680825,4.0493718234740195,3120,0.2
+tp_rating,Trustpilot rating,Trustpilot,User reviews,0.58,stars,2023-12,FY24,3.8584969329451226,4.043103119844613,3120,0.2
+tp_rating,Trustpilot rating,Trustpilot,User reviews,0.58,stars,2024-01,FY24,3.7494853549353637,4.010567883759717,3120,0.2
+tp_rating,Trustpilot rating,Trustpilot,User reviews,0.58,stars,2024-02,FY24,3.8259613204780307,4.055607246536995,3120,0.2
+tp_rating,Trustpilot rating,Trustpilot,User reviews,0.58,stars,2024-03,FY24,3.6690910121392473,4.019600817463122,3120,0.2
+tp_rating,Trustpilot rating,Trustpilot,User reviews,0.58,stars,2024-04,FY25,3.6420319505243643,4.034695196679473,3120,0.2
+tp_rating,Trustpilot rating,Trustpilot,User reviews,0.58,stars,2024-05,FY25,3.6262600555346176,4.0054149919264015,3120,0.2
+tp_rating,Trustpilot rating,Trustpilot,User reviews,0.58,stars,2024-06,FY25,3.5958066012499947,3.958501484627668,3120,0.2
+tp_rating,Trustpilot rating,Trustpilot,User reviews,0.58,stars,2024-07,FY25,3.559943397399088,4.029923720568298,3120,0.2
+tp_rating,Trustpilot rating,Trustpilot,User reviews,0.58,stars,2024-08,FY25,3.6917675463634207,4.009318166355253,3120,0.2
+tp_rating,Trustpilot rating,Trustpilot,User reviews,0.58,stars,2024-09,FY25,3.4947519562272102,3.979805281175876,3120,0.2
+tp_rating,Trustpilot rating,Trustpilot,User reviews,0.58,stars,2024-10,FY25,3.649993814177725,3.956996606598162,3120,0.2
+tp_rating,Trustpilot rating,Trustpilot,User reviews,0.58,stars,2024-11,FY25,3.4264099312785112,3.94579976008681,3120,0.2
+tp_rating,Trustpilot rating,Trustpilot,User reviews,0.58,stars,2024-12,FY25,3.3634432886685115,3.9563481120374346,3120,0.2
+tp_rating,Trustpilot rating,Trustpilot,User reviews,0.58,stars,2025-01,FY25,3.443771308045971,3.972275410839199,3120,0.2
+tp_rating,Trustpilot rating,Trustpilot,User reviews,0.58,stars,2025-02,FY25,3.364290736826797,4.023593403835843,3120,0.2
+tp_rating,Trustpilot rating,Trustpilot,User reviews,0.58,stars,2025-03,FY25,3.3965647843913027,4.0381451152344,3120,0.2
+price_cmp,Reviews mentioning price or billing,Trustpilot,User reviews,0.58,%,2022-10,FY23,0.038324519175359485,0.055944512736200394,3120,0.2
+price_cmp,Reviews mentioning price or billing,Trustpilot,User reviews,0.58,%,2022-11,FY23,0.045491565935793093,0.0497552513491913,3120,0.2
+price_cmp,Reviews mentioning price or billing,Trustpilot,User reviews,0.58,%,2022-12,FY23,0.044358749748757705,0.05214464574468771,3120,0.2
+price_cmp,Reviews mentioning price or billing,Trustpilot,User reviews,0.58,%,2023-01,FY23,0.05374467214371216,0.05071945757583397,3120,0.2
+price_cmp,Reviews mentioning price or billing,Trustpilot,User reviews,0.58,%,2023-02,FY23,0.050836103241778806,0.043757798183134695,3120,0.2
+price_cmp,Reviews mentioning price or billing,Trustpilot,User reviews,0.58,%,2023-03,FY23,0.0608033253004067,0.03943535257856888,3120,0.2
+price_cmp,Reviews mentioning price or billing,Trustpilot,User reviews,0.58,%,2023-04,FY24,0.06028781051154955,0.044522049775172434,3120,0.2
+price_cmp,Reviews mentioning price or billing,Trustpilot,User reviews,0.58,%,2023-05,FY24,0.05462557872846033,0.044673615995980714,3120,0.2
+price_cmp,Reviews mentioning price or billing,Trustpilot,User reviews,0.58,%,2023-06,FY24,0.06228994093283229,0.047036853046316565,3120,0.2
+price_cmp,Reviews mentioning price or billing,Trustpilot,User reviews,0.58,%,2023-07,FY24,0.06772898364504805,0.05259229655330885,3120,0.2
+price_cmp,Reviews mentioning price or billing,Trustpilot,User reviews,0.58,%,2023-08,FY24,0.07734128032535333,0.05028470410029173,3120,0.2
+price_cmp,Reviews mentioning price or billing,Trustpilot,User reviews,0.58,%,2023-09,FY24,0.06443535680503443,0.05254141909121847,3120,0.2
+price_cmp,Reviews mentioning price or billing,Trustpilot,User reviews,0.58,%,2023-10,FY24,0.07922256286496124,0.04202770137204571,3120,0.2
+price_cmp,Reviews mentioning price or billing,Trustpilot,User reviews,0.58,%,2023-11,FY24,0.07925026075615503,0.05503357441985846,3120,0.2
+price_cmp,Reviews mentioning price or billing,Trustpilot,User reviews,0.58,%,2023-12,FY24,0.06724297058811082,0.04456385045563409,3120,0.2
+price_cmp,Reviews mentioning price or billing,Trustpilot,User reviews,0.58,%,2024-01,FY24,0.07883602587533761,0.051970720632317426,3120,0.2
+price_cmp,Reviews mentioning price or billing,Trustpilot,User reviews,0.58,%,2024-02,FY24,0.09037827281548755,0.06022123263710827,3120,0.2
+price_cmp,Reviews mentioning price or billing,Trustpilot,User reviews,0.58,%,2024-03,FY24,0.09773081066992201,0.057611480318244965,3120,0.2
+price_cmp,Reviews mentioning price or billing,Trustpilot,User reviews,0.58,%,2024-04,FY25,0.10321552390211422,0.05663231236266477,3120,0.2
+price_cmp,Reviews mentioning price or billing,Trustpilot,User reviews,0.58,%,2024-05,FY25,0.09762998290455063,0.057323018155688424,3120,0.2
+price_cmp,Reviews mentioning price or billing,Trustpilot,User reviews,0.58,%,2024-06,FY25,0.10264328266170547,0.060488266511443955,3120,0.2
+price_cmp,Reviews mentioning price or billing,Trustpilot,User reviews,0.58,%,2024-07,FY25,0.11398769357868452,0.05428825216267814,3120,0.2
+price_cmp,Reviews mentioning price or billing,Trustpilot,User reviews,0.58,%,2024-08,FY25,0.10838258973997192,0.05955722522740932,3120,0.2
+price_cmp,Reviews mentioning price or billing,Trustpilot,User reviews,0.58,%,2024-09,FY25,0.1198569624922691,0.055692196352164,3120,0.2
+price_cmp,Reviews mentioning price or billing,Trustpilot,User reviews,0.58,%,2024-10,FY25,0.10891476476302078,0.0494956627388726,3120,0.2
+price_cmp,Reviews mentioning price or billing,Trustpilot,User reviews,0.58,%,2024-11,FY25,0.11113119462501382,0.05396632890447243,3120,0.2
+price_cmp,Reviews mentioning price or billing,Trustpilot,User reviews,0.58,%,2024-12,FY25,0.10705869406972467,0.05810277494520409,3120,0.2
+price_cmp,Reviews mentioning price or billing,Trustpilot,User reviews,0.58,%,2025-01,FY25,0.12045235792335837,0.051689609443658434,3120,0.2
+price_cmp,Reviews mentioning price or billing,Trustpilot,User reviews,0.58,%,2025-02,FY25,0.12398222625420155,0.04984100911644544,3120,0.2
+price_cmp,Reviews mentioning price or billing,Trustpilot,User reviews,0.58,%,2025-03,FY25,0.13049482013065955,0.054492527096215285,3120,0.2
+gd_rating,Glassdoor overall rating,Glassdoor,Employee reviews,0.55,stars,2022-10,FY23,3.968076931402503,3.53145908525328,214,0.5
+gd_rating,Glassdoor overall rating,Glassdoor,Employee reviews,0.55,stars,2022-11,FY23,3.910408574211677,3.5684968180036445,214,0.5
+gd_rating,Glassdoor overall rating,Glassdoor,Employee reviews,0.55,stars,2022-12,FY23,3.8664124879101522,3.577477000649396,214,0.5
+gd_rating,Glassdoor overall rating,Glassdoor,Employee reviews,0.55,stars,2023-01,FY23,3.7870076581038172,3.548408101381816,214,0.5
+gd_rating,Glassdoor overall rating,Glassdoor,Employee reviews,0.55,stars,2023-02,FY23,3.848527766646371,3.5845789165000737,214,0.5
+gd_rating,Glassdoor overall rating,Glassdoor,Employee reviews,0.55,stars,2023-03,FY23,3.769883634609037,3.5227348051816083,214,0.5
+gd_rating,Glassdoor overall rating,Glassdoor,Employee reviews,0.55,stars,2023-04,FY24,3.834962848562925,3.534748666147137,214,0.5
+gd_rating,Glassdoor overall rating,Glassdoor,Employee reviews,0.55,stars,2023-05,FY24,3.7736905023830842,3.5669805418255156,214,0.5
+gd_rating,Glassdoor overall rating,Glassdoor,Employee reviews,0.55,stars,2023-06,FY24,3.6786261001853595,3.5484574952234125,214,0.5
+gd_rating,Glassdoor overall rating,Glassdoor,Employee reviews,0.55,stars,2023-07,FY24,3.6635699574340665,3.537699400354085,214,0.5
+gd_rating,Glassdoor overall rating,Glassdoor,Employee reviews,0.55,stars,2023-08,FY24,3.658480794250951,3.601969202377776,214,0.5
+gd_rating,Glassdoor overall rating,Glassdoor,Employee reviews,0.55,stars,2023-09,FY24,3.598251503028819,3.584513054993071,214,0.5
+gd_rating,Glassdoor overall rating,Glassdoor,Employee reviews,0.55,stars,2023-10,FY24,3.572906714243817,3.573089313651436,214,0.5
+gd_rating,Glassdoor overall rating,Glassdoor,Employee reviews,0.55,stars,2023-11,FY24,3.523626745168522,3.6580571664246664,214,0.5
+gd_rating,Glassdoor overall rating,Glassdoor,Employee reviews,0.55,stars,2023-12,FY24,3.5185526697885616,3.581892666123395,214,0.5
+gd_rating,Glassdoor overall rating,Glassdoor,Employee reviews,0.55,stars,2024-01,FY24,3.499303847153978,3.538225680904796,214,0.5
+gd_rating,Glassdoor overall rating,Glassdoor,Employee reviews,0.55,stars,2024-02,FY24,3.526353509648903,3.54080262601676,214,0.5
+gd_rating,Glassdoor overall rating,Glassdoor,Employee reviews,0.55,stars,2024-03,FY24,3.408711309224137,3.4743702893995554,214,0.5
+gd_rating,Glassdoor overall rating,Glassdoor,Employee reviews,0.55,stars,2024-04,FY25,3.4116843807942874,3.556676094122593,214,0.5
+gd_rating,Glassdoor overall rating,Glassdoor,Employee reviews,0.55,stars,2024-05,FY25,3.477473085820504,3.527979036100182,214,0.5
+gd_rating,Glassdoor overall rating,Glassdoor,Employee reviews,0.55,stars,2024-06,FY25,3.327693876306842,3.610547759399271,214,0.5
+gd_rating,Glassdoor overall rating,Glassdoor,Employee reviews,0.55,stars,2024-07,FY25,3.3892537113224175,3.535897145243491,214,0.5
+gd_rating,Glassdoor overall rating,Glassdoor,Employee reviews,0.55,stars,2024-08,FY25,3.2874331174748286,3.4899031656785615,214,0.5
+gd_rating,Glassdoor overall rating,Glassdoor,Employee reviews,0.55,stars,2024-09,FY25,3.329361956618507,3.556832282963028,214,0.5
+gd_rating,Glassdoor overall rating,Glassdoor,Employee reviews,0.55,stars,2024-10,FY25,3.1978469833517935,3.5186799328554237,214,0.5
+gd_rating,Glassdoor overall rating,Glassdoor,Employee reviews,0.55,stars,2024-11,FY25,3.159605110704778,3.511627419557995,214,0.5
+gd_rating,Glassdoor overall rating,Glassdoor,Employee reviews,0.55,stars,2024-12,FY25,3.1894495918718855,3.466614739802904,214,0.5
+gd_rating,Glassdoor overall rating,Glassdoor,Employee reviews,0.55,stars,2025-01,FY25,3.1574297760907872,3.582446882512208,214,0.5
+gd_rating,Glassdoor overall rating,Glassdoor,Employee reviews,0.55,stars,2025-02,FY25,3.128824848123606,3.5276747739564485,214,0.5
+gd_rating,Glassdoor overall rating,Glassdoor,Employee reviews,0.55,stars,2025-03,FY25,3.1444321594092273,3.53055384915516,214,0.5
+gd_clinical,Glassdoor clinical staff rating,Glassdoor,Employee reviews,0.55,stars,2022-10,FY23,3.883997029385543,3.53145908525328,96,0.5
+gd_clinical,Glassdoor clinical staff rating,Glassdoor,Employee reviews,0.55,stars,2022-11,FY23,3.798611385069087,3.5684968180036445,96,0.5
+gd_clinical,Glassdoor clinical staff rating,Glassdoor,Employee reviews,0.55,stars,2022-12,FY23,3.766988291606149,3.577477000649396,96,0.5
+gd_clinical,Glassdoor clinical staff rating,Glassdoor,Employee reviews,0.55,stars,2023-01,FY23,3.693027618021884,3.548408101381816,96,0.5
+gd_clinical,Glassdoor clinical staff rating,Glassdoor,Employee reviews,0.55,stars,2023-02,FY23,3.6183762777780077,3.5845789165000737,96,0.5
+gd_clinical,Glassdoor clinical staff rating,Glassdoor,Employee reviews,0.55,stars,2023-03,FY23,3.646784837853567,3.5227348051816083,96,0.5
+gd_clinical,Glassdoor clinical staff rating,Glassdoor,Employee reviews,0.55,stars,2023-04,FY24,3.6496725480614662,3.534748666147137,96,0.5
+gd_clinical,Glassdoor clinical staff rating,Glassdoor,Employee reviews,0.55,stars,2023-05,FY24,3.5368076396139725,3.5669805418255156,96,0.5
+gd_clinical,Glassdoor clinical staff rating,Glassdoor,Employee reviews,0.55,stars,2023-06,FY24,3.4858916470890233,3.5484574952234125,96,0.5
+gd_clinical,Glassdoor clinical staff rating,Glassdoor,Employee reviews,0.55,stars,2023-07,FY24,3.4424997871621246,3.537699400354085,96,0.5
+gd_clinical,Glassdoor clinical staff rating,Glassdoor,Employee reviews,0.55,stars,2023-08,FY24,3.4342900338492193,3.601969202377776,96,0.5
+gd_clinical,Glassdoor clinical staff rating,Glassdoor,Employee reviews,0.55,stars,2023-09,FY24,3.3963795578941434,3.584513054993071,96,0.5
+gd_clinical,Glassdoor clinical staff rating,Glassdoor,Employee reviews,0.55,stars,2023-10,FY24,3.2833676306925494,3.573089313651436,96,0.5
+gd_clinical,Glassdoor clinical staff rating,Glassdoor,Employee reviews,0.55,stars,2023-11,FY24,3.25373667412897,3.6580571664246664,96,0.5
+gd_clinical,Glassdoor clinical staff rating,Glassdoor,Employee reviews,0.55,stars,2023-12,FY24,3.3291823549261554,3.581892666123395,96,0.5
+gd_clinical,Glassdoor clinical staff rating,Glassdoor,Employee reviews,0.55,stars,2024-01,FY24,3.1801477070112276,3.538225680904796,96,0.5
+gd_clinical,Glassdoor clinical staff rating,Glassdoor,Employee reviews,0.55,stars,2024-02,FY24,3.1276583863875196,3.54080262601676,96,0.5
+gd_clinical,Glassdoor clinical staff rating,Glassdoor,Employee reviews,0.55,stars,2024-03,FY24,3.061970400828005,3.4743702893995554,96,0.5
+gd_clinical,Glassdoor clinical staff rating,Glassdoor,Employee reviews,0.55,stars,2024-04,FY25,3.097877818927849,3.556676094122593,96,0.5
+gd_clinical,Glassdoor clinical staff rating,Glassdoor,Employee reviews,0.55,stars,2024-05,FY25,3.124082292887913,3.527979036100182,96,0.5
+gd_clinical,Glassdoor clinical staff rating,Glassdoor,Employee reviews,0.55,stars,2024-06,FY25,3.124389687856442,3.610547759399271,96,0.5
+gd_clinical,Glassdoor clinical staff rating,Glassdoor,Employee reviews,0.55,stars,2024-07,FY25,3.0192955873777914,3.535897145243491,96,0.5
+gd_clinical,Glassdoor clinical staff rating,Glassdoor,Employee reviews,0.55,stars,2024-08,FY25,2.9729023496592144,3.4899031656785615,96,0.5
+gd_clinical,Glassdoor clinical staff rating,Glassdoor,Employee reviews,0.55,stars,2024-09,FY25,2.8431474448643703,3.556832282963028,96,0.5
+gd_clinical,Glassdoor clinical staff rating,Glassdoor,Employee reviews,0.55,stars,2024-10,FY25,2.8808765740922992,3.5186799328554237,96,0.5
+gd_clinical,Glassdoor clinical staff rating,Glassdoor,Employee reviews,0.55,stars,2024-11,FY25,2.874873554578841,3.511627419557995,96,0.5
+gd_clinical,Glassdoor clinical staff rating,Glassdoor,Employee reviews,0.55,stars,2024-12,FY25,2.849959632602996,3.466614739802904,96,0.5
+gd_clinical,Glassdoor clinical staff rating,Glassdoor,Employee reviews,0.55,stars,2025-01,FY25,2.829901003454724,3.582446882512208,96,0.5
+gd_clinical,Glassdoor clinical staff rating,Glassdoor,Employee reviews,0.55,stars,2025-02,FY25,2.7017259472003214,3.5276747739564485,96,0.5
+gd_clinical,Glassdoor clinical staff rating,Glassdoor,Employee reviews,0.55,stars,2025-03,FY25,2.699166569990368,3.53055384915516,96,0.5
+vacancies,Open veterinary surgeon vacancies,Indeed,Labour market,0.68,postings,2022-10,FY23,65.33100262939574,,1180,0.2
+vacancies,Open veterinary surgeon vacancies,Indeed,Labour market,0.68,postings,2022-11,FY23,78.18818625788437,,1180,0.2
+vacancies,Open veterinary surgeon vacancies,Indeed,Labour market,0.68,postings,2022-12,FY23,71.87954889141872,,1180,0.2
+vacancies,Open veterinary surgeon vacancies,Indeed,Labour market,0.68,postings,2023-01,FY23,75.83468613777212,,1180,0.2
+vacancies,Open veterinary surgeon vacancies,Indeed,Labour market,0.68,postings,2023-02,FY23,84.08587581059425,,1180,0.2
+vacancies,Open veterinary surgeon vacancies,Indeed,Labour market,0.68,postings,2023-03,FY23,83.9037301843339,,1180,0.2
+vacancies,Open veterinary surgeon vacancies,Indeed,Labour market,0.68,postings,2023-04,FY24,70.49631077537794,,1180,0.2
+vacancies,Open veterinary surgeon vacancies,Indeed,Labour market,0.68,postings,2023-05,FY24,78.52442043603718,,1180,0.2
+vacancies,Open veterinary surgeon vacancies,Indeed,Labour market,0.68,postings,2023-06,FY24,99.07989759553685,,1180,0.2
+vacancies,Open veterinary surgeon vacancies,Indeed,Labour market,0.68,postings,2023-07,FY24,82.07285670481178,,1180,0.2
+vacancies,Open veterinary surgeon vacancies,Indeed,Labour market,0.68,postings,2023-08,FY24,74.49309200173286,,1180,0.2
+vacancies,Open veterinary surgeon vacancies,Indeed,Labour market,0.68,postings,2023-09,FY24,98.0118221774408,,1180,0.2
+vacancies,Open veterinary surgeon vacancies,Indeed,Labour market,0.68,postings,2023-10,FY24,108.2614067183746,,1180,0.2
+vacancies,Open veterinary surgeon vacancies,Indeed,Labour market,0.68,postings,2023-11,FY24,103.81282681413313,,1180,0.2
+vacancies,Open veterinary surgeon vacancies,Indeed,Labour market,0.68,postings,2023-12,FY24,105.74566215588848,,1180,0.2
+vacancies,Open veterinary surgeon vacancies,Indeed,Labour market,0.68,postings,2024-01,FY24,118.96886494721059,,1180,0.2
+vacancies,Open veterinary surgeon vacancies,Indeed,Labour market,0.68,postings,2024-02,FY24,110.24832292842626,,1180,0.2
+vacancies,Open veterinary surgeon vacancies,Indeed,Labour market,0.68,postings,2024-03,FY24,120.61579851032542,,1180,0.2
+vacancies,Open veterinary surgeon vacancies,Indeed,Labour market,0.68,postings,2024-04,FY25,103.14558747239722,,1180,0.2
+vacancies,Open veterinary surgeon vacancies,Indeed,Labour market,0.68,postings,2024-05,FY25,131.61807958606857,,1180,0.2
+vacancies,Open veterinary surgeon vacancies,Indeed,Labour market,0.68,postings,2024-06,FY25,146.4127652130793,,1180,0.2
+vacancies,Open veterinary surgeon vacancies,Indeed,Labour market,0.68,postings,2024-07,FY25,137.7526831127367,,1180,0.2
+vacancies,Open veterinary surgeon vacancies,Indeed,Labour market,0.68,postings,2024-08,FY25,124.0361668459584,,1180,0.2
+vacancies,Open veterinary surgeon vacancies,Indeed,Labour market,0.68,postings,2024-09,FY25,137.40039705521733,,1180,0.2
+vacancies,Open veterinary surgeon vacancies,Indeed,Labour market,0.68,postings,2024-10,FY25,135.24154012298462,,1180,0.2
+vacancies,Open veterinary surgeon vacancies,Indeed,Labour market,0.68,postings,2024-11,FY25,144.6913612774151,,1180,0.2
+vacancies,Open veterinary surgeon vacancies,Indeed,Labour market,0.68,postings,2024-12,FY25,114.01801001966216,,1180,0.2
+vacancies,Open veterinary surgeon vacancies,Indeed,Labour market,0.68,postings,2025-01,FY25,142.33409265620173,,1180,0.2
+vacancies,Open veterinary surgeon vacancies,Indeed,Labour market,0.68,postings,2025-02,FY25,158.39452198113025,,1180,0.2
+vacancies,Open veterinary surgeon vacancies,Indeed,Labour market,0.68,postings,2025-03,FY25,157.75772226782576,,1180,0.2
+time_to_fill,Median days to fill a vet role,Indeed,Labour market,0.68,days,2022-10,FY23,37.13399995431048,,1180,0.2
+time_to_fill,Median days to fill a vet role,Indeed,Labour market,0.68,days,2022-11,FY23,34.64529670419047,,1180,0.2
+time_to_fill,Median days to fill a vet role,Indeed,Labour market,0.68,days,2022-12,FY23,34.822532799615054,,1180,0.2
+time_to_fill,Median days to fill a vet role,Indeed,Labour market,0.68,days,2023-01,FY23,36.000946601315405,,1180,0.2
+time_to_fill,Median days to fill a vet role,Indeed,Labour market,0.68,days,2023-02,FY23,41.62079575125883,,1180,0.2
+time_to_fill,Median days to fill a vet role,Indeed,Labour market,0.68,days,2023-03,FY23,40.41891450587884,,1180,0.2
+time_to_fill,Median days to fill a vet role,Indeed,Labour market,0.68,days,2023-04,FY24,42.20623172127544,,1180,0.2
+time_to_fill,Median days to fill a vet role,Indeed,Labour market,0.68,days,2023-05,FY24,43.52819123068379,,1180,0.2
+time_to_fill,Median days to fill a vet role,Indeed,Labour market,0.68,days,2023-06,FY24,42.142907983608765,,1180,0.2
+time_to_fill,Median days to fill a vet role,Indeed,Labour market,0.68,days,2023-07,FY24,42.58801238068457,,1180,0.2
+time_to_fill,Median days to fill a vet role,Indeed,Labour market,0.68,days,2023-08,FY24,48.47507579858107,,1180,0.2
+time_to_fill,Median days to fill a vet role,Indeed,Labour market,0.68,days,2023-09,FY24,47.11194233714139,,1180,0.2
+time_to_fill,Median days to fill a vet role,Indeed,Labour market,0.68,days,2023-10,FY24,48.33512096764249,,1180,0.2
+time_to_fill,Median days to fill a vet role,Indeed,Labour market,0.68,days,2023-11,FY24,49.83685696994376,,1180,0.2
+time_to_fill,Median days to fill a vet role,Indeed,Labour market,0.68,days,2023-12,FY24,48.919067912187444,,1180,0.2
+time_to_fill,Median days to fill a vet role,Indeed,Labour market,0.68,days,2024-01,FY24,55.14363324800983,,1180,0.2
+time_to_fill,Median days to fill a vet role,Indeed,Labour market,0.68,days,2024-02,FY24,54.03621879862533,,1180,0.2
+time_to_fill,Median days to fill a vet role,Indeed,Labour market,0.68,days,2024-03,FY24,54.23129862001519,,1180,0.2
+time_to_fill,Median days to fill a vet role,Indeed,Labour market,0.68,days,2024-04,FY25,53.70900632815108,,1180,0.2
+time_to_fill,Median days to fill a vet role,Indeed,Labour market,0.68,days,2024-05,FY25,58.556736382281706,,1180,0.2
+time_to_fill,Median days to fill a vet role,Indeed,Labour market,0.68,days,2024-06,FY25,61.10611837272174,,1180,0.2
+time_to_fill,Median days to fill a vet role,Indeed,Labour market,0.68,days,2024-07,FY25,60.97375819570463,,1180,0.2
+time_to_fill,Median days to fill a vet role,Indeed,Labour market,0.68,days,2024-08,FY25,64.60559325662372,,1180,0.2
+time_to_fill,Median days to fill a vet role,Indeed,Labour market,0.68,days,2024-09,FY25,61.39004924637744,,1180,0.2
+time_to_fill,Median days to fill a vet role,Indeed,Labour market,0.68,days,2024-10,FY25,61.817429693951645,,1180,0.2
+time_to_fill,Median days to fill a vet role,Indeed,Labour market,0.68,days,2024-11,FY25,66.95876968071971,,1180,0.2
+time_to_fill,Median days to fill a vet role,Indeed,Labour market,0.68,days,2024-12,FY25,67.68192075968123,,1180,0.2
+time_to_fill,Median days to fill a vet role,Indeed,Labour market,0.68,days,2025-01,FY25,67.80042033760343,,1180,0.2
+time_to_fill,Median days to fill a vet role,Indeed,Labour market,0.68,days,2025-02,FY25,64.90640328295085,,1180,0.2
+time_to_fill,Median days to fill a vet role,Indeed,Labour market,0.68,days,2025-03,FY25,69.33164305559511,,1180,0.2
+cma_mentions,Transcripts citing CMA pricing review,AlphaSense,Expert network,0.7,per month,2022-10,FY23,4.0,,61,0.5
+cma_mentions,Transcripts citing CMA pricing review,AlphaSense,Expert network,0.7,per month,2022-11,FY23,5.0,,61,0.5
+cma_mentions,Transcripts citing CMA pricing review,AlphaSense,Expert network,0.7,per month,2022-12,FY23,4.0,,61,0.5
+cma_mentions,Transcripts citing CMA pricing review,AlphaSense,Expert network,0.7,per month,2023-01,FY23,2.0,,61,0.5
+cma_mentions,Transcripts citing CMA pricing review,AlphaSense,Expert network,0.7,per month,2023-02,FY23,2.0,,61,0.5
+cma_mentions,Transcripts citing CMA pricing review,AlphaSense,Expert network,0.7,per month,2023-03,FY23,7.0,,61,0.5
+cma_mentions,Transcripts citing CMA pricing review,AlphaSense,Expert network,0.7,per month,2023-04,FY24,6.0,,61,0.5
+cma_mentions,Transcripts citing CMA pricing review,AlphaSense,Expert network,0.7,per month,2023-05,FY24,8.0,,61,0.5
+cma_mentions,Transcripts citing CMA pricing review,AlphaSense,Expert network,0.7,per month,2023-06,FY24,7.0,,61,0.5
+cma_mentions,Transcripts citing CMA pricing review,AlphaSense,Expert network,0.7,per month,2023-07,FY24,9.0,,61,0.5
+cma_mentions,Transcripts citing CMA pricing review,AlphaSense,Expert network,0.7,per month,2023-08,FY24,12.0,,61,0.5
+cma_mentions,Transcripts citing CMA pricing review,AlphaSense,Expert network,0.7,per month,2023-09,FY24,12.0,,61,0.5
+cma_mentions,Transcripts citing CMA pricing review,AlphaSense,Expert network,0.7,per month,2023-10,FY24,13.0,,61,0.5
+cma_mentions,Transcripts citing CMA pricing review,AlphaSense,Expert network,0.7,per month,2023-11,FY24,14.0,,61,0.5
+cma_mentions,Transcripts citing CMA pricing review,AlphaSense,Expert network,0.7,per month,2023-12,FY24,14.0,,61,0.5
+cma_mentions,Transcripts citing CMA pricing review,AlphaSense,Expert network,0.7,per month,2024-01,FY24,14.0,,61,0.5
+cma_mentions,Transcripts citing CMA pricing review,AlphaSense,Expert network,0.7,per month,2024-02,FY24,22.0,,61,0.5
+cma_mentions,Transcripts citing CMA pricing review,AlphaSense,Expert network,0.7,per month,2024-03,FY24,20.0,,61,0.5
+cma_mentions,Transcripts citing CMA pricing review,AlphaSense,Expert network,0.7,per month,2024-04,FY25,23.0,,61,0.5
+cma_mentions,Transcripts citing CMA pricing review,AlphaSense,Expert network,0.7,per month,2024-05,FY25,22.0,,61,0.5
+cma_mentions,Transcripts citing CMA pricing review,AlphaSense,Expert network,0.7,per month,2024-06,FY25,27.0,,61,0.5
+cma_mentions,Transcripts citing CMA pricing review,AlphaSense,Expert network,0.7,per month,2024-07,FY25,26.0,,61,0.5
+cma_mentions,Transcripts citing CMA pricing review,AlphaSense,Expert network,0.7,per month,2024-08,FY25,29.0,,61,0.5
+cma_mentions,Transcripts citing CMA pricing review,AlphaSense,Expert network,0.7,per month,2024-09,FY25,30.0,,61,0.5
+cma_mentions,Transcripts citing CMA pricing review,AlphaSense,Expert network,0.7,per month,2024-10,FY25,34.0,,61,0.5
+cma_mentions,Transcripts citing CMA pricing review,AlphaSense,Expert network,0.7,per month,2024-11,FY25,37.0,,61,0.5
+cma_mentions,Transcripts citing CMA pricing review,AlphaSense,Expert network,0.7,per month,2024-12,FY25,38.0,,61,0.5
+cma_mentions,Transcripts citing CMA pricing review,AlphaSense,Expert network,0.7,per month,2025-01,FY25,41.0,,61,0.5
+cma_mentions,Transcripts citing CMA pricing review,AlphaSense,Expert network,0.7,per month,2025-02,FY25,44.0,,61,0.5
+cma_mentions,Transcripts citing CMA pricing review,AlphaSense,Expert network,0.7,per month,2025-03,FY25,45.0,,61,0.5
+news_sent,"Media sentiment, net",Quid,Media,0.5,index,2022-10,FY23,0.12649911335463332,,430,0.2
+news_sent,"Media sentiment, net",Quid,Media,0.5,index,2022-11,FY23,0.22546290844288958,,430,0.2
+news_sent,"Media sentiment, net",Quid,Media,0.5,index,2022-12,FY23,0.13581155053199973,,430,0.2
+news_sent,"Media sentiment, net",Quid,Media,0.5,index,2023-01,FY23,0.1137590923164438,,430,0.2
+news_sent,"Media sentiment, net",Quid,Media,0.5,index,2023-02,FY23,0.08499882934556387,,430,0.2
+news_sent,"Media sentiment, net",Quid,Media,0.5,index,2023-03,FY23,0.08837103880747227,,430,0.2
+news_sent,"Media sentiment, net",Quid,Media,0.5,index,2023-04,FY24,0.0315840189974881,,430,0.2
+news_sent,"Media sentiment, net",Quid,Media,0.5,index,2023-05,FY24,-0.012201520370587658,,430,0.2
+news_sent,"Media sentiment, net",Quid,Media,0.5,index,2023-06,FY24,0.07923109370876377,,430,0.2
+news_sent,"Media sentiment, net",Quid,Media,0.5,index,2023-07,FY24,-0.07663638586490051,,430,0.2
+news_sent,"Media sentiment, net",Quid,Media,0.5,index,2023-08,FY24,0.03900043844154584,,430,0.2
+news_sent,"Media sentiment, net",Quid,Media,0.5,index,2023-09,FY24,-0.05675227898620838,,430,0.2
+news_sent,"Media sentiment, net",Quid,Media,0.5,index,2023-10,FY24,-0.07335178959488349,,430,0.2
+news_sent,"Media sentiment, net",Quid,Media,0.5,index,2023-11,FY24,-0.09387996181453297,,430,0.2
+news_sent,"Media sentiment, net",Quid,Media,0.5,index,2023-12,FY24,-0.23407730917298097,,430,0.2
+news_sent,"Media sentiment, net",Quid,Media,0.5,index,2024-01,FY24,-0.17396337114467847,,430,0.2
+news_sent,"Media sentiment, net",Quid,Media,0.5,index,2024-02,FY24,-0.20757941222126758,,430,0.2
+news_sent,"Media sentiment, net",Quid,Media,0.5,index,2024-03,FY24,-0.24747070519588985,,430,0.2
+news_sent,"Media sentiment, net",Quid,Media,0.5,index,2024-04,FY25,-0.24043634216963808,,430,0.2
+news_sent,"Media sentiment, net",Quid,Media,0.5,index,2024-05,FY25,-0.20908980906713992,,430,0.2
+news_sent,"Media sentiment, net",Quid,Media,0.5,index,2024-06,FY25,-0.25244689429263156,,430,0.2
+news_sent,"Media sentiment, net",Quid,Media,0.5,index,2024-07,FY25,-0.36011159993864705,,430,0.2
+news_sent,"Media sentiment, net",Quid,Media,0.5,index,2024-08,FY25,-0.31770037590257194,,430,0.2
+news_sent,"Media sentiment, net",Quid,Media,0.5,index,2024-09,FY25,-0.4035681129048295,,430,0.2
+news_sent,"Media sentiment, net",Quid,Media,0.5,index,2024-10,FY25,-0.4550005375227971,,430,0.2
+news_sent,"Media sentiment, net",Quid,Media,0.5,index,2024-11,FY25,-0.38715660165380883,,430,0.2
+news_sent,"Media sentiment, net",Quid,Media,0.5,index,2024-12,FY25,-0.4276325826291853,,430,0.2
+news_sent,"Media sentiment, net",Quid,Media,0.5,index,2025-01,FY25,-0.3803112169361632,,430,0.2
+news_sent,"Media sentiment, net",Quid,Media,0.5,index,2025-02,FY25,-0.534016871593891,,430,0.2
+news_sent,"Media sentiment, net",Quid,Media,0.5,index,2025-03,FY25,-0.5790965881213274,,430,0.2
