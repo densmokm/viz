@@ -1,0 +1,980 @@
+<title>Meridian Revenue Bridge</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;450;500;600;700&display=swap">
+<style>
+:root{
+  --ground:#eef1f5; --surface:#ffffff; --surface-2:#e4e9ef; --surface-3:#f6f8fa;
+  --ink:#101519; --ink-2:#495568; --ink-3:#79869a; --rule:#d5dce5; --rule-2:#c0cad6;
+  --accent:#173a5e; --accent-soft:#dce8f5;
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a;
+  --pos:#2a78d6; --neg:#e34948; --total:#334155;
+  --good:#0ca30c; --warn:#fab219; --serious:#ec835a; --crit:#d03b3b;
+  --chip-good:#e3f4e3; --chip-warn:#fdf1d6; --chip-serious:#fbe7dd; --chip-neutral:#e7ebf1;
+  --shadow:0 1px 2px rgba(16,21,25,.06), 0 8px 24px -12px rgba(16,21,25,.18);
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --ground:#0f1318; --surface:#171c23; --surface-2:#232a34; --surface-3:#1b2129;
+  --ink:#eef2f7; --ink-2:#aab6c6; --ink-3:#78859a; --rule:#2a323d; --rule-2:#3a4450;
+  --accent:#8fb8e2; --accent-soft:#1d2c3d;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70;
+  --pos:#3987e5; --neg:#e66767; --total:#94a3b5;
+  --chip-good:#12301a; --chip-warn:#332709; --chip-serious:#33210f; --chip-neutral:#242b35;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --ground:#0f1318; --surface:#171c23; --surface-2:#232a34; --surface-3:#1b2129;
+  --ink:#eef2f7; --ink-2:#aab6c6; --ink-3:#78859a; --rule:#2a323d; --rule-2:#3a4450;
+  --accent:#8fb8e2; --accent-soft:#1d2c3d;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70;
+  --pos:#3987e5; --neg:#e66767; --total:#94a3b5;
+  --chip-good:#12301a; --chip-warn:#332709; --chip-serious:#33210f; --chip-neutral:#242b35;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--ground); color:var(--ink);
+  font-family:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  font-size:16px; line-height:1.6; -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1120px; margin:0 auto; padding-inline:clamp(16px,4vw,40px)}
+h1,h2,h3{text-wrap:balance; margin:0}
+h1{font-family:Newsreader,Georgia,serif; font-weight:500; font-size:clamp(2rem,4.6vw,2.9rem); line-height:1.1; letter-spacing:-.015em}
+h2{font-family:Newsreader,Georgia,serif; font-weight:500; font-size:clamp(1.4rem,3vw,1.85rem); line-height:1.2; letter-spacing:-.01em}
+h3{font-size:1rem; font-weight:600; letter-spacing:-.005em}
+p{margin:0}
+a{color:var(--accent)}
+.label{font-size:.7rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-3)}
+.lede{font-size:1.06rem; color:var(--ink-2); max-width:66ch}
+.small{font-size:.84rem; color:var(--ink-2)}
+.tiny{font-size:.76rem; color:var(--ink-3)}
+.num{font-family:"IBM Plex Mono",ui-monospace,monospace; font-variant-numeric:tabular-nums}
+
+/* ---------- top bar ---------- */
+.topbar{position:sticky; top:0; z-index:40; background:color-mix(in srgb,var(--ground) 88%,transparent);
+  backdrop-filter:blur(10px); border-bottom:1px solid var(--rule)}
+.topbar .wrap{display:flex; align-items:center; gap:20px; height:52px}
+.brandmark{display:flex; align-items:center; gap:9px; font-weight:600; font-size:.9rem; white-space:nowrap}
+.brandmark i{width:9px; height:9px; border-radius:2px; background:var(--s1); display:block}
+.navlinks{display:flex; gap:18px; margin-left:auto; overflow-x:auto; scrollbar-width:none}
+.navlinks::-webkit-scrollbar{display:none}
+.navlinks a{color:var(--ink-2); text-decoration:none; font-size:.83rem; white-space:nowrap; padding:4px 0; border-bottom:2px solid transparent}
+.navlinks a:hover{color:var(--ink); border-bottom-color:var(--rule-2)}
+@media (max-width:720px){ .navlinks{display:none} }
+
+/* ---------- header ---------- */
+header.hero{padding-block:clamp(34px,6vw,60px) 30px}
+.eyebrow{display:flex; align-items:center; gap:10px; margin-bottom:16px; flex-wrap:wrap}
+.eyebrow span{color:var(--ink-3)}
+.codename{background:var(--accent-soft); color:var(--accent); padding:2px 9px; border-radius:3px; font-weight:600}
+.metarow{display:flex; flex-wrap:wrap; gap:0; margin-top:26px; border-top:1px solid var(--rule); border-bottom:1px solid var(--rule)}
+.metarow div{flex:1 1 165px; padding:13px 18px 13px 0; border-right:1px solid var(--rule)}
+.metarow div:last-child{border-right:0}
+.metarow dt{font-size:.7rem; font-weight:600; letter-spacing:.09em; text-transform:uppercase; color:var(--ink-3); margin-bottom:3px}
+.metarow dd{margin:0; font-size:.9rem; font-weight:450}
+
+/* ---------- verdict ---------- */
+.verdict{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:1px; background:var(--rule);
+  border:1px solid var(--rule); border-radius:6px; overflow:hidden; margin-block:8px 26px}
+.verdict > div{background:var(--surface); padding:24px 26px 22px}
+.verdict .fig{font-size:clamp(2.4rem,6.5vw,3.4rem); font-weight:600; line-height:1; letter-spacing:-.03em; margin:10px 0 6px}
+.verdict .reported .fig{color:var(--ink)}
+.verdict .underlying .fig{color:var(--neg)}
+.verdict .cap{font-size:.85rem; color:var(--ink-2)}
+@media (max-width:620px){ .verdict{grid-template-columns:1fr} }
+.thesis{background:var(--surface); border:1px solid var(--rule); border-left:3px solid var(--s2);
+  border-radius:4px; padding:20px 24px; margin-bottom:40px; font-size:1.02rem; color:var(--ink-2); max-width:none}
+.thesis strong{color:var(--ink); font-weight:600}
+
+/* ---------- sections ---------- */
+section{padding-block:34px; border-top:1px solid var(--rule)}
+.sechead{display:flex; align-items:baseline; gap:16px; flex-wrap:wrap; margin-bottom:8px}
+.sechead .amt{font-family:"IBM Plex Mono",monospace; font-size:.82rem; font-weight:500; color:var(--ink-3);
+  background:var(--surface-2); padding:3px 9px; border-radius:3px; white-space:nowrap}
+.secintro{margin-block:12px 26px}
+
+/* ---------- panels & charts ---------- */
+.panel{background:var(--surface); border:1px solid var(--rule); border-radius:6px; padding:22px clamp(14px,2.4vw,24px)}
+.panelhead{display:flex; align-items:flex-start; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-bottom:6px}
+.chart{width:100%; min-height:60px}
+.chart svg{display:block; width:100%; height:auto; overflow:visible}
+figcaption{font-size:.78rem; color:var(--ink-3); margin-top:12px; line-height:1.5}
+.grid2{display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:18px}
+.grid3{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:18px}
+
+/* ---------- controls ---------- */
+.controls{display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-bottom:18px}
+.tabs{display:inline-flex; background:var(--surface-2); border-radius:5px; padding:3px; gap:2px}
+.tabs button{appearance:none; border:0; background:transparent; color:var(--ink-2); font:inherit; font-size:.84rem;
+  font-weight:500; padding:6px 13px; border-radius:3px; cursor:pointer; white-space:nowrap}
+.tabs button[aria-selected="true"]{background:var(--surface); color:var(--ink); box-shadow:0 1px 2px rgba(0,0,0,.10); font-weight:600}
+.tabs button:focus-visible, .toggle:focus-visible{outline:2px solid var(--s1); outline-offset:2px}
+.toggle{appearance:none; border:1px solid var(--rule-2); background:var(--surface); color:var(--ink-2); font:inherit;
+  font-size:.8rem; font-weight:500; padding:6px 12px; border-radius:5px; cursor:pointer; display:inline-flex; align-items:center; gap:7px}
+.toggle[aria-pressed="true"]{border-color:var(--s1); color:var(--ink); background:var(--accent-soft)}
+.toggle i{width:8px; height:8px; border-radius:50%; background:var(--rule-2); display:block}
+.toggle[aria-pressed="true"] i{background:var(--s1)}
+
+/* ---------- legend ---------- */
+.legend{display:flex; gap:16px; flex-wrap:wrap; align-items:center; font-size:.8rem; color:var(--ink-2); margin-top:14px}
+.legend span{display:inline-flex; align-items:center; gap:7px}
+.legend b{width:11px; height:11px; border-radius:2px; display:block}
+
+/* ---------- tables ---------- */
+.tablewrap{overflow-x:auto; margin-top:4px}
+table{border-collapse:collapse; width:100%; font-size:.85rem; min-width:480px}
+th,td{text-align:right; padding:9px 10px; border-bottom:1px solid var(--rule); white-space:nowrap}
+th:first-child,td:first-child{text-align:left; white-space:normal}
+thead th{font-size:.7rem; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-3);
+  border-bottom:1px solid var(--rule-2); vertical-align:bottom}
+tbody tr:last-child td{border-bottom:0}
+tbody tr.totalrow td{border-top:1px solid var(--rule-2); font-weight:600; background:var(--surface-3)}
+td.n{font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums}
+td.neg{color:var(--neg)}
+.bar-cell{position:relative; min-width:96px}
+.bar-cell i{position:absolute; left:10px; top:50%; transform:translateY(-50%); height:9px; border-radius:2px; display:block}
+
+/* ---------- chips ---------- */
+.chip{display:inline-flex; align-items:center; gap:6px; font-size:.74rem; font-weight:600; padding:2px 8px; border-radius:3px; white-space:nowrap}
+.chip i{width:7px; height:7px; border-radius:50%; display:block; flex:none}
+.chip.good{background:var(--chip-good); color:var(--good)} .chip.good i{background:var(--good)}
+.chip.warn{background:var(--chip-warn); color:#8a6200} .chip.warn i{background:var(--warn)}
+.chip.serious{background:var(--chip-serious); color:#a8501f} .chip.serious i{background:var(--serious)}
+.chip.neutral{background:var(--chip-neutral); color:var(--ink-2)} .chip.neutral i{background:var(--ink-3)}
+:root[data-theme="dark"] .chip.warn, :root[data-theme="dark"] .chip.serious{color:var(--ink)}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]) .chip.warn,
+  :root:not([data-theme="light"]) .chip.serious{color:var(--ink)} }
+
+/* ---------- stat tiles ---------- */
+.stats{display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:1px; background:var(--rule);
+  border:1px solid var(--rule); border-radius:6px; overflow:hidden}
+.stat{background:var(--surface); padding:16px 18px}
+.stat .v{font-size:1.6rem; font-weight:600; line-height:1.15; letter-spacing:-.02em; margin:6px 0 3px}
+.stat .k{font-size:.7rem; font-weight:600; letter-spacing:.09em; text-transform:uppercase; color:var(--ink-3)}
+.stat .d{font-size:.78rem; color:var(--ink-3); line-height:1.45}
+
+/* ---------- callout ---------- */
+.callout{border:1px solid var(--rule); border-left:3px solid var(--crit); background:var(--surface);
+  border-radius:4px; padding:18px 22px; display:grid; gap:8px}
+.callout.ok{border-left-color:var(--good)}
+.callout h3{display:flex; align-items:center; gap:9px}
+.callout h3::before{content:""; width:7px; height:7px; border-radius:50%; background:var(--crit); flex:none}
+.callout.ok h3::before{background:var(--good)}
+
+/* ---------- lists ---------- */
+ol.qs{counter-reset:q; list-style:none; padding:0; margin:0; display:grid; gap:14px}
+ol.qs li{counter-increment:q; display:grid; grid-template-columns:auto 1fr; gap:14px; align-items:start}
+ol.qs li::before{content:"Q" counter(q); font-family:"IBM Plex Mono",monospace; font-size:.74rem; font-weight:600;
+  color:var(--accent); background:var(--accent-soft); padding:3px 7px; border-radius:3px; margin-top:2px}
+ul.plain{list-style:none; padding:0; margin:0; display:grid; gap:10px}
+ul.plain li{display:grid; grid-template-columns:auto 1fr; gap:11px; align-items:start; font-size:.9rem; color:var(--ink-2)}
+ul.plain li::before{content:""; width:5px; height:5px; border-radius:50%; background:var(--rule-2); margin-top:9px}
+code{font-family:"IBM Plex Mono",monospace; font-size:.86em; background:var(--surface-2); padding:1px 5px; border-radius:3px}
+.formula{font-family:"IBM Plex Mono",monospace; font-size:.82rem; background:var(--surface-3); border:1px solid var(--rule);
+  border-radius:4px; padding:14px 16px; overflow-x:auto; white-space:pre; line-height:1.7; color:var(--ink-2)}
+
+/* ---------- tooltip ---------- */
+#tip{position:fixed; z-index:80; pointer-events:none; opacity:0; transition:opacity .1s;
+  background:var(--surface); color:var(--ink); border:1px solid var(--rule-2); border-radius:5px;
+  box-shadow:var(--shadow); padding:9px 12px; font-size:.8rem; line-height:1.5; max-width:270px}
+#tip .t{font-weight:600; margin-bottom:3px}
+#tip .r{display:flex; justify-content:space-between; gap:16px}
+#tip .r span:last-child{font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums}
+
+footer{padding-block:34px 60px; border-top:1px solid var(--rule); color:var(--ink-3); font-size:.82rem}
+[hidden]{display:none !important}
+@media (prefers-reduced-motion:reduce){ *{transition:none !important; animation:none !important} }
+</style>
+
+<div class="topbar"><div class="wrap">
+  <div class="brandmark"><i></i> Project Palette</div>
+  <nav class="navlinks">
+    <a href="#bridge">Bridge</a><a href="#quality">Quality of growth</a><a href="#price">Price</a>
+    <a href="#volume">Volume &amp; mix</a><a href="#customers">Customers</a><a href="#sowhat">So what</a><a href="#method">Method</a>
+  </nav>
+</div></div>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="eyebrow label"><span class="codename">Project Palette</span><span>Financial due diligence</span><span>&middot;</span><span>Revenue decomposition</span></div>
+  <h1>Meridian Coatings Ltd</h1>
+  <p class="lede" style="margin-top:14px">Management reports 18.6% revenue growth and a 200bp gross margin improvement. This is what the invoice ledger says actually happened.</p>
+  <dl class="metarow" id="metarow"></dl>
+</header>
+
+<div class="verdict">
+  <div class="reported">
+    <div class="label">Reported growth, FY24 &rarr; FY25</div>
+    <div class="fig num" id="figReported">&mdash;</div>
+    <div class="cap" id="capReported"></div>
+  </div>
+  <div class="underlying">
+    <div class="label">Underlying growth, same period</div>
+    <div class="fig num" id="figUnderlying">&mdash;</div>
+    <div class="cap">Excluding passthrough pricing, the one-off contract and FX, and haircutting new logos for observed early attrition</div>
+  </div>
+</div>
+
+<p class="thesis" id="thesis"></p>
+
+<section id="bridge">
+  <div class="sechead"><h2>One movement, three ways of reading it</h2><span class="amt" id="bridgeAmt"></span></div>
+  <p class="secintro lede">A revenue bridge is only useful if it ties. These three views decompose the identical
+     movement &mdash; commercially, by customer, and combined &mdash; and each reconciles to the same closing number.</p>
+
+  <div class="panel">
+    <div class="controls">
+      <div class="tabs" role="tablist" aria-label="Bridge view">
+        <button role="tab" id="tab-unified" aria-selected="true" data-view="unified">Unified</button>
+        <button role="tab" id="tab-commercial" aria-selected="false" data-view="commercial">Commercial lens</button>
+        <button role="tab" id="tab-customer" aria-selected="false" data-view="customer">Customer lens</button>
+      </div>
+      <button class="toggle" id="btnDurability" aria-pressed="false"><i></i> Shade by durability</button>
+      <button class="toggle" id="btnTable" aria-pressed="false"><i></i> Table view</button>
+    </div>
+    <figure style="margin:0">
+      <div class="chart" id="bridgeChart"></div>
+      <div class="legend" id="bridgeLegend"></div>
+      <figcaption id="bridgeCap"></figcaption>
+    </figure>
+    <div class="tablewrap" id="bridgeTable" hidden></div>
+  </div>
+</section>
+
+<section id="quality">
+  <div class="sechead"><h2>Quality of growth</h2><span class="amt">18.6% &rarr; &minus;1.8%</span></div>
+  <p class="secintro lede">Each component of the bridge is rated for whether it repeats in FY26. Strip the
+     components that do not, and the growth rate inverts.</p>
+  <div class="grid2" style="align-items:start">
+    <div class="panel">
+      <div class="panelhead"><h3>The step-down</h3></div>
+      <figure style="margin:0"><div class="chart" id="stepChart"></div>
+        <figcaption>Each step removes one non-durable component from the reported growth rate.</figcaption></figure>
+    </div>
+    <div class="panel">
+      <div class="panelhead"><h3>Component ratings</h3></div>
+      <div class="tablewrap" id="qualityTable"></div>
+    </div>
+  </div>
+</section>
+
+<section id="price">
+  <div class="sechead"><h2>Price did the work, and it is not Meridian's price</h2><span class="amt" id="priceAmt"></span></div>
+  <p class="secintro lede">Meridian's contracts reset selling prices against a resin and titanium-dioxide index
+     on a one-quarter lag. Through FY24 that lag squeezed margin as costs ran ahead of prices. Through FY25 it
+     did the reverse: costs rolled over while prices kept catching up. Both effects are timing.</p>
+
+  <div class="panel">
+    <div class="panelhead"><h3>Input cost index vs. realised selling price</h3>
+      <span class="tiny">Both rebased to FY24 average = 100</span></div>
+    <figure style="margin:0"><div class="chart" id="idxChart"></div>
+      <div class="legend" id="idxLegend"></div>
+      <figcaption>Realised price is a like-for-like index: the same SKUs at the same weights, so mix cannot move it.
+        The gap between the two lines is the passthrough lag &mdash; negative through FY24, positive from Oct&#8209;24.</figcaption></figure>
+  </div>
+
+  <div class="grid2" style="margin-top:18px; align-items:start">
+    <div class="panel">
+      <div class="panelhead"><h3>Reported vs. normalised gross margin</h3></div>
+      <figure style="margin:0"><div class="chart" id="gmChart"></div>
+        <div class="legend" id="gmLegend"></div>
+        <figcaption>Normalised margin re-prices every line as if contractual resets were instant.
+          It is flat to slightly down. The reported improvement is the lag unwinding.</figcaption></figure>
+    </div>
+    <div class="panel">
+      <div class="panelhead"><h3>Price realisation by segment</h3><span class="tiny">Like-for-like, mix-neutral</span></div>
+      <figure style="margin:0"><div class="chart" id="segChart"></div>
+        <figcaption>The spread is only two percentage points, but it runs the wrong way: the two largest
+          segments &mdash; 60% of the book &mdash; recovered the least. Closing that gap is worth roughly
+          &pound;0.5m of revenue.</figcaption></figure>
+      <div class="tablewrap" id="segTable" style="margin-top:14px"></div>
+    </div>
+  </div>
+
+  <div class="callout" style="margin-top:18px">
+    <h3>Quality of earnings adjustment</h3>
+    <p class="small" id="qoeText"></p>
+    <div class="stats" style="margin-top:6px" id="qoeStats"></div>
+  </div>
+</section>
+
+<section id="volume">
+  <div class="sechead"><h2>What the business actually shipped</h2><span class="amt" id="volAmt"></span></div>
+  <p class="secintro lede">Volume is the part of a revenue line a buyer is really buying. Strip price and the
+     one-off contract out of each quarter and the picture is flat &mdash; in a year the company described as
+     one of strong demand.</p>
+
+  <div class="panel">
+    <div class="panelhead"><h3>Year-on-year growth by quarter</h3><span class="tiny">FY25 vs. FY24</span></div>
+    <figure style="margin:0"><div class="chart" id="yoyChart"></div>
+      <div class="legend" id="yoyLegend"></div>
+      <figcaption>Volume is measured at constant FY24 SKU prices and excludes the one-off programme, so it is a
+        clean read on units shipped. The wedge between the two bars is price.</figcaption></figure>
+  </div>
+
+  <div class="grid2" style="margin-top:18px; align-items:start">
+    <div class="panel">
+      <div class="panelhead"><h3>Where the mix went</h3><span class="tiny">Share of units</span></div>
+      <figure style="margin:0"><div class="chart" id="famChart"></div>
+        <div class="legend" id="famLegend"></div>
+        <figcaption>Share is measured in units, so a family moves right only by shipping relatively more.
+          High-ASP marine work is being replaced by low-ASP trade product.</figcaption></figure>
+    </div>
+    <div class="panel">
+      <div class="panelhead"><h3>Product family detail</h3></div>
+      <div class="tablewrap" id="famTable"></div>
+      <p class="tiny" style="margin-top:12px" id="mixSplitNote"></p>
+    </div>
+  </div>
+</section>
+
+<section id="customers">
+  <div class="sechead"><h2>Churn replaced, but not like for like</h2><span class="amt" id="custAmt"></span></div>
+  <p class="secintro lede">The customer lens reconciles to the same movement but tells a different story:
+     gross expansion looks strong until you decompose it, and the accounts arriving are a third the size of
+     the ones already on the book.</p>
+
+  <div class="stats" id="custStats"></div>
+
+  <div class="grid2" style="margin-top:18px; align-items:start">
+    <div class="panel">
+      <div class="panelhead"><h3>What expansion is made of</h3></div>
+      <figure style="margin:0"><div class="chart" id="expChart"></div>
+        <figcaption id="expCap"></figcaption></figure>
+    </div>
+    <div class="panel">
+      <div class="panelhead"><h3>Largest movements</h3></div>
+      <div class="tablewrap" id="moversTable"></div>
+    </div>
+  </div>
+
+  <div class="callout" style="margin-top:18px">
+    <h3>The FY25 new-logo cohort does not replace what was lost</h3>
+    <p class="small" id="cohortText"></p>
+  </div>
+</section>
+
+<section id="sowhat">
+  <div class="sechead"><h2>So what</h2></div>
+  <p class="secintro lede">Three things change for a buyer, and five things go on the management agenda.</p>
+  <div class="grid3">
+    <div class="panel"><div class="label">Valuation</div><h3 style="margin-block:8px 10px">The maintainable earnings base is lower</h3>
+      <p class="small" id="soValuation"></p></div>
+    <div class="panel"><div class="label">Deal structure</div><h3 style="margin-block:8px 10px">Price the passthrough risk into the mechanism</h3>
+      <p class="small" id="soStructure"></p></div>
+    <div class="panel"><div class="label">Post-close</div><h3 style="margin-block:8px 10px">The value creation plan writes itself</h3>
+      <p class="small" id="soPostClose"></p></div>
+  </div>
+  <div class="panel" style="margin-top:18px">
+    <h3 style="margin-bottom:16px">Questions for management</h3>
+    <ol class="qs" id="questions"></ol>
+  </div>
+</section>
+
+<section id="method">
+  <div class="sechead"><h2>How it is built</h2></div>
+  <div class="grid2" style="align-items:start">
+    <div class="panel">
+      <div class="panelhead"><h3>Ingredients</h3></div>
+      <p class="small" style="margin-block:6px 14px">Everything here comes from one table. On a live deal this is a
+        sales day-book extract or an ERP invoice-line dump &mdash; typically one overnight request.</p>
+      <ul class="plain" id="ingredients"></ul>
+    </div>
+    <div class="panel">
+      <div class="panelhead"><h3>The arithmetic</h3></div>
+      <p class="small" style="margin-block:6px 14px">Price, volume and mix are defined so they sum to the movement
+        exactly, with no residual to explain away:</p>
+      <div class="formula">Volume = (Q&#8321; &minus; Q&#8320;) &times; p&#8320;
+Price  = &Sigma; q&#8321; &times; (p&#8321; &minus; p&#8320;)
+Mix    = &Sigma; q&#8321; &times; p&#8320; &minus; Q&#8321; &times; p&#8320;
+
+         &there4; Volume + Price + Mix &equiv; R&#8321; &minus; R&#8320;</div>
+      <p class="small" style="margin-top:14px">Subscripts are prior and current year; <code>p&#8320;</code> is the prior-year
+        average price across the book, <code>p&#8320;</code> per SKU. The customer lens partitions the same movement into
+        accounts that left, arrived, grew and shrank. Both are computed on constant-currency revenue, with FX
+        carried as a single translation line.</p>
+      <p class="small" style="margin-top:12px" id="reconNote"></p>
+    </div>
+  </div>
+  <div class="panel" style="margin-top:18px">
+    <div class="panelhead"><h3>About this data</h3></div>
+    <p class="small" style="margin-top:8px">Meridian Coatings is synthetic. The generator models drivers &mdash; a cost
+      index, contractual passthrough by segment, customer churn and acquisition hazards, product family drift, an FX
+      path and one lumpy infrastructure contract &mdash; and emits <span class="num" id="lineCount"></span> invoice lines.
+      The analysis then discovers the bridge from those lines without being told what it should find, which is the
+      point: the same code runs unchanged against a real day-book.</p>
+  </div>
+</section>
+
+<footer>
+  <strong style="color:var(--ink)">Technique 09 &mdash; Revenue Decomposition.</strong>
+  Built as a working demonstration of data &amp; analytics in transaction advisory.
+  All figures synthetic. <span id="genStamp"></span>
+</footer>
+
+</div>
+<div id="tip" role="status" aria-live="polite"></div>
+<script id="payload" type="application/json">{"meta":{"company":"Meridian Coatings Ltd","sector":"Specialty industrial coatings distribution","fy0":"FY24","fy1":"FY25","fy0_period":"Apr-2023 to Mar-2024","fy1_period":"Apr-2024 to Mar-2025","currency":"GBP","lines":75531,"skus":64,"reconciliation_error":-7.450580596923828e-09},"headline":{"r0":41983869.42,"r1":49779133.53,"delta":7795264.109999999,"growth":0.18567283620329056,"units0":285144.0,"units1":300460.0,"asp0":147.2426489422888,"asp1":164.41343037342745,"gm0":0.3253238543442478,"gm1":0.34533936854565417},"unified_bridge":[{"label":"FY24 revenue","value":41983869.42,"kind":"total"},{"label":"Volume (organic)","value":-32305.059135911582,"kind":"delta","lens":"commercial","note":"Retained book, units at prior-year average price"},{"label":"Price","value":4751437.355852196,"kind":"delta","lens":"commercial","note":"Per-SKU realised price change at current-year volumes"},{"label":"Mix","value":-812909.7067162842,"kind":"delta","lens":"commercial","note":"Basket shift toward lower-ASP lines, at prior-year prices"},{"label":"One-off project","value":2854537.7699999996,"kind":"delta","lens":"commercial","note":"Non-recurring contract volume, retained accounts"},{"label":"New customers","value":2614196.82,"kind":"delta","lens":"customer","note":"57 accounts with no FY24 billings"},{"label":"Lost customers","value":-1960655.7799999998,"kind":"delta","lens":"customer","note":"74 accounts billed in FY24 but not in FY25"},{"label":"FX translation","value":380962.70999999344,"kind":"delta","lens":"commercial","note":"EUR book retranslated at actual vs prior-year average rates"},{"label":"FY25 revenue","value":49779133.53,"kind":"total"}],"customer_bridge":[{"label":"FY24 revenue","value":41983869.42,"kind":"total"},{"label":"Lost customers","value":-1960655.7799999998,"kind":"delta"},{"label":"Contraction","value":-2558020.7199999997,"kind":"delta","note":"Retained accounts spending less than last year"},{"label":"Expansion","value":9318781.08,"kind":"delta","note":"Retained accounts spending more than last year"},{"label":"New customers","value":2614196.82,"kind":"delta"},{"label":"FX translation","value":380962.70999999344,"kind":"delta"},{"label":"FY25 revenue","value":49779133.53,"kind":"total"}],"commercial_all":{"volume":2255168.4112000954,"price":5267048.631117158,"mix":-107915.64231725782,"delta":7414301.3999999985,"r0":41985357.89,"r1":49399659.29,"q0":285144.0,"q1":300460.0,"p0_bar":147.2426489422888,"p1_bar":164.41343037342742},"pvm_retained":{"volume":-32305.059135911582,"price":4751437.355852196,"mix":-812909.7067162842,"delta":3906222.5900000036,"r0":39541098.699999996,"r1":43447321.29,"q0":269278.0,"q1":269058.0,"p0_bar":146.8411778905072,"p1_bar":161.47938842182725},"pvm_expansion":{"volume":3619653.999012771,"price":3346991.0104964073,"mix":-502401.6995091848,"delta":6464243.309999999,"r0":24789927.92,"r1":31254171.23,"q0":171875.0,"q1":196971.0,"p0_bar":144.23230789818183,"p1_bar":158.6739734783293},"expansion_project":2854537.7700000014,"project":2854537.7699999996,"expansion":9318781.08,"contraction":-2558020.7199999997,"family":[{"product_family":"Industrial Protective","r0":11083852.17,"r1":12677782.61,"q0":79456,"q1":81735,"asp0":139.49672988824003,"asp1":155.1083698537958,"asp_change":0.11191402105313353,"unit_change":0.028682541280708795,"lfl_price":0.11924501666500356,"volume":317913.047415299,"price":1350698.3512058123,"mix_within":-74680.9586211117,"mix_between":-17214.76562031104,"share0":0.2950705219141556,"share1":0.30378208416029256,"delta":1593930.4399999995},{"product_family":"Marine & Offshore","r0":11818808.45,"r1":11949925.46,"q0":51456,"q1":45600,"asp0":229.6876642179726,"asp1":262.0597688596491,"asp_change":0.14093967454410405,"unit_change":-0.11380597014925375,"lfl_price":0.1294007612130923,"volume":-1345050.9616604475,"price":1369159.20731521,"mix_within":107008.76434523915,"mix_between":-481666.196758367,"share0":0.1910887632855265,"share1":0.16948018642820506,"delta":131117.01000000164},{"product_family":"Specialty Resins & Additives","r0":7234494.03,"r1":8105138.0600000005,"q0":20571,"q1":20504,"asp0":351.68411987749744,"asp1":395.29545747171284,"asp_change":0.12400712778673828,"unit_change":-0.0032570122988673234,"lfl_price":0.12362462618943296,"volume":-23562.83603179233,"price":891752.1381489539,"mix_within":2454.7278828386916,"mix_between":-10281.784746446976,"share0":0.07639316988391179,"share1":0.07620661716061221,"delta":870644.0300000003},{"product_family":"Powder Coatings","r0":5468331.8,"r1":6032194.9399999995,"q0":52849,"q1":52173,"asp0":103.47086605233778,"asp1":115.61909301746113,"asp_change":0.11740722223179723,"unit_change":-0.012791159719199974,"lfl_price":0.12169974904781798,"volume":-69946.30545138034,"price":654468.0169793121,"mix_within":-20658.571527932072,"mix_between":27445.70446746271,"share0":0.1962618557773008,"share1":0.19390986330084964,"delta":563863.1399999997},{"product_family":"Architectural Trade","r0":3935612.25,"r1":4682280.22,"q0":64946,"q1":69046,"asp0":60.59822390909371,"asp1":67.81392434029488,"asp_change":0.11907445409663797,"unit_change":0.06312936901425803,"lfl_price":0.115646611177395,"volume":248452.71802728422,"price":485359.6422029082,"mix_within":12855.609769807314,"mix_between":-358172.2359074632,"share0":0.24118568913910532,"share1":0.2566212489500405,"delta":746667.9699999997}],"segment":[{"segment":"Distributor","r0":15205529.69,"r1":16726759.17,"q0":116880,"q1":118772,"asp0":130.09522322039697,"asp1":140.8308285622874,"asp_change":0.0825211339520362,"unit_change":0.01618754277891865,"lfl_price":0.11999836349156227,"volume":246140.16233299108,"price":1792130.9462097299,"mix_within":-517041.6285427206,"mix_between":-33282.43260757352,"share0":0.43404956958979196,"share1":0.44143641891339414,"delta":1521229.4800000004},{"segment":"Key Account","r0":11741433.42,"r1":13281295.76,"q0":78967,"q1":80864,"asp0":148.68784960806414,"asp1":164.24237930352197,"asp_change":0.10461197560163127,"unit_change":0.024022693023668218,"lfl_price":0.118110510108565,"volume":282060.8507064977,"price":1402956.6871382056,"mix_within":-145155.19784470345,"mix_between":3622.2761245208985,"share0":0.2932545547723914,"share1":0.30054486393268365,"delta":1539862.3399999999},{"segment":"Mid-Market","r0":9782045.35,"r1":10425112.81,"q0":57026,"q1":54129,"asp0":171.53658594325395,"asp1":192.59755048125774,"asp_change":0.12277826576874373,"unit_change":-0.05080138884017815,"lfl_price":0.13024050933815828,"volume":-496941.4894776067,"price":1201312.4561224913,"mix_within":-61303.50664488366,"mix_between":-70392.03275030073,"share0":0.2117737059841502,"share1":0.20117967129763842,"delta":643067.4600000009},{"segment":"SME","r0":2812090.2399999998,"r1":3014153.55,"q0":16405,"q1":15293,"asp0":171.4166558975922,"asp1":197.09367357614593,"asp_change":0.1497930148275306,"unit_change":-0.06778421213044805,"lfl_price":0.13844041626195333,"volume":-190615.3213581225,"price":366537.12058956694,"mix_within":26141.51076855563,"mix_between":-26998.549426975613,"share0":0.06092216965366647,"share1":0.05683904585628378,"delta":202063.31000000006}],"channel":[{"channel":"Direct Sales","r0":15312376.34,"r1":17101367.9,"q0":100140,"q1":100016,"asp0":152.90968983423207,"asp1":170.98632118860982,"asp_change":0.11821769682467109,"unit_change":-0.0012382664270021992,"lfl_price":0.12128773178384548,"volume":-18960.801539444776,"price":1849825.0397266569,"mix_within":-41872.67818721337,"mix_between":-256.0042231776039,"share0":0.3718833324668187,"share1":0.37172654223252977,"delta":1788991.5599999987},{"channel":"Distributor","r0":12601518.64,"r1":13796537.75,"q0":93386,"q1":96252,"asp0":134.94012635726983,"asp1":143.33767350288826,"asp_change":0.062231653195469416,"unit_change":0.030689825027305995,"lfl_price":0.11813435639785674,"volume":386738.40213993535,"price":1457646.9261401086,"mix_within":-649366.2182800446,"mix_between":-35016.420110178966,"share0":0.3468014468318986,"share1":0.3577369935106929,"delta":1195019.1099999994},{"channel":"National Accounts","r0":6345405.77,"r1":6716488.29,"q0":41377,"q1":38733,"asp0":153.35586847765666,"asp1":173.40480443033073,"asp_change":0.13073471626288047,"unit_change":-0.06390023442975568,"lfl_price":0.12266942706743754,"volume":-405472.9162549242,"price":733882.7891587022,"mix_within":42672.64709622238,"mix_between":-17004.612864623476,"share0":0.1536590438134567,"share1":0.14395780835358918,"delta":371082.5200000005},{"channel":"Trade Counter","r0":2879653.0,"r1":3327107.34,"q0":18704,"q1":19549,"asp0":153.95920658682635,"asp1":170.19322420584172,"asp_change":0.10544363002975121,"unit_change":0.04517750213858007,"lfl_price":0.132395061867647,"volume":130095.52956586827,"price":388991.9666314181,"mix_within":-71633.1561972865,"mix_between":6123.505978430417,"share0":0.06945981476392427,"share1":0.07265719658958292,"delta":447454.33999999985},{"channel":"E-commerce","r0":2402144.95,"r1":2505820.01,"q0":15671,"q1":14508,"asp0":153.28600280773404,"asp1":172.71987937689548,"asp_change":0.12678180794848748,"unit_change":-0.07421351541063115,"lfl_price":0.135398047291431,"volume":-178271.62126539467,"price":298823.07533219474,"mix_within":-16876.39406680048,"mix_between":-7412.816998499012,"share0":0.058196362123901696,"share1":0.053921459313605244,"delta":103675.05999999959}],"quarters":[{"fiscal_quarter":"FY24 Q1","revenue":11189404.97,"revenue_ex_project":11189404.97,"const_price_rev":12000605.746291906,"units":79640,"price_index":93.4308563004372,"volume_index":99.99999999999999,"gm_pct":0.3243500051817322,"yoy":null,"volume_yoy":null,"yoy_ex_project":null,"volume_yoy_ex_project":null,"gm_pct_norm":0.35717193876126085,"customers":355},{"fiscal_quarter":"FY24 Q2","revenue":10893866.02,"revenue_ex_project":10743989.8,"const_price_rev":11098535.21132808,"units":75474,"price_index":98.18972596380998,"volume_index":92.48312498523202,"gm_pct":0.32099309864653536,"yoy":null,"volume_yoy":null,"yoy_ex_project":null,"volume_yoy_ex_project":null,"gm_pct_norm":0.35409541884661166,"customers":340},{"fiscal_quarter":"FY24 Q3","revenue":10122422.39,"revenue_ex_project":9788695.2,"const_price_rev":9813331.229050618,"units":67338,"price_index":102.98587772194999,"volume_index":81.77363240253818,"gm_pct":0.3237698916059558,"yoy":null,"volume_yoy":null,"yoy_ex_project":null,"volume_yoy_ex_project":null,"gm_pct_norm":0.35067540706715583,"customers":330},{"fiscal_quarter":"FY24 Q4","revenue":9778176.04,"revenue_ex_project":9778176.04,"const_price_rev":9072885.703329396,"units":62692,"price_index":107.67381943779048,"volume_index":75.60356447950844,"gm_pct":0.332871819517784,"yoy":null,"volume_yoy":null,"yoy_ex_project":null,"volume_yoy_ex_project":null,"gm_pct_norm":0.3481763231138598,"customers":321},{"fiscal_quarter":"FY25 Q1","revenue":12315054.35,"revenue_ex_project":12315054.35,"const_price_rev":11141986.52705633,"units":77147,"price_index":110.03303360876535,"volume_index":92.84520100578355,"gm_pct":0.33200460946402566,"yoy":0.10059957459918434,"volume_yoy":-0.07154798994216449,"yoy_ex_project":0.10059957459918434,"volume_yoy_ex_project":-0.07154798994216449,"gm_pct_norm":0.34695237312351124,"customers":320},{"fiscal_quarter":"FY25 Q2","revenue":14018716.03,"revenue_ex_project":12410408.11,"const_price_rev":12445180.02892245,"units":84300,"price_index":111.8090323134104,"volume_index":103.70459868467819,"gm_pct":0.3338910032832729,"yoy":0.28684490926022965,"volume_yoy":0.12133536470829709,"yoy_ex_project":0.1551023726772338,"volume_yoy_ex_project":-0.0012467561875508792,"gm_pct_norm":0.34674669220997634,"customers":315},{"fiscal_quarter":"FY25 Q3","revenue":12406319.25,"revenue_ex_project":10923756.08,"const_price_rev":10838731.798211351,"units":72811,"price_index":113.32824705586907,"volume_index":90.31820582523873,"gm_pct":0.35327398656132436,"yoy":0.22562750021736644,"volume_yoy":0.10449056953516633,"yoy_ex_project":0.11595630028402559,"volume_yoy_ex_project":-0.0007769587303320113,"gm_pct_norm":0.34578346076469446,"customers":316},{"fiscal_quarter":"FY25 Q4","revenue":11039043.9,"revenue_ex_project":10791773.81,"const_price_rev":9706712.30469271,"units":66202,"price_index":112.72213553409095,"volume_index":80.88518621397098,"gm_pct":0.36583663826176105,"yoy":0.12894714257977302,"volume_yoy":0.06985942753921437,"yoy_ex_project":0.10365918611545077,"volume_yoy_ex_project":0.044446571050492434,"gm_pct_norm":0.3514395576054268,"customers":315}],"margin":{"gm0":0.3253238543442478,"gm1":0.34533936854565417,"gm0_norm":0.3527447631034949,"gm1_norm":0.3475761725416251,"gp0":13658354.220000003,"gp1":17190694.540000003,"windfall0":-1778642.7781503499,"windfall1":-170665.386685282,"swing":1607977.3914650679,"reversal_exposure":-1138429.8835168034,"index_peak":123.0,"index_exit":117.0,"avg_passthrough":0.8712260068485045},"quality":{"headline_growth":0.18567283620329056,"ex_oneoff_fx":0.10860751267075579,"ex_price":-0.004565413538583495,"underlying":-0.018402457019619383,"new_haircut":580932.6266666667,"components":[{"label":"Price","value":4751437.355852196,"rating":"At risk","why":"Contractual passthrough of resin and TiO2 cost. Resets are symmetric: the index has already eased from 123 at peak to 117."},{"label":"One-off project","value":2854537.7699999996,"rating":"Non-recurring","why":"Single infrastructure programme, one account, completes in FY26 Q1."},{"label":"FX translation","value":380962.70999999344,"rating":"Non-recurring","why":"Translation only. No underlying trading effect."},{"label":"New customers","value":2614196.82,"rating":"Partly recurring","why":"Only 78% of the FY25 H1 new-logo cohort was still billing in Q4. Haircut applied to the annualised contribution."},{"label":"Lost customers","value":-1960655.7799999998,"rating":"Recurring","why":"74 accounts gone. The loss repeats in FY26 and compounds."},{"label":"Volume (organic)","value":-32305.059135911582,"rating":"Recurring","why":"True underlying demand on the retained book."},{"label":"Mix","value":-812909.7067162842,"rating":"Recurring","why":"Structural drift toward lower-ASP architectural lines."}]},"mix_split":{"total":-812909.7067162842,"between_family":-839889.2785651255,"within_family":26979.571848841384},"monthly":[{"month":"2023-04","label":"Apr-23","cost_index":91.19638826185101,"price_index":91.53280077263119,"revenue":3527490.37},{"month":"2023-05","label":"May-23","cost_index":93.00225733634312,"price_index":92.53110227990462,"revenue":3769170.69},{"month":"2023-06","label":"Jun-23","cost_index":94.80812641083521,"price_index":94.48462368316213,"revenue":3915607.65},{"month":"2023-07","label":"Jul-23","cost_index":96.61399548532731,"price_index":96.07022675156354,"revenue":3837907.69},{"month":"2023-08","label":"Aug-23","cost_index":98.41986455981942,"price_index":97.6264226321146,"revenue":3295208.42},{"month":"2023-09","label":"Sep-23","cost_index":100.22573363431151,"price_index":99.22861150449167,"revenue":3764505.2},{"month":"2023-10","label":"Oct-23","cost_index":102.0316027088036,"price_index":101.16806144843,"revenue":3648487.22},{"month":"2023-11","label":"Nov-23","cost_index":102.93453724604966,"price_index":102.40068968430178,"revenue":3724325.75},{"month":"2023-12","label":"Dec-23","cost_index":103.83747178329573,"price_index":104.022282509813,"revenue":2733532.33},{"month":"2024-01","label":"Jan-24","cost_index":104.74040632054175,"price_index":106.05437399495905,"revenue":2874577.78},{"month":"2024-02","label":"Feb-24","cost_index":105.64334085778782,"price_index":107.24319924584829,"revenue":3099347.05},{"month":"2024-03","label":"Mar-24","cost_index":106.54627539503385,"price_index":107.63760549278014,"revenue":3795197.74},{"month":"2024-04","label":"Apr-24","cost_index":107.44920993227991,"price_index":108.50482822077299,"revenue":3792470.36},{"month":"2024-05","label":"May-24","cost_index":108.35214446952597,"price_index":109.16717497324386,"revenue":4129937.11},{"month":"2024-06","label":"Jun-24","cost_index":109.25507900677201,"price_index":110.385865580625,"revenue":4337458.31},{"month":"2024-07","label":"Jul-24","cost_index":110.15801354401806,"price_index":110.26527608416812,"revenue":4829399.83},{"month":"2024-08","label":"Aug-24","cost_index":111.0609480812641,"price_index":110.62612955059225,"revenue":4415991.75},{"month":"2024-09","label":"Sep-24","cost_index":111.0609480812641,"price_index":112.59914191975322,"revenue":4669443.78},{"month":"2024-10","label":"Oct-24","cost_index":110.15801354401806,"price_index":112.53455149836262,"revenue":4258432.19},{"month":"2024-11","label":"Nov-24","cost_index":109.25507900677201,"price_index":113.01484269494037,"revenue":4533606.05},{"month":"2024-12","label":"Dec-24","cost_index":108.35214446952597,"price_index":112.36789673262615,"revenue":3491306.51},{"month":"2025-01","label":"Jan-25","cost_index":107.44920993227991,"price_index":112.25650864718797,"revenue":3249136.33},{"month":"2025-02","label":"Feb-25","cost_index":106.54627539503385,"price_index":112.39961322181362,"revenue":3483561.98},{"month":"2025-03","label":"Mar-25","cost_index":105.64334085778782,"price_index":111.63313170417129,"revenue":4208915.09}],"runrate":{"q4_fy25":11039043.9,"q4_fy24":9778176.04,"q4_yoy":0.12894714257977302,"annualised":44156175.6,"volume_yoy_q4":0.06985942753921437,"fy25_reported":49779133.53},"new_cohort":{"count":57,"revenue":2628285.6799999997,"share_of_fy25":0.052798943927299,"avg_account":46110.275087719296,"avg_account_retained":151610.4432475884,"gm_pct":0.33779408637191977,"gm_pct_retained":0.3457599581637214,"h1_cohort":27,"h1_surviving":21,"survival":0.7777777777777778,"channels":[{"channel":"Distributor","revenue":1288892.23},{"channel":"National Accounts","revenue":721654.92},{"channel":"E-commerce","revenue":252195.77},{"channel":"Direct Sales","revenue":202352.79},{"channel":"Trade Counter","revenue":163189.97}]},"lost":{"count":74,"revenue":1960655.7799999998,"by_segment":[{"segment":"Distributor","revenue":752149.88},{"segment":"Mid-Market","revenue":605581.9},{"segment":"SME","revenue":514078.44},{"segment":"Key Account","revenue":87875.42}]},"top_movers":[{"name":"Caldera Infrastructure Group","fy24":305618.2,"fy25":3676564.7,"delta":3370946.5},{"name":"Granton Fabrications","fy24":2008038.6300000001,"fy25":2620493.3,"delta":612454.6699999997},{"name":"Orwell Surface Technologies","fy24":965222.09,"fy25":1397760.29,"delta":432538.20000000007},{"name":"Marlowe Steelworks","fy24":42424.98,"fy25":424063.44,"delta":381638.46},{"name":"Alderley Finishing Ltd","fy24":0.0,"fy25":320575.57,"delta":320575.57},{"name":"Vandermeer Steelworks","fy24":0.0,"fy25":320367.3,"delta":320367.3},{"name":"Blackthorn Distribution","fy24":435910.68,"fy25":0.0,"delta":-435910.68},{"name":"Selby Engineering","fy24":270976.5,"fy25":0.0,"delta":-270976.5},{"name":"Ilkley Marine Services","fy24":248573.72,"fy25":0.0,"delta":-248573.72},{"name":"Aalders Steelworks","fy24":262938.39,"fy25":73133.7,"delta":-189804.69},{"name":"Tavistock Protective Systems","fy24":1521762.68,"fy25":1356026.69,"delta":-165735.99}],"concentration":{"top10_fy24":0.2718048912033797,"top10_fy25":0.3174637067653274,"customers_fy24":385,"customers_fy25":368},"raw_index":[{"month":"2023-01","index":96},{"month":"2023-02","index":97},{"month":"2023-03","index":99},{"month":"2023-04","index":101},{"month":"2023-05","index":103},{"month":"2023-06","index":105},{"month":"2023-07","index":107},{"month":"2023-08","index":109},{"month":"2023-09","index":111},{"month":"2023-10","index":113},{"month":"2023-11","index":114},{"month":"2023-12","index":115},{"month":"2024-01","index":116},{"month":"2024-02","index":117},{"month":"2024-03","index":118},{"month":"2024-04","index":119},{"month":"2024-05","index":120},{"month":"2024-06","index":121},{"month":"2024-07","index":122},{"month":"2024-08","index":123},{"month":"2024-09","index":123},{"month":"2024-10","index":122},{"month":"2024-11","index":121},{"month":"2024-12","index":120},{"month":"2025-01","index":119},{"month":"2025-02","index":118},{"month":"2025-03","index":117}]}</script>
+<script>
+(() => {
+"use strict";
+const D = JSON.parse(document.getElementById("payload").textContent);
+const NS = "http://www.w3.org/2000/svg";
+const $ = s => document.querySelector(s);
+const el = (t, a = {}, kids = []) => { const e = document.createElementNS(NS, t);
+  for (const k in a) if (a[k] !== null && a[k] !== undefined) e.setAttribute(k, a[k]);
+  for (const c of [].concat(kids)) e.appendChild(typeof c === "string" ? document.createTextNode(c) : c);
+  return e; };
+const tok = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+
+/* ---------- formatting: deal-desk conventions ---------- */
+const MINUS = "−";
+const m2 = v => (v < 0 ? MINUS : "") + "£" + (Math.abs(v) / 1e6).toFixed(2) + "m";
+const m2s = v => (v < 0 ? MINUS : "+") + "£" + (Math.abs(v) / 1e6).toFixed(2) + "m";
+const m1 = v => (v < 0 ? MINUS : "") + "£" + (Math.abs(v) / 1e6).toFixed(1) + "m";
+const acct = (v, d = 2) => v < 0 ? "(" + (Math.abs(v) / 1e6).toFixed(d) + ")" : (v / 1e6).toFixed(d);
+const pc = (v, d = 1) => (v * 100).toFixed(d) + "%";
+const pcs = (v, d = 1) => (v < 0 ? MINUS : "+") + (Math.abs(v) * 100).toFixed(d) + "%";
+const pp = (v, d = 1) => (v < 0 ? MINUS : "+") + (Math.abs(v) * 100).toFixed(d) + "pp";
+const int = v => Math.round(v).toLocaleString("en-GB");
+
+/* ---------- tooltip ---------- */
+const tip = $("#tip");
+function showTip(e, title, rows) {
+  tip.innerHTML = '<div class="t"></div>' + rows.map(() => '<div class="r"><span></span><span></span></div>').join("");
+  tip.querySelector(".t").textContent = title;
+  tip.querySelectorAll(".r").forEach((r, i) => {
+    r.children[0].textContent = rows[i][0]; r.children[1].textContent = rows[i][1];
+  });
+  tip.style.opacity = 1; moveTip(e);
+}
+function moveTip(e) {
+  const b = tip.getBoundingClientRect();
+  let x = e.clientX + 14, y = e.clientY - b.height - 12;
+  if (x + b.width > innerWidth - 8) x = e.clientX - b.width - 14;
+  if (y < 8) y = e.clientY + 18;
+  tip.style.left = x + "px"; tip.style.top = y + "px";
+}
+const hideTip = () => { tip.style.opacity = 0; };
+function hit(target, title, rows) {
+  target.addEventListener("mouseenter", e => showTip(e, title, rows));
+  target.addEventListener("mousemove", moveTip);
+  target.addEventListener("mouseleave", hideTip);
+}
+
+/* ---------- scales & axes ---------- */
+const lin = (d0, d1, r0, r1) => v => r0 + (v - d0) / (d1 - d0) * (r1 - r0);
+function niceTicks(lo, hi, n = 5) {
+  const raw = (hi - lo) / n, mag = Math.pow(10, Math.floor(Math.log10(raw)));
+  const step = [1, 1.5, 2, 2.5, 3, 4, 5, 7.5, 10].map(x => x * mag).find(x => x >= raw) || 10 * mag;
+  const out = []; for (let t = Math.ceil(lo / step) * step; t <= hi + 1e-9; t += step) out.push(t);
+  return out;
+}
+/** Padded domain first, ticks second. Returns a scale that always contains the data. */
+function axisScale(lo, hi, r0, r1, o = {}) {
+  const span = (hi - lo) || Math.abs(hi) || 1;
+  const dlo = lo - span * (o.padLo ?? 0.08), dhi = hi + span * (o.padHi ?? 0.08);
+  return { y: lin(dlo, dhi, r0, r1), dlo, dhi,
+           ticks: niceTicks(dlo, dhi, o.n ?? 5).filter(t => t >= dlo && t <= dhi) };
+}
+function gridY(g, ticks, y, x0, x1, fmt) {
+  ticks.forEach(t => {
+    g.appendChild(el("line", { x1: x0, x2: x1, y1: y(t), y2: y(t), stroke: tok("--rule"), "stroke-width": 1 }));
+    g.appendChild(el("text", { x: x0 - 9, y: y(t) + 4, "text-anchor": "end", fill: tok("--ink-3"),
+      "font-size": 11, "font-family": "IBM Plex Mono, monospace" }, fmt(t)));
+  });
+}
+function xLabels(g, items, cx, yTop, slot) {
+  const rotate = slot < 94;
+  items.forEach((s, i) => {
+    const x = cx(i);
+    if (rotate) {
+      const t = el("text", { x: 0, y: 0, "text-anchor": "end", fill: tok("--ink-2"), "font-size": 11 }, s);
+      t.setAttribute("transform", `translate(${x},${yTop + 14}) rotate(-40)`); g.appendChild(t);
+    } else {
+      const words = s.split(" "); const lines = words.length > 2
+        ? [words.slice(0, Math.ceil(words.length / 2)).join(" "), words.slice(Math.ceil(words.length / 2)).join(" ")]
+        : [s];
+      lines.forEach((ln, j) => g.appendChild(el("text", { x, y: yTop + 16 + j * 13, "text-anchor": "middle",
+        fill: tok("--ink-2"), "font-size": 11.5 }, ln)));
+    }
+  });
+}
+
+/* ---------- waterfall ---------- */
+function waterfall(w, steps, opt = {}) {
+  const compact = !!opt.compact;
+  const rotate = (w - 66) / steps.length < 94;
+  const H = opt.height || (compact ? 250 : Math.max(330, Math.min(430, w * 0.46)));
+  const M = { t: 30, r: 8, b: rotate ? 74 : (compact ? 44 : 52), l: 58 };
+  const iw = Math.max(40, w - M.l - M.r), ih = H - M.t - M.b;
+  const svg = el("svg", { viewBox: `0 0 ${w} ${H}`, width: w, height: H, role: "img" });
+  const g = el("g", { transform: `translate(${M.l},${M.t})` });
+
+  let cum = 0; const bars = steps.map(s => {
+    if (s.kind === "total") { cum = s.value; return { ...s, lo: 0, hi: s.value, base: true }; }
+    const a = cum, b = cum + s.value; cum = b; return { ...s, lo: Math.min(a, b), hi: Math.max(a, b), end: b };
+  });
+  const vals = bars.flatMap(b => b.base ? [b.value] : [b.lo, b.hi]);
+  const sc = axisScale(Math.min(...vals), Math.max(...vals), ih, 0, { padLo: 0.16, padHi: 0.14, n: 5 });
+  const y = sc.y, floor = sc.dlo;
+  gridY(g, sc.ticks, y, 0, iw, t => (t / 1e6).toFixed(0));
+  g.appendChild(el("text", { x: -M.l + 2, y: -12, fill: tok("--ink-3"), "font-size": 10.5,
+    "font-weight": 600, "letter-spacing": ".06em" }, "£m"));
+
+  const slot = iw / steps.length, bw = Math.min(slot * 0.6, 62);
+  const cx = i => slot * i + slot / 2;
+
+  if (opt.hatch) {
+    const defs = el("defs"); const p = el("pattern", { id: opt.hatchId, width: 6, height: 6,
+      patternUnits: "userSpaceOnUse", patternTransform: "rotate(45)" });
+    p.appendChild(el("rect", { width: 6, height: 6, fill: tok("--surface") }));
+    p.appendChild(el("line", { x1: 0, y1: 0, x2: 0, y2: 6, stroke: "currentColor", "stroke-width": 3.4 }));
+    defs.appendChild(p); svg.appendChild(defs);
+  }
+
+  bars.forEach((b, i) => {
+    const x = cx(i) - bw / 2;
+    const top = y(b.base ? b.value : b.hi), bot = y(b.base ? floor : b.lo);
+    const col = b.base ? tok("--total") : (b.value >= 0 ? tok("--pos") : tok("--neg"));
+    const shade = opt.hatch && !b.base && opt.ratings && opt.ratings[b.label] && opt.ratings[b.label] !== "Recurring";
+    const h = Math.max(2, bot - top);
+    const r = el("rect", { x, y: top, width: bw, height: h, rx: 2.5,
+      fill: shade ? `url(#${opt.hatchId})` : col, color: col,
+      stroke: shade ? col : "none", "stroke-width": shade ? 1.2 : 0 });
+    g.appendChild(r);
+
+    if (i < bars.length - 1) {
+      const nx = cx(i + 1) - bw / 2, ly = y(b.base ? b.value : b.end);
+      g.appendChild(el("line", { x1: x + bw, x2: nx, y1: ly, y2: ly, stroke: tok("--rule-2"), "stroke-width": 1 }));
+    }
+    const lab = b.base ? m2(b.value) : m2s(b.value);
+    const ly = b.value >= 0 || b.base ? top - 9 : bot + 15;
+    g.appendChild(el("text", { x: cx(i), y: ly, "text-anchor": "middle", fill: tok("--ink"),
+      "font-size": compact ? 11 : 12, "font-weight": 600, "font-family": "IBM Plex Mono, monospace" }, lab));
+
+    const hitr = el("rect", { x: cx(i) - slot / 2, y: 0, width: slot, height: ih, fill: "transparent" });
+    const rows = [[b.base ? "Revenue" : "Movement", lab]];
+    if (!b.base) rows.push(["Running total", m2(b.end)]);
+    if (opt.ratings && opt.ratings[b.label]) rows.push(["Durability", opt.ratings[b.label]]);
+    hit(hitr, b.label, rows);
+    if (b.note) hitr.addEventListener("mouseenter", () => {
+      const n = document.createElement("div"); n.className = "tiny";
+      n.style.cssText = "margin-top:6px;padding-top:6px;border-top:1px solid var(--rule)";
+      n.textContent = b.note; tip.appendChild(n);
+    });
+    g.appendChild(hitr);
+  });
+
+  xLabels(g, steps.map(s => s.label), cx, ih, slot);
+  svg.appendChild(g); return svg;
+}
+
+/* ---------- multi-line chart ---------- */
+function lineChart(w, cfg) {
+  const H = cfg.height || Math.max(230, Math.min(320, w * 0.5));
+  const M = { t: 16, r: cfg.rightPad || 44, b: 34, l: 46 };
+  const iw = Math.max(40, w - M.l - M.r), ih = H - M.t - M.b;
+  const svg = el("svg", { viewBox: `0 0 ${w} ${H}`, width: w, height: H, role: "img" });
+  const g = el("g", { transform: `translate(${M.l},${M.t})` });
+  const n = cfg.labels.length;
+  const all = cfg.series.flatMap(s => s.values);
+  const sc = axisScale(Math.min(...all), Math.max(...all), ih, 0, { n: 4 });
+  const y = sc.y;
+  const x = i => n === 1 ? iw / 2 : i * (iw / (n - 1));
+  gridY(g, sc.ticks, y, 0, iw, cfg.fmtAxis);
+
+  cfg.labels.forEach((l, i) => { if (i % (cfg.every || 1) === 0)
+    g.appendChild(el("text", { x: x(i), y: ih + 20, "text-anchor": "middle", fill: tok("--ink-3"), "font-size": 10.5 }, l)); });
+
+  cfg.series.forEach(s => {
+    const col = tok(s.token);
+    g.appendChild(el("path", { d: s.values.map((v, i) => (i ? "L" : "M") + x(i) + "," + y(v)).join(" "),
+      fill: "none", stroke: col, "stroke-width": 2, "stroke-linejoin": "round", "stroke-linecap": "round" }));
+    const li = s.values.length - 1;
+    g.appendChild(el("circle", { cx: x(li), cy: y(s.values[li]), r: 4, fill: col,
+      stroke: tok("--surface"), "stroke-width": 2 }));
+    g.appendChild(el("text", { x: x(li) + 9, y: y(s.values[li]) + 4, fill: tok("--ink-2"),
+      "font-size": 11, "font-weight": 600, "font-family": "IBM Plex Mono, monospace" }, cfg.fmtEnd(s.values[li])));
+  });
+
+  const cross = el("line", { y1: 0, y2: ih, stroke: tok("--rule-2"), "stroke-width": 1, opacity: 0 });
+  g.appendChild(cross);
+  const dots = cfg.series.map(s => { const c = el("circle", { r: 4.5, fill: tok(s.token),
+    stroke: tok("--surface"), "stroke-width": 2, opacity: 0 }); g.appendChild(c); return c; });
+  const surface = el("rect", { x: 0, y: 0, width: iw, height: ih, fill: "transparent" });
+  surface.addEventListener("mousemove", e => {
+    const r = surface.getBoundingClientRect();
+    const i = Math.max(0, Math.min(n - 1, Math.round((e.clientX - r.left) / (iw / Math.max(n - 1, 1)))));
+    cross.setAttribute("x1", x(i)); cross.setAttribute("x2", x(i)); cross.setAttribute("opacity", 1);
+    cfg.series.forEach((s, k) => { dots[k].setAttribute("cx", x(i)); dots[k].setAttribute("cy", y(s.values[i]));
+      dots[k].setAttribute("opacity", 1); });
+    showTip(e, cfg.labels[i], cfg.series.map(s => [s.name, cfg.fmtEnd(s.values[i])]));
+  });
+  surface.addEventListener("mouseleave", () => { hideTip(); cross.setAttribute("opacity", 0);
+    dots.forEach(d => d.setAttribute("opacity", 0)); });
+  g.appendChild(surface);
+  svg.appendChild(g); return svg;
+}
+
+/* ---------- horizontal bars (signed) ---------- */
+function hBars(w, items, cfg) {
+  const rowH = cfg.rowH || 40, M = { t: 6, r: 58, b: 22, l: cfg.left || 128 };
+  const H = M.t + M.b + items.length * rowH;
+  const iw = Math.max(40, w - M.l - M.r);
+  const svg = el("svg", { viewBox: `0 0 ${w} ${H}`, width: w, height: H, role: "img" });
+  const g = el("g", { transform: `translate(${M.l},${M.t})` });
+  const vals = items.map(d => d.value);
+  const lo = Math.min(0, ...vals), hi = Math.max(0, ...vals), span = (hi - lo) || 1;
+  const x = lin(lo - span * 0.04, hi + span * 0.08, 0, iw);
+  const zero = x(0);
+  g.appendChild(el("line", { x1: zero, x2: zero, y1: -2, y2: items.length * rowH - 4,
+    stroke: tok("--rule-2"), "stroke-width": 1 }));
+  items.forEach((d, i) => {
+    const yy = i * rowH, bh = Math.min(19, rowH - 16);
+    const xa = Math.min(zero, x(d.value)), bw = Math.max(2, Math.abs(x(d.value) - zero));
+    const col = cfg.token ? tok(cfg.token) : tok(d.value >= 0 ? "--pos" : "--neg");
+    g.appendChild(el("rect", { x: xa, y: yy + (rowH - bh) / 2 - 4, width: bw, height: bh, rx: 2.5, fill: col }));
+    g.appendChild(el("text", { x: -12, y: yy + rowH / 2 + 0, "text-anchor": "end", fill: tok("--ink"),
+      "font-size": 12, "font-weight": 500 }, d.label));
+    if (d.sub) g.appendChild(el("text", { x: -12, y: yy + rowH / 2 + 13, "text-anchor": "end",
+      fill: tok("--ink-3"), "font-size": 10.5 }, d.sub));
+    const tx = d.value >= 0 ? xa + bw + 8 : xa - 8;
+    g.appendChild(el("text", { x: tx, y: yy + rowH / 2 + 4, "text-anchor": d.value >= 0 ? "start" : "end",
+      fill: tok("--ink"), "font-size": 11.5, "font-weight": 600,
+      "font-family": "IBM Plex Mono, monospace" }, cfg.fmt(d.value)));
+    const hr = el("rect", { x: -M.l, y: yy - 2, width: w - 8, height: rowH, fill: "transparent" });
+    hit(hr, d.label, d.rows || [[cfg.valueName || "Value", cfg.fmt(d.value)]]); g.appendChild(hr);
+  });
+  svg.appendChild(g); return svg;
+}
+
+/* ---------- grouped bars ---------- */
+function groupBars(w, groups, series, cfg) {
+  const H = cfg.height || 260, M = { t: 24, r: 8, b: 42, l: 52 };
+  const iw = Math.max(40, w - M.l - M.r), ih = H - M.t - M.b;
+  const svg = el("svg", { viewBox: `0 0 ${w} ${H}`, width: w, height: H, role: "img" });
+  const g = el("g", { transform: `translate(${M.l},${M.t})` });
+  const all = series.flatMap(s => s.values);
+  const sc = axisScale(Math.min(0, ...all), Math.max(0, ...all), ih, 0, { n: 4 });
+  const y = sc.y;
+  gridY(g, sc.ticks, y, 0, iw, cfg.fmtAxis);
+  const slot = iw / groups.length, bw = Math.min((slot * 0.68) / series.length, 38);
+  groups.forEach((gr, i) => {
+    const cx0 = slot * i + slot / 2;
+    series.forEach((s, k) => {
+      const v = s.values[i];
+      const x = cx0 - (bw * series.length + 2 * (series.length - 1)) / 2 + k * (bw + 2);
+      const top = Math.min(y(v), y(0)), h = Math.max(2, Math.abs(y(v) - y(0)));
+      g.appendChild(el("rect", { x, y: top, width: bw, height: h, rx: 2.5, fill: tok(s.token) }));
+      g.appendChild(el("text", { x: x + bw / 2, y: v >= 0 ? top - 7 : top + h + 14, "text-anchor": "middle",
+        fill: tok("--ink-2"), "font-size": 10.5, "font-weight": 600,
+        "font-family": "IBM Plex Mono, monospace" }, cfg.fmt(v)));
+    });
+    g.appendChild(el("text", { x: cx0, y: ih + 20, "text-anchor": "middle", fill: tok("--ink-2"), "font-size": 11.5 }, gr));
+    const hr = el("rect", { x: slot * i, y: 0, width: slot, height: ih, fill: "transparent" });
+    hit(hr, gr, series.map(s => [s.name, cfg.fmt(s.values[i])])); g.appendChild(hr);
+  });
+  g.appendChild(el("line", { x1: 0, x2: iw, y1: y(0), y2: y(0), stroke: tok("--rule-2"), "stroke-width": 1 }));
+  svg.appendChild(g); return svg;
+}
+
+/* ---------- dumbbell ---------- */
+function dumbbell(w, items, cfg) {
+  const rowH = 44, M = { t: 20, r: 22, b: 26, l: cfg.left || 150 };
+  const H = M.t + M.b + items.length * rowH;
+  const iw = Math.max(40, w - M.l - M.r);
+  const svg = el("svg", { viewBox: `0 0 ${w} ${H}`, width: w, height: H, role: "img" });
+  const g = el("g", { transform: `translate(${M.l},${M.t})` });
+  const all = items.flatMap(d => [d.a, d.b]);
+  const sc = axisScale(Math.min(...all), Math.max(...all), 0, iw, { padLo: 0.14, padHi: 0.12, n: 4 });
+  const x = sc.y;
+  sc.ticks.forEach(t => {
+    g.appendChild(el("line", { x1: x(t), x2: x(t), y1: -8, y2: items.length * rowH - 10,
+      stroke: tok("--rule"), "stroke-width": 1 }));
+    g.appendChild(el("text", { x: x(t), y: items.length * rowH + 8, "text-anchor": "middle",
+      fill: tok("--ink-3"), "font-size": 10.5, "font-family": "IBM Plex Mono, monospace" }, pc(t, 0)));
+  });
+  items.forEach((d, i) => {
+    const yy = i * rowH + rowH / 2 - 12, up = d.b >= d.a;
+    const col = tok(up ? "--pos" : "--neg");
+    g.appendChild(el("line", { x1: x(d.a), x2: x(d.b), y1: yy, y2: yy, stroke: col,
+      "stroke-width": 2.5, "stroke-linecap": "round", opacity: .35 }));
+    g.appendChild(el("circle", { cx: x(d.a), cy: yy, r: 5, fill: tok("--surface"),
+      stroke: tok("--ink-3"), "stroke-width": 2 }));
+    g.appendChild(el("circle", { cx: x(d.b), cy: yy, r: 5.5, fill: col, stroke: tok("--surface"), "stroke-width": 2 }));
+    g.appendChild(el("text", { x: -12, y: yy + 4, "text-anchor": "end", fill: tok("--ink"), "font-size": 12 }, d.label));
+    g.appendChild(el("text", { x: -12, y: yy + 17, "text-anchor": "end", fill: tok("--ink-3"),
+      "font-size": 10.5, "font-family": "IBM Plex Mono, monospace" }, d.sub));
+    const hr = el("rect", { x: -M.l, y: i * rowH - 8, width: w - 8, height: rowH, fill: "transparent" });
+    hit(hr, d.label, d.rows); g.appendChild(hr);
+  });
+  svg.appendChild(g); return svg;
+}
+
+/* ---------- legends ---------- */
+function legend(id, items) {
+  const n = $(id); if (!n) return;
+  n.innerHTML = items.map(i => `<span><b style="background:${i.swatch}"></b>${i.name}</span>`).join("");
+}
+
+/* ================= data wiring ================= */
+const H = D.headline, Q = D.quality, MG = D.margin, CN = D.concentration, NC = D.new_cohort;
+const RATING = Object.fromEntries(Q.components.map(c => [c.label, c.rating]));
+const NOTE = Object.fromEntries(Q.components.map(c => [c.label, c.why]));
+const fxVal = D.unified_bridge.find(s => s.label === "FX translation").value;
+const CA = D.commercial_all;
+const accountsLost = CN.customers_fy24 - CN.customers_fy25;
+const newVal = D.unified_bridge.find(s => s.label === "New customers").value;
+const lostVal = D.unified_bridge.find(s => s.label === "Lost customers").value;
+
+const VIEWS = {
+  unified: { steps: D.unified_bridge,
+    cap: "Retained accounts are decomposed into price, volume and mix; accounts that arrived or left are carried whole. Vertical axis truncated to make the movements legible." },
+  commercial: { steps: [
+      { label: "FY24 revenue", value: H.r0, kind: "total" },
+      { label: "Volume", value: CA.volume, kind: "delta", note: "All accounts, including the one-off programme" },
+      { label: "Price", value: CA.price, kind: "delta", note: "Per-SKU realised price at current-year volumes" },
+      { label: "Mix", value: CA.mix, kind: "delta", note: "Basket shift, valued at prior-year prices" },
+      { label: "FX translation", value: fxVal, kind: "delta" },
+      { label: "FY25 revenue", value: H.r1, kind: "total" }],
+    cap: "The classic three-way split across the whole book. Note that the one-off contract hides inside Volume here — which is exactly why the unified view separates it out." },
+  customer: { steps: D.customer_bridge,
+    cap: "The same movement partitioned by account rather than by product. Expansion and contraction net the retained book; the one-off contract sits inside Expansion." }
+};
+let view = "unified", hatchOn = false, tableOn = false;
+
+/* ================= static content ================= */
+function fillStatic() {
+  $("#metarow").innerHTML = [
+    ["Sector", "Specialty coatings distribution"],
+    ["Comparison", "FY24 vs FY25, years ending 31 March"],
+    ["Basis", int(D.meta.lines) + " invoice lines · " + D.meta.skus + " SKUs"],
+    ["Reconciliation", "Exact — £0.00 residual"]
+  ].map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join("");
+
+  $("#figReported").textContent = pcs(H.growth);
+  $("#capReported").textContent = `${m2(H.r0)} → ${m2(H.r1)}. Gross margin up ${(Math.abs(MG.gm1 - MG.gm0) * 10000).toFixed(0)}bp.`;
+  $("#figUnderlying").textContent = pcs(Q.underlying);
+  $("#thesis").innerHTML = `Management's <strong>${m2(H.delta)}</strong> of growth is <strong>${m2(Q.components[0].value)}</strong> of
+    raw-material price passthrough, <strong>${m2(D.project)}</strong> of a single infrastructure contract and
+    <strong>${m2(fxVal)}</strong> of currency translation. Underneath it, Meridian sold no more coating than it did the year
+    before — organic volume moved ${m2(D.pvm_retained.volume)} on a ${m1(H.r0)} base — at a mix worth
+    <strong>${m2(Math.abs(D.pvm_retained.mix))}</strong> less, to <strong>${accountsLost} fewer accounts</strong>.`;
+
+  $("#bridgeAmt").textContent = `${m2(H.r0)} → ${m2(H.r1)}`;
+  $("#priceAmt").textContent = `${m2s(Q.components[0].value)} of ${m2(H.delta)}`;
+  $("#volAmt").textContent = `${m2s(D.pvm_retained.volume + D.pvm_retained.mix)} of ${m2(H.delta)}`;
+  $("#custAmt").textContent = `${m2s(newVal + lostVal)} net of ${m2(H.delta)}`;
+
+  /* quality table */
+  $("#qualityTable").innerHTML = `<table><thead><tr><th>Component</th><th>Movement</th><th>Durability</th></tr></thead>
+    <tbody>${[...Q.components].sort((a, b) => Math.abs(b.value) - Math.abs(a.value)).map(c => {
+      const cls = { "Recurring": "good", "At risk": "warn", "Partly recurring": "serious", "Non-recurring": "neutral" }[c.rating];
+      return `<tr><td><div style="font-weight:500">${c.label}</div><div class="tiny" style="white-space:normal;max-width:38ch;margin-top:2px">${c.why}</div></td>
+        <td class="n ${c.value < 0 ? "neg" : ""}">${m2s(c.value)}</td>
+        <td><span class="chip ${cls}"><i></i>${c.rating}</span></td></tr>`; }).join("")}</tbody></table>`;
+
+  /* price: QoE */
+  $("#qoeText").innerHTML = `Reported gross margin improved ${pp(MG.gm1 - MG.gm0, 2).replace("+", "")} from ${pc(MG.gm0)}
+    to ${pc(MG.gm1)}. Re-priced as if contractual resets were instant, margin was ${pc(MG.gm0_norm)} in FY24 and
+    ${pc(MG.gm1_norm)} in FY25 — flat to slightly down. The entire reported improvement is the FY24 squeeze unwinding:
+    a ${m2(MG.swing)} year-on-year swing in gross profit that reflects <em>when</em> prices reset, not how the business trades.`;
+  $("#qoeStats").innerHTML = [
+    ["Reported GM movement", pp(MG.gm1 - MG.gm0, 2), "FY24 → FY25 as filed"],
+    ["Normalised GM movement", pp(MG.gm1_norm - MG.gm0_norm, 2), "With instant price resets"],
+    ["Passthrough timing swing", m2s(MG.swing), "Gross profit, not trading"],
+    ["FY26 reversal exposure", m2s(MG.reversal_exposure), `If the index holds at ${MG.index_exit}`]
+  ].map(([k, v, d]) => `<div class="stat"><div class="k">${k}</div><div class="v num">${v}</div><div class="d">${d}</div></div>`).join("");
+
+  $("#segTable").innerHTML = `<table style="min-width:380px"><thead><tr><th>Segment</th><th>FY25 revenue</th><th>LFL price</th><th>Units</th></tr></thead>
+    <tbody>${D.segment.map(s => `<tr><td>${s.segment}</td><td class="n">${m2(s.r1)}</td>
+      <td class="n">${pcs(s.lfl_price)}</td><td class="n ${s.unit_change < 0 ? "neg" : ""}">${pcs(s.unit_change)}</td></tr>`).join("")}</tbody></table>`;
+
+  /* volume: family table */
+  $("#famTable").innerHTML = `<table style="min-width:520px"><thead><tr><th>Product family</th><th>FY24</th><th>FY25</th>
+      <th>Units</th><th>ASP</th><th>Mix</th></tr></thead><tbody>${D.family.map(f =>
+      `<tr><td>${f.product_family}</td><td class="n">${acct(f.r0)}</td><td class="n">${acct(f.r1)}</td>
+       <td class="n ${f.unit_change < 0 ? "neg" : ""}">${pcs(f.unit_change)}</td>
+       <td class="n">£${f.asp1.toFixed(0)}</td>
+       <td class="n ${f.mix_between < 0 ? "neg" : ""}">${acct(f.mix_between)}</td></tr>`).join("")}
+      <tr class="totalrow"><td>Total</td><td class="n">${acct(H.r0)}</td><td class="n">${acct(H.r1)}</td>
+       <td class="n">${pcs(H.units1 / H.units0 - 1)}</td><td class="n">£${H.asp1.toFixed(0)}</td>
+       <td class="n neg">${acct(D.mix_split.between_family)}</td></tr></tbody></table>
+      <p class="tiny" style="margin-top:8px">£m unless stated. Negatives in brackets. Family revenue is the retained standard book, so it does not foot to group revenue.</p>`;
+  $("#mixSplitNote").innerHTML = `Total mix effect ${m2(D.mix_split.total)}, of which ${m2(D.mix_split.between_family)}
+    is families trading places and only ${m2s(D.mix_split.within_family)} is SKU churn inside them. The drag is
+    structural, not a one-quarter ordering pattern.`;
+
+  /* customers */
+  $("#custStats").innerHTML = [
+    ["Expansion", m2s(D.expansion), "Retained accounts that grew"],
+    ["Contraction", m2s(D.contraction), "Retained accounts that shrank"],
+    ["New customers", m2s(newVal), `${NC.count} accounts won`],
+    ["Lost customers", m2s(lostVal), `${D.lost.count} accounts gone`]
+  ].map(([k, v, d]) => `<div class="stat"><div class="k">${k}</div><div class="v num">${v}</div><div class="d">${d}</div></div>`).join("");
+
+  $("#expCap").innerHTML = `Expanding accounts added ${m2(D.expansion)}. Only ${m2(D.pvm_expansion.volume)} of it is more
+    product leaving the warehouse — and that is almost exactly cancelled by volume lost at shrinking accounts, which is
+    why organic volume across the retained book nets to ${m2(D.pvm_retained.volume)}.`;
+
+  $("#moversTable").innerHTML = `<table style="min-width:420px"><thead><tr><th>Account</th><th>FY24</th><th>FY25</th><th>Movement</th></tr></thead>
+    <tbody>${D.top_movers.map(t => `<tr><td>${t.name}</td><td class="n">${acct(t.fy24)}</td>
+      <td class="n">${acct(t.fy25)}</td><td class="n ${t.delta < 0 ? "neg" : ""}">${t.delta < 0 ? acct(t.delta) : "+" + acct(t.delta)}</td></tr>`).join("")}
+    </tbody></table><p class="tiny" style="margin-top:8px">£m. Negatives in brackets. Top 10 accounts moved from
+    ${pc(CN.top10_fy24)} to ${pc(CN.top10_fy25)} of revenue.</p>`;
+
+  $("#cohortText").innerHTML = `Meridian won ${NC.count} accounts worth ${m2(newVal)} and lost ${D.lost.count} worth
+    ${m2(-lostVal)} — on paper a net gain. But the new accounts average ${"£" + int(NC.avg_account)} against
+    ${"£" + int(NC.avg_account_retained)} for the retained book, they carry ${(Math.abs(NC.gm_pct - NC.gm_pct_retained) * 100).toFixed(1)}pp less gross margin,
+    and only ${pc(NC.survival, 0)} of the accounts won in the first half were still ordering in Q4. Annualising the cohort at
+    face value overstates it by roughly ${m2(Q.new_haircut)}.`;
+
+  /* so what */
+  $("#soValuation").innerHTML = `FY25 gross profit of ${m2(MG.gp1)} carries ${m2(MG.swing)} of passthrough timing that
+    reverses rather than repeats. At a 9× multiple that is roughly ${m1(MG.swing * 9)} of headline price paid for a
+    reset lag — before the ${m2(Math.abs(MG.reversal_exposure))} of contractual repricing already scheduled into FY26.`;
+  $("#soStructure").innerHTML = `The exposure is quantified and dated, which makes it priceable. Strike any earn-out on
+    gross profit or volume, never revenue — a revenue-linked mechanism pays the seller for resin inflation. Normalise the
+    completion-accounts margin rather than taking the FY25 outturn.`;
+  $("#soPostClose").innerHTML = `Organic volume is flat, mix is drifting toward lower-value product, and the top 10 accounts
+    have gone from ${pc(CN.top10_fy24)} to ${pc(CN.top10_fy25)} of revenue. That is a 100-day plan: price architecture in the
+    two segments recovering least, a mix defence in marine, and a concentration strategy.`;
+
+  $("#questions").innerHTML = [
+    `Your contracts reset against the resin index on a one-quarter lag. The index peaked at ${MG.index_peak} in September and closed FY25 at ${MG.index_exit}. How much FY25 revenue is contractually scheduled to reprice downward in FY26, and over what period? We calculate ${m2(Math.abs(MG.reversal_exposure))}.`,
+    `Excluding the A14 programme, mix-adjusted volume was flat or negative in three of the four FY25 quarters. Which end-markets do you believe you are gaining share in, and what is the evidence?`,
+    `The A14 programme was ${m2(D.project)} of FY25 revenue at a 7% pricing concession and completes in FY26 Q1. What replaces it, at what probability, and is it in the forecast?`,
+    `${pc(1 - NC.survival, 0)} of the accounts you won in the first half of FY25 had stopped ordering by Q4. What is the onboarding process, and is sales commission paid on first order or on retained revenue?`,
+    `Marine and offshore fell from ${pc(D.family.find(f => f.product_family.startsWith("Marine")).share0)} to ${pc(D.family.find(f => f.product_family.startsWith("Marine")).share1)} of units while carrying the highest price in the book. Deliberate exit, capacity constraint, or share loss?`
+  ].map(q => `<li><span>${q}</span></li>`).join("");
+
+  $("#ingredients").innerHTML = [
+    "<strong>Invoice lines</strong> — date, account, SKU, quantity, net value. The one non-negotiable input.",
+    "<strong>Product master</strong> — SKU to family, list price, standard cost. Drives mix and margin.",
+    "<strong>Customer master</strong> — segment, channel, region, first order date. Drives the customer lens.",
+    "<strong>Order-type flag</strong> — contract, project or standard, so one-off work can be isolated rather than argued about.",
+    "<strong>FX rate table</strong> — the rates actually used for translation, by month.",
+    "<strong>Input cost index</strong> — where contracts carry a passthrough clause, the index they reference."
+  ].map(s => `<li><span>${s}</span></li>`).join("");
+
+  $("#reconNote").innerHTML = `This build reconciles to <span class="num">£${Math.abs(D.meta.reconciliation_error).toFixed(2)}</span>
+    across all three views. A bridge that does not tie is a bridge that will be picked apart in the first management meeting.`;
+  $("#lineCount").textContent = int(D.meta.lines);
+  $("#genStamp").textContent = "Dataset seed 20250912 — regenerate and every figure on this page rebuilds.";
+}
+
+/* ================= chart rendering ================= */
+const REG = [];
+const reg = (id, fn) => REG.push({ id, fn });
+
+reg("bridgeChart", w => waterfall(w, VIEWS[view].steps,
+  { ratings: RATING, hatch: hatchOn, hatchId: "hatchBridge" }));
+
+reg("stepChart", w => hBars(w, [
+  { label: "Reported", sub: "as filed", value: Q.headline_growth, rows: [["Growth", pcs(Q.headline_growth)]] },
+  { label: "Ex one-off & FX", sub: "trading only", value: Q.ex_oneoff_fx, rows: [["Growth", pcs(Q.ex_oneoff_fx)]] },
+  { label: "Ex passthrough price", sub: "volume, mix, customers", value: Q.ex_price, rows: [["Growth", pcs(Q.ex_price)]] },
+  { label: "After new-logo haircut", sub: "observed attrition applied", value: Q.underlying, rows: [["Growth", pcs(Q.underlying)]] }
+], { fmt: v => pcs(v), left: 158, rowH: 46 }));
+
+reg("idxChart", w => lineChart(w, {
+  labels: D.monthly.map(m => m.label), every: w < 520 ? 4 : 2, rightPad: 52,
+  series: [{ name: "Input cost index", token: "--s2", values: D.monthly.map(m => m.cost_index) },
+           { name: "Realised price (LFL)", token: "--s1", values: D.monthly.map(m => m.price_index) }],
+  fmtAxis: t => t.toFixed(0), fmtEnd: v => v.toFixed(1)
+}));
+
+reg("gmChart", w => lineChart(w, {
+  labels: D.quarters.map(q => q.fiscal_quarter.replace("FY", "")), every: 1, rightPad: 52, height: 240,
+  series: [{ name: "Reported GM", token: "--s1", values: D.quarters.map(q => q.gm_pct) },
+           { name: "Normalised GM", token: "--s2", values: D.quarters.map(q => q.gm_pct_norm) }],
+  fmtAxis: t => pc(t, 0), fmtEnd: v => pc(v)
+}));
+
+reg("segChart", w => hBars(w, D.segment.map(s => ({
+  label: s.segment, sub: pc(s.r1 / D.segment.reduce((a, b) => a + b.r1, 0), 0) + " of book", value: s.lfl_price,
+  rows: [["LFL price", pcs(s.lfl_price)], ["Units", pcs(s.unit_change)], ["FY25 revenue", m2(s.r1)]]
+})), { fmt: v => pcs(v), token: "--s1", left: 116, rowH: 44 }));
+
+reg("yoyChart", w => groupBars(w,
+  D.quarters.filter(q => q.yoy !== null).map(q => q.fiscal_quarter.replace("FY25 ", "")),
+  [{ name: "Revenue", token: "--s1", values: D.quarters.filter(q => q.yoy !== null).map(q => q.yoy) },
+   { name: "Volume, ex one-off", token: "--s2", values: D.quarters.filter(q => q.yoy !== null).map(q => q.volume_yoy_ex_project) }],
+  { fmt: v => pcs(v, 0), fmtAxis: t => pc(t, 0), height: 270 }));
+
+reg("famChart", w => dumbbell(w, D.family.map(f => ({
+  label: f.product_family, a: f.share0, b: f.share1, sub: "£" + f.asp1.toFixed(0) + " per unit",
+  rows: [["FY24 unit share", pc(f.share0)], ["FY25 unit share", pc(f.share1)],
+         ["Average selling price", "£" + f.asp1.toFixed(0)], ["Mix contribution", m2s(f.mix_between)]]
+})), { left: w < 520 ? 118 : 172 }));
+
+reg("expChart", w => hBars(w, [
+  { label: "One-off contract", value: D.expansion_project, rows: [["Movement", m2s(D.expansion_project)]] },
+  { label: "Price", value: D.pvm_expansion.price, rows: [["Movement", m2s(D.pvm_expansion.price)]] },
+  { label: "Volume", value: D.pvm_expansion.volume, rows: [["Movement", m2s(D.pvm_expansion.volume)]] },
+  { label: "Mix", value: D.pvm_expansion.mix, rows: [["Movement", m2s(D.pvm_expansion.mix)]] }
+], { fmt: v => m2s(v), left: 122, rowH: 42 }));
+
+function renderCharts() {
+  for (const { id, fn } of REG) {
+    const host = document.getElementById(id); if (!host) continue;
+    const w = Math.max(260, Math.floor(host.clientWidth));
+    host.replaceChildren(fn(w));
+  }
+  legend("#bridgeLegend", hatchOn
+    ? [{ swatch: tok("--pos"), name: "Increase" }, { swatch: tok("--neg"), name: "Decrease" },
+       { swatch: tok("--total"), name: "Reported revenue" },
+       { swatch: `repeating-linear-gradient(45deg,${tok("--ink-3")} 0 2px,transparent 2px 5px)`, name: "Does not repeat in FY26" }]
+    : [{ swatch: tok("--pos"), name: "Increase" }, { swatch: tok("--neg"), name: "Decrease" },
+       { swatch: tok("--total"), name: "Reported revenue" }]);
+  legend("#idxLegend", [{ swatch: tok("--s2"), name: "Input cost index" }, { swatch: tok("--s1"), name: "Realised selling price, like-for-like" }]);
+  legend("#gmLegend", [{ swatch: tok("--s1"), name: "Reported gross margin" }, { swatch: tok("--s2"), name: "Normalised for reset timing" }]);
+  legend("#yoyLegend", [{ swatch: tok("--s1"), name: "Revenue" }, { swatch: tok("--s2"), name: "Volume, excluding one-off contract" }]);
+  legend("#famLegend", [{ swatch: tok("--ink-3"), name: "FY24 share" }, { swatch: tok("--pos"), name: "FY25 — share gained" }, { swatch: tok("--neg"), name: "FY25 — share lost" }]);
+  $("#bridgeCap").textContent = VIEWS[view].cap;
+}
+
+function renderBridgeTable() {
+  let cum = 0;
+  const rows = VIEWS[view].steps.map(s => {
+    if (s.kind === "total") { cum = s.value; return `<tr class="totalrow"><td>${s.label}</td><td class="n">—</td>
+      <td class="n">${acct(s.value)}</td><td>—</td></tr>`; }
+    cum += s.value;
+    const r = RATING[s.label] || "—";
+    const cls = { "Recurring": "good", "At risk": "warn", "Partly recurring": "serious", "Non-recurring": "neutral" }[r];
+    return `<tr><td>${s.label}${s.note ? `<div class="tiny" style="white-space:normal;max-width:44ch;margin-top:2px">${s.note}</div>` : ""}</td>
+      <td class="n ${s.value < 0 ? "neg" : ""}">${s.value < 0 ? acct(s.value) : "+" + acct(s.value)}</td>
+      <td class="n">${acct(cum)}</td><td>${cls ? `<span class="chip ${cls}"><i></i>${r}</span>` : "—"}</td></tr>`;
+  }).join("");
+  $("#bridgeTable").innerHTML = `<table><thead><tr><th>Component</th><th>Movement</th><th>Running total</th><th>Durability</th></tr></thead>
+    <tbody>${rows}</tbody></table><p class="tiny" style="margin-top:8px">£m. Negatives in brackets.</p>`;
+}
+
+/* ================= controls ================= */
+document.querySelectorAll('.tabs [role="tab"]').forEach(b => b.addEventListener("click", () => {
+  document.querySelectorAll('.tabs [role="tab"]').forEach(x => x.setAttribute("aria-selected", String(x === b)));
+  view = b.dataset.view; renderCharts(); renderBridgeTable();
+}));
+$("#btnDurability").addEventListener("click", e => {
+  hatchOn = !hatchOn; e.currentTarget.setAttribute("aria-pressed", String(hatchOn)); renderCharts();
+});
+$("#btnTable").addEventListener("click", e => {
+  tableOn = !tableOn; e.currentTarget.setAttribute("aria-pressed", String(tableOn));
+  $("#bridgeTable").hidden = !tableOn;
+  e.currentTarget.parentElement.parentElement.querySelector("figure").hidden = tableOn;
+});
+
+/* ================= boot ================= */
+fillStatic(); renderCharts(); renderBridgeTable();
+let t; const redraw = () => { clearTimeout(t); t = setTimeout(renderCharts, 120); };
+addEventListener("resize", redraw);
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change", redraw);
+new MutationObserver(redraw).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+document.fonts && document.fonts.ready.then(renderCharts);
+})();
+</script>
