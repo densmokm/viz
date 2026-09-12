@@ -1,0 +1,157 @@
+month,initiative_id,workstream,type,in_year_benefit,runrate_recognised
+4,S001,Procurement,Cost,23816.0,285790.0
+5,S001,Procurement,Cost,37153.0,445833.0
+6,S001,Procurement,Cost,47632.0,571580.0
+7,S001,Procurement,Cost,47632.0,571580.0
+8,S001,Procurement,Cost,47632.0,571580.0
+9,S001,Procurement,Cost,47632.0,571580.0
+10,S001,Procurement,Cost,47632.0,571580.0
+11,S001,Procurement,Cost,47632.0,571580.0
+12,S001,Procurement,Cost,47632.0,571580.0
+13,S001,Procurement,Cost,47632.0,571580.0
+14,S001,Procurement,Cost,47632.0,571580.0
+12,S002,Procurement,Cost,40755.0,489057.0
+13,S002,Procurement,Cost,63577.0,762929.0
+14,S002,Procurement,Cost,81509.0,978114.0
+7,S003,Procurement,Cost,4148.0,49776.0
+8,S003,Procurement,Cost,6471.0,77650.0
+9,S003,Procurement,Cost,8296.0,99551.0
+10,S003,Procurement,Cost,8296.0,99551.0
+11,S003,Procurement,Cost,8296.0,99551.0
+12,S003,Procurement,Cost,8296.0,99551.0
+13,S003,Procurement,Cost,8296.0,99551.0
+14,S003,Procurement,Cost,8296.0,99551.0
+8,S004,Procurement,Cost,33527.0,402323.0
+9,S004,Procurement,Cost,52302.0,627624.0
+10,S004,Procurement,Cost,67054.0,804646.0
+11,S004,Procurement,Cost,67054.0,804646.0
+12,S004,Procurement,Cost,67054.0,804646.0
+13,S004,Procurement,Cost,67054.0,804646.0
+14,S004,Procurement,Cost,67054.0,804646.0
+4,S005,Procurement,Cost,28458.0,341499.0
+5,S005,Procurement,Cost,44395.0,532739.0
+6,S005,Procurement,Cost,56917.0,682999.0
+7,S005,Procurement,Cost,56917.0,682999.0
+8,S005,Procurement,Cost,56917.0,682999.0
+9,S005,Procurement,Cost,56917.0,682999.0
+10,S005,Procurement,Cost,56917.0,682999.0
+11,S005,Procurement,Cost,56917.0,682999.0
+12,S005,Procurement,Cost,56917.0,682999.0
+13,S005,Procurement,Cost,56917.0,682999.0
+14,S005,Procurement,Cost,56917.0,682999.0
+6,S008,Procurement,Cost,15682.0,188185.0
+7,S008,Procurement,Cost,24464.0,293568.0
+8,S008,Procurement,Cost,31364.0,376370.0
+9,S008,Procurement,Cost,31364.0,376370.0
+10,S008,Procurement,Cost,31364.0,376370.0
+11,S008,Procurement,Cost,31364.0,376370.0
+12,S008,Procurement,Cost,31364.0,376370.0
+13,S008,Procurement,Cost,31364.0,376370.0
+14,S008,Procurement,Cost,31364.0,376370.0
+6,S009,Procurement,Cost,40126.0,481512.0
+7,S009,Procurement,Cost,62597.0,751158.0
+8,S009,Procurement,Cost,80252.0,963023.0
+9,S009,Procurement,Cost,80252.0,963023.0
+10,S009,Procurement,Cost,80252.0,963023.0
+11,S009,Procurement,Cost,80252.0,963023.0
+12,S009,Procurement,Cost,80252.0,963023.0
+13,S009,Procurement,Cost,80252.0,963023.0
+14,S009,Procurement,Cost,80252.0,963023.0
+1,S010,Organisation design,Cost,11619.0,139432.0
+2,S010,Organisation design,Cost,18126.0,217514.0
+3,S010,Organisation design,Cost,23239.0,278864.0
+4,S010,Organisation design,Cost,23239.0,278864.0
+5,S010,Organisation design,Cost,23239.0,278864.0
+6,S010,Organisation design,Cost,23239.0,278864.0
+7,S010,Organisation design,Cost,23239.0,278864.0
+8,S010,Organisation design,Cost,23239.0,278864.0
+9,S010,Organisation design,Cost,23239.0,278864.0
+10,S010,Organisation design,Cost,23239.0,278864.0
+11,S010,Organisation design,Cost,23239.0,278864.0
+12,S010,Organisation design,Cost,23239.0,278864.0
+13,S010,Organisation design,Cost,23239.0,278864.0
+14,S010,Organisation design,Cost,23239.0,278864.0
+13,S012,Organisation design,Cost,49503.0,594037.0
+14,S012,Organisation design,Cost,77225.0,926698.0
+5,S014,Organisation design,Cost,28526.0,342306.0
+6,S014,Organisation design,Cost,44500.0,533997.0
+7,S014,Organisation design,Cost,57051.0,684612.0
+8,S014,Organisation design,Cost,57051.0,684612.0
+9,S014,Organisation design,Cost,57051.0,684612.0
+10,S014,Organisation design,Cost,57051.0,684612.0
+11,S014,Organisation design,Cost,57051.0,684612.0
+12,S014,Organisation design,Cost,57051.0,684612.0
+13,S014,Organisation design,Cost,57051.0,684612.0
+14,S014,Organisation design,Cost,57051.0,684612.0
+6,S015,Organisation design,Cost,24173.0,290076.0
+7,S015,Organisation design,Cost,37710.0,452518.0
+8,S015,Organisation design,Cost,48346.0,580151.0
+9,S015,Organisation design,Cost,48346.0,580151.0
+10,S015,Organisation design,Cost,48346.0,580151.0
+11,S015,Organisation design,Cost,48346.0,580151.0
+12,S015,Organisation design,Cost,48346.0,580151.0
+13,S015,Organisation design,Cost,48346.0,580151.0
+14,S015,Organisation design,Cost,48346.0,580151.0
+5,S016,Property & sites,Cost,10634.0,127614.0
+6,S016,Property & sites,Cost,16590.0,199077.0
+7,S016,Property & sites,Cost,21269.0,255227.0
+8,S016,Property & sites,Cost,21269.0,255227.0
+9,S016,Property & sites,Cost,21269.0,255227.0
+10,S016,Property & sites,Cost,21269.0,255227.0
+11,S016,Property & sites,Cost,21269.0,255227.0
+12,S016,Property & sites,Cost,21269.0,255227.0
+13,S016,Property & sites,Cost,21269.0,255227.0
+14,S016,Property & sites,Cost,21269.0,255227.0
+2,S017,Property & sites,Cost,28076.0,336912.0
+3,S017,Property & sites,Cost,43799.0,525583.0
+4,S017,Property & sites,Cost,56152.0,673824.0
+5,S017,Property & sites,Cost,56152.0,673824.0
+6,S017,Property & sites,Cost,56152.0,673824.0
+7,S017,Property & sites,Cost,56152.0,673824.0
+8,S017,Property & sites,Cost,56152.0,673824.0
+9,S017,Property & sites,Cost,56152.0,673824.0
+10,S017,Property & sites,Cost,56152.0,673824.0
+11,S017,Property & sites,Cost,56152.0,673824.0
+12,S017,Property & sites,Cost,56152.0,673824.0
+13,S017,Property & sites,Cost,56152.0,673824.0
+14,S017,Property & sites,Cost,56152.0,673824.0
+5,S018,Property & sites,Cost,38539.0,462463.0
+6,S018,Property & sites,Cost,60120.0,721442.0
+7,S018,Property & sites,Cost,77077.0,924926.0
+8,S018,Property & sites,Cost,77077.0,924926.0
+9,S018,Property & sites,Cost,77077.0,924926.0
+10,S018,Property & sites,Cost,77077.0,924926.0
+11,S018,Property & sites,Cost,77077.0,924926.0
+12,S018,Property & sites,Cost,77077.0,924926.0
+13,S018,Property & sites,Cost,77077.0,924926.0
+14,S018,Property & sites,Cost,77077.0,924926.0
+9,S021,IT & systems,Cost,14555.0,174655.0
+10,S021,IT & systems,Cost,22705.0,272462.0
+11,S021,IT & systems,Cost,29109.0,349311.0
+12,S021,IT & systems,Cost,29109.0,349311.0
+13,S021,IT & systems,Cost,29109.0,349311.0
+14,S021,IT & systems,Cost,29109.0,349311.0
+8,S023,IT & systems,Cost,10447.0,125363.0
+9,S023,IT & systems,Cost,16297.0,195567.0
+10,S023,IT & systems,Cost,20894.0,250727.0
+11,S023,IT & systems,Cost,20894.0,250727.0
+12,S023,IT & systems,Cost,20894.0,250727.0
+13,S023,IT & systems,Cost,20894.0,250727.0
+14,S023,IT & systems,Cost,20894.0,250727.0
+12,S026,Insurance & risk,Cost,14520.0,174240.0
+13,S026,Insurance & risk,Cost,22651.0,271814.0
+14,S026,Insurance & risk,Cost,29040.0,348480.0
+10,S027,Insurance & risk,Cost,7374.0,88494.0
+11,S027,Insurance & risk,Cost,11504.0,138050.0
+12,S027,Insurance & risk,Cost,14749.0,176987.0
+13,S027,Insurance & risk,Cost,14749.0,176987.0
+14,S027,Insurance & risk,Cost,14749.0,176987.0
+8,S028,Insurance & risk,Cost,12590.0,151083.0
+9,S028,Insurance & risk,Cost,19641.0,235690.0
+10,S028,Insurance & risk,Cost,25181.0,302167.0
+11,S028,Insurance & risk,Cost,25181.0,302167.0
+12,S028,Insurance & risk,Cost,25181.0,302167.0
+13,S028,Insurance & risk,Cost,25181.0,302167.0
+14,S028,Insurance & risk,Cost,25181.0,302167.0
+13,S042,Geographic expansion,Revenue,7105.0,85263.0
+14,S042,Geographic expansion,Revenue,11084.0,133010.0

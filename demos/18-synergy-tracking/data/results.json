@@ -1,0 +1,893 @@
+{
+ "meta": {
+  "acquirer": "Wexford Industrial Group",
+  "target": "Pentland Technical Services",
+  "codename": "Project Anvil",
+  "sector": "Industrial and technical services",
+  "stage": "Post-deal value creation",
+  "month": 14,
+  "target_month": 24,
+  "initiatives": 46,
+  "history": 260
+ },
+ "model": {
+  "total": 24500000,
+  "cost": 16500000,
+  "revenue": 8000000,
+  "target_month": 24,
+  "cta_budget": 6522000
+ },
+ "bridge": [
+  {
+   "label": "Deal model",
+   "value": 24500000.0,
+   "kind": "total"
+  },
+  {
+   "label": "Re-estimation",
+   "value": 199000.0,
+   "kind": "delta",
+   "note": "Current owner estimates against the number in the deal model"
+  },
+  {
+   "label": "Conversion risk",
+   "value": -5403187.9299998125,
+   "kind": "delta",
+   "note": "Initiatives that history says will not convert from their current stage"
+  },
+  {
+   "label": "Realisation haircut",
+   "value": -2868247.7545880084,
+   "kind": "delta",
+   "note": "Delivered initiatives land at 89% of estimate on average"
+  },
+  {
+   "label": "Dis-synergy",
+   "value": -2630000.0,
+   "kind": "delta",
+   "note": "Attrition and integration costs the deal model did not carry"
+  },
+  {
+   "label": "Risk-adjusted forecast",
+   "value": 13797564.315412179,
+   "kind": "total"
+  }
+ ],
+ "recon": 0.0,
+ "position": {
+  "secured": 10361267.0,
+  "gross_estimate": 24699000.0,
+  "expected": 16427564.315412179,
+  "net_forecast": 13797564.315412179,
+  "gap": 10702435.684587821,
+  "pct_of_model": 0.5631658904249869,
+  "dis_synergy": -2630000.0,
+  "mu_real": 0.8938360533404326,
+  "sd_real": 0.22135099010052883
+ },
+ "by_type": [
+  {
+   "type": "Cost",
+   "plan": 16500000.0,
+   "estimate": 17279000.0,
+   "secured": 10228257.0,
+   "expected": 13557319.0951567,
+   "n": 28,
+   "pct": 0.8216557027367697
+  },
+  {
+   "type": "Revenue",
+   "plan": 8000000.0,
+   "estimate": 7420000.0,
+   "secured": 133010.0,
+   "expected": 2870245.2202554788,
+   "n": 18,
+   "pct": 0.35878065253193486
+  }
+ ],
+ "workstreams": [
+  {
+   "workstream": "Procurement",
+   "type": "Cost",
+   "n": 9,
+   "plan": 6200000.0,
+   "estimate": 7085000.0,
+   "secured": 4476283.0,
+   "expected": 5826888.550478143,
+   "pv": 5140000.0,
+   "ev": 5063400.0,
+   "spi": 0.9850972762645914,
+   "cta_budget": 1641000.0,
+   "cta_spent": 1907000.0,
+   "stalled": 2,
+   "stages": {
+    "Identified": 0,
+    "Validated": 1,
+    "In execution": 1,
+    "Delivered": 4,
+    "Banked": 3
+   }
+  },
+  {
+   "workstream": "Organisation design",
+   "type": "Cost",
+   "n": 6,
+   "plan": 4800000.0,
+   "estimate": 4514000.0,
+   "secured": 2470325.0,
+   "expected": 3542413.486187833,
+   "pv": 4477500.0,
+   "ev": 4055100.0,
+   "spi": 0.9056616415410386,
+   "cta_budget": 1418000.0,
+   "cta_spent": 1469000.0,
+   "stalled": 0,
+   "stages": {
+    "Identified": 0,
+    "Validated": 0,
+    "In execution": 2,
+    "Delivered": 2,
+    "Banked": 2
+   }
+  },
+  {
+   "workstream": "Property & sites",
+   "type": "Cost",
+   "n": 4,
+   "plan": 2600000.0,
+   "estimate": 2786000.0,
+   "secured": 1853977.0,
+   "expected": 2221259.662471754,
+   "pv": 1996000.0,
+   "ev": 2041000.0,
+   "spi": 1.0225450901803608,
+   "cta_budget": 663000.0,
+   "cta_spent": 804000.0,
+   "stalled": 0,
+   "stages": {
+    "Identified": 0,
+    "Validated": 1,
+    "In execution": 0,
+    "Delivered": 1,
+    "Banked": 2
+   }
+  },
+  {
+   "workstream": "IT & systems",
+   "type": "Cost",
+   "n": 6,
+   "plan": 1899000.0,
+   "estimate": 1930000.0,
+   "secured": 600038.0,
+   "expected": 1139123.3960189722,
+   "pv": 1419666.6666666667,
+   "ev": 905000.0,
+   "spi": 0.6374735853486734,
+   "cta_budget": 552000.0,
+   "cta_spent": 553000.0,
+   "stalled": 0,
+   "stages": {
+    "Identified": 2,
+    "Validated": 1,
+    "In execution": 1,
+    "Delivered": 2,
+    "Banked": 0
+   }
+  },
+  {
+   "workstream": "Insurance & risk",
+   "type": "Cost",
+   "n": 3,
+   "plan": 1000000.0,
+   "estimate": 964000.0,
+   "secured": 827634.0,
+   "expected": 827634.0,
+   "pv": 1000000.0,
+   "ev": 925000.0,
+   "spi": 0.925,
+   "cta_budget": 300000.0,
+   "cta_spent": 344000.0,
+   "stalled": 0,
+   "stages": {
+    "Identified": 0,
+    "Validated": 0,
+    "In execution": 0,
+    "Delivered": 2,
+    "Banked": 1
+   }
+  },
+  {
+   "workstream": "Cross-sell",
+   "type": "Revenue",
+   "n": 8,
+   "plan": 4399000.0,
+   "estimate": 4042000.0,
+   "secured": 0.0,
+   "expected": 1523613.2302109376,
+   "pv": 1650833.3333333333,
+   "ev": 779000.0,
+   "spi": 0.47188288743059065,
+   "cta_budget": 979000.0,
+   "cta_spent": 682000.0,
+   "stalled": 7,
+   "stages": {
+    "Identified": 3,
+    "Validated": 4,
+    "In execution": 1,
+    "Delivered": 0,
+    "Banked": 0
+   }
+  },
+  {
+   "workstream": "Pricing harmonisation",
+   "type": "Revenue",
+   "n": 5,
+   "plan": 2201000.0,
+   "estimate": 2104000.0,
+   "secured": 0.0,
+   "expected": 819310.1818414564,
+   "pv": 484500.0,
+   "ev": 442150.0,
+   "spi": 0.9125902992776058,
+   "cta_budget": 588000.0,
+   "cta_spent": 442000.0,
+   "stalled": 3,
+   "stages": {
+    "Identified": 1,
+    "Validated": 3,
+    "In execution": 1,
+    "Delivered": 0,
+    "Banked": 0
+   }
+  },
+  {
+   "workstream": "Geographic expansion",
+   "type": "Revenue",
+   "n": 5,
+   "plan": 1400000.0,
+   "estimate": 1274000.0,
+   "secured": 133010.0,
+   "expected": 527321.8082030844,
+   "pv": 626666.6666666667,
+   "ev": 224100.0,
+   "spi": 0.3576063829787234,
+   "cta_budget": 381000.0,
+   "cta_spent": 145000.0,
+   "stalled": 3,
+   "stages": {
+    "Identified": 4,
+    "Validated": 0,
+    "In execution": 0,
+    "Delivered": 1,
+    "Banked": 0
+   }
+  }
+ ],
+ "curve": [
+  {
+   "month": 1,
+   "plan": 0.0,
+   "runrate": 139432.0,
+   "in_year_cum": 11619.0
+  },
+  {
+   "month": 2,
+   "plan": 1453000.0,
+   "runrate": 554426.0,
+   "in_year_cum": 57821.0
+  },
+  {
+   "month": 3,
+   "plan": 1988000.0,
+   "runrate": 804447.0,
+   "in_year_cum": 124859.0
+  },
+  {
+   "month": 4,
+   "plan": 5386000.0,
+   "runrate": 1579977.0,
+   "in_year_cum": 256524.0
+  },
+  {
+   "month": 5,
+   "plan": 6231000.0,
+   "runrate": 2863643.0,
+   "in_year_cum": 495162.0
+  },
+  {
+   "month": 6,
+   "plan": 6231000.0,
+   "runrate": 4621556.0,
+   "in_year_cum": 880293.0
+  },
+  {
+   "month": 7,
+   "plan": 6597000.0,
+   "runrate": 5619052.0,
+   "in_year_cum": 1348549.0
+  },
+  {
+   "month": 8,
+   "plan": 7533000.0,
+   "runrate": 6747995.0,
+   "in_year_cum": 1910883.0
+  },
+  {
+   "month": 9,
+   "plan": 8353000.0,
+   "runrate": 7324663.0,
+   "in_year_cum": 2521273.0
+  },
+  {
+   "month": 10,
+   "plan": 8734000.0,
+   "runrate": 7809623.0,
+   "in_year_cum": 3172076.0
+  },
+  {
+   "month": 11,
+   "plan": 9940000.0,
+   "runrate": 7936028.0,
+   "in_year_cum": 3833413.0
+  },
+  {
+   "month": 12,
+   "plan": 11616000.0,
+   "runrate": 8638262.0,
+   "in_year_cum": 4553270.0
+  },
+  {
+   "month": 13,
+   "plan": 13770000.0,
+   "runrate": 9689008.0,
+   "in_year_cum": 5360688.0
+  },
+  {
+   "month": 14,
+   "plan": 13770000.0,
+   "runrate": 10361267.0,
+   "in_year_cum": 6224128.0
+  },
+  {
+   "month": 15,
+   "plan": 14530000.0,
+   "runrate": null,
+   "in_year_cum": null
+  },
+  {
+   "month": 16,
+   "plan": 15057000.0,
+   "runrate": null,
+   "in_year_cum": null
+  },
+  {
+   "month": 17,
+   "plan": 18195000.0,
+   "runrate": null,
+   "in_year_cum": null
+  },
+  {
+   "month": 18,
+   "plan": 18966000.0,
+   "runrate": null,
+   "in_year_cum": null
+  },
+  {
+   "month": 19,
+   "plan": 20253000.0,
+   "runrate": null,
+   "in_year_cum": null
+  },
+  {
+   "month": 20,
+   "plan": 20961000.0,
+   "runrate": null,
+   "in_year_cum": null
+  },
+  {
+   "month": 21,
+   "plan": 23019000.0,
+   "runrate": null,
+   "in_year_cum": null
+  },
+  {
+   "month": 22,
+   "plan": 23892000.0,
+   "runrate": null,
+   "in_year_cum": null
+  },
+  {
+   "month": 23,
+   "plan": 24499000.0,
+   "runrate": null,
+   "in_year_cum": null
+  },
+  {
+   "month": 24,
+   "plan": 24499000.0,
+   "runrate": null,
+   "in_year_cum": null
+  }
+ ],
+ "pl_gap": {
+  "runrate": 10361267.0,
+  "ltm_pl": 6166307.0,
+  "ratio": 0.5951305955150079,
+  "annualisation_gap": 4194960.0
+ },
+ "simulation": {
+  "mean": 13787455.242890155,
+  "p10": 12318092.406803709,
+  "p50": 13780102.411727577,
+  "p90": 15290160.773491567,
+  "p_hit_model": 0.0,
+  "p_hit_80": 0.0,
+  "n": 20000,
+  "histogram": [
+   {
+    "x": 9633500.425922293,
+    "n": 7
+   },
+   {
+    "x": 10005237.434685431,
+    "n": 9
+   },
+   {
+    "x": 10376974.443448568,
+    "n": 36
+   },
+   {
+    "x": 10748711.452211706,
+    "n": 89
+   },
+   {
+    "x": 11120448.460974844,
+    "n": 199
+   },
+   {
+    "x": 11492185.46973798,
+    "n": 345
+   },
+   {
+    "x": 11863922.478501119,
+    "n": 613
+   },
+   {
+    "x": 12235659.487264257,
+    "n": 1023
+   },
+   {
+    "x": 12607396.496027395,
+    "n": 1581
+   },
+   {
+    "x": 12979133.504790531,
+    "n": 2066
+   },
+   {
+    "x": 13350870.51355367,
+    "n": 2364
+   },
+   {
+    "x": 13722607.522316808,
+    "n": 2559
+   },
+   {
+    "x": 14094344.531079946,
+    "n": 2462
+   },
+   {
+    "x": 14466081.539843082,
+    "n": 2154
+   },
+   {
+    "x": 14837818.54860622,
+    "n": 1608
+   },
+   {
+    "x": 15209555.557369359,
+    "n": 1182
+   },
+   {
+    "x": 15581292.566132495,
+    "n": 762
+   },
+   {
+    "x": 15953029.574895633,
+    "n": 508
+   },
+   {
+    "x": 16324766.583658772,
+    "n": 228
+   },
+   {
+    "x": 16696503.59242191,
+    "n": 119
+   },
+   {
+    "x": 17068240.601185046,
+    "n": 59
+   },
+   {
+    "x": 17439977.609948184,
+    "n": 16
+   },
+   {
+    "x": 17811714.618711323,
+    "n": 8
+   },
+   {
+    "x": 18183451.627474457,
+    "n": 2
+   },
+   {
+    "x": 18555188.6362376,
+    "n": 1
+   }
+  ]
+ },
+ "shortfall": {
+  "ceiling": 19921267.0,
+  "reachable": false,
+  "unreachable_by": 4578733.0,
+  "new_runrate_required": 11973600.353880128,
+  "required_conversion": 1.5390001988416995
+ },
+ "conversion": [
+  {
+   "stage": "Identified",
+   "type": "Cost",
+   "n": 35,
+   "raw": 0.3142857142857143,
+   "smoothed": 0.3554240631163708
+  },
+  {
+   "stage": "Identified",
+   "type": "Revenue",
+   "n": 22,
+   "raw": 0.36363636363636365,
+   "smoothed": 0.41775147928994083
+  },
+  {
+   "stage": "Validated",
+   "type": "Cost",
+   "n": 34,
+   "raw": 0.5882352941176471,
+   "smoothed": 0.6016194331983806
+  },
+  {
+   "stage": "Validated",
+   "type": "Revenue",
+   "n": 23,
+   "raw": 0.30434782608695654,
+   "smoothed": 0.36524216524216524
+  },
+  {
+   "stage": "In execution",
+   "type": "Cost",
+   "n": 42,
+   "raw": 0.9285714285714286,
+   "smoothed": 0.9100334448160534
+  },
+  {
+   "stage": "In execution",
+   "type": "Revenue",
+   "n": 18,
+   "raw": 0.8888888888888888,
+   "smoothed": 0.8573426573426574
+  },
+  {
+   "stage": "Delivered",
+   "type": "Cost",
+   "n": 37,
+   "raw": 0.972972972972973,
+   "smoothed": 0.947842401500938
+  },
+  {
+   "stage": "Delivered",
+   "type": "Revenue",
+   "n": 14,
+   "raw": 1.0,
+   "smoothed": 0.9367521367521368
+  },
+  {
+   "stage": "Banked",
+   "type": "Cost",
+   "n": 24,
+   "raw": 1.0,
+   "smoothed": 0.9593406593406594
+  },
+  {
+   "stage": "Banked",
+   "type": "Revenue",
+   "n": 11,
+   "raw": 1.0,
+   "smoothed": 0.9241025641025641
+  }
+ ],
+ "stage_order": [
+  "Identified",
+  "Validated",
+  "In execution",
+  "Delivered",
+  "Banked"
+ ],
+ "credit": {
+  "Identified": 0.0,
+  "Validated": 0.25,
+  "In execution": 0.6,
+  "Delivered": 0.9,
+  "Banked": 1.0
+ },
+ "cta": {
+  "budget": 6522000.0,
+  "spent": 6346000.0,
+  "ratio": 0.9730144127568231,
+  "per_pound": 0.6124733587118255,
+  "by_ws": [
+   {
+    "workstream": "Procurement",
+    "budget": 1641000.0,
+    "spent": 1907000.0,
+    "over": 266000.0
+   },
+   {
+    "workstream": "Organisation design",
+    "budget": 1418000.0,
+    "spent": 1469000.0,
+    "over": 51000.0
+   },
+   {
+    "workstream": "Property & sites",
+    "budget": 663000.0,
+    "spent": 804000.0,
+    "over": 141000.0
+   },
+   {
+    "workstream": "IT & systems",
+    "budget": 552000.0,
+    "spent": 553000.0,
+    "over": 1000.0
+   },
+   {
+    "workstream": "Insurance & risk",
+    "budget": 300000.0,
+    "spent": 344000.0,
+    "over": 44000.0
+   },
+   {
+    "workstream": "Cross-sell",
+    "budget": 979000.0,
+    "spent": 682000.0,
+    "over": -297000.0
+   },
+   {
+    "workstream": "Pricing harmonisation",
+    "budget": 588000.0,
+    "spent": 442000.0,
+    "over": -146000.0
+   },
+   {
+    "workstream": "Geographic expansion",
+    "budget": 381000.0,
+    "spent": 145000.0,
+    "over": -236000.0
+   }
+  ]
+ },
+ "escalate": [
+  {
+   "initiative_id": "S033",
+   "name": 32,
+   "workstream": "Cross-sell",
+   "type": "Revenue",
+   "owner": "COO",
+   "stage": "Validated",
+   "days_in_stage": 129,
+   "estimate": 894000.0,
+   "p_convert": 0.36524216524216524,
+   "at_risk": 602138.8457487473,
+   "stalled": 1,
+   "planned_month": 12,
+   "overdue": 1
+  },
+  {
+   "initiative_id": "S031",
+   "name": 30,
+   "workstream": "Cross-sell",
+   "type": "Revenue",
+   "owner": "CCO",
+   "stage": "Identified",
+   "days_in_stage": 124,
+   "estimate": 741000.0,
+   "p_convert": 0.41775147928994083,
+   "at_risk": 464309.6118574947,
+   "stalled": 1,
+   "planned_month": 22,
+   "overdue": 0
+  },
+  {
+   "initiative_id": "S041",
+   "name": 40,
+   "workstream": "Pricing harmonisation",
+   "type": "Revenue",
+   "owner": "CFO",
+   "stage": "Validated",
+   "days_in_stage": 73,
+   "estimate": 680000.0,
+   "p_convert": 0.36524216524216524,
+   "at_risk": 458002.70146437164,
+   "stalled": 0,
+   "planned_month": 19,
+   "overdue": 0
+  },
+  {
+   "initiative_id": "S039",
+   "name": 38,
+   "workstream": "Pricing harmonisation",
+   "type": "Revenue",
+   "owner": "Integration MD",
+   "stage": "Identified",
+   "days_in_stage": 82,
+   "estimate": 591000.0,
+   "p_convert": 0.41775147928994083,
+   "at_risk": 370319.8118863419,
+   "stalled": 0,
+   "planned_month": 21,
+   "overdue": 0
+  },
+  {
+   "initiative_id": "S032",
+   "name": 31,
+   "workstream": "Cross-sell",
+   "type": "Revenue",
+   "owner": "Group Procurement",
+   "stage": "Validated",
+   "days_in_stage": 157,
+   "estimate": 530000.0,
+   "p_convert": 0.36524216524216524,
+   "at_risk": 356972.6937884073,
+   "stalled": 1,
+   "planned_month": 17,
+   "overdue": 0
+  },
+  {
+   "initiative_id": "S029",
+   "name": 28,
+   "workstream": "Cross-sell",
+   "type": "Revenue",
+   "owner": "Group Procurement",
+   "stage": "Identified",
+   "days_in_stage": 93,
+   "estimate": 550000.0,
+   "p_convert": 0.41775147928994083,
+   "at_risk": 344629.2665608935,
+   "stalled": 1,
+   "planned_month": 23,
+   "overdue": 0
+  },
+  {
+   "initiative_id": "S046",
+   "name": 45,
+   "workstream": "Geographic expansion",
+   "type": "Revenue",
+   "owner": "CIO",
+   "stage": "Identified",
+   "days_in_stage": 185,
+   "estimate": 507000.0,
+   "p_convert": 0.41775147928994083,
+   "at_risk": 317685.5239024964,
+   "stalled": 1,
+   "planned_month": 17,
+   "overdue": 0
+  },
+  {
+   "initiative_id": "S019",
+   "name": 18,
+   "workstream": "Property & sites",
+   "type": "Cost",
+   "owner": "COO",
+   "stage": "Validated",
+   "days_in_stage": 21,
+   "estimate": 683000.0,
+   "p_convert": 0.6016194331983806,
+   "at_risk": 315717.3375282461,
+   "stalled": 0,
+   "planned_month": 21,
+   "overdue": 0
+  },
+  {
+   "initiative_id": "S030",
+   "name": 29,
+   "workstream": "Cross-sell",
+   "type": "Revenue",
+   "owner": "Group Procurement",
+   "stage": "Identified",
+   "days_in_stage": 430,
+   "estimate": 479000.0,
+   "p_convert": 0.41775147928994083,
+   "at_risk": 300140.7612412145,
+   "stalled": 1,
+   "planned_month": 21,
+   "overdue": 0
+  },
+  {
+   "initiative_id": "S035",
+   "name": 34,
+   "workstream": "Cross-sell",
+   "type": "Revenue",
+   "owner": "CFO",
+   "stage": "Validated",
+   "days_in_stage": 115,
+   "estimate": 431000.0,
+   "p_convert": 0.36524216524216524,
+   "at_risk": 290292.88872227084,
+   "stalled": 1,
+   "planned_month": 20,
+   "overdue": 0
+  },
+  {
+   "initiative_id": "S022",
+   "name": 21,
+   "workstream": "IT & systems",
+   "type": "Cost",
+   "owner": "Group Procurement",
+   "stage": "Validated",
+   "days_in_stage": 68,
+   "estimate": 587000.0,
+   "p_convert": 0.6016194331983806,
+   "at_risk": 271341.2549474092,
+   "stalled": 0,
+   "planned_month": 15,
+   "overdue": 0
+  },
+  {
+   "initiative_id": "S006",
+   "name": 5,
+   "workstream": "Procurement",
+   "type": "Cost",
+   "owner": "Group Procurement",
+   "stage": "Validated",
+   "days_in_stage": 89,
+   "estimate": 586000.0,
+   "p_convert": 0.6016194331983806,
+   "at_risk": 270879.0040871921,
+   "stalled": 1,
+   "planned_month": 19,
+   "overdue": 0
+  }
+ ],
+ "dissynergies": [
+  {
+   "item": "Customer overlap attrition",
+   "type": "Revenue",
+   "annual_impact": -1240000,
+   "note": "Twelve accounts held with both businesses consolidated volume with a third party"
+  },
+  {
+   "item": "Key account manager departures",
+   "type": "Revenue",
+   "annual_impact": -660000,
+   "note": "Four senior sellers left in the first nine months, two to a direct competitor"
+  },
+  {
+   "item": "Retention and duplicate cover",
+   "type": "Cost",
+   "annual_impact": -420000,
+   "note": "Retention packages and contractor cover during the finance consolidation"
+  },
+  {
+   "item": "Contract novation losses",
+   "type": "Revenue",
+   "annual_impact": -310000,
+   "note": "Three framework contracts not novated on change of control"
+  }
+ ],
+ "stage_counts": {
+  "Identified": 10,
+  "Validated": 10,
+  "In execution": 6,
+  "Delivered": 12,
+  "Banked": 8
+ }
+}

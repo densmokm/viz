@@ -13,9 +13,15 @@ partners, PE deal teams and portfolio company CFOs.
 
 ## Built
 
-| # | Technique | Demo | The finding |
-|---|---|---|---|
-| 09 | [Revenue Decomposition](demos/09-revenue-decomposition/) | [Meridian Revenue Bridge](https://claude.ai/code/artifact/230bde63-86eb-44b4-a8fa-d86185f0a70f) | +18.6% reported growth is −1.8% underlying once passthrough pricing, a one-off contract and FX come out |
+| # | Technique | Stage | Demo | The finding |
+|---|---|---|---|---|
+| — | **Deal Lifecycle** | front door | [Lifecycle map](https://claude.ai/code/artifact/8f47772e-1d82-4096-9b06-7aa3de1988da) | 32 techniques across five phases of a transaction |
+| 01 | [Alt Data Triangulation](demos/01-alt-data-triangulation/) | Commercial DD | [Project Harrier](https://claude.ai/code/artifact/573d0f94-5d11-4e02-8ed7-064c98752cb3) | 4 of 7 IM claims challenged; implied organic growth 5.1% against 9% claimed |
+| 09 | [Revenue Decomposition](demos/09-revenue-decomposition/) | Financial DD | [Meridian Bridge](https://claude.ai/code/artifact/230bde63-86eb-44b4-a8fa-d86185f0a70f) | +18.6% reported growth is −1.8% underlying |
+| 16 | [Data Room Analytics](demos/16-vdr-analytics/) | SPA & completion | [Project Lantern](https://claude.ai/code/artifact/b50804ed-996e-472a-9aa8-df7b184ec06c) | Six bidders on the process letter, 3.0 expected live bids |
+| 18 | [Synergy Tracking](demos/18-synergy-tracking/) | Value creation | [Project Anvil](https://claude.ai/code/artifact/b18eee14-aa3a-497e-8b8c-7c07101062a8) | £13.8m forecast against a £24.5m model — and the model is unreachable |
+
+**Start here:** the [lifecycle map](https://claude.ai/code/artifact/8f47772e-1d82-4096-9b06-7aa3de1988da) is the front door — every technique in the catalogue placed against the phase of a deal it belongs to, with the built ones linked.
 
 ## Catalogue
 

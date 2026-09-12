@@ -1,4 +1,4 @@
-<title>Project Lantern Dataroom</title>
+<title>Project Anvil Synergy Tracker</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;450;500;600;700&display=swap">
@@ -244,136 +244,159 @@ footer{padding-block:34px 60px; border-top:1px solid var(--rule); color:var(--in
 .stagebar{display:flex; height:10px; border-radius:3px; overflow:hidden; gap:2px; background:var(--surface-2)}
 .stagebar i{display:block; min-width:2px}
 
+.wsrow{display:grid; gap:14px; align-items:center; padding:15px 6px; border-bottom:1px solid var(--rule);
+  grid-template-columns:minmax(0,1.35fr) minmax(130px,1fr) 74px 74px minmax(110px,.8fr)}
+.wsrow:last-child{border-bottom:0}
+.wsrow .nm{display:grid; gap:3px}
+.wsrow .nm strong{font-size:.94rem; font-weight:600}
+.wsrow .nm span{font-size:.75rem; color:var(--ink-3)}
+.wsrow .kv{text-align:right}
+.wsrow .kv b{display:block; font-family:"IBM Plex Mono",monospace; font-size:.92rem; font-weight:600}
+.wsrow .kv s{text-decoration:none; font-size:.68rem; color:var(--ink-3); letter-spacing:.05em; text-transform:uppercase}
+.dualbar{position:relative; height:24px; background:var(--surface-2); border-radius:3px}
+.dualbar i{position:absolute; left:0; top:0; bottom:0; border-radius:3px; display:block}
+.dualbar u{position:absolute; top:-3px; bottom:-3px; width:2px; background:var(--ink); display:block; text-decoration:none}
+@media (max-width:880px){
+  .wsrow{grid-template-columns:minmax(0,1fr) 74px 74px}
+  .wsrow .bar, .wsrow .stages{grid-column:1 / -1}
+}
 </style>
 
 <div class="topbar"><div class="wrap">
-  <div class="brandmark"><i></i> Project Lantern</div>
+  <div class="brandmark"><i></i> Project Anvil</div>
   <nav class="navlinks">
-    <a href="#board">Bidder board</a><a href="#model">Drop-out model</a><a href="#attention">Attention</a>
-    <a href="#risk">Deal risk</a><a href="#prep">Sell-side</a><a href="#sowhat">So what</a><a href="#method">Method</a>
+    <a href="#bridge">Bridge</a><a href="#split">Cost vs revenue</a><a href="#land">Where it lands</a>
+    <a href="#workstreams">Workstreams</a><a href="#pl">Run-rate vs P&amp;L</a><a href="#escalate">Escalation</a><a href="#method">Method</a>
   </nav>
 </div></div>
 
 <div class="wrap">
 
 <header class="hero">
-  <div class="eyebrow label"><span class="codename">Project Lantern</span><span>Sell-side / transaction support</span><span>&middot;</span><span>Data room analytics</span></div>
-  <h1>Thornbury Precision Group</h1>
-  <p class="lede" style="margin-top:14px">Nine weeks of Phase 2. Every document opened, by whom, for how long.
-     Behaviour is a more honest read on bidder intent than anything said on a Friday call.</p>
+  <div class="eyebrow label"><span class="codename">Project Anvil</span><span>Post-deal value creation</span><span>&middot;</span><span>Synergy tracking</span></div>
+  <h1>Wexford &amp; Pentland</h1>
+  <p class="lede" style="margin-top:14px">Month 14 of 24. The deal model carried £24.5m of run-rate synergies.
+     This is what the initiative register, weighted by what actually converts, says will arrive.</p>
   <dl class="metarow" id="metarow"></dl>
 </header>
 
 <div class="verdict">
   <div class="reported">
-    <div class="label">Bidders in Phase 2</div>
-    <div class="fig num" id="figHeadline">&mdash;</div>
-    <div class="cap">All still formally in the process</div>
+    <div class="label">Deal model, run-rate by month 24</div>
+    <div class="fig num" id="figModel">&mdash;</div>
+    <div class="cap" id="capModel"></div>
   </div>
   <div class="underlying">
-    <div class="label">Expected live bids at the deadline</div>
-    <div class="fig num" id="figExpected">&mdash;</div>
-    <div class="cap" id="capExpected"></div>
+    <div class="label">Risk-adjusted forecast</div>
+    <div class="fig num" id="figFcast">&mdash;</div>
+    <div class="cap" id="capFcast"></div>
   </div>
 </div>
 
 <p class="thesis" id="thesis"></p>
 
-<section id="board">
-  <div class="sechead"><h2>Who is actually working the deal</h2></div>
-  <p class="secintro lede">Engagement measures effort invested &mdash; coverage, dwell time, seniority of the
-     people reading, adviser firms onboarded, questions asked &mdash; scored against the same measures taken
-     from 140 bidders in past processes. Withdrawal risk comes from a model fitted on those outcomes.</p>
-  <div class="panel" style="padding-block:4px"><div class="board" id="boardRows"></div></div>
-  <div class="legend" style="margin-top:14px" id="boardLegend"></div>
+<section id="bridge">
+  <div class="sechead"><h2>From the deal model to what arrives</h2><span class="amt" id="bridgeAmt"></span></div>
+  <p class="secintro lede">Four things sit between the number in the model and the number that reaches EBITDA:
+     owners re-estimating their initiatives, initiatives that never convert, initiatives that convert for less
+     than they promised, and dis-synergies the model never carried at all.</p>
+  <div class="panel">
+    <figure style="margin:0"><div class="chart" id="bridgeChart"></div>
+      <div class="legend" id="brLegend"></div>
+      <figcaption id="brCap"></figcaption></figure>
+  </div>
 </section>
 
-<section id="model">
-  <div class="sechead"><h2>The drop-out model</h2><span class="amt" id="modelAmt"></span></div>
-  <p class="secintro lede">Fitted by logistic regression on prior processes, not hand-weighted. The coefficients
-     are what the history says, and they are worth reading on their own: going quiet is the loudest signal,
-     and onboarding advisers is close behind.</p>
+<section id="split">
+  <div class="sechead"><h2>Cost is landing. Revenue is not.</h2></div>
+  <p class="secintro lede">This is the pattern in nearly every integration, and the reason a single blended
+     completion percentage is worse than useless: it averages a programme that is working with one that is not,
+     and the blend looks survivable until it is too late to act.</p>
   <div class="grid2" style="align-items:start">
     <div class="panel">
-      <div class="panelhead"><h3>What predicts a withdrawal</h3><span class="tiny">log-odds, standardised</span></div>
-      <figure style="margin:0"><div class="chart" id="coefChart"></div>
-        <figcaption>Positive pushes toward withdrawal, negative toward bidding. Each is the effect of a
-          one standard deviation move in that feature, holding the others constant.</figcaption></figure>
+      <div class="panelhead"><h3>Expected against plan</h3></div>
+      <figure style="margin:0"><div class="chart" id="typeChart"></div>
+        <div class="legend" id="tyLegend"></div>
+        <figcaption id="tyCap"></figcaption></figure>
     </div>
     <div class="panel">
-      <div class="panelhead"><h3>Does it hold up?</h3></div>
-      <figure style="margin:0"><div class="chart" id="calChart"></div>
-        <div class="legend" id="calLegend"></div>
-        <figcaption id="calCap"></figcaption></figure>
-      <div class="stats" style="margin-top:16px" id="modelStats"></div>
+      <div class="panelhead"><h3>What history says converts</h3><span class="tiny">260 prior initiatives</span></div>
+      <div class="tablewrap" id="convTable"></div>
+      <p class="tiny" style="margin-top:10px">Conversion from each open stage, estimated separately for cost and
+        revenue initiatives and smoothed toward the overall rate where a cell is thin. Delivered and banked
+        initiatives are excluded — they are already counted at realised value. Revenue converts materially
+        worse from every open stage, and a PMO confidence rating that ignores this is the least reliable
+        number in a synergy tracker.</p>
     </div>
   </div>
-  <div class="panel" style="margin-top:18px">
-    <div class="panelhead"><h3>How many bids actually arrive</h3></div>
-    <figure style="margin:0"><div class="chart" id="tensionChart"></div>
-      <figcaption id="tensionCap"></figcaption></figure>
-  </div>
 </section>
 
-<section id="attention">
-  <div class="sechead"><h2>What each bidder came to read</h2></div>
-  <p class="secintro lede">Attention share by category, indexed against the room average. A buyer builds a model,
-     so reads broadly with weight on financial, legal and pensions. A pattern concentrated in customers and
-     operations, with no advisers and almost no questions, looks like something else.</p>
+<section id="land">
+  <div class="sechead"><h2>Where the programme actually lands</h2></div>
+  <p class="secintro lede">Twenty thousand simulations over the register: each initiative converts or does not,
+     at the rate its stage and type earn from history, and lands at a realisation factor drawn from the same
+     history. The result is not a range of opinions &mdash; it is what this pipeline can produce.</p>
   <div class="panel">
-    <figure style="margin:0"><div class="chart" id="attMatrix"></div>
-      <div class="legend" id="attLegend"></div>
-      <figcaption>Blue means the bidder spends more time on that category than the room does; red, less.
-        Index 1.00 is the room average.</figcaption></figure>
+    <div class="panelhead"><h3>Probability the programme reaches a given run-rate</h3></div>
+    <figure style="margin:0"><div class="chart" id="exceedChart"></div>
+      <figcaption id="exCap"></figcaption></figure>
   </div>
-  <div class="callout" style="margin-top:18px" id="reconCallout"></div>
+  <div class="callout" style="margin-top:18px" id="ceilingCallout"></div>
+  <div class="stats" style="margin-top:18px" id="landStats"></div>
 </section>
 
-<section id="risk">
-  <div class="sechead"><h2>Where the deal risk is concentrated</h2></div>
-  <p class="secintro lede">The documents every bidder opens, and keeps going back to, are the issues that will
-     show up in the SPA. You can see them weeks before the first mark-up arrives &mdash; which is time enough
-     to get in front of them.</p>
+<section id="workstreams">
+  <div class="sechead"><h2>Workstreams</h2></div>
+  <p class="secintro lede">The bar shows expected against the plan value, with the black marker at plan.
+     The schedule index is earned value against what the plan said should have been earned by now.</p>
+  <div class="panel" style="padding-block:4px"><div id="wsBoard"></div></div>
+  <div class="legend" style="margin-top:14px" id="wsLegend"></div>
+</section>
+
+<section id="pl">
+  <div class="sechead"><h2>Run-rate is not EBITDA</h2><span class="amt" id="plAmt"></span></div>
+  <p class="secintro lede">An initiative delivered in month twelve carries its full annualised value into the
+     run-rate and almost none of it into this year's P&amp;L. Reporting one as the other is how a programme
+     looks fine right up until the audited numbers arrive.</p>
   <div class="panel">
-    <div class="panelhead"><h3>Hottest documents in the room</h3></div>
-    <div class="tablewrap" id="docTable"></div>
+    <figure style="margin:0"><div class="chart" id="curveChart"></div>
+      <div class="legend" id="cvLegend"></div>
+      <figcaption>The plan curve runs to month 24; actuals stop at today. Recognised run-rate is annualised
+        value secured; cumulative P&amp;L benefit is what has actually reached EBITDA since completion.</figcaption></figure>
+  </div>
+  <div class="stats" style="margin-top:18px" id="plStats"></div>
+</section>
+
+<section id="escalate">
+  <div class="sechead"><h2>What to escalate this month</h2></div>
+  <p class="secintro lede">Ranked by value at risk &mdash; the current estimate discounted by everything
+     history says will happen to it. Stalled means the initiative has sat in its current stage longer than
+     three quarters of comparable initiatives ever did.</p>
+  <div class="panel">
+    <div class="tablewrap" id="escTable"></div>
   </div>
   <div class="grid2" style="margin-top:18px; align-items:start">
     <div class="panel">
-      <div class="panelhead"><h3>Attention by category</h3><span class="tiny">total reading hours</span></div>
-      <figure style="margin:0"><div class="chart" id="catChart"></div>
-        <figcaption>Read alongside question volume: a category that draws both heavy reading and heavy
-          Q&amp;A is where the price adjustment will be argued.</figcaption></figure>
+      <div class="panelhead"><h3>Cost to achieve, against budget</h3></div>
+      <figure style="margin:0"><div class="chart" id="ctaChart"></div>
+        <figcaption id="ctaCap"></figcaption></figure>
     </div>
     <div class="panel">
-      <div class="panelhead"><h3>Reading against questions</h3></div>
-      <div class="tablewrap" id="catTable"></div>
+      <div class="panelhead"><h3>Dis-synergies</h3><span class="tiny">not in the deal model</span></div>
+      <div class="tablewrap" id="disTable"></div>
     </div>
-  </div>
-</section>
-
-<section id="prep">
-  <div class="sechead"><h2>What the sell-side wasted</h2></div>
-  <p class="secintro lede">The same log that reads bidders also grades the vendor's own preparation. Pages
-     nobody opened cost management time to assemble and redaction time to clear.</p>
-  <div class="stats" id="prepStats"></div>
-  <div class="panel" style="margin-top:18px">
-    <div class="panelhead"><h3>Pages uploaded versus pages read</h3></div>
-    <figure style="margin:0"><div class="chart" id="prepChart"></div>
-      <figcaption>Unread pages by category. On the next process these folders start as an index with
-        documents released on request, rather than uploaded up front.</figcaption></figure>
   </div>
 </section>
 
 <section id="sowhat">
   <div class="sechead"><h2>So what</h2></div>
   <div class="grid3">
-    <div class="panel"><div class="label">Process</div><h3 style="margin-block:8px 10px">Run the timetable for the bidders you have</h3>
-      <p class="small" id="soProcess"></p></div>
-    <div class="panel"><div class="label">Preparation</div><h3 style="margin-block:8px 10px">Get in front of the two issues</h3>
-      <p class="small" id="soPrep"></p></div>
-    <div class="panel"><div class="label">Information control</div><h3 style="margin-block:8px 10px">Stage the commercial detail</h3>
-      <p class="small" id="soControl"></p></div>
+    <div class="panel"><div class="label">This month</div><h3 style="margin-block:8px 10px">Re-forecast, and say so</h3>
+      <p class="small" id="soNow"></p></div>
+    <div class="panel"><div class="label">The pipeline</div><h3 style="margin-block:8px 10px">Find new initiatives, not new optimism</h3>
+      <p class="small" id="soPipe"></p></div>
+    <div class="panel"><div class="label">The revenue programme</div><h3 style="margin-block:8px 10px">Treat it as a different problem</h3>
+      <p class="small" id="soRev"></p></div>
   </div>
 </section>
 
@@ -382,38 +405,34 @@ footer{padding-block:34px 60px; border-top:1px solid var(--rule); color:var(--in
   <div class="grid2" style="align-items:start">
     <div class="panel">
       <div class="panelhead"><h3>Ingredients</h3></div>
-      <p class="small" style="margin-block:6px 14px">Four exports, all of which every major VDR platform
-        produces as standard. No bespoke instrumentation, no vendor cooperation beyond a report request.</p>
-      <ul class="plain" id="ingredients"></ul>
+      <ul class="plain" id="ingredients" style="margin-top:12px"></ul>
     </div>
     <div class="panel">
       <div class="panelhead"><h3>Method notes</h3></div>
-      <ul class="plain" id="notes"></ul>
+      <ul class="plain" id="notes" style="margin-top:12px"></ul>
     </div>
   </div>
   <div class="panel" style="margin-top:18px">
     <div class="panelhead"><h3>About this data</h3></div>
-    <p class="small" style="margin-top:8px">Thornbury Precision is synthetic. The generator models six bidders
-      with distinct attention profiles, team structures and activity paths, a document set with a realistic
-      long tail of material nobody opens, and a handful of documents carrying the issues that end up in the
-      SPA &mdash; unlabelled, so the heat scoring has to find them. It emits
-      <span class="num" id="nEvents"></span> access events. The withdrawal model is fitted on a separate
-      register of 140 bidders from prior processes.</p>
-    <p class="small" style="margin-top:12px"><strong>A caution worth stating.</strong> This is behavioural
-      inference, not fact. A quiet bidder may be waiting on an investment committee; a bidder reading only
-      customer contracts may have a thesis rather than an ulterior motive. The output is a ranked set of
-      questions for the deal team, not a verdict on anyone's intent.</p>
+    <p class="small" style="margin-top:8px">Wexford and Pentland are synthetic. The generator models
+      <span class="num" id="nInit"></span> initiatives across eight workstreams with realistic stage
+      distributions, cost-to-achieve overruns where the work is hard, and a library of
+      <span class="num" id="nHist"></span> initiatives from prior deals with known outcomes. Every
+      probability in the forecast is estimated from that library; none is set by hand.</p>
+    <p class="small" style="margin-top:12px">The bridge reconciles to <span class="num" id="recon"></span>.
+      A synergy tracker whose numbers do not add up is worse than no tracker at all, because it gets
+      presented to a board.</p>
   </div>
 </section>
 
 <footer>
-  <strong style="color:var(--ink)">Technique 16 &mdash; Virtual Data Room Analytics.</strong>
-  SPA and transaction support stage of the D&amp;A technique series. All figures synthetic.
+  <strong style="color:var(--ink)">Technique 18 &mdash; Synergy Tracking.</strong>
+  Post-deal value creation stage of the D&amp;A technique series. All figures synthetic.
 </footer>
 
 </div>
 <div id="tip" role="status" aria-live="polite"></div>
-<script id="payload" type="application/json">{"meta":{"company":"Thornbury Precision Group","codename":"Project Lantern","sector":"Precision components, aerospace and medical","stage":"Sell-side / transaction support","weeks":9,"events":9846,"documents":432,"pages":9505,"users":64,"questions":75,"bidders":6},"bidders":[{"bidder":"Marlowe Partners","kind":"Sponsor","engagement":83.8,"p_drop":0.01489451591123681,"events":5107,"hours":45.024055555555556,"users":20,"docs":334,"downloads":801,"coverage":0.7731481481481481,"depth":0.8997252747252747,"senior_share":0.2811756184656844,"advisers":4,"trend":-0.02091364745435787,"days_idle":1,"qa_count":39,"last_seen":"2026-03-14","weekly":[4.872722222222222,4.934416666666667,4.442555555555556,4.208694444444444,6.3684722222222225,4.9710833333333335,4.905222222222222,5.596694444444444,4.724194444444444],"divergence":0.1933811697792454,"recon_score":0.0,"over":["HR & Pensions","Legal & Corporate"],"under":["Environmental & H&S","Commercial & Customers"]},{"bidder":"Granton Equity","kind":"Sponsor","engagement":81.8,"p_drop":0.008389990682775192,"events":1926,"hours":19.37125,"users":16,"docs":307,"downloads":305,"coverage":0.7106481481481481,"depth":1.0397398300624108,"senior_share":0.4876757508621741,"advisers":3,"trend":0.7067094336630795,"days_idle":0,"qa_count":19,"last_seen":"2026-03-15","weekly":[0.0,0.0,0.014583333333333334,1.3264999999999998,1.9477222222222226,3.114138888888889,3.8712777777777774,3.8500833333333335,5.246944444444445],"divergence":0.21543100002593024,"recon_score":0.0,"over":["Financial","Legal & Corporate"],"under":["Environmental & H&S","Commercial & Customers"]},{"bidder":"Dunmore Family Office","kind":"Family office","engagement":65.9,"p_drop":0.1790365026838581,"events":1074,"hours":16.26336111111111,"users":11,"docs":251,"downloads":185,"coverage":0.5810185185185185,"depth":1.4438585607940444,"senior_share":0.8346402359769147,"advisers":2,"trend":-0.2239880595457859,"days_idle":2,"qa_count":9,"last_seen":"2026-03-13","weekly":[1.503111111111111,2.0108333333333333,1.7255,1.644,2.811972222222222,1.6725833333333333,1.7971666666666668,1.4777500000000001,1.6204444444444444],"divergence":0.2053729309440476,"recon_score":0.0,"over":["Financial","Legal & Corporate"],"under":["Operations & Sites","Commercial & Customers"]},{"bidder":"Pennine Capital","kind":"Sponsor","engagement":63.0,"p_drop":0.9699391895847304,"events":944,"hours":11.47938888888889,"users":10,"docs":237,"downloads":176,"coverage":0.5486111111111112,"depth":1.3048328305681247,"senior_share":0.8151445344070773,"advisers":2,"trend":-1.6,"days_idle":15,"qa_count":3,"last_seen":"2026-02-28","weekly":[2.0100277777777777,2.3923333333333336,1.8979722222222224,1.8131944444444446,1.3244722222222225,1.2080277777777777,0.8333611111111111,0.0,0.0],"divergence":0.2659184408638385,"recon_score":0.0,"over":["Tax","Legal & Corporate"],"under":["Operations & Sites","Commercial & Customers"]},{"bidder":"Aldermoor Industrial","kind":"Trade","engagement":23.9,"p_drop":0.8001184776196612,"events":765,"hours":6.060777777777777,"users":5,"docs":144,"downloads":120,"coverage":0.3333333333333333,"depth":1.0027472527472527,"senior_share":0.0,"advisers":0,"trend":-0.03415798602688446,"days_idle":0,"qa_count":5,"last_seen":"2026-03-15","weekly":[0.6630555555555557,0.842138888888889,0.5191944444444445,0.6535277777777777,0.833138888888889,0.5662777777777778,0.5330833333333332,0.5329444444444443,0.9174166666666667],"divergence":0.38959899375456863,"recon_score":0.3713695356338254,"over":["Commercial & Customers","Insurance"],"under":["HR & Pensions","Tax"]},{"bidder":"Selby Holdings","kind":"Trade","engagement":20.7,"p_drop":0.998710715261833,"events":30,"hours":0.5028888888888888,"users":2,"docs":20,"downloads":6,"coverage":0.046296296296296294,"depth":1.1902618657937807,"senior_share":0.7994918250110474,"advisers":0,"trend":-1.6,"days_idle":35,"qa_count":0,"last_seen":"2026-02-08","weekly":[0.29875,0.06494444444444444,0.01813888888888889,0.12105555555555554,0.0,0.0,0.0,0.0,0.0],"divergence":0.477351274021224,"recon_score":0.7004749041336863,"over":["Commercial & Customers","Environmental & H&S"],"under":["Legal & Corporate","Tax"]}],"categories":["Commercial & Customers","Environmental & H&S","Financial","HR & Pensions","IT & Data","Insurance","Legal & Corporate","Operations & Sites","Tax"],"profiles":[{"bidder":"Aldermoor Industrial","divergence":0.38959899375456863,"recon_score":0.3713695356338254,"shares":{"Commercial & Customers":0.6880305058023355,"Environmental & H&S":0.08991786899371183,"Financial":0.03160118796634095,"HR & Pensions":0.014780831209782387,"IT & Data":0.025844684400608647,"Insurance":0.03496525931765266,"Legal & Corporate":0.03487359524813463,"Operations & Sites":0.07763946688177167,"Tax":0.002346600179661576},"index":{"Commercial & Customers":1.9157021365274833,"Environmental & H&S":1.3808132394077914,"Financial":0.1595221958869912,"HR & Pensions":0.1335207149190783,"IT & Data":1.4640054745531654,"Insurance":1.6594132449298205,"Legal & Corporate":0.2598159928816665,"Operations & Sites":1.2168842360467522,"Tax":0.07776033834998392},"over":["Commercial & Customers","Insurance"],"under":["HR & Pensions","Tax"]},{"bidder":"Dunmore Family Office","divergence":0.2053729309440476,"recon_score":0.0,"shares":{"Commercial & Customers":0.1847762779663217,"Environmental & H&S":0.05518368657565318,"Financial":0.3207311595081651,"HR & Pensions":0.12263250216488665,"IT & Data":0.021563466619753672,"Insurance":0.015906579376615125,"Legal & Corporate":0.18938103883815188,"Operations & Sites":0.04790590984165157,"Tax":0.04191937910880114},"index":{"Commercial & Customers":0.5144776394280585,"Environmental & H&S":0.8474218292286336,"Financial":1.6190447937786026,"HR & Pensions":1.107784746945375,"IT & Data":1.2214903727329076,"Insurance":0.7549089872116725,"Legal & Corporate":1.4109305991709526,"Operations & Sites":0.7508545439725267,"Tax":1.389101190383327},"over":["Financial","Legal & Corporate"],"under":["Operations & Sites","Commercial & Customers"]},{"bidder":"Granton Equity","divergence":0.21543100002593024,"recon_score":0.0,"shares":{"Commercial & Customers":0.1784431395323826,"Environmental & H&S":0.03727029604296172,"Financial":0.30636180479375935,"HR & Pensions":0.148527672022542,"IT & Data":0.014612147153929434,"Insurance":0.01988915417320915,"Legal & Corporate":0.19591748940655182,"Operations & Sites":0.0611530547130986,"Tax":0.037825242161565326},"index":{"Commercial & Customers":0.4968441090445859,"Environmental & H&S":0.5723369424643316,"Financial":1.5465085644456231,"HR & Pensions":1.3417053934416834,"IT & Data":0.8277239178755595,"Insurance":0.9439176631191699,"Legal & Corporate":1.459628600689497,"Operations & Sites":0.9584840192140189,"Tax":1.2534319455637255},"over":["Financial","Legal & Corporate"],"under":["Environmental & H&S","Commercial & Customers"]},{"bidder":"Marlowe Partners","divergence":0.1933811697792454,"recon_score":0.0,"shares":{"Commercial & Customers":0.17664075870553148,"Environmental & H&S":0.05448383765221801,"Financial":0.25596872289257716,"HR & Pensions":0.19264886795083613,"IT & Data":0.01742031728717858,"Insurance":0.023553458459860344,"Legal & Corporate":0.17516870611142438,"Operations & Sites":0.06558901229342833,"Tax":0.03852631864694552},"index":{"Commercial & Customers":0.491825690861502,"Environmental & H&S":0.8366746810824498,"Financial":1.2921252453453451,"HR & Pensions":1.7402684742196888,"IT & Data":0.9867963362045148,"Insurance":1.11782156617566,"Legal & Corporate":1.3050455789347088,"Operations & Sites":1.0280111175839164,"Tax":1.2766638302217432},"over":["HR & Pensions","Legal & Corporate"],"under":["Environmental & H&S","Commercial & Customers"]},{"bidder":"Pennine Capital","divergence":0.2659184408638385,"recon_score":0.0,"shares":{"Commercial & Customers":0.0932347347177792,"Environmental & H&S":0.08603100242463546,"Financial":0.2516708690454873,"HR & Pensions":0.16280144607000951,"IT & Data":0.02647982616186498,"Insurance":0.03211069114209525,"Legal & Corporate":0.21000440402847614,"Operations & Sites":0.07722052567645392,"Tax":0.06044650073319814},"index":{"Commercial & Customers":0.2595960193496648,"Environmental & H&S":1.3211250275044653,"Financial":1.2704297608585158,"HR & Pensions":1.4706456734815438,"IT & Data":1.4999838986338525,"Insurance":1.5239385385636752,"Legal & Corporate":1.5645792283231736,"Operations & Sites":1.2103179499933212,"Tax":2.0030426954812204},"over":["Tax","Legal & Corporate"],"under":["Operations & Sites","Commercial & Customers"]},{"bidder":"Selby Holdings","divergence":0.477351274021224,"recon_score":0.7004749041336863,"shares":{"Commercial & Customers":0.8337936367653558,"Environmental & H&S":0.06783031374281927,"Financial":0.02226027397260274,"HR & Pensions":0.022812638091029607,"IT & Data":0.0,"Insurance":0.0,"Legal & Corporate":0.0,"Operations & Sites":0.05330313742819267,"Tax":0.0},"index":{"Commercial & Customers":2.3215544047887047,"Environmental & H&S":1.0416282803123265,"Financial":0.11236943968492182,"HR & Pensions":0.20607499699262957,"IT & Data":0.0,"Insurance":0.0,"Legal & Corporate":0.0,"Operations & Sites":0.835448133189463,"Tax":0.0},"over":["Commercial & Customers","Environmental & H&S"],"under":["Legal & Corporate","Tax"]}],"matrix":[{"bidder":"Marlowe Partners","cells":[{"category":"Commercial & Customers","index":0.491825690861502,"share":0.17664075870553148},{"category":"Environmental & H&S","index":0.8366746810824498,"share":0.05448383765221801},{"category":"Financial","index":1.2921252453453451,"share":0.25596872289257716},{"category":"HR & Pensions","index":1.7402684742196888,"share":0.19264886795083613},{"category":"IT & Data","index":0.9867963362045148,"share":0.01742031728717858},{"category":"Insurance","index":1.11782156617566,"share":0.023553458459860344},{"category":"Legal & Corporate","index":1.3050455789347088,"share":0.17516870611142438},{"category":"Operations & Sites","index":1.0280111175839164,"share":0.06558901229342833},{"category":"Tax","index":1.2766638302217432,"share":0.03852631864694552}]},{"bidder":"Granton Equity","cells":[{"category":"Commercial & Customers","index":0.4968441090445859,"share":0.1784431395323826},{"category":"Environmental & H&S","index":0.5723369424643316,"share":0.03727029604296172},{"category":"Financial","index":1.5465085644456231,"share":0.30636180479375935},{"category":"HR & Pensions","index":1.3417053934416834,"share":0.148527672022542},{"category":"IT & Data","index":0.8277239178755595,"share":0.014612147153929434},{"category":"Insurance","index":0.9439176631191699,"share":0.01988915417320915},{"category":"Legal & Corporate","index":1.459628600689497,"share":0.19591748940655182},{"category":"Operations & Sites","index":0.9584840192140189,"share":0.0611530547130986},{"category":"Tax","index":1.2534319455637255,"share":0.037825242161565326}]},{"bidder":"Dunmore Family Office","cells":[{"category":"Commercial & Customers","index":0.5144776394280585,"share":0.1847762779663217},{"category":"Environmental & H&S","index":0.8474218292286336,"share":0.05518368657565318},{"category":"Financial","index":1.6190447937786026,"share":0.3207311595081651},{"category":"HR & Pensions","index":1.107784746945375,"share":0.12263250216488665},{"category":"IT & Data","index":1.2214903727329076,"share":0.021563466619753672},{"category":"Insurance","index":0.7549089872116725,"share":0.015906579376615125},{"category":"Legal & Corporate","index":1.4109305991709526,"share":0.18938103883815188},{"category":"Operations & Sites","index":0.7508545439725267,"share":0.04790590984165157},{"category":"Tax","index":1.389101190383327,"share":0.04191937910880114}]},{"bidder":"Pennine Capital","cells":[{"category":"Commercial & Customers","index":0.2595960193496648,"share":0.0932347347177792},{"category":"Environmental & H&S","index":1.3211250275044653,"share":0.08603100242463546},{"category":"Financial","index":1.2704297608585158,"share":0.2516708690454873},{"category":"HR & Pensions","index":1.4706456734815438,"share":0.16280144607000951},{"category":"IT & Data","index":1.4999838986338525,"share":0.02647982616186498},{"category":"Insurance","index":1.5239385385636752,"share":0.03211069114209525},{"category":"Legal & Corporate","index":1.5645792283231736,"share":0.21000440402847614},{"category":"Operations & Sites","index":1.2103179499933212,"share":0.07722052567645392},{"category":"Tax","index":2.0030426954812204,"share":0.06044650073319814}]},{"bidder":"Aldermoor Industrial","cells":[{"category":"Commercial & Customers","index":1.9157021365274833,"share":0.6880305058023355},{"category":"Environmental & H&S","index":1.3808132394077914,"share":0.08991786899371183},{"category":"Financial","index":0.1595221958869912,"share":0.03160118796634095},{"category":"HR & Pensions","index":0.1335207149190783,"share":0.014780831209782387},{"category":"IT & Data","index":1.4640054745531654,"share":0.025844684400608647},{"category":"Insurance","index":1.6594132449298205,"share":0.03496525931765266},{"category":"Legal & Corporate","index":0.2598159928816665,"share":0.03487359524813463},{"category":"Operations & Sites","index":1.2168842360467522,"share":0.07763946688177167},{"category":"Tax","index":0.07776033834998392,"share":0.002346600179661576}]},{"bidder":"Selby Holdings","cells":[{"category":"Commercial & Customers","index":2.3215544047887047,"share":0.8337936367653558},{"category":"Environmental & H&S","index":1.0416282803123265,"share":0.06783031374281927},{"category":"Financial","index":0.11236943968492182,"share":0.02226027397260274},{"category":"HR & Pensions","index":0.20607499699262957,"share":0.022812638091029607},{"category":"IT & Data","index":0.0,"share":0.0},{"category":"Insurance","index":0.0,"share":0.0},{"category":"Legal & Corporate","index":0.0,"share":0.0},{"category":"Operations & Sites","index":0.835448133189463,"share":0.05330313742819267},{"category":"Tax","index":0.0,"share":0.0}]}],"model":{"coefficients":[{"feature":"trend","beta":-1.185074048510086,"odds":0.3057235402878657,"label":"Activity trend, last 3 weeks"},{"feature":"coverage","beta":-0.6407591152658673,"odds":0.5268923002036532,"label":"Document coverage"},{"feature":"days_idle","beta":0.6299972073102988,"odds":1.8776053356879374,"label":"Days since last login"},{"feature":"qa_count","beta":-0.5102345614786225,"odds":0.6003547421994613,"label":"Questions submitted"},{"feature":"depth","beta":-0.5002903108033098,"odds":0.606354602866419,"label":"Dwell time per page"},{"feature":"advisers","beta":-0.4573104299648577,"odds":0.6329838124176587,"label":"Adviser firms engaged"},{"feature":"senior_share","beta":-0.35350801327415016,"odds":0.7022203654812187,"label":"Share of time by senior staff"}],"auc":0.8324829931972789,"accuracy":0.7285714285714285,"brier":0.1632777061136865,"n":140,"withdrew":56,"calibration":[{"bucket":"0\u201320%","n":49,"predicted":0.10680656532167257,"actual":0.10204081632653061},{"bucket":"20\u201340%","n":24,"predicted":0.28862711424687976,"actual":0.2916666666666667},{"bucket":"40\u201360%","n":31,"predicted":0.48647756928740443,"actual":0.5161290322580645},{"bucket":"60\u201380%","n":18,"predicted":0.6927873313726846,"actual":0.6111111111111112},{"bucket":"80\u2013100%","n":18,"predicted":0.9052239856788079,"actual":0.9444444444444444}],"clipped":{"senior_share":4,"days_idle":3,"qa_count":4}},"tension":{"headline":6,"expected":3.028910608255906,"p_at_least_two":0.9967018579779107,"p_at_least_three":0.8455693559168066,"distribution":[1.734075384521726e-05,0.003280801268244097,0.15113250206110407,0.6639642560748774,0.17655967711544904,0.005039210179856245,6.2125466239477634e-06]},"top_docs":[{"name":"Master supply agreement \u2014 Halstead Aerospace","category":"Commercial & Customers","pages":94,"bidders":6,"revisits":21.666666666666668,"hours":5.81125,"score":12.233090692328812},{"name":"Actuarial valuation \u2014 Thornbury Pension Scheme","category":"HR & Pensions","pages":168,"bidders":4,"revisits":19.0,"hours":4.065083333333333,"score":9.546232620058749},{"name":"Working capital: 36-month normalisation","category":"Financial","pages":62,"bidders":5,"revisits":15.6,"hours":2.9231111111111114,"score":8.775244147882939},{"name":"Capex schedule 14","category":"Financial","pages":21,"bidders":5,"revisits":16.8,"hours":2.2918333333333334,"score":8.277165176930723},{"name":"Distribution agreement 13","category":"Commercial & Customers","pages":22,"bidders":6,"revisits":14.0,"hours":1.953861111111111,"score":7.974355218618666},{"name":"Net debt bridge 33","category":"Financial","pages":31,"bidders":5,"revisits":16.6,"hours":1.6959722222222222,"score":7.1687412440783955},{"name":"Distribution agreement 17","category":"Commercial & Customers","pages":21,"bidders":5,"revisits":15.0,"hours":1.3908888888888888,"score":6.546937108078291},{"name":"Phase I environmental report \u2014 Tipton site","category":"Environmental & H&S","pages":77,"bidders":5,"revisits":11.4,"hours":1.508638888888889,"score":6.129720110334726},{"name":"Budget and forecast model 23","category":"Financial","pages":27,"bidders":4,"revisits":15.25,"hours":1.3037222222222222,"score":5.850391974927919},{"name":"Management accounts \u2014 December 2025","category":"Financial","pages":38,"bidders":5,"revisits":11.2,"hours":1.2929722222222222,"score":5.8391264756136465},{"name":"Revenue and margin by customer, FY22\u2013FY25","category":"Commercial & Customers","pages":41,"bidders":5,"revisits":9.8,"hours":1.06025,"score":5.123322895436348},{"name":"Capex schedule 9","category":"Financial","pages":27,"bidders":4,"revisits":14.25,"hours":0.9513333333333334,"score":4.927589497734958}],"category_heat":[{"category":"Commercial & Customers","documents":60,"pages":1219,"hours":20.074416666666664,"bidders":3.0166666666666666,"revisits":5.140555555555556,"questions":14,"days_to_answer":3.2,"unread_pages":149},{"category":"Environmental & H&S","documents":25,"pages":509,"hours":5.639194444444444,"bidders":3.44,"revisits":4.0406666666666675,"questions":5,"days_to_answer":3.2,"unread_pages":48},{"category":"Financial","documents":76,"pages":2088,"hours":25.76727777777778,"bidders":3.1315789473684212,"revisits":5.723684210526316,"questions":14,"days_to_answer":3.4000000000000004,"unread_pages":248},{"category":"HR & Pensions","documents":48,"pages":1589,"hours":15.515333333333334,"bidders":2.8333333333333335,"revisits":4.739583333333333,"questions":16,"days_to_answer":5.0,"unread_pages":350},{"category":"IT & Data","documents":28,"pages":321,"hours":1.8786944444444442,"bidders":2.642857142857143,"revisits":2.9505952380952385,"questions":4,"days_to_answer":4.05,"unread_pages":57},{"category":"Insurance","documents":18,"pages":301,"hours":2.284972222222222,"bidders":3.0555555555555554,"revisits":3.755555555555555,"questions":3,"days_to_answer":5.4,"unread_pages":31},{"category":"Legal & Corporate","documents":92,"pages":2007,"hours":17.384027777777774,"bidders":2.891304347826087,"revisits":4.371376811594203,"questions":8,"days_to_answer":4.9,"unread_pages":297},{"category":"Operations & Sites","documents":52,"pages":680,"hours":6.300611111111111,"bidders":3.076923076923077,"revisits":3.8544871794871796,"questions":9,"days_to_answer":2.9,"unread_pages":104},{"category":"Tax","documents":33,"pages":791,"hours":3.857194444444444,"bidders":2.9393939393939394,"revisits":3.193434343434343,"questions":2,"days_to_answer":2.55,"unread_pages":24}],"prep":{"documents":432,"pages":9505,"unread_docs":60,"unread_pages":1308,"unread_pct":0.13761178327196213,"single_bidder_docs":48,"all_bidder_docs":13},"qa_weekly":[4,6,4,12,12,9,8,13,7],"weeks":[1,2,3,4,5,6,7,8,9]}</script>
+<script id="payload" type="application/json">{"meta":{"acquirer":"Wexford Industrial Group","target":"Pentland Technical Services","codename":"Project Anvil","sector":"Industrial and technical services","stage":"Post-deal value creation","month":14,"target_month":24,"initiatives":46,"history":260},"model":{"total":24500000,"cost":16500000,"revenue":8000000,"target_month":24,"cta_budget":6522000},"bridge":[{"label":"Deal model","value":24500000.0,"kind":"total"},{"label":"Re-estimation","value":199000.0,"kind":"delta","note":"Current owner estimates against the number in the deal model"},{"label":"Conversion risk","value":-5403187.9299998125,"kind":"delta","note":"Initiatives that history says will not convert from their current stage"},{"label":"Realisation haircut","value":-2868247.7545880084,"kind":"delta","note":"Delivered initiatives land at 89% of estimate on average"},{"label":"Dis-synergy","value":-2630000.0,"kind":"delta","note":"Attrition and integration costs the deal model did not carry"},{"label":"Risk-adjusted forecast","value":13797564.315412179,"kind":"total"}],"recon":0.0,"position":{"secured":10361267.0,"gross_estimate":24699000.0,"expected":16427564.315412179,"net_forecast":13797564.315412179,"gap":10702435.684587821,"pct_of_model":0.5631658904249869,"dis_synergy":-2630000.0,"mu_real":0.8938360533404326,"sd_real":0.22135099010052883},"by_type":[{"type":"Cost","plan":16500000.0,"estimate":17279000.0,"secured":10228257.0,"expected":13557319.0951567,"n":28,"pct":0.8216557027367697},{"type":"Revenue","plan":8000000.0,"estimate":7420000.0,"secured":133010.0,"expected":2870245.2202554788,"n":18,"pct":0.35878065253193486}],"workstreams":[{"workstream":"Procurement","type":"Cost","n":9,"plan":6200000.0,"estimate":7085000.0,"secured":4476283.0,"expected":5826888.550478143,"pv":5140000.0,"ev":5063400.0,"spi":0.9850972762645914,"cta_budget":1641000.0,"cta_spent":1907000.0,"stalled":2,"stages":{"Identified":0,"Validated":1,"In execution":1,"Delivered":4,"Banked":3}},{"workstream":"Organisation design","type":"Cost","n":6,"plan":4800000.0,"estimate":4514000.0,"secured":2470325.0,"expected":3542413.486187833,"pv":4477500.0,"ev":4055100.0,"spi":0.9056616415410386,"cta_budget":1418000.0,"cta_spent":1469000.0,"stalled":0,"stages":{"Identified":0,"Validated":0,"In execution":2,"Delivered":2,"Banked":2}},{"workstream":"Property & sites","type":"Cost","n":4,"plan":2600000.0,"estimate":2786000.0,"secured":1853977.0,"expected":2221259.662471754,"pv":1996000.0,"ev":2041000.0,"spi":1.0225450901803608,"cta_budget":663000.0,"cta_spent":804000.0,"stalled":0,"stages":{"Identified":0,"Validated":1,"In execution":0,"Delivered":1,"Banked":2}},{"workstream":"IT & systems","type":"Cost","n":6,"plan":1899000.0,"estimate":1930000.0,"secured":600038.0,"expected":1139123.3960189722,"pv":1419666.6666666667,"ev":905000.0,"spi":0.6374735853486734,"cta_budget":552000.0,"cta_spent":553000.0,"stalled":0,"stages":{"Identified":2,"Validated":1,"In execution":1,"Delivered":2,"Banked":0}},{"workstream":"Insurance & risk","type":"Cost","n":3,"plan":1000000.0,"estimate":964000.0,"secured":827634.0,"expected":827634.0,"pv":1000000.0,"ev":925000.0,"spi":0.925,"cta_budget":300000.0,"cta_spent":344000.0,"stalled":0,"stages":{"Identified":0,"Validated":0,"In execution":0,"Delivered":2,"Banked":1}},{"workstream":"Cross-sell","type":"Revenue","n":8,"plan":4399000.0,"estimate":4042000.0,"secured":0.0,"expected":1523613.2302109376,"pv":1650833.3333333333,"ev":779000.0,"spi":0.47188288743059065,"cta_budget":979000.0,"cta_spent":682000.0,"stalled":7,"stages":{"Identified":3,"Validated":4,"In execution":1,"Delivered":0,"Banked":0}},{"workstream":"Pricing harmonisation","type":"Revenue","n":5,"plan":2201000.0,"estimate":2104000.0,"secured":0.0,"expected":819310.1818414564,"pv":484500.0,"ev":442150.0,"spi":0.9125902992776058,"cta_budget":588000.0,"cta_spent":442000.0,"stalled":3,"stages":{"Identified":1,"Validated":3,"In execution":1,"Delivered":0,"Banked":0}},{"workstream":"Geographic expansion","type":"Revenue","n":5,"plan":1400000.0,"estimate":1274000.0,"secured":133010.0,"expected":527321.8082030844,"pv":626666.6666666667,"ev":224100.0,"spi":0.3576063829787234,"cta_budget":381000.0,"cta_spent":145000.0,"stalled":3,"stages":{"Identified":4,"Validated":0,"In execution":0,"Delivered":1,"Banked":0}}],"curve":[{"month":1,"plan":0.0,"runrate":139432.0,"in_year_cum":11619.0},{"month":2,"plan":1453000.0,"runrate":554426.0,"in_year_cum":57821.0},{"month":3,"plan":1988000.0,"runrate":804447.0,"in_year_cum":124859.0},{"month":4,"plan":5386000.0,"runrate":1579977.0,"in_year_cum":256524.0},{"month":5,"plan":6231000.0,"runrate":2863643.0,"in_year_cum":495162.0},{"month":6,"plan":6231000.0,"runrate":4621556.0,"in_year_cum":880293.0},{"month":7,"plan":6597000.0,"runrate":5619052.0,"in_year_cum":1348549.0},{"month":8,"plan":7533000.0,"runrate":6747995.0,"in_year_cum":1910883.0},{"month":9,"plan":8353000.0,"runrate":7324663.0,"in_year_cum":2521273.0},{"month":10,"plan":8734000.0,"runrate":7809623.0,"in_year_cum":3172076.0},{"month":11,"plan":9940000.0,"runrate":7936028.0,"in_year_cum":3833413.0},{"month":12,"plan":11616000.0,"runrate":8638262.0,"in_year_cum":4553270.0},{"month":13,"plan":13770000.0,"runrate":9689008.0,"in_year_cum":5360688.0},{"month":14,"plan":13770000.0,"runrate":10361267.0,"in_year_cum":6224128.0},{"month":15,"plan":14530000.0,"runrate":null,"in_year_cum":null},{"month":16,"plan":15057000.0,"runrate":null,"in_year_cum":null},{"month":17,"plan":18195000.0,"runrate":null,"in_year_cum":null},{"month":18,"plan":18966000.0,"runrate":null,"in_year_cum":null},{"month":19,"plan":20253000.0,"runrate":null,"in_year_cum":null},{"month":20,"plan":20961000.0,"runrate":null,"in_year_cum":null},{"month":21,"plan":23019000.0,"runrate":null,"in_year_cum":null},{"month":22,"plan":23892000.0,"runrate":null,"in_year_cum":null},{"month":23,"plan":24499000.0,"runrate":null,"in_year_cum":null},{"month":24,"plan":24499000.0,"runrate":null,"in_year_cum":null}],"pl_gap":{"runrate":10361267.0,"ltm_pl":6166307.0,"ratio":0.5951305955150079,"annualisation_gap":4194960.0},"simulation":{"mean":13787455.242890155,"p10":12318092.406803709,"p50":13780102.411727577,"p90":15290160.773491567,"p_hit_model":0.0,"p_hit_80":0.0,"n":20000,"histogram":[{"x":9633500.425922293,"n":7},{"x":10005237.434685431,"n":9},{"x":10376974.443448568,"n":36},{"x":10748711.452211706,"n":89},{"x":11120448.460974844,"n":199},{"x":11492185.46973798,"n":345},{"x":11863922.478501119,"n":613},{"x":12235659.487264257,"n":1023},{"x":12607396.496027395,"n":1581},{"x":12979133.504790531,"n":2066},{"x":13350870.51355367,"n":2364},{"x":13722607.522316808,"n":2559},{"x":14094344.531079946,"n":2462},{"x":14466081.539843082,"n":2154},{"x":14837818.54860622,"n":1608},{"x":15209555.557369359,"n":1182},{"x":15581292.566132495,"n":762},{"x":15953029.574895633,"n":508},{"x":16324766.583658772,"n":228},{"x":16696503.59242191,"n":119},{"x":17068240.601185046,"n":59},{"x":17439977.609948184,"n":16},{"x":17811714.618711323,"n":8},{"x":18183451.627474457,"n":2},{"x":18555188.6362376,"n":1}]},"shortfall":{"ceiling":19921267.0,"reachable":false,"unreachable_by":4578733.0,"new_runrate_required":11973600.353880128,"required_conversion":1.5390001988416995},"conversion":[{"stage":"Identified","type":"Cost","n":35,"raw":0.3142857142857143,"smoothed":0.3554240631163708},{"stage":"Identified","type":"Revenue","n":22,"raw":0.36363636363636365,"smoothed":0.41775147928994083},{"stage":"Validated","type":"Cost","n":34,"raw":0.5882352941176471,"smoothed":0.6016194331983806},{"stage":"Validated","type":"Revenue","n":23,"raw":0.30434782608695654,"smoothed":0.36524216524216524},{"stage":"In execution","type":"Cost","n":42,"raw":0.9285714285714286,"smoothed":0.9100334448160534},{"stage":"In execution","type":"Revenue","n":18,"raw":0.8888888888888888,"smoothed":0.8573426573426574},{"stage":"Delivered","type":"Cost","n":37,"raw":0.972972972972973,"smoothed":0.947842401500938},{"stage":"Delivered","type":"Revenue","n":14,"raw":1.0,"smoothed":0.9367521367521368},{"stage":"Banked","type":"Cost","n":24,"raw":1.0,"smoothed":0.9593406593406594},{"stage":"Banked","type":"Revenue","n":11,"raw":1.0,"smoothed":0.9241025641025641}],"stage_order":["Identified","Validated","In execution","Delivered","Banked"],"credit":{"Identified":0.0,"Validated":0.25,"In execution":0.6,"Delivered":0.9,"Banked":1.0},"cta":{"budget":6522000.0,"spent":6346000.0,"ratio":0.9730144127568231,"per_pound":0.6124733587118255,"by_ws":[{"workstream":"Procurement","budget":1641000.0,"spent":1907000.0,"over":266000.0},{"workstream":"Organisation design","budget":1418000.0,"spent":1469000.0,"over":51000.0},{"workstream":"Property & sites","budget":663000.0,"spent":804000.0,"over":141000.0},{"workstream":"IT & systems","budget":552000.0,"spent":553000.0,"over":1000.0},{"workstream":"Insurance & risk","budget":300000.0,"spent":344000.0,"over":44000.0},{"workstream":"Cross-sell","budget":979000.0,"spent":682000.0,"over":-297000.0},{"workstream":"Pricing harmonisation","budget":588000.0,"spent":442000.0,"over":-146000.0},{"workstream":"Geographic expansion","budget":381000.0,"spent":145000.0,"over":-236000.0}]},"escalate":[{"initiative_id":"S033","name":32,"workstream":"Cross-sell","type":"Revenue","owner":"COO","stage":"Validated","days_in_stage":129,"estimate":894000.0,"p_convert":0.36524216524216524,"at_risk":602138.8457487473,"stalled":1,"planned_month":12,"overdue":1},{"initiative_id":"S031","name":30,"workstream":"Cross-sell","type":"Revenue","owner":"CCO","stage":"Identified","days_in_stage":124,"estimate":741000.0,"p_convert":0.41775147928994083,"at_risk":464309.6118574947,"stalled":1,"planned_month":22,"overdue":0},{"initiative_id":"S041","name":40,"workstream":"Pricing harmonisation","type":"Revenue","owner":"CFO","stage":"Validated","days_in_stage":73,"estimate":680000.0,"p_convert":0.36524216524216524,"at_risk":458002.70146437164,"stalled":0,"planned_month":19,"overdue":0},{"initiative_id":"S039","name":38,"workstream":"Pricing harmonisation","type":"Revenue","owner":"Integration MD","stage":"Identified","days_in_stage":82,"estimate":591000.0,"p_convert":0.41775147928994083,"at_risk":370319.8118863419,"stalled":0,"planned_month":21,"overdue":0},{"initiative_id":"S032","name":31,"workstream":"Cross-sell","type":"Revenue","owner":"Group Procurement","stage":"Validated","days_in_stage":157,"estimate":530000.0,"p_convert":0.36524216524216524,"at_risk":356972.6937884073,"stalled":1,"planned_month":17,"overdue":0},{"initiative_id":"S029","name":28,"workstream":"Cross-sell","type":"Revenue","owner":"Group Procurement","stage":"Identified","days_in_stage":93,"estimate":550000.0,"p_convert":0.41775147928994083,"at_risk":344629.2665608935,"stalled":1,"planned_month":23,"overdue":0},{"initiative_id":"S046","name":45,"workstream":"Geographic expansion","type":"Revenue","owner":"CIO","stage":"Identified","days_in_stage":185,"estimate":507000.0,"p_convert":0.41775147928994083,"at_risk":317685.5239024964,"stalled":1,"planned_month":17,"overdue":0},{"initiative_id":"S019","name":18,"workstream":"Property & sites","type":"Cost","owner":"COO","stage":"Validated","days_in_stage":21,"estimate":683000.0,"p_convert":0.6016194331983806,"at_risk":315717.3375282461,"stalled":0,"planned_month":21,"overdue":0},{"initiative_id":"S030","name":29,"workstream":"Cross-sell","type":"Revenue","owner":"Group Procurement","stage":"Identified","days_in_stage":430,"estimate":479000.0,"p_convert":0.41775147928994083,"at_risk":300140.7612412145,"stalled":1,"planned_month":21,"overdue":0},{"initiative_id":"S035","name":34,"workstream":"Cross-sell","type":"Revenue","owner":"CFO","stage":"Validated","days_in_stage":115,"estimate":431000.0,"p_convert":0.36524216524216524,"at_risk":290292.88872227084,"stalled":1,"planned_month":20,"overdue":0},{"initiative_id":"S022","name":21,"workstream":"IT & systems","type":"Cost","owner":"Group Procurement","stage":"Validated","days_in_stage":68,"estimate":587000.0,"p_convert":0.6016194331983806,"at_risk":271341.2549474092,"stalled":0,"planned_month":15,"overdue":0},{"initiative_id":"S006","name":5,"workstream":"Procurement","type":"Cost","owner":"Group Procurement","stage":"Validated","days_in_stage":89,"estimate":586000.0,"p_convert":0.6016194331983806,"at_risk":270879.0040871921,"stalled":1,"planned_month":19,"overdue":0}],"dissynergies":[{"item":"Customer overlap attrition","type":"Revenue","annual_impact":-1240000,"note":"Twelve accounts held with both businesses consolidated volume with a third party"},{"item":"Key account manager departures","type":"Revenue","annual_impact":-660000,"note":"Four senior sellers left in the first nine months, two to a direct competitor"},{"item":"Retention and duplicate cover","type":"Cost","annual_impact":-420000,"note":"Retention packages and contractor cover during the finance consolidation"},{"item":"Contract novation losses","type":"Revenue","annual_impact":-310000,"note":"Three framework contracts not novated on change of control"}],"stage_counts":{"Identified":10,"Validated":10,"In execution":6,"Delivered":12,"Banked":8}}</script>
 <script>/* House chart toolkit. Shared by every demo in this repo so the whole set reads
    as one system: same scales, same marks, same tooltip, same validated palette.
    Exposed as window.V; each demo destructures what it needs. */
@@ -824,190 +843,202 @@ return { el, tok, $, MINUS, m2, m2s, m1, acct, pc, pcs, pp, int,
          reg, onRender, render, boot };
 })();
 </script>
+
 <script>
 (() => {
 "use strict";
-const { el, tok, $, pc, pcs, int, hit, hBars, groupBars, heatmap, spark, legend, reg, onRender } = window.V;
+const { el, tok, $, pc, pcs, int, hit, waterfall, lineChart, hBars, groupBars, legend, reg, onRender } = window.V;
 const D = JSON.parse(document.getElementById("payload").textContent);
-const M = D.model, T = D.tension, P = D.prep;
-const B = D.bidders, byName = Object.fromEntries(B.map(b => [b.bidder, b]));
-const h1 = v => v.toFixed(1);
+const P = D.position, S = D.simulation, SF = D.shortfall, MD = D.model, G = D.pl_gap, C = D.cta;
+const m2 = v => (v < 0 ? "−" : "") + "£" + (Math.abs(v) / 1e6).toFixed(2) + "m";
+const m1 = v => (v < 0 ? "−" : "") + "£" + (Math.abs(v) / 1e6).toFixed(1) + "m";
+const STAGES = D.stage_order;
 
 /* ---------------- static ---------------- */
 $("#metarow").innerHTML = [
-  ["Process", `Phase 2, ${D.meta.weeks} weeks elapsed`],
-  ["Room", `${int(D.meta.documents)} documents, ${int(D.meta.pages)} pages`],
-  ["Activity", `${int(D.meta.events)} access events, ${D.meta.users} users`],
-  ["Q&A", `${D.meta.questions} questions submitted`]
+  ["Position", `Month ${D.meta.month} of ${D.meta.target_month}`],
+  ["Register", `${D.meta.initiatives} initiatives, 8 workstreams`],
+  ["Secured run-rate", m2(P.secured)],
+  ["Evidence base", `${D.meta.history} initiatives from prior deals`]
 ].map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join("");
 
-$("#figHeadline").textContent = T.headline;
-$("#figExpected").textContent = h1(T.expected);
-$("#capExpected").innerHTML = `Probability of at least two live bids ${pc(T.p_at_least_two, 0)};
-  at least three ${pc(T.p_at_least_three, 0)}.`;
-$("#modelAmt").textContent = `AUC ${M.auc.toFixed(2)} on ${M.n} prior bidders`;
-$("#nEvents").textContent = int(D.meta.events);
+$("#figModel").textContent = m2(MD.total);
+$("#capModel").innerHTML = `${m1(MD.cost)} cost, ${m1(MD.revenue)} revenue`;
+$("#figFcast").textContent = m2(P.net_forecast);
+$("#capFcast").innerHTML = `${pc(P.pct_of_model, 0)} of the model. Gap of ${m2(P.gap)}.`;
+$("#bridgeAmt").textContent = `${m2(MD.total)} → ${m2(P.net_forecast)}`;
+$("#plAmt").textContent = `${m2(G.runrate)} run-rate · ${m2(G.ltm_pl)} in P&L`;
+$("#nInit").textContent = D.meta.initiatives;
+$("#nHist").textContent = D.meta.history;
+$("#recon").textContent = "£" + Math.abs(D.recon).toFixed(2);
 
-const real = B.filter(b => b.p_drop < 0.5);
-const quiet = B.filter(b => b.days_idle >= 10);
-const recon = B.filter(b => b.recon_score >= 0.3);
-$("#thesis").innerHTML = `Six bidders sit in Phase 2 and all six are formally still in the process. The access
-  log says <strong>${real.length} are doing the work</strong>. ${quiet.map(b => `${b.bidder} has not logged in for ${b.days_idle} days`)
-    .join("; ")}${quiet.length ? "." : ""}
-  ${recon.length ? `<strong>${recon[0].bidder}</strong> has read the commercial folders and very little else,
-  with no advisers onboarded and ${recon[0].qa_count} questions — a pattern worth testing before more customer
-  detail is released.` : ""} Expected live bids at the deadline: <strong>${h1(T.expected)}</strong>, not ${T.headline}.`;
+const cost = D.by_type.find(t => t.type === "Cost"), revn = D.by_type.find(t => t.type === "Revenue");
+const stalledRev = D.workstreams.filter(w => w.type === "Revenue").reduce((a, w) => a + w.stalled, 0);
+const stalledTotal = D.workstreams.reduce((a, w) => a + w.stalled, 0);
+$("#thesis").innerHTML = `Fourteen months in, the cost programme is broadly doing what it said it would:
+  <strong>${pc(cost.pct, 0)}</strong> of plan expected. The revenue programme is at
+  <strong>${pc(revn.pct, 0)}</strong>, with ${stalledRev} of its ${D.workstreams.filter(w => w.type === "Revenue").reduce((a, w) => a + w.n, 0)}
+  initiatives stalled in stage beyond the point history says they recover. Risk-adjusted, the programme lands at <strong>${m2(P.net_forecast)}</strong>
+  against a ${m2(MD.total)} model. The more serious finding sits underneath that: even if every remaining
+  initiative converted in full and delivered its estimate, the register reaches only
+  <strong>${m2(SF.ceiling)}</strong>. The gap cannot be closed from the current pipeline.`;
 
-/* ---------------- bidder board ---------------- */
-function flags(b) {
-  const f = [];
-  if (b.p_drop >= 0.6) f.push(["crit", "Likely to withdraw"]);
-  if (b.days_idle >= 10) f.push(["warn", `Quiet ${b.days_idle} days`]);
-  if (b.recon_score >= 0.3) f.push(["warn", "Commercial-only reading"]);
-  if (b.advisers >= 3) f.push(["good", "Full adviser team"]);
-  if (b.p_drop < 0.1 && b.advisers >= 2 && b.qa_count >= 8) f.push(["good", "Preparing to bid"]);
-  if (!f.length) f.push(["neutral", "Active, no flags"]);
-  return f.map(([c, t]) => `<span class="chip ${c}"><i></i>${t}</span>`).join("");
-}
-$("#boardRows").innerHTML = B.map(b => `<div class="brow">
-  <div class="who"><strong>${b.bidder}</strong><span>${b.kind} · ${b.users} users · ${b.advisers} adviser ${b.advisers === 1 ? "firm" : "firms"}</span>
-    <div class="mini" style="margin-top:6px">
-      <span>hours<b>${Math.round(b.hours)}</b></span><span>coverage<b>${pc(b.coverage, 0)}</b></span>
-      <span>questions<b>${b.qa_count}</b></span><span>last seen<b>${b.days_idle}d ago</b></span></div></div>
-  <div class="meter"><u><i style="width:${b.engagement}%; background:var(--s1)"></i></u>
-    <s>engagement ${Math.round(b.engagement)}</s></div>
-  <div class="meter"><u><i style="width:${(b.p_drop * 100).toFixed(0)}%; background:var(--${b.p_drop >= 0.6 ? "neg" : b.p_drop >= 0.3 ? "warn" : "ink-3"})"></i></u>
-    <s>p(withdraw) ${pc(b.p_drop, 0)}</s></div>
-  <div class="spark" id="sp-${b.bidder.replace(/\W/g, "")}"></div>
-  <div class="flags">${flags(b)}</div></div>`).join("");
-B.forEach(b => reg("sp-" + b.bidder.replace(/\W/g, ""), w => {
-  const s = spark(w, b.weekly, { height: 38, token: b.p_drop >= 0.6 ? "--neg" : "--s1" });
-  hit(s, b.bidder, [["Weekly hours", b.weekly.map(v => v.toFixed(0)).join(" · ")],
-                    ["Trend, last 3 weeks", b.trend >= 0 ? "+" + b.trend.toFixed(2) : b.trend.toFixed(2)]]);
-  return s;
+/* ---------------- bridge ---------------- */
+reg("bridgeChart", w => waterfall(w, D.bridge, {}));
+$("#brCap").innerHTML = `Reconciles exactly: ${m2(MD.total)} plus the four movements equals
+  ${m2(P.net_forecast)}, residual £${Math.abs(D.recon).toFixed(2)}. Vertical axis truncated to make the
+  movements legible. Realisation haircut uses the ${pc(P.mu_real, 0)} that delivered initiatives have
+  historically landed at against their own estimate.`;
+
+/* ---------------- cost vs revenue ---------------- */
+reg("typeChart", w => groupBars(w, ["Cost", "Revenue"],
+  [{ name: "Deal model", token: "--total", values: D.by_type.map(t => t.plan) },
+   { name: "Secured", token: "--s1", values: D.by_type.map(t => t.secured) },
+   { name: "Risk-adjusted", token: "--s2", values: D.by_type.map(t => t.expected) }],
+  { fmt: v => m1(v), fmtAxis: t => (t / 1e6).toFixed(0), height: 270 }));
+$("#tyCap").innerHTML = `Cost synergies are at ${pc(cost.pct, 0)} of the model and ${m2(cost.secured)} of that
+  is already banked. Revenue is at ${pc(revn.pct, 0)} with ${m2(revn.secured)} secured. A blended
+  ${pc((cost.expected + revn.expected) / MD.total, 0)} completion figure would hide both facts.`;
+
+$("#convTable").innerHTML = `<table style="min-width:340px"><thead><tr><th>Stage</th><th>Cost</th><th>Revenue</th><th>n</th></tr></thead><tbody>
+  ${STAGES.filter(s => !["Delivered", "Banked"].includes(s)).map(s => {
+    const c = D.conversion.find(x => x.stage === s && x.type === "Cost");
+    const r = D.conversion.find(x => x.stage === s && x.type === "Revenue");
+    return `<tr><td>${s}</td><td class="n">${pc(c.smoothed, 0)}</td>
+      <td class="n ${r.smoothed < c.smoothed ? "neg" : ""}">${pc(r.smoothed, 0)}</td>
+      <td class="n tiny">${c.n + r.n}</td></tr>`;
+  }).join("")}</tbody></table>`;
+
+/* ---------------- where it lands ---------------- */
+const hb = S.histogram, total = hb.reduce((a, b) => a + b.n, 0);
+let run = 0;
+const exceed = hb.map((b, i) => { const v = 1 - run / total; run += b.n; return v; });
+reg("exceedChart", w => lineChart(w, {
+  labels: hb.map(b => (b.x / 1e6).toFixed(0)), every: 4, rightPad: 46, height: 250,
+  series: [{ name: "P(run-rate ≥ x)", token: "--s1", values: exceed }],
+  fmtAxis: t => pc(t, 0), fmtEnd: v => pc(v, 0)
 }));
+$("#exCap").innerHTML = `Horizontal axis is final run-rate in £m at month ${MD.target_month}. The deal model
+  of ${m2(MD.total)} sits off the right-hand end of this distribution entirely: across
+  ${int(S.n)} simulations the programme reached it ${S.p_hit_model === 0 ? "not once" : pc(S.p_hit_model, 1) + " of the time"}.
+  With ${D.meta.initiatives} largely independent initiatives the aggregate is tightly distributed, so this is
+  not a variance problem that might come good — it is a shortfall.`;
 
-/* ---------------- model ---------------- */
-reg("coefChart", w => hBars(w, M.coefficients.map(c => ({
-  label: c.label, value: c.beta,
-  rows: [["Coefficient", c.beta.toFixed(2)], ["Odds ratio", c.odds.toFixed(2) + "×"]]
-})), { fmt: v => (v >= 0 ? "+" : "−") + Math.abs(v).toFixed(2), left: w < 600 ? 150 : 216, rowH: 38 }));
+$("#ceilingCallout").innerHTML = `<h3>The model is not reachable from this pipeline</h3>
+  <p class="small">Give every remaining initiative a 100% conversion rate and full delivery of its current
+  estimate — an outcome no integration has ever achieved — and the register totals ${m2(SF.ceiling)} after
+  dis-synergy. That is ${m2(Math.abs(SF.unreachable_by))} short of the ${m2(MD.total)} model before any
+  discount for reality.</p>
+  <p class="small">Closing the gap at the historical realisation rate needs roughly
+  <strong>${m1(SF.new_runrate_required)}</strong> of genuinely new initiatives identified, validated and
+  executed inside ten months. That is a decision for the board this month, not a status update.</p>`;
 
-reg("calChart", w => groupBars(w, M.calibration.map(c => c.bucket),
-  [{ name: "Predicted", token: "--s1", values: M.calibration.map(c => c.predicted) },
-   { name: "Actually withdrew", token: "--s2", values: M.calibration.map(c => c.actual) }],
-  { fmt: v => pc(v, 0), fmtAxis: t => pc(t, 0), height: 230 }));
-
-reg("tensionChart", w => hBars(w, T.distribution.map((p, i) => ({
-  label: i === 1 ? "1 bid" : `${i} bids`, value: p, token: i >= 2 ? "--s1" : "--neg",
-  rows: [["Probability", pc(p, 1)]]
-})).filter(d => d.value > 0.001), { fmt: v => pc(v, 1), left: 92, rowH: 36 }));
-
-$("#modelStats").innerHTML = [
-  ["Discrimination", M.auc.toFixed(2), "AUC on the fitted sample"],
-  ["Accuracy", pc(M.accuracy, 0), "At a 50% threshold"],
-  ["Brier score", M.brier.toFixed(3), "Lower is better calibrated"],
-  ["Sample", `${M.withdrew}/${M.n}`, "Prior bidders who withdrew"]
-].map(([k, v, d]) => `<div class="stat"><div class="k">${k}</div><div class="v num">${v}</div><div class="d">${d}</div></div>`).join("");
-$("#calCap").innerHTML = `Bidders grouped by predicted risk, against how many in each group actually withdrew.
-  The bars track reasonably well, which is what matters more than AUC for a model whose output gets read as a
-  probability. Fitted and evaluated on the same ${M.n} records — on a live desk this would be cross-validated.`;
-$("#tensionCap").innerHTML = `Treating the six withdrawal probabilities as independent gives the full
-  distribution of how many bids arrive. Six names on a process letter is not six-way tension: the realistic
-  outcome is ${h1(T.expected)} bids, and the probability of fewer than two — the point at which price
-  discipline collapses — is ${pc(1 - T.p_at_least_two, 1)}.`;
-
-/* ---------------- attention ---------------- */
-reg("attMatrix", w => heatmap(w, {
-  rows: D.matrix.map(m => ({ label: m.bidder.split(" ")[0] })), cols: D.categories,
-  left: w < 640 ? 78 : 96, top: 108, cellH: w < 640 ? 34 : 42,
-  cell: (i, j) => ({ d: Math.tanh(Math.log(Math.max(D.matrix[i].cells[j].index, 0.02))) }),
-  title: (i, j) => `${D.matrix[i].bidder} · ${D.categories[j]}`,
-  rowsOf: (i, j) => [["Index vs room", D.matrix[i].cells[j].index.toFixed(2) + "×"],
-                     ["Share of their time", pc(D.matrix[i].cells[j].share, 1)]]
-}));
-
-const r0 = B.reduce((a, b) => b.recon_score > a.recon_score ? b : a);
-$("#reconCallout").innerHTML = `<h3>${r0.bidder}: reading the commercial file, not the deal</h3>
-  <p class="small">Over-indexed on ${r0.over.join(" and ")}; under-indexed on ${r0.under.join(" and ")}.
-  No adviser firms onboarded in nine weeks, ${r0.qa_count} questions submitted, and
-  ${pc(r0.senior_share, 0)} of reading time from senior staff. A trade buyer preparing an offer
-  commissions legal and financial diligence before it reads pricing schedules this closely.</p>
-  <p class="small">This is a flag, not a finding. The action is proportionate: confirm their process
-  with their adviser, and hold the customer-level pricing detail behind a further confidentiality
-  undertaking until they do.</p>`;
-
-/* ---------------- deal risk ---------------- */
-$("#docTable").innerHTML = `<table style="min-width:620px"><thead><tr><th>Document</th><th>Category</th>
-  <th>Pages</th><th>Bidders</th><th>Revisits</th><th>Hours</th></tr></thead><tbody>
-  ${D.top_docs.map(d => `<tr><td>${d.name}</td><td class="tiny">${d.category}</td>
-    <td class="n">${d.pages}</td><td class="n">${d.bidders}/${D.meta.bidders}</td>
-    <td class="n">${d.revisits.toFixed(1)}</td><td class="n">${d.hours.toFixed(1)}</td></tr>`).join("")}
-  </tbody></table><p class="tiny" style="margin-top:8px">Revisits is the average number of separate days a
-  bidder came back to the document. Ranked on total attention, breadth across bidders and revisit frequency.</p>`;
-
-reg("catChart", w => hBars(w, [...D.category_heat].sort((a, b) => b.hours - a.hours).map(c => ({
-  label: c.category, value: c.hours, token: "--s1",
-  rows: [["Reading hours", c.hours.toFixed(1)], ["Questions", String(c.questions)],
-         ["Documents", String(c.documents)]]
-})), { fmt: v => v.toFixed(0) + "h", left: w < 600 ? 132 : 170, rowH: 36 }));
-
-$("#catTable").innerHTML = `<table style="min-width:400px"><thead><tr><th>Category</th><th>Hours</th>
-  <th>Questions</th><th>Median answer</th></tr></thead><tbody>
-  ${[...D.category_heat].sort((a, b) => b.questions - a.questions).map(c => `<tr><td>${c.category}</td>
-    <td class="n">${c.hours.toFixed(0)}</td><td class="n">${c.questions}</td>
-    <td class="n">${c.days_to_answer ? c.days_to_answer.toFixed(1) + "d" : "—"}</td></tr>`).join("")}
-  </tbody></table>`;
-
-/* ---------------- sell-side prep ---------------- */
-$("#prepStats").innerHTML = [
-  ["Pages uploaded", int(P.pages), `${P.documents} documents`],
-  ["Never opened", int(P.unread_pages), `${pc(P.unread_pct, 0)} of the room, ${P.unread_docs} documents`],
-  ["Read by one bidder only", int(P.single_bidder_docs), "Documents"],
-  ["Read by all six", int(P.all_bidder_docs), "Documents — the deal risk set"]
+$("#landStats").innerHTML = [
+  ["Median outcome", m2(S.p50), `P10 ${m1(S.p10)} · P90 ${m1(S.p90)}`],
+  ["Perfect-execution ceiling", m2(SF.ceiling), "Every initiative, full value"],
+  ["P(reaching the model)", S.p_hit_model === 0 ? "0%" : pc(S.p_hit_model, 1), `${int(S.n)} simulations`],
+  ["New run-rate required", m1(SF.new_runrate_required), "Initiatives not yet identified"]
 ].map(([k, v, d]) => `<div class="stat"><div class="k">${k}</div><div class="v num">${v}</div><div class="d">${d}</div></div>`).join("");
 
-reg("prepChart", w => hBars(w, [...D.category_heat].sort((a, b) => b.unread_pages - a.unread_pages).map(c => ({
-  label: c.category, sub: `${c.pages} pages total`, value: c.unread_pages, token: "--s2",
-  rows: [["Unread pages", int(c.unread_pages)], ["Total pages", int(c.pages)],
-         ["Share unread", pc(c.unread_pages / c.pages, 0)]]
-})), { fmt: v => int(v), left: w < 600 ? 132 : 170, rowH: 42 }));
+/* ---------------- workstreams ---------------- */
+const maxPlan = Math.max(...D.workstreams.map(w => Math.max(w.plan, w.expected)));
+$("#wsBoard").innerHTML = D.workstreams.map(w => {
+  const pctPlan = w.expected / w.plan;
+  const col = pctPlan >= 0.85 ? "--s1" : pctPlan >= 0.6 ? "--warn" : "--neg";
+  const tot = STAGES.reduce((a, s) => a + w.stages[s], 0) || 1;
+  return `<div class="wsrow">
+    <div class="nm"><strong>${w.workstream}</strong>
+      <span>${w.type} · ${w.n} initiatives${w.stalled ? ` · <span style="color:var(--neg)">${w.stalled} stalled</span>` : ""}</span></div>
+    <div class="bar"><div class="dualbar" title="${m2(w.expected)} of ${m2(w.plan)}">
+      <i style="width:${(100 * w.expected / maxPlan).toFixed(1)}%; background:var(${col})"></i>
+      <u style="left:${(100 * w.plan / maxPlan).toFixed(1)}%"></u></div>
+      <div class="tiny" style="margin-top:5px">${m2(w.expected)} expected of ${m2(w.plan)} plan</div></div>
+    <div class="kv"><b>${pc(pctPlan, 0)}</b><s>of plan</s></div>
+    <div class="kv"><b>${w.spi === null ? "—" : w.spi.toFixed(2)}</b><s>SPI</s></div>
+    <div class="stages"><div class="stagebar">
+      ${STAGES.map((s, i) => w.stages[s] ? `<i style="flex:${w.stages[s]}; background:var(--ord${i + 1})" title="${s}: ${w.stages[s]}"></i>` : "").join("")}
+    </div><div class="tiny" style="margin-top:5px">${STAGES.map((s, i) => w.stages[s] ? `${w.stages[s]} ${s.toLowerCase()}` : "").filter(Boolean).join(" · ")}</div></div>
+  </div>`;
+}).join("");
+
+/* ---------------- run-rate vs P&L ---------------- */
+reg("curveChart", w => lineChart(w, {
+  labels: D.curve.map(c => "M" + c.month), every: 2, rightPad: 52, height: 280,
+  series: [{ name: "Plan, cumulative run-rate", token: "--total", values: D.curve.map(c => c.plan) },
+           { name: "Run-rate recognised", token: "--s1", values: D.curve.map(c => c.runrate) },
+           { name: "Cumulative P&L benefit", token: "--s2", values: D.curve.map(c => c.in_year_cum) }],
+  fmtAxis: t => (t / 1e6).toFixed(0), fmtEnd: v => m1(v)
+}));
+$("#plStats").innerHTML = [
+  ["Run-rate recognised", m2(G.runrate), "Annualised value secured to date"],
+  ["Reached the P&L", m2(G.ltm_pl), "Last twelve months of EBITDA benefit"],
+  ["Annualisation gap", m2(G.annualisation_gap), `Only ${pc(G.ratio, 0)} has converted to cash earnings`],
+  ["Cost to achieve", m2(C.spent), `${pc(C.ratio, 0)} of a ${m1(C.budget)} budget`]
+].map(([k, v, d]) => `<div class="stat"><div class="k">${k}</div><div class="v num">${v}</div><div class="d">${d}</div></div>`).join("");
+
+/* ---------------- escalation ---------------- */
+$("#escTable").innerHTML = `<table style="min-width:680px"><thead><tr><th>Initiative</th><th>Workstream</th>
+  <th>Stage</th><th>Days</th><th>Estimate</th><th>p(convert)</th><th>At risk</th><th>Flag</th></tr></thead><tbody>
+  ${D.escalate.map(e => `<tr><td>${e.name}<div class="tiny">${e.owner}</div></td>
+    <td class="tiny">${e.workstream}</td><td class="tiny">${e.stage}</td>
+    <td class="n ${e.stalled ? "neg" : ""}">${e.days_in_stage}</td>
+    <td class="n">${m2(e.estimate)}</td><td class="n">${pc(e.p_convert, 0)}</td>
+    <td class="n neg">${m2(e.at_risk)}</td>
+    <td>${e.stalled ? '<span class="chip crit"><i></i>Stalled</span>' : e.overdue ? '<span class="chip warn"><i></i>Overdue</span>' : '<span class="chip neutral"><i></i>Tracking</span>'}</td></tr>`).join("")}
+  </tbody></table><p class="tiny" style="margin-top:8px">Value at risk is the current estimate less what
+  history expects it to convert and realise. Stalled means longer in stage than 75% of comparable initiatives.</p>`;
+
+reg("ctaChart", w => hBars(w, C.by_ws.map(c => ({
+  label: c.workstream, value: c.over,
+  rows: [["Budget", m2(c.budget)], ["Spent", m2(c.spent)], ["Variance", m2(c.over)]]
+})), { fmt: v => m2(v), left: w < 600 ? 132 : 170, rowH: 38 }));
+const under = C.by_ws.filter(c => c.over < 0).map(c => c.workstream);
+$("#ctaCap").innerHTML = `Variance against budget by workstream. Total spend ${m2(C.spent)} against
+  ${m2(C.budget)} budgeted — ${pc(C.ratio, 0)} — which looks like control until you see where the
+  underspend is. ${under.join(", ")} are all beneath budget, and all three are revenue workstreams. You do
+  not deliver cross-sell synergies without spending on them: the underspend is not thrift, it is the same
+  stall showing up in a different ledger.`;
+
+$("#disTable").innerHTML = `<table style="min-width:340px"><thead><tr><th>Item</th><th>Annual</th></tr></thead><tbody>
+  ${D.dissynergies.map(d => `<tr><td>${d.item}<div class="tiny" style="white-space:normal;max-width:40ch">${d.note}</div></td>
+    <td class="n neg">${m2(d.annual_impact)}</td></tr>`).join("")}
+  <tr class="totalrow"><td>Total</td><td class="n neg">${m2(P.dis_synergy)}</td></tr></tbody></table>`;
 
 /* ---------------- so what ---------------- */
-const top2 = D.top_docs.slice(0, 2);
-$("#soProcess").innerHTML = `Management's time is finite and currently split six ways. Two bidders carry
-  ${pc((B[0].hours + B[1].hours) / B.reduce((a, b) => a + b.hours, 0), 0)} of all reading hours between them.
-  Concentrate site visits and management sessions there, and set the bid deadline for the tension you
-  actually have — ${h1(T.expected)} bids — rather than the six on the process letter.`;
-$("#soPrep").innerHTML = `<strong>${top2[0].name}</strong> and <strong>${top2[1].name}</strong> are the two most
-  read documents in the room, by every bidder, repeatedly. They will come back as a pension indemnity and a
-  change-of-control condition. Commission a vendor-side actuarial position and open the consent conversation
-  now, while it is still a preparation task rather than a negotiation.`;
-$("#soControl").innerHTML = `The commercial folders draw the heaviest reading from the bidder least likely to
-  transact. Staging customer-level pricing behind a supplementary undertaking costs a genuine buyer nothing
-  and costs a competitor the thing they came for.`;
+$("#soNow").innerHTML = `The forecast is ${m2(P.gap)} short and the distribution does not reach the model.
+  Re-forecast to ${m2(P.net_forecast)} now, at month ${D.meta.month}, while there are ten months to act.
+  A programme that re-forecasts at month 20 has told the board something it can no longer do anything about.`;
+$("#soPipe").innerHTML = `Roughly ${m1(SF.new_runrate_required)} of run-rate has to come from initiatives that
+  do not yet exist. That is an identification exercise with a deadline, not a push on the existing register —
+  and the register itself is the evidence that pushing harder on stalled revenue initiatives has not worked.`;
+$("#soRev").innerHTML = `Revenue synergies convert at ${pc(D.conversion.find(c => c.stage === "Validated" && c.type === "Revenue").smoothed, 0)}
+  from validated against ${pc(D.conversion.find(c => c.stage === "Validated" && c.type === "Cost").smoothed, 0)}
+  for cost. They need different governance: named accounts, a seller compensated on the cross-sell, and a
+  monthly pipeline review rather than a quarterly status paper.`;
 
 $("#ingredients").innerHTML = [
-  "<strong>Access log</strong> — timestamp, user, document, action and duration. Every major platform exports this.",
-  "<strong>Document index</strong> — folder, category and page count, so attention can be normalised.",
-  "<strong>User register</strong> — organisation, role and whether they are an adviser. Seniority is the signal.",
-  "<strong>Q&amp;A log</strong> — question, category, bidder, and time to answer.",
-  "<strong>Prior process outcomes</strong> — the same bidder features from past deals, with who bid and who walked. This is what makes the model a model."
+  "<strong>Initiative register</strong> — value, owner, workstream, stage and the date it entered that stage. The stage date is what makes stall detection possible and is the field most often missing.",
+  "<strong>Monthly realised benefit</strong> — actual P&L impact by initiative, so run-rate and in-year can be reported separately.",
+  "<strong>Deal model synergy schedule</strong> — the committed value and its phasing, by category.",
+  "<strong>Cost to achieve</strong> — budget and spend by initiative.",
+  "<strong>Prior deal outcomes</strong> — the same register from previous integrations, with what each initiative was worth in the end. Without this the confidence weighting is opinion."
 ].map(s => `<li><span>${s}</span></li>`).join("");
 $("#notes").innerHTML = [
-  "<strong>Fitted, not asserted.</strong> Withdrawal probability comes from logistic regression on 140 prior bidders. A hand-weighted health score would not survive the first partner who asked where the weights came from.",
-  "<strong>Live features are clipped</strong> to the range the model was fitted on, so no prediction is an extrapolation beyond the evidence.",
-  "<strong>Dwell time is shrunk</strong> toward coverage for bidders with little activity — thirty page-views is not enough to estimate how carefully someone reads.",
-  "<strong>Document heat</strong> combines total attention, breadth across bidders and revisit frequency. Per-page intensity alone penalises exactly the long documents that carry the risk.",
-  "<strong>Bid-count distribution</strong> is the exact Poisson-binomial over the six probabilities, not a simulation."
+  "<strong>Run-rate and in-year are reported separately</strong>, never blended. They answer different questions and only one of them is EBITDA.",
+  "<strong>Conversion is estimated, not assigned.</strong> Stage-to-delivery rates come from 260 prior initiatives, split by cost versus revenue and smoothed toward the overall rate where a cell is thin.",
+  "<strong>Realisation is a distribution, not a factor.</strong> Delivered initiatives land at a mean of " + pc(P.mu_real, 0) + " of estimate with a standard deviation of " + pc(P.sd_real, 0) + "; the simulation draws from a gamma matched to those moments.",
+  "<strong>Schedule index is earned value</strong> — credit by stage against what the plan said should have been earned by now — rather than a count of initiatives closed.",
+  "<strong>The ceiling is reported alongside the forecast.</strong> Knowing a target is unreachable from the current pipeline is a different conversation from being behind, and most trackers cannot tell you which one you are in."
 ].map(s => `<li><span>${s}</span></li>`).join("");
 
 onRender(() => {
-  legend("#boardLegend", [{ swatch: tok("--s1"), name: "Engagement, percentile against prior processes" },
-                          { swatch: tok("--neg"), name: "Withdrawal risk, fitted model" }]);
-  legend("#calLegend", [{ swatch: tok("--s1"), name: "Predicted" }, { swatch: tok("--s2"), name: "Actually withdrew" }]);
-  legend("#attLegend", [{ swatch: tok("--pos"), name: "Reads more than the room" },
-                        { swatch: tok("--neg"), name: "Reads less" }]);
+  legend("#brLegend", [{ swatch: tok("--pos"), name: "Increase" }, { swatch: tok("--neg"), name: "Reduction" },
+                       { swatch: tok("--total"), name: "Position" }]);
+  legend("#tyLegend", [{ swatch: tok("--total"), name: "Deal model" }, { swatch: tok("--s1"), name: "Secured" },
+                       { swatch: tok("--s2"), name: "Risk-adjusted expected" }]);
+  legend("#cvLegend", [{ swatch: tok("--total"), name: "Plan" }, { swatch: tok("--s1"), name: "Run-rate recognised" },
+                       { swatch: tok("--s2"), name: "Cumulative P&L benefit" }]);
+  legend("#wsLegend", STAGES.map((s, i) => ({ swatch: `var(--ord${i + 1})`, name: s })));
 });
 window.V.boot();
 })();

@@ -1,0 +1,192 @@
+<title>Deal Lifecycle Analytics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;450;500;600;700&display=swap">
+<style>
+__CSS__
+
+/* ---------- lifecycle spine ---------- */
+.spine{list-style:none; margin:0; padding:0; display:grid; grid-template-columns:repeat(5,1fr);
+  position:relative; gap:4px}
+.spine::before{content:""; position:absolute; top:19px; left:10%; right:10%; height:2px;
+  background:var(--rule-2); z-index:0}
+.spine li{position:relative; z-index:1}
+.spine a{display:grid; justify-items:center; text-align:center; gap:7px; text-decoration:none;
+  color:inherit; padding:0 6px 4px}
+.spine .dot{width:40px; height:40px; border-radius:50%; display:grid; place-items:center;
+  background:var(--surface); border:2px solid var(--rule-2); font-family:"IBM Plex Mono",monospace;
+  font-size:.92rem; font-weight:600; color:var(--ink-3); transition:transform .15s}
+.spine a:hover .dot{transform:translateY(-2px)}
+.spine li.has .dot{border-color:var(--s1); color:var(--s1); background:var(--accent-soft)}
+.spine strong{font-size:.86rem; font-weight:600; line-height:1.3}
+.spine em{font-style:normal; font-size:.72rem; color:var(--ink-3); font-family:"IBM Plex Mono",monospace}
+.spine a:hover strong{color:var(--accent)}
+@media (max-width:760px){
+  .spine{grid-template-columns:1fr; gap:0}
+  .spine::before{top:18px; bottom:26px; left:19px; right:auto; width:2px; height:auto}
+  .spine a{grid-template-columns:40px 1fr; justify-items:start; text-align:left; gap:14px;
+    align-items:center; padding:9px 0}
+  .spine strong{grid-column:2} .spine em{grid-column:2; margin-top:-6px}
+}
+
+/* ---------- cross-cutting band ---------- */
+.band{margin-top:26px; border:1px solid var(--rule); border-left:3px solid var(--s2);
+  border-radius:5px; background:var(--surface); padding:16px 20px; display:flex; gap:14px;
+  align-items:baseline; flex-wrap:wrap}
+.band strong{font-size:.9rem}
+.band span{font-size:.84rem; color:var(--ink-2); flex:1 1 280px}
+.band a{font-size:.82rem; font-weight:600; text-decoration:none; white-space:nowrap}
+.band a:hover{text-decoration:underline}
+
+/* ---------- technique cards ---------- */
+.techs{display:grid; grid-template-columns:repeat(auto-fill,minmax(268px,1fr)); gap:14px; margin-top:22px}
+.tech{display:grid; gap:9px; align-content:start; padding:18px 18px 16px; border-radius:6px;
+  border:1px solid var(--rule); background:var(--surface); text-decoration:none; color:inherit;
+  position:relative; transition:border-color .15s, transform .15s}
+.tech .tnum{font-family:"IBM Plex Mono",monospace; font-size:.72rem; font-weight:600; color:var(--ink-3);
+  letter-spacing:.04em}
+.tech h3{font-size:1rem; line-height:1.3}
+.tech p{font-size:.83rem; line-height:1.55; color:var(--ink-2)}
+.tech .st{margin-top:2px; font-size:.74rem; font-weight:600; display:inline-flex; align-items:center; gap:6px}
+a.tech{border-color:var(--rule-2)}
+a.tech:hover{border-color:var(--s1); transform:translateY(-2px)}
+a.tech:focus-visible{outline:2px solid var(--s1); outline-offset:2px}
+a.tech .st{color:var(--s1)}
+.tech:not(.live){background:transparent; border-style:dashed}
+.tech.planned h3{color:var(--ink-2)}
+.tech.planned .st{color:var(--ink-3)}
+.tech.next .st{color:#8a6200} .tech.building .st{color:var(--s2)}
+:root[data-theme="dark"] .tech.next .st{color:var(--warn)}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]) .tech.next .st{color:var(--warn)} }
+
+/* ---------- phase heading ---------- */
+.phase{display:flex; align-items:baseline; gap:16px; flex-wrap:wrap}
+.phase .pn{font-family:"IBM Plex Mono",monospace; font-size:.78rem; font-weight:600; color:var(--s1);
+  background:var(--accent-soft); padding:4px 10px; border-radius:3px}
+.progress{display:flex; align-items:center; gap:10px; margin-top:22px; flex-wrap:wrap}
+.progress u{flex:1 1 200px; height:7px; border-radius:4px; background:var(--surface-2);
+  text-decoration:none; display:block; position:relative; overflow:hidden}
+.progress u i{position:absolute; left:0; top:0; bottom:0; background:var(--s1); display:block}
+.progress s{text-decoration:none; font-size:.8rem; color:var(--ink-3);
+  font-family:"IBM Plex Mono",monospace; white-space:nowrap}
+</style>
+
+<div class="topbar"><div class="wrap">
+  <div class="brandmark"><i></i> Deal Lifecycle Analytics</div>
+  <nav class="navlinks" id="nav"></nav>
+</div></div>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="eyebrow label"><span class="codename">Data &amp; Analytics</span><span>Transaction advisory</span><span>&middot;</span><span id="ownerTag"></span></div>
+  <h1>Analytics across the deal lifecycle</h1>
+  <p class="lede" style="margin-top:14px">Working demonstrations of what data and analytics contributes at each
+     stage of a transaction &mdash; from finding the target to owning the asset. Every one runs on synthetic
+     data, with the analytical logic as runnable code rather than a slide.</p>
+  <div class="progress"><u><i id="progBar"></i></u><s id="progText"></s></div>
+</header>
+
+<section style="border-top:0; padding-top:8px">
+  <ol class="spine" id="spine"></ol>
+  <div class="band" id="band"></div>
+</section>
+
+<div id="phases"></div>
+
+<section id="how">
+  <div class="sechead"><h2>How these are built</h2></div>
+  <div class="grid2" style="align-items:start; margin-top:18px">
+    <div class="panel">
+      <h3 style="margin-bottom:12px">House rules</h3>
+      <ul class="plain">
+        <li><span><strong>Synthetic, but honest.</strong> Generators model the underlying drivers &mdash; cost
+          indices, churn hazards, contractual terms, integration disruption &mdash; and the analysis then
+          discovers the answer from the records. Nothing is hard-coded to produce a punchy finding, which is
+          why the same code would run against a real extract.</span></li>
+        <li><span><strong>It has to tie.</strong> Where an analysis decomposes a movement, the components
+          reconcile exactly, and the reconciliation is asserted in code. A demo that fails its own checks
+          fails loudly rather than publishing a number.</span></li>
+        <li><span><strong>Fitted, not asserted.</strong> Where something is scored or predicted, the weights
+          come from data. A hand-weighted index does not survive the first partner who asks where the
+          numbers came from.</span></li>
+        <li><span><strong>Built for the room.</strong> Each one answers the same five questions: what it is,
+          what data it needs, how the calculation works, what the output looks like, and what a deal team
+          does with it on Monday.</span></li>
+      </ul>
+    </div>
+    <div class="panel">
+      <h3 style="margin-bottom:12px">What each demo contains</h3>
+      <ul class="plain">
+        <li><span>A seeded synthetic dataset with a generator you can re-run and change.</span></li>
+        <li><span>The analytical logic as commented Python, including the checks it has to pass.</span></li>
+        <li><span>An interactive page built on a shared chart toolkit &mdash; one scale per plot, no dual
+          axes, a colourblind-validated palette, a table view behind every chart, and both themes designed
+          rather than inverted.</span></li>
+        <li><span>A written note covering the ingredients, the arithmetic, and the "so what".</span></li>
+      </ul>
+      <p class="small" style="margin-top:16px">The demos share one stylesheet and one chart toolkit, so a fix
+        to a scale or a mark specification lands everywhere at once. That is the same argument for repeatable
+        analysis packs on live deals &mdash; and the reason it is worth making structurally rather than
+        promising it.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <strong style="color:var(--ink)">Deal Lifecycle Analytics.</strong>
+  A demonstration portfolio, built with Claude Code. All companies, figures and findings are synthetic.
+</footer>
+
+</div>
+<script id="payload" type="application/json">__DATA__</script>
+<script>
+(() => {
+"use strict";
+const D = JSON.parse(document.getElementById("payload").textContent);
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+const LABEL = { live: "Open the demo →", building: "In build", next: "Next up", planned: "Planned" };
+const all = D.phases.flatMap(p => p.techniques).concat(D.crosscutting.techniques);
+const liveCount = all.filter(t => t.status === "live").length;
+
+$("#ownerTag").textContent = D.owner;
+$("#progBar").style.width = (100 * liveCount / all.length).toFixed(1) + "%";
+$("#progText").textContent = `${liveCount} of ${all.length} built · ${all.filter(t => t.status === "next" || t.status === "building").length} in flight`;
+
+$("#spine").innerHTML = D.phases.map(p => {
+  const live = p.techniques.filter(t => t.status === "live").length;
+  return `<li class="${live ? "has" : ""}"><a href="#${p.id}">
+    <span class="dot">${p.n}</span><strong>${esc(p.name)}</strong>
+    <em>${live} of ${p.techniques.length} live</em></a></li>`;
+}).join("");
+
+const X = D.crosscutting;
+$("#band").innerHTML = `<strong>${esc(X.name)}</strong>
+  <span>${esc(X.strap)} — ${X.techniques.length} techniques, none of them a phase of their own.</span>
+  <a href="#${X.id}">See the layer ↓</a>`;
+
+function card(t) {
+  const inner = `<span class="tnum">${String(t.n).padStart(2, "0")}</span>
+    <h3>${esc(t.name)}</h3><p>${esc(t.blurb)}</p>
+    <span class="st">${t.status === "live" ? "" : "● "}${LABEL[t.status]}</span>`;
+  return t.status === "live"
+    ? `<a class="tech live" href="${t.url}" target="_blank" rel="noopener">${inner}</a>`
+    : `<div class="tech ${t.status}">${inner}</div>`;
+}
+
+function section(p, cross) {
+  return `<section id="${p.id}">
+    <div class="phase">${cross ? "" : `<span class="pn">Phase ${p.n}</span>`}<h2>${esc(p.name)}</h2>
+      <span class="amt">${esc(p.strap)}</span></div>
+    <p class="secintro lede" style="margin-bottom:0">${esc(p.job)}</p>
+    <div class="techs">${p.techniques.map(card).join("")}</div>
+  </section>`;
+}
+$("#phases").innerHTML = D.phases.map(p => section(p, false)).join("") + section(X, true);
+
+$("#nav").innerHTML = D.phases.map(p => `<a href="#${p.id}">${esc(p.name)}</a>`).join("")
+  + `<a href="#${X.id}">AI layer</a><a href="#how">Method</a>`;
+})();
+</script>

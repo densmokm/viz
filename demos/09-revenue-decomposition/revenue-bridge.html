@@ -236,6 +236,14 @@ footer{padding-block:34px 60px; border-top:1px solid var(--rule); color:var(--in
 @media (max-width:900px){ .brow{grid-template-columns:minmax(0,1fr) 100px 100px} 
   .brow .spark, .brow .flags{grid-column:1 / -1} }
 
+/* ---------- ordinal ramp: stage pipelines, funnel steps, tiers ---------- */
+:root{--ord1:#86b6ef; --ord2:#5598e7; --ord3:#2a78d6; --ord4:#1c5cab; --ord5:#104281}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --ord1:#184f95; --ord2:#256abf; --ord3:#3987e5; --ord4:#86b6ef; --ord5:#cde2fb} }
+:root[data-theme="dark"]{--ord1:#184f95; --ord2:#256abf; --ord3:#3987e5; --ord4:#86b6ef; --ord5:#cde2fb}
+.stagebar{display:flex; height:10px; border-radius:3px; overflow:hidden; gap:2px; background:var(--surface-2)}
+.stagebar i{display:block; min-width:2px}
+
 </style>
 
 <div class="topbar"><div class="wrap">
@@ -632,7 +640,7 @@ function lineChart(w, cfg) {
   const svg = el("svg", { viewBox: `0 0 ${w} ${H}`, width: w, height: H, role: "img" });
   const g = el("g", { transform: `translate(${M.l},${M.t})` });
   const n = cfg.labels.length;
-  const all = cfg.series.flatMap(s => s.values);
+  const all = cfg.series.flatMap(s => s.values).filter(v => v !== null && v !== undefined);
   const sc = axisScale(Math.min(...all), Math.max(...all), ih, 0, { n: 4 });
   const y = sc.y;
   const x = i => n === 1 ? iw / 2 : i * (iw / (n - 1));
@@ -649,9 +657,15 @@ function lineChart(w, cfg) {
   }
   cfg.series.forEach(s => {
     const col = tok(s.token);
-    g.appendChild(el("path", { d: s.values.map((v, i) => (i ? "L" : "M") + x(i) + "," + y(v)).join(" "),
-      fill: "none", stroke: col, "stroke-width": 2, "stroke-linejoin": "round", "stroke-linecap": "round" }));
-    const li = s.values.length - 1;
+    let pen = false;
+    const d = s.values.map((v, i) => {
+      if (v === null || v === undefined) { pen = false; return ""; }
+      const cmd = (pen ? "L" : "M") + x(i) + "," + y(v); pen = true; return cmd;
+    }).filter(Boolean).join(" ");
+    g.appendChild(el("path", { d, fill: "none", stroke: col, "stroke-width": 2,
+      "stroke-linejoin": "round", "stroke-linecap": "round" }));
+    let li = s.values.length - 1;
+    while (li > 0 && (s.values[li] === null || s.values[li] === undefined)) li--;
     g.appendChild(el("circle", { cx: x(li), cy: y(s.values[li]), r: 4, fill: col,
       stroke: tok("--surface"), "stroke-width": 2 }));
     g.appendChild(el("text", { x: x(li) + 9, y: y(s.values[li]) + 4, fill: tok("--ink-2"),
@@ -667,9 +681,13 @@ function lineChart(w, cfg) {
     const r = surface.getBoundingClientRect();
     const i = Math.max(0, Math.min(n - 1, Math.round((e.clientX - r.left) / (iw / Math.max(n - 1, 1)))));
     cross.setAttribute("x1", x(i)); cross.setAttribute("x2", x(i)); cross.setAttribute("opacity", 1);
-    cfg.series.forEach((s, k) => { dots[k].setAttribute("cx", x(i)); dots[k].setAttribute("cy", y(s.values[i]));
-      dots[k].setAttribute("opacity", 1); });
-    showTip(e, cfg.labels[i], cfg.series.map(s => [s.name, cfg.fmtEnd(s.values[i])]));
+    cfg.series.forEach((s, k) => {
+      const v = s.values[i], ok = v !== null && v !== undefined;
+      dots[k].setAttribute("cx", x(i)); dots[k].setAttribute("cy", ok ? y(v) : 0);
+      dots[k].setAttribute("opacity", ok ? 1 : 0);
+    });
+    showTip(e, cfg.labels[i], cfg.series.filter(s => s.values[i] !== null && s.values[i] !== undefined)
+      .map(s => [s.name, cfg.fmtEnd(s.values[i])]));
   });
   surface.addEventListener("mouseleave", () => { hideTip(); cross.setAttribute("opacity", 0);
     dots.forEach(d => d.setAttribute("opacity", 0)); });
@@ -733,7 +751,8 @@ function groupBars(w, groups, series, cfg) {
         fill: tok("--ink-2"), "font-size": 10.5, "font-weight": 600,
         "font-family": "IBM Plex Mono, monospace" }, cfg.fmt(v)));
     });
-    g.appendChild(el("text", { x: cx0, y: ih + 20, "text-anchor": "middle", fill: tok("--ink-2"), "font-size": 11.5 }, gr));
+    if (!cfg.every || i % cfg.every === 0)
+      g.appendChild(el("text", { x: cx0, y: ih + 20, "text-anchor": "middle", fill: tok("--ink-2"), "font-size": 11.5 }, gr));
     const hr = el("rect", { x: slot * i, y: 0, width: slot, height: ih, fill: "transparent" });
     hit(hr, gr, series.map(s => [s.name, cfg.fmt(s.values[i])])); g.appendChild(hr);
   });

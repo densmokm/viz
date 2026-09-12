@@ -1,0 +1,432 @@
+<title>Deal Lifecycle Analytics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;450;500;600;700&display=swap">
+<style>
+:root{
+  --ground:#eef1f5; --surface:#ffffff; --surface-2:#e4e9ef; --surface-3:#f6f8fa;
+  --ink:#101519; --ink-2:#495568; --ink-3:#79869a; --rule:#d5dce5; --rule-2:#c0cad6;
+  --accent:#173a5e; --accent-soft:#dce8f5;
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a;
+  --pos:#2a78d6; --neg:#e34948; --total:#334155;
+  --good:#0ca30c; --warn:#fab219; --serious:#ec835a; --crit:#d03b3b;
+  --chip-good:#e3f4e3; --chip-warn:#fdf1d6; --chip-serious:#fbe7dd; --chip-neutral:#e7ebf1;
+  --shadow:0 1px 2px rgba(16,21,25,.06), 0 8px 24px -12px rgba(16,21,25,.18);
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --ground:#0f1318; --surface:#171c23; --surface-2:#232a34; --surface-3:#1b2129;
+  --ink:#eef2f7; --ink-2:#aab6c6; --ink-3:#78859a; --rule:#2a323d; --rule-2:#3a4450;
+  --accent:#8fb8e2; --accent-soft:#1d2c3d;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70;
+  --pos:#3987e5; --neg:#e66767; --total:#94a3b5;
+  --chip-good:#12301a; --chip-warn:#332709; --chip-serious:#33210f; --chip-neutral:#242b35;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --ground:#0f1318; --surface:#171c23; --surface-2:#232a34; --surface-3:#1b2129;
+  --ink:#eef2f7; --ink-2:#aab6c6; --ink-3:#78859a; --rule:#2a323d; --rule-2:#3a4450;
+  --accent:#8fb8e2; --accent-soft:#1d2c3d;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70;
+  --pos:#3987e5; --neg:#e66767; --total:#94a3b5;
+  --chip-good:#12301a; --chip-warn:#332709; --chip-serious:#33210f; --chip-neutral:#242b35;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--ground); color:var(--ink);
+  font-family:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  font-size:16px; line-height:1.6; -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1120px; margin:0 auto; padding-inline:clamp(16px,4vw,40px)}
+h1,h2,h3{text-wrap:balance; margin:0}
+h1{font-family:Newsreader,Georgia,serif; font-weight:500; font-size:clamp(2rem,4.6vw,2.9rem); line-height:1.1; letter-spacing:-.015em}
+h2{font-family:Newsreader,Georgia,serif; font-weight:500; font-size:clamp(1.4rem,3vw,1.85rem); line-height:1.2; letter-spacing:-.01em}
+h3{font-size:1rem; font-weight:600; letter-spacing:-.005em}
+p{margin:0}
+a{color:var(--accent)}
+.label{font-size:.7rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-3)}
+.lede{font-size:1.06rem; color:var(--ink-2); max-width:66ch}
+.small{font-size:.84rem; color:var(--ink-2)}
+.tiny{font-size:.76rem; color:var(--ink-3)}
+.num{font-family:"IBM Plex Mono",ui-monospace,monospace; font-variant-numeric:tabular-nums}
+
+/* ---------- top bar ---------- */
+.topbar{position:sticky; top:0; z-index:40; background:color-mix(in srgb,var(--ground) 88%,transparent);
+  backdrop-filter:blur(10px); border-bottom:1px solid var(--rule)}
+.topbar .wrap{display:flex; align-items:center; gap:20px; height:52px}
+.brandmark{display:flex; align-items:center; gap:9px; font-weight:600; font-size:.9rem; white-space:nowrap}
+.brandmark i{width:9px; height:9px; border-radius:2px; background:var(--s1); display:block}
+.navlinks{display:flex; gap:18px; margin-left:auto; overflow-x:auto; scrollbar-width:none}
+.navlinks::-webkit-scrollbar{display:none}
+.navlinks a{color:var(--ink-2); text-decoration:none; font-size:.83rem; white-space:nowrap; padding:4px 0; border-bottom:2px solid transparent}
+.navlinks a:hover{color:var(--ink); border-bottom-color:var(--rule-2)}
+@media (max-width:720px){ .navlinks{display:none} }
+
+/* ---------- header ---------- */
+header.hero{padding-block:clamp(34px,6vw,60px) 30px}
+.eyebrow{display:flex; align-items:center; gap:10px; margin-bottom:16px; flex-wrap:wrap}
+.eyebrow span{color:var(--ink-3)}
+.codename{background:var(--accent-soft); color:var(--accent); padding:2px 9px; border-radius:3px; font-weight:600}
+.metarow{display:flex; flex-wrap:wrap; gap:0; margin-top:26px; border-top:1px solid var(--rule); border-bottom:1px solid var(--rule)}
+.metarow div{flex:1 1 165px; padding:13px 18px 13px 0; border-right:1px solid var(--rule)}
+.metarow div:last-child{border-right:0}
+.metarow dt{font-size:.7rem; font-weight:600; letter-spacing:.09em; text-transform:uppercase; color:var(--ink-3); margin-bottom:3px}
+.metarow dd{margin:0; font-size:.9rem; font-weight:450}
+
+/* ---------- verdict ---------- */
+.verdict{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:1px; background:var(--rule);
+  border:1px solid var(--rule); border-radius:6px; overflow:hidden; margin-block:8px 26px}
+.verdict > div{background:var(--surface); padding:24px 26px 22px}
+.verdict .fig{font-size:clamp(2.4rem,6.5vw,3.4rem); font-weight:600; line-height:1; letter-spacing:-.03em; margin:10px 0 6px}
+.verdict .reported .fig{color:var(--ink)}
+.verdict .underlying .fig{color:var(--neg)}
+.verdict .cap{font-size:.85rem; color:var(--ink-2)}
+@media (max-width:620px){ .verdict{grid-template-columns:1fr} }
+.thesis{background:var(--surface); border:1px solid var(--rule); border-left:3px solid var(--s2);
+  border-radius:4px; padding:20px 24px; margin-bottom:40px; font-size:1.02rem; color:var(--ink-2); max-width:none}
+.thesis strong{color:var(--ink); font-weight:600}
+
+/* ---------- sections ---------- */
+section{padding-block:34px; border-top:1px solid var(--rule)}
+.sechead{display:flex; align-items:baseline; gap:16px; flex-wrap:wrap; margin-bottom:8px}
+.sechead .amt{font-family:"IBM Plex Mono",monospace; font-size:.82rem; font-weight:500; color:var(--ink-3);
+  background:var(--surface-2); padding:3px 9px; border-radius:3px; white-space:nowrap}
+.secintro{margin-block:12px 26px}
+
+/* ---------- panels & charts ---------- */
+.panel{background:var(--surface); border:1px solid var(--rule); border-radius:6px; padding:22px clamp(14px,2.4vw,24px)}
+.panelhead{display:flex; align-items:flex-start; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-bottom:6px}
+.chart{width:100%; min-height:60px}
+.chart svg{display:block; width:100%; height:auto; overflow:visible}
+figcaption{font-size:.78rem; color:var(--ink-3); margin-top:12px; line-height:1.5}
+.grid2{display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:18px}
+.grid3{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:18px}
+
+/* ---------- controls ---------- */
+.controls{display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-bottom:18px}
+.tabs{display:inline-flex; background:var(--surface-2); border-radius:5px; padding:3px; gap:2px}
+.tabs button{appearance:none; border:0; background:transparent; color:var(--ink-2); font:inherit; font-size:.84rem;
+  font-weight:500; padding:6px 13px; border-radius:3px; cursor:pointer; white-space:nowrap}
+.tabs button[aria-selected="true"]{background:var(--surface); color:var(--ink); box-shadow:0 1px 2px rgba(0,0,0,.10); font-weight:600}
+.tabs button:focus-visible, .toggle:focus-visible{outline:2px solid var(--s1); outline-offset:2px}
+.toggle{appearance:none; border:1px solid var(--rule-2); background:var(--surface); color:var(--ink-2); font:inherit;
+  font-size:.8rem; font-weight:500; padding:6px 12px; border-radius:5px; cursor:pointer; display:inline-flex; align-items:center; gap:7px}
+.toggle[aria-pressed="true"]{border-color:var(--s1); color:var(--ink); background:var(--accent-soft)}
+.toggle i{width:8px; height:8px; border-radius:50%; background:var(--rule-2); display:block}
+.toggle[aria-pressed="true"] i{background:var(--s1)}
+
+/* ---------- legend ---------- */
+.legend{display:flex; gap:16px; flex-wrap:wrap; align-items:center; font-size:.8rem; color:var(--ink-2); margin-top:14px}
+.legend span{display:inline-flex; align-items:center; gap:7px}
+.legend b{width:11px; height:11px; border-radius:2px; display:block}
+
+/* ---------- tables ---------- */
+.tablewrap{overflow-x:auto; margin-top:4px}
+table{border-collapse:collapse; width:100%; font-size:.85rem; min-width:480px}
+th,td{text-align:right; padding:9px 10px; border-bottom:1px solid var(--rule); white-space:nowrap}
+th:first-child,td:first-child{text-align:left; white-space:normal}
+thead th{font-size:.7rem; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-3);
+  border-bottom:1px solid var(--rule-2); vertical-align:bottom}
+tbody tr:last-child td{border-bottom:0}
+tbody tr.totalrow td{border-top:1px solid var(--rule-2); font-weight:600; background:var(--surface-3)}
+td.n{font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums}
+td.neg{color:var(--neg)}
+.bar-cell{position:relative; min-width:96px}
+.bar-cell i{position:absolute; left:10px; top:50%; transform:translateY(-50%); height:9px; border-radius:2px; display:block}
+
+/* ---------- chips ---------- */
+.chip{display:inline-flex; align-items:center; gap:6px; font-size:.74rem; font-weight:600; padding:2px 8px; border-radius:3px; white-space:nowrap}
+.chip i{width:7px; height:7px; border-radius:50%; display:block; flex:none}
+.chip.good{background:var(--chip-good); color:var(--good)} .chip.good i{background:var(--good)}
+.chip.warn{background:var(--chip-warn); color:#8a6200} .chip.warn i{background:var(--warn)}
+.chip.serious{background:var(--chip-serious); color:#a8501f} .chip.serious i{background:var(--serious)}
+.chip.neutral{background:var(--chip-neutral); color:var(--ink-2)} .chip.neutral i{background:var(--ink-3)}
+:root[data-theme="dark"] .chip.warn, :root[data-theme="dark"] .chip.serious{color:var(--ink)}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]) .chip.warn,
+  :root:not([data-theme="light"]) .chip.serious{color:var(--ink)} }
+
+/* ---------- stat tiles ---------- */
+.stats{display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:1px; background:var(--rule);
+  border:1px solid var(--rule); border-radius:6px; overflow:hidden}
+.stat{background:var(--surface); padding:16px 18px}
+.stat .v{font-size:1.6rem; font-weight:600; line-height:1.15; letter-spacing:-.02em; margin:6px 0 3px}
+.stat .k{font-size:.7rem; font-weight:600; letter-spacing:.09em; text-transform:uppercase; color:var(--ink-3)}
+.stat .d{font-size:.78rem; color:var(--ink-3); line-height:1.45}
+
+/* ---------- callout ---------- */
+.callout{border:1px solid var(--rule); border-left:3px solid var(--crit); background:var(--surface);
+  border-radius:4px; padding:18px 22px; display:grid; gap:8px}
+.callout.ok{border-left-color:var(--good)}
+.callout h3{display:flex; align-items:center; gap:9px}
+.callout h3::before{content:""; width:7px; height:7px; border-radius:50%; background:var(--crit); flex:none}
+.callout.ok h3::before{background:var(--good)}
+
+/* ---------- lists ---------- */
+ol.qs{counter-reset:q; list-style:none; padding:0; margin:0; display:grid; gap:14px}
+ol.qs li{counter-increment:q; display:grid; grid-template-columns:auto 1fr; gap:14px; align-items:start}
+ol.qs li::before{content:"Q" counter(q); font-family:"IBM Plex Mono",monospace; font-size:.74rem; font-weight:600;
+  color:var(--accent); background:var(--accent-soft); padding:3px 7px; border-radius:3px; margin-top:2px}
+ul.plain{list-style:none; padding:0; margin:0; display:grid; gap:10px}
+ul.plain li{display:grid; grid-template-columns:auto 1fr; gap:11px; align-items:start; font-size:.9rem; color:var(--ink-2)}
+ul.plain li::before{content:""; width:5px; height:5px; border-radius:50%; background:var(--rule-2); margin-top:9px}
+code{font-family:"IBM Plex Mono",monospace; font-size:.86em; background:var(--surface-2); padding:1px 5px; border-radius:3px}
+.formula{font-family:"IBM Plex Mono",monospace; font-size:.82rem; background:var(--surface-3); border:1px solid var(--rule);
+  border-radius:4px; padding:14px 16px; overflow-x:auto; white-space:pre; line-height:1.7; color:var(--ink-2)}
+
+/* ---------- tooltip ---------- */
+#tip{position:fixed; z-index:80; pointer-events:none; opacity:0; transition:opacity .1s;
+  background:var(--surface); color:var(--ink); border:1px solid var(--rule-2); border-radius:5px;
+  box-shadow:var(--shadow); padding:9px 12px; font-size:.8rem; line-height:1.5; max-width:270px}
+#tip .t{font-weight:600; margin-bottom:3px}
+#tip .r{display:flex; justify-content:space-between; gap:16px}
+#tip .r span:last-child{font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums}
+
+footer{padding-block:34px 60px; border-top:1px solid var(--rule); color:var(--ink-3); font-size:.82rem}
+[hidden]{display:none !important}
+@media (prefers-reduced-motion:reduce){ *{transition:none !important; animation:none !important} }
+
+/* ---------- verdict chips: critical state ---------- */
+.chip.crit{background:var(--chip-crit); color:var(--crit)} .chip.crit i{background:var(--crit)}
+:root{--chip-crit:#fbe3e3}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){--chip-crit:#3a1717} }
+:root[data-theme="dark"]{--chip-crit:#3a1717}
+
+/* ---------- claim scorecard ---------- */
+.claim{border-bottom:1px solid var(--rule)}
+.claim:last-child{border-bottom:0}
+.claimhead{width:100%; appearance:none; background:transparent; border:0; font:inherit; color:inherit;
+  text-align:left; cursor:pointer; display:grid; align-items:center; gap:16px; padding:15px 6px;
+  grid-template-columns:38px minmax(0,1fr) 150px 104px 132px}
+.claimhead:hover{background:var(--surface-3)}
+.claimhead:focus-visible{outline:2px solid var(--s1); outline-offset:-2px}
+.claimhead .cid{font-family:"IBM Plex Mono",monospace; font-size:.76rem; font-weight:600; color:var(--ink-3)}
+.claimhead .ctext{font-size:.93rem; line-height:1.45}
+.claimhead .ctext em{display:block; font-style:normal; font-size:.76rem; color:var(--ink-3); margin-top:3px}
+.divbar{display:block; position:relative; height:22px; background:var(--surface-2); border-radius:3px; overflow:hidden}
+.divbar::before{content:""; position:absolute; left:50%; top:0; bottom:0; width:1px; background:var(--rule-2)}
+.divbar i{position:absolute; top:4px; bottom:4px; border-radius:2px; display:block}
+.divbar b{position:absolute; right:6px; top:50%; transform:translateY(-50%); font-family:"IBM Plex Mono",monospace;
+  font-size:.72rem; font-weight:600; color:var(--ink-2)}
+.meter{display:flex; flex-direction:column; gap:4px}
+.meter u{height:6px; background:var(--surface-2); border-radius:3px; display:block; text-decoration:none; position:relative}
+.meter u i{position:absolute; left:0; top:0; bottom:0; border-radius:3px; background:var(--ink-3); display:block}
+.meter s{text-decoration:none; font-size:.7rem; color:var(--ink-3); font-family:"IBM Plex Mono",monospace}
+.claimbody{padding:2px 6px 20px 56px; display:grid; gap:14px}
+@media (max-width:860px){
+  .claimhead{grid-template-columns:34px minmax(0,1fr); gap:8px 12px}
+  .claimhead .cscore, .claimhead .cconf{grid-column:2}
+  .claimhead .cverdict{grid-column:2; justify-self:start}
+  .claimbody{padding-left:12px}
+}
+
+/* ---------- entity board (bidders, portcos, workstreams) ---------- */
+.board{display:grid}
+.brow{display:grid; gap:14px; align-items:center; padding:16px 6px; border-bottom:1px solid var(--rule);
+  grid-template-columns:minmax(0,1.5fr) 108px 108px minmax(120px,1fr) minmax(0,1.4fr)}
+.brow:last-child{border-bottom:0}
+.brow .who{display:grid; gap:3px}
+.brow .who strong{font-size:.95rem; font-weight:600}
+.brow .who span{font-size:.76rem; color:var(--ink-3)}
+.brow .flags{display:flex; flex-wrap:wrap; gap:6px}
+.brow .mini{display:flex; gap:14px; font-size:.75rem; color:var(--ink-3); flex-wrap:wrap}
+.brow .mini b{display:block; font-family:"IBM Plex Mono",monospace; font-size:.86rem; font-weight:600; color:var(--ink)}
+@media (max-width:900px){ .brow{grid-template-columns:minmax(0,1fr) 100px 100px} 
+  .brow .spark, .brow .flags{grid-column:1 / -1} }
+
+/* ---------- ordinal ramp: stage pipelines, funnel steps, tiers ---------- */
+:root{--ord1:#86b6ef; --ord2:#5598e7; --ord3:#2a78d6; --ord4:#1c5cab; --ord5:#104281}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --ord1:#184f95; --ord2:#256abf; --ord3:#3987e5; --ord4:#86b6ef; --ord5:#cde2fb} }
+:root[data-theme="dark"]{--ord1:#184f95; --ord2:#256abf; --ord3:#3987e5; --ord4:#86b6ef; --ord5:#cde2fb}
+.stagebar{display:flex; height:10px; border-radius:3px; overflow:hidden; gap:2px; background:var(--surface-2)}
+.stagebar i{display:block; min-width:2px}
+
+
+/* ---------- lifecycle spine ---------- */
+.spine{list-style:none; margin:0; padding:0; display:grid; grid-template-columns:repeat(5,1fr);
+  position:relative; gap:4px}
+.spine::before{content:""; position:absolute; top:19px; left:10%; right:10%; height:2px;
+  background:var(--rule-2); z-index:0}
+.spine li{position:relative; z-index:1}
+.spine a{display:grid; justify-items:center; text-align:center; gap:7px; text-decoration:none;
+  color:inherit; padding:0 6px 4px}
+.spine .dot{width:40px; height:40px; border-radius:50%; display:grid; place-items:center;
+  background:var(--surface); border:2px solid var(--rule-2); font-family:"IBM Plex Mono",monospace;
+  font-size:.92rem; font-weight:600; color:var(--ink-3); transition:transform .15s}
+.spine a:hover .dot{transform:translateY(-2px)}
+.spine li.has .dot{border-color:var(--s1); color:var(--s1); background:var(--accent-soft)}
+.spine strong{font-size:.86rem; font-weight:600; line-height:1.3}
+.spine em{font-style:normal; font-size:.72rem; color:var(--ink-3); font-family:"IBM Plex Mono",monospace}
+.spine a:hover strong{color:var(--accent)}
+@media (max-width:760px){
+  .spine{grid-template-columns:1fr; gap:0}
+  .spine::before{top:18px; bottom:26px; left:19px; right:auto; width:2px; height:auto}
+  .spine a{grid-template-columns:40px 1fr; justify-items:start; text-align:left; gap:14px;
+    align-items:center; padding:9px 0}
+  .spine strong{grid-column:2} .spine em{grid-column:2; margin-top:-6px}
+}
+
+/* ---------- cross-cutting band ---------- */
+.band{margin-top:26px; border:1px solid var(--rule); border-left:3px solid var(--s2);
+  border-radius:5px; background:var(--surface); padding:16px 20px; display:flex; gap:14px;
+  align-items:baseline; flex-wrap:wrap}
+.band strong{font-size:.9rem}
+.band span{font-size:.84rem; color:var(--ink-2); flex:1 1 280px}
+.band a{font-size:.82rem; font-weight:600; text-decoration:none; white-space:nowrap}
+.band a:hover{text-decoration:underline}
+
+/* ---------- technique cards ---------- */
+.techs{display:grid; grid-template-columns:repeat(auto-fill,minmax(268px,1fr)); gap:14px; margin-top:22px}
+.tech{display:grid; gap:9px; align-content:start; padding:18px 18px 16px; border-radius:6px;
+  border:1px solid var(--rule); background:var(--surface); text-decoration:none; color:inherit;
+  position:relative; transition:border-color .15s, transform .15s}
+.tech .tnum{font-family:"IBM Plex Mono",monospace; font-size:.72rem; font-weight:600; color:var(--ink-3);
+  letter-spacing:.04em}
+.tech h3{font-size:1rem; line-height:1.3}
+.tech p{font-size:.83rem; line-height:1.55; color:var(--ink-2)}
+.tech .st{margin-top:2px; font-size:.74rem; font-weight:600; display:inline-flex; align-items:center; gap:6px}
+a.tech{border-color:var(--rule-2)}
+a.tech:hover{border-color:var(--s1); transform:translateY(-2px)}
+a.tech:focus-visible{outline:2px solid var(--s1); outline-offset:2px}
+a.tech .st{color:var(--s1)}
+.tech:not(.live){background:transparent; border-style:dashed}
+.tech.planned h3{color:var(--ink-2)}
+.tech.planned .st{color:var(--ink-3)}
+.tech.next .st{color:#8a6200} .tech.building .st{color:var(--s2)}
+:root[data-theme="dark"] .tech.next .st{color:var(--warn)}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]) .tech.next .st{color:var(--warn)} }
+
+/* ---------- phase heading ---------- */
+.phase{display:flex; align-items:baseline; gap:16px; flex-wrap:wrap}
+.phase .pn{font-family:"IBM Plex Mono",monospace; font-size:.78rem; font-weight:600; color:var(--s1);
+  background:var(--accent-soft); padding:4px 10px; border-radius:3px}
+.progress{display:flex; align-items:center; gap:10px; margin-top:22px; flex-wrap:wrap}
+.progress u{flex:1 1 200px; height:7px; border-radius:4px; background:var(--surface-2);
+  text-decoration:none; display:block; position:relative; overflow:hidden}
+.progress u i{position:absolute; left:0; top:0; bottom:0; background:var(--s1); display:block}
+.progress s{text-decoration:none; font-size:.8rem; color:var(--ink-3);
+  font-family:"IBM Plex Mono",monospace; white-space:nowrap}
+</style>
+
+<div class="topbar"><div class="wrap">
+  <div class="brandmark"><i></i> Deal Lifecycle Analytics</div>
+  <nav class="navlinks" id="nav"></nav>
+</div></div>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="eyebrow label"><span class="codename">Data &amp; Analytics</span><span>Transaction advisory</span><span>&middot;</span><span id="ownerTag"></span></div>
+  <h1>Analytics across the deal lifecycle</h1>
+  <p class="lede" style="margin-top:14px">Working demonstrations of what data and analytics contributes at each
+     stage of a transaction &mdash; from finding the target to owning the asset. Every one runs on synthetic
+     data, with the analytical logic as runnable code rather than a slide.</p>
+  <div class="progress"><u><i id="progBar"></i></u><s id="progText"></s></div>
+</header>
+
+<section style="border-top:0; padding-top:8px">
+  <ol class="spine" id="spine"></ol>
+  <div class="band" id="band"></div>
+</section>
+
+<div id="phases"></div>
+
+<section id="how">
+  <div class="sechead"><h2>How these are built</h2></div>
+  <div class="grid2" style="align-items:start; margin-top:18px">
+    <div class="panel">
+      <h3 style="margin-bottom:12px">House rules</h3>
+      <ul class="plain">
+        <li><span><strong>Synthetic, but honest.</strong> Generators model the underlying drivers &mdash; cost
+          indices, churn hazards, contractual terms, integration disruption &mdash; and the analysis then
+          discovers the answer from the records. Nothing is hard-coded to produce a punchy finding, which is
+          why the same code would run against a real extract.</span></li>
+        <li><span><strong>It has to tie.</strong> Where an analysis decomposes a movement, the components
+          reconcile exactly, and the reconciliation is asserted in code. A demo that fails its own checks
+          fails loudly rather than publishing a number.</span></li>
+        <li><span><strong>Fitted, not asserted.</strong> Where something is scored or predicted, the weights
+          come from data. A hand-weighted index does not survive the first partner who asks where the
+          numbers came from.</span></li>
+        <li><span><strong>Built for the room.</strong> Each one answers the same five questions: what it is,
+          what data it needs, how the calculation works, what the output looks like, and what a deal team
+          does with it on Monday.</span></li>
+      </ul>
+    </div>
+    <div class="panel">
+      <h3 style="margin-bottom:12px">What each demo contains</h3>
+      <ul class="plain">
+        <li><span>A seeded synthetic dataset with a generator you can re-run and change.</span></li>
+        <li><span>The analytical logic as commented Python, including the checks it has to pass.</span></li>
+        <li><span>An interactive page built on a shared chart toolkit &mdash; one scale per plot, no dual
+          axes, a colourblind-validated palette, a table view behind every chart, and both themes designed
+          rather than inverted.</span></li>
+        <li><span>A written note covering the ingredients, the arithmetic, and the "so what".</span></li>
+      </ul>
+      <p class="small" style="margin-top:16px">The demos share one stylesheet and one chart toolkit, so a fix
+        to a scale or a mark specification lands everywhere at once. That is the same argument for repeatable
+        analysis packs on live deals &mdash; and the reason it is worth making structurally rather than
+        promising it.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <strong style="color:var(--ink)">Deal Lifecycle Analytics.</strong>
+  A demonstration portfolio, built with Claude Code. All companies, figures and findings are synthetic.
+</footer>
+
+</div>
+<script id="payload" type="application/json">{"owner":"Kevin Densmore","phases":[{"id":"origination","n":1,"name":"Origination","strap":"Before there is a deal","job":"Find the target before it comes to market, and know why it is going to move. The work is surveillance and pattern recognition across public signals, not analysis of a company that has already hired a banker.","techniques":[{"n":6,"name":"Deal Signal Monitoring","status":"planned","blurb":"Automated surveillance for M&A triggers: Gazette filings, Companies House changes, credit movements and sector transaction activity."},{"n":31,"name":"Predictive Deal Origination","status":"planned","blurb":"Score which companies are most likely to transact from financial stress indicators, ownership-change signals and sector consolidation patterns."},{"n":7,"name":"Data Subscription Rationalisation","status":"planned","blurb":"Usage-log analysis across the firm's own data estate to find underused subscriptions and quantify the saving."}]},{"id":"cdd","n":2,"name":"Commercial diligence","strap":"Outside-in, before the data room","job":"Form a view with no internal data. Everything here is bought or observed, so the discipline is knowing what each source is worth \u2014 and being explicit about the questions outside data cannot reach.","techniques":[{"n":1,"name":"Alt Data Triangulation","status":"live","url":"https://claude.ai/code/artifact/573d0f94-5d11-4e02-8ed7-064c98752cb3","blurb":"Eleven subscriptions and 23 signals tested against seven claims from the IM. Four challenged, one untestable, and a growth claim worth \u00a370m of enterprise value."},{"n":4,"name":"Trade Area & Footfall","status":"next","blurb":"Mobile-device footfall and Experian purchase data to size catchments, test demographic fit, measure competitive density and quantify cannibalisation between sites."},{"n":32,"name":"Telecoms: the Starlink Threat","status":"next","blurb":"Satellite broadband as a structural threat to fixed-line and rural fibre economics. Coverage overlap, addressable-base erosion and payback under displacement."},{"n":5,"name":"Churn Analysis","status":"planned","blurb":"Cohort retention curves, survival modelling, lifetime value and revenue stress-testing under attrition scenarios."},{"n":2,"name":"Web Traffic Analysis","status":"planned","blurb":"Traffic trend, channel mix and engagement against competitors. Declining organic and rising paid is a diligence red flag."},{"n":3,"name":"Sentiment Analytics","status":"planned","blurb":"NLP over reviews, app stores and Glassdoor for brand health, product-quality trend and employee sentiment as leading indicators."}]},{"id":"fdd","n":3,"name":"Financial diligence","strap":"Inside the numbers","job":"Transaction-level data, independently cut. The value is not reproducing management's analysis faster \u2014 it is producing the analysis management did not, and having it reconcile.","techniques":[{"n":9,"name":"Revenue Decomposition","status":"live","url":"https://claude.ai/code/artifact/230bde63-86eb-44b4-a8fa-d86185f0a70f","blurb":"Price, volume, mix, customer flows, one-offs and FX from 75k invoice lines. Reported growth +18.6%; underlying \u22121.8%."},{"n":11,"name":"EBITDA Adjustments Validation","status":"planned","blurb":"Rebuild management's pro forma adjustments bottom-up from transaction data and flag what does not reconcile."},{"n":10,"name":"Working Capital Analytics","status":"planned","blurb":"Debtor and creditor days, inventory turns and cash conversion, with seasonality and period-end manipulation risk flagged."},{"n":12,"name":"SKU-Level Performance","status":"planned","blurb":"Pareto and margin contribution across the range: what drives profit, what destroys it, and what the long tail really costs."},{"n":13,"name":"AI Document Review","status":"planned","blurb":"LLM extraction of change-of-control clauses, renewal terms, pricing escalators and risk provisions from contracts and leases."},{"n":8,"name":"Repeatable Analysis Packs","status":"planned","blurb":"Sector-specific templates that run on every deal \u2014 insurance loss triangles, software ARR and NRR, and a generic pack."}]},{"id":"spa","n":4,"name":"SPA & completion","strap":"Where the price actually moves","job":"The highest-stakes arithmetic on any deal, usually done under time pressure in spreadsheets nobody has time to check. Automation here is not efficiency \u2014 it is error reduction on numbers that settle the price.","techniques":[{"n":16,"name":"Data Room Analytics","status":"live","url":"https://claude.ai/code/artifact/b50804ed-996e-472a-9aa8-df7b184ec06c","blurb":"Nine weeks of bidder telemetry. Six names on the process letter, 3.0 expected live bids, and the SPA issues visible weeks before the first mark-up."},{"n":15,"name":"Balance Sheet Carve-Out","status":"next","blurb":"Segment an intermingled P&L from transaction data using explicit allocation bases, then drive the balance sheet off the segmented P&L and headcount."},{"n":14,"name":"SPA Automation","status":"planned","blurb":"Net debt, completion working capital against the peg, and earnout mechanics built from source data rather than retyped."},{"n":17,"name":"Dispute Investigation","status":"planned","blurb":"Forensic anomaly detection for revenue inflation, cut-off manipulation and channel stuffing after completion."}]},{"id":"value","n":5,"name":"Value creation","strap":"Owning the asset","job":"The deal model becomes an operating plan. Most synergy programmes fail quietly for eighteen months before anyone says so \u2014 the job is making the gap visible at month nine.","techniques":[{"n":18,"name":"Synergy Tracking","status":"live","blurb":"Realisation against the deal model at month 14 of 24, with conversion fitted on 260 prior initiatives. Forecast \u00a313.8m against \u00a324.5m \u2014 and the model is unreachable from the current pipeline.","url":"https://claude.ai/code/artifact/b18eee14-aa3a-497e-8b8c-7c07101062a8"},{"n":24,"name":"Portfolio KPI Dashboards","status":"planned","blurb":"Portfolio-company monitoring: financial and operational KPIs, covenant headroom with forward projection, automated RAG reporting."},{"n":23,"name":"Procurement & Spend","status":"planned","blurb":"Spend cube across a merged supplier base: category consolidation, maverick spend, tail rationalisation and phased savings."},{"n":21,"name":"Raw Material Passthrough","status":"planned","blurb":"Whether input cost moves reach customer pricing, how fast, and what the lag is costing in margin."},{"n":22,"name":"Segmentation & Cross-Sell","status":"planned","blurb":"RFM segmentation of the combined base, propensity modelling, cross-sell sizing and overlap analysis."},{"n":20,"name":"SKU Harmonisation","status":"planned","blurb":"Overlapping ranges across two merged portfolios, margin impact of rationalisation scenarios, optimal combined assortment."},{"n":19,"name":"Finance Close Effectiveness","status":"planned","blurb":"Task-level duration tracking, bottleneck identification and an automation roadmap from a 20-day close to seven."},{"n":25,"name":"Tax Operations Automation","status":"planned","blurb":"ERP extraction, automated calculation, filing timeline management and exception-based review."}]}],"crosscutting":{"id":"ai","name":"AI & emerging technology","strap":"Runs underneath every stage","job":"Not a phase \u2014 a capability layer. The constraint on AI in a deals environment is almost never the model; it is governance, data handling and whether anyone can audit what the thing did.","techniques":[{"n":30,"name":"Agentic Deal Workflows","status":"planned","blurb":"An agent running the repetitive diligence loop \u2014 IR tracking, document triage, Q&A prep, anomaly flagging \u2014 with a visible trace and human gates."},{"n":26,"name":"Text-to-SQL for Deal Teams","status":"planned","blurb":"Natural-language querying over deal data with schema grounding, generated SQL shown for inspection and row-level audit logging."},{"n":27,"name":"LLM Governance","status":"planned","blurb":"Data classification, prompt guardrails, client-name and PII redaction, output validation and audit trail. The actual blocker at most firms."},{"n":28,"name":"Computer Vision for Ops DD","status":"planned","blurb":"Site condition assessment, safety compliance and asset scoring from visual data."},{"n":29,"name":"Voice-to-Text for Field Ops","status":"planned","blurb":"Voice memo capture from field workers, entity extraction and structured output."}]}}</script>
+<script>
+(() => {
+"use strict";
+const D = JSON.parse(document.getElementById("payload").textContent);
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+const LABEL = { live: "Open the demo →", building: "In build", next: "Next up", planned: "Planned" };
+const all = D.phases.flatMap(p => p.techniques).concat(D.crosscutting.techniques);
+const liveCount = all.filter(t => t.status === "live").length;
+
+$("#ownerTag").textContent = D.owner;
+$("#progBar").style.width = (100 * liveCount / all.length).toFixed(1) + "%";
+$("#progText").textContent = `${liveCount} of ${all.length} built · ${all.filter(t => t.status === "next" || t.status === "building").length} in flight`;
+
+$("#spine").innerHTML = D.phases.map(p => {
+  const live = p.techniques.filter(t => t.status === "live").length;
+  return `<li class="${live ? "has" : ""}"><a href="#${p.id}">
+    <span class="dot">${p.n}</span><strong>${esc(p.name)}</strong>
+    <em>${live} of ${p.techniques.length} live</em></a></li>`;
+}).join("");
+
+const X = D.crosscutting;
+$("#band").innerHTML = `<strong>${esc(X.name)}</strong>
+  <span>${esc(X.strap)} — ${X.techniques.length} techniques, none of them a phase of their own.</span>
+  <a href="#${X.id}">See the layer ↓</a>`;
+
+function card(t) {
+  const inner = `<span class="tnum">${String(t.n).padStart(2, "0")}</span>
+    <h3>${esc(t.name)}</h3><p>${esc(t.blurb)}</p>
+    <span class="st">${t.status === "live" ? "" : "● "}${LABEL[t.status]}</span>`;
+  return t.status === "live"
+    ? `<a class="tech live" href="${t.url}" target="_blank" rel="noopener">${inner}</a>`
+    : `<div class="tech ${t.status}">${inner}</div>`;
+}
+
+function section(p, cross) {
+  return `<section id="${p.id}">
+    <div class="phase">${cross ? "" : `<span class="pn">Phase ${p.n}</span>`}<h2>${esc(p.name)}</h2>
+      <span class="amt">${esc(p.strap)}</span></div>
+    <p class="secintro lede" style="margin-bottom:0">${esc(p.job)}</p>
+    <div class="techs">${p.techniques.map(card).join("")}</div>
+  </section>`;
+}
+$("#phases").innerHTML = D.phases.map(p => section(p, false)).join("") + section(X, true);
+
+$("#nav").innerHTML = D.phases.map(p => `<a href="#${p.id}">${esc(p.name)}</a>`).join("")
+  + `<a href="#${X.id}">AI layer</a><a href="#how">Method</a>`;
+})();
+</script>

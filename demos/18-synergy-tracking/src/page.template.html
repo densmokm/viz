@@ -1,0 +1,396 @@
+<title>Project Anvil Synergy Tracker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;450;500;600;700&display=swap">
+<style>
+__CSS__
+.wsrow{display:grid; gap:14px; align-items:center; padding:15px 6px; border-bottom:1px solid var(--rule);
+  grid-template-columns:minmax(0,1.35fr) minmax(130px,1fr) 74px 74px minmax(110px,.8fr)}
+.wsrow:last-child{border-bottom:0}
+.wsrow .nm{display:grid; gap:3px}
+.wsrow .nm strong{font-size:.94rem; font-weight:600}
+.wsrow .nm span{font-size:.75rem; color:var(--ink-3)}
+.wsrow .kv{text-align:right}
+.wsrow .kv b{display:block; font-family:"IBM Plex Mono",monospace; font-size:.92rem; font-weight:600}
+.wsrow .kv s{text-decoration:none; font-size:.68rem; color:var(--ink-3); letter-spacing:.05em; text-transform:uppercase}
+.dualbar{position:relative; height:24px; background:var(--surface-2); border-radius:3px}
+.dualbar i{position:absolute; left:0; top:0; bottom:0; border-radius:3px; display:block}
+.dualbar u{position:absolute; top:-3px; bottom:-3px; width:2px; background:var(--ink); display:block; text-decoration:none}
+@media (max-width:880px){
+  .wsrow{grid-template-columns:minmax(0,1fr) 74px 74px}
+  .wsrow .bar, .wsrow .stages{grid-column:1 / -1}
+}
+</style>
+
+<div class="topbar"><div class="wrap">
+  <div class="brandmark"><i></i> Project Anvil</div>
+  <nav class="navlinks">
+    <a href="#bridge">Bridge</a><a href="#split">Cost vs revenue</a><a href="#land">Where it lands</a>
+    <a href="#workstreams">Workstreams</a><a href="#pl">Run-rate vs P&amp;L</a><a href="#escalate">Escalation</a><a href="#method">Method</a>
+  </nav>
+</div></div>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="eyebrow label"><span class="codename">Project Anvil</span><span>Post-deal value creation</span><span>&middot;</span><span>Synergy tracking</span></div>
+  <h1>Wexford &amp; Pentland</h1>
+  <p class="lede" style="margin-top:14px">Month 14 of 24. The deal model carried £24.5m of run-rate synergies.
+     This is what the initiative register, weighted by what actually converts, says will arrive.</p>
+  <dl class="metarow" id="metarow"></dl>
+</header>
+
+<div class="verdict">
+  <div class="reported">
+    <div class="label">Deal model, run-rate by month 24</div>
+    <div class="fig num" id="figModel">&mdash;</div>
+    <div class="cap" id="capModel"></div>
+  </div>
+  <div class="underlying">
+    <div class="label">Risk-adjusted forecast</div>
+    <div class="fig num" id="figFcast">&mdash;</div>
+    <div class="cap" id="capFcast"></div>
+  </div>
+</div>
+
+<p class="thesis" id="thesis"></p>
+
+<section id="bridge">
+  <div class="sechead"><h2>From the deal model to what arrives</h2><span class="amt" id="bridgeAmt"></span></div>
+  <p class="secintro lede">Four things sit between the number in the model and the number that reaches EBITDA:
+     owners re-estimating their initiatives, initiatives that never convert, initiatives that convert for less
+     than they promised, and dis-synergies the model never carried at all.</p>
+  <div class="panel">
+    <figure style="margin:0"><div class="chart" id="bridgeChart"></div>
+      <div class="legend" id="brLegend"></div>
+      <figcaption id="brCap"></figcaption></figure>
+  </div>
+</section>
+
+<section id="split">
+  <div class="sechead"><h2>Cost is landing. Revenue is not.</h2></div>
+  <p class="secintro lede">This is the pattern in nearly every integration, and the reason a single blended
+     completion percentage is worse than useless: it averages a programme that is working with one that is not,
+     and the blend looks survivable until it is too late to act.</p>
+  <div class="grid2" style="align-items:start">
+    <div class="panel">
+      <div class="panelhead"><h3>Expected against plan</h3></div>
+      <figure style="margin:0"><div class="chart" id="typeChart"></div>
+        <div class="legend" id="tyLegend"></div>
+        <figcaption id="tyCap"></figcaption></figure>
+    </div>
+    <div class="panel">
+      <div class="panelhead"><h3>What history says converts</h3><span class="tiny">260 prior initiatives</span></div>
+      <div class="tablewrap" id="convTable"></div>
+      <p class="tiny" style="margin-top:10px">Conversion from each open stage, estimated separately for cost and
+        revenue initiatives and smoothed toward the overall rate where a cell is thin. Delivered and banked
+        initiatives are excluded — they are already counted at realised value. Revenue converts materially
+        worse from every open stage, and a PMO confidence rating that ignores this is the least reliable
+        number in a synergy tracker.</p>
+    </div>
+  </div>
+</section>
+
+<section id="land">
+  <div class="sechead"><h2>Where the programme actually lands</h2></div>
+  <p class="secintro lede">Twenty thousand simulations over the register: each initiative converts or does not,
+     at the rate its stage and type earn from history, and lands at a realisation factor drawn from the same
+     history. The result is not a range of opinions &mdash; it is what this pipeline can produce.</p>
+  <div class="panel">
+    <div class="panelhead"><h3>Probability the programme reaches a given run-rate</h3></div>
+    <figure style="margin:0"><div class="chart" id="exceedChart"></div>
+      <figcaption id="exCap"></figcaption></figure>
+  </div>
+  <div class="callout" style="margin-top:18px" id="ceilingCallout"></div>
+  <div class="stats" style="margin-top:18px" id="landStats"></div>
+</section>
+
+<section id="workstreams">
+  <div class="sechead"><h2>Workstreams</h2></div>
+  <p class="secintro lede">The bar shows expected against the plan value, with the black marker at plan.
+     The schedule index is earned value against what the plan said should have been earned by now.</p>
+  <div class="panel" style="padding-block:4px"><div id="wsBoard"></div></div>
+  <div class="legend" style="margin-top:14px" id="wsLegend"></div>
+</section>
+
+<section id="pl">
+  <div class="sechead"><h2>Run-rate is not EBITDA</h2><span class="amt" id="plAmt"></span></div>
+  <p class="secintro lede">An initiative delivered in month twelve carries its full annualised value into the
+     run-rate and almost none of it into this year's P&amp;L. Reporting one as the other is how a programme
+     looks fine right up until the audited numbers arrive.</p>
+  <div class="panel">
+    <figure style="margin:0"><div class="chart" id="curveChart"></div>
+      <div class="legend" id="cvLegend"></div>
+      <figcaption>The plan curve runs to month 24; actuals stop at today. Recognised run-rate is annualised
+        value secured; cumulative P&amp;L benefit is what has actually reached EBITDA since completion.</figcaption></figure>
+  </div>
+  <div class="stats" style="margin-top:18px" id="plStats"></div>
+</section>
+
+<section id="escalate">
+  <div class="sechead"><h2>What to escalate this month</h2></div>
+  <p class="secintro lede">Ranked by value at risk &mdash; the current estimate discounted by everything
+     history says will happen to it. Stalled means the initiative has sat in its current stage longer than
+     three quarters of comparable initiatives ever did.</p>
+  <div class="panel">
+    <div class="tablewrap" id="escTable"></div>
+  </div>
+  <div class="grid2" style="margin-top:18px; align-items:start">
+    <div class="panel">
+      <div class="panelhead"><h3>Cost to achieve, against budget</h3></div>
+      <figure style="margin:0"><div class="chart" id="ctaChart"></div>
+        <figcaption id="ctaCap"></figcaption></figure>
+    </div>
+    <div class="panel">
+      <div class="panelhead"><h3>Dis-synergies</h3><span class="tiny">not in the deal model</span></div>
+      <div class="tablewrap" id="disTable"></div>
+    </div>
+  </div>
+</section>
+
+<section id="sowhat">
+  <div class="sechead"><h2>So what</h2></div>
+  <div class="grid3">
+    <div class="panel"><div class="label">This month</div><h3 style="margin-block:8px 10px">Re-forecast, and say so</h3>
+      <p class="small" id="soNow"></p></div>
+    <div class="panel"><div class="label">The pipeline</div><h3 style="margin-block:8px 10px">Find new initiatives, not new optimism</h3>
+      <p class="small" id="soPipe"></p></div>
+    <div class="panel"><div class="label">The revenue programme</div><h3 style="margin-block:8px 10px">Treat it as a different problem</h3>
+      <p class="small" id="soRev"></p></div>
+  </div>
+</section>
+
+<section id="method">
+  <div class="sechead"><h2>How it is built</h2></div>
+  <div class="grid2" style="align-items:start">
+    <div class="panel">
+      <div class="panelhead"><h3>Ingredients</h3></div>
+      <ul class="plain" id="ingredients" style="margin-top:12px"></ul>
+    </div>
+    <div class="panel">
+      <div class="panelhead"><h3>Method notes</h3></div>
+      <ul class="plain" id="notes" style="margin-top:12px"></ul>
+    </div>
+  </div>
+  <div class="panel" style="margin-top:18px">
+    <div class="panelhead"><h3>About this data</h3></div>
+    <p class="small" style="margin-top:8px">Wexford and Pentland are synthetic. The generator models
+      <span class="num" id="nInit"></span> initiatives across eight workstreams with realistic stage
+      distributions, cost-to-achieve overruns where the work is hard, and a library of
+      <span class="num" id="nHist"></span> initiatives from prior deals with known outcomes. Every
+      probability in the forecast is estimated from that library; none is set by hand.</p>
+    <p class="small" style="margin-top:12px">The bridge reconciles to <span class="num" id="recon"></span>.
+      A synergy tracker whose numbers do not add up is worse than no tracker at all, because it gets
+      presented to a board.</p>
+  </div>
+</section>
+
+<footer>
+  <strong style="color:var(--ink)">Technique 18 &mdash; Synergy Tracking.</strong>
+  Post-deal value creation stage of the D&amp;A technique series. All figures synthetic.
+</footer>
+
+</div>
+<div id="tip" role="status" aria-live="polite"></div>
+<script id="payload" type="application/json">__DATA__</script>
+<script>__VIZ__</script>
+
+<script>
+(() => {
+"use strict";
+const { el, tok, $, pc, pcs, int, hit, waterfall, lineChart, hBars, groupBars, legend, reg, onRender } = window.V;
+const D = JSON.parse(document.getElementById("payload").textContent);
+const P = D.position, S = D.simulation, SF = D.shortfall, MD = D.model, G = D.pl_gap, C = D.cta;
+const m2 = v => (v < 0 ? "−" : "") + "£" + (Math.abs(v) / 1e6).toFixed(2) + "m";
+const m1 = v => (v < 0 ? "−" : "") + "£" + (Math.abs(v) / 1e6).toFixed(1) + "m";
+const STAGES = D.stage_order;
+
+/* ---------------- static ---------------- */
+$("#metarow").innerHTML = [
+  ["Position", `Month ${D.meta.month} of ${D.meta.target_month}`],
+  ["Register", `${D.meta.initiatives} initiatives, 8 workstreams`],
+  ["Secured run-rate", m2(P.secured)],
+  ["Evidence base", `${D.meta.history} initiatives from prior deals`]
+].map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join("");
+
+$("#figModel").textContent = m2(MD.total);
+$("#capModel").innerHTML = `${m1(MD.cost)} cost, ${m1(MD.revenue)} revenue`;
+$("#figFcast").textContent = m2(P.net_forecast);
+$("#capFcast").innerHTML = `${pc(P.pct_of_model, 0)} of the model. Gap of ${m2(P.gap)}.`;
+$("#bridgeAmt").textContent = `${m2(MD.total)} → ${m2(P.net_forecast)}`;
+$("#plAmt").textContent = `${m2(G.runrate)} run-rate · ${m2(G.ltm_pl)} in P&L`;
+$("#nInit").textContent = D.meta.initiatives;
+$("#nHist").textContent = D.meta.history;
+$("#recon").textContent = "£" + Math.abs(D.recon).toFixed(2);
+
+const cost = D.by_type.find(t => t.type === "Cost"), revn = D.by_type.find(t => t.type === "Revenue");
+const stalledRev = D.workstreams.filter(w => w.type === "Revenue").reduce((a, w) => a + w.stalled, 0);
+const stalledTotal = D.workstreams.reduce((a, w) => a + w.stalled, 0);
+$("#thesis").innerHTML = `Fourteen months in, the cost programme is broadly doing what it said it would:
+  <strong>${pc(cost.pct, 0)}</strong> of plan expected. The revenue programme is at
+  <strong>${pc(revn.pct, 0)}</strong>, with ${stalledRev} of its ${D.workstreams.filter(w => w.type === "Revenue").reduce((a, w) => a + w.n, 0)}
+  initiatives stalled in stage beyond the point history says they recover. Risk-adjusted, the programme lands at <strong>${m2(P.net_forecast)}</strong>
+  against a ${m2(MD.total)} model. The more serious finding sits underneath that: even if every remaining
+  initiative converted in full and delivered its estimate, the register reaches only
+  <strong>${m2(SF.ceiling)}</strong>. The gap cannot be closed from the current pipeline.`;
+
+/* ---------------- bridge ---------------- */
+reg("bridgeChart", w => waterfall(w, D.bridge, {}));
+$("#brCap").innerHTML = `Reconciles exactly: ${m2(MD.total)} plus the four movements equals
+  ${m2(P.net_forecast)}, residual £${Math.abs(D.recon).toFixed(2)}. Vertical axis truncated to make the
+  movements legible. Realisation haircut uses the ${pc(P.mu_real, 0)} that delivered initiatives have
+  historically landed at against their own estimate.`;
+
+/* ---------------- cost vs revenue ---------------- */
+reg("typeChart", w => groupBars(w, ["Cost", "Revenue"],
+  [{ name: "Deal model", token: "--total", values: D.by_type.map(t => t.plan) },
+   { name: "Secured", token: "--s1", values: D.by_type.map(t => t.secured) },
+   { name: "Risk-adjusted", token: "--s2", values: D.by_type.map(t => t.expected) }],
+  { fmt: v => m1(v), fmtAxis: t => (t / 1e6).toFixed(0), height: 270 }));
+$("#tyCap").innerHTML = `Cost synergies are at ${pc(cost.pct, 0)} of the model and ${m2(cost.secured)} of that
+  is already banked. Revenue is at ${pc(revn.pct, 0)} with ${m2(revn.secured)} secured. A blended
+  ${pc((cost.expected + revn.expected) / MD.total, 0)} completion figure would hide both facts.`;
+
+$("#convTable").innerHTML = `<table style="min-width:340px"><thead><tr><th>Stage</th><th>Cost</th><th>Revenue</th><th>n</th></tr></thead><tbody>
+  ${STAGES.filter(s => !["Delivered", "Banked"].includes(s)).map(s => {
+    const c = D.conversion.find(x => x.stage === s && x.type === "Cost");
+    const r = D.conversion.find(x => x.stage === s && x.type === "Revenue");
+    return `<tr><td>${s}</td><td class="n">${pc(c.smoothed, 0)}</td>
+      <td class="n ${r.smoothed < c.smoothed ? "neg" : ""}">${pc(r.smoothed, 0)}</td>
+      <td class="n tiny">${c.n + r.n}</td></tr>`;
+  }).join("")}</tbody></table>`;
+
+/* ---------------- where it lands ---------------- */
+const hb = S.histogram, total = hb.reduce((a, b) => a + b.n, 0);
+let run = 0;
+const exceed = hb.map((b, i) => { const v = 1 - run / total; run += b.n; return v; });
+reg("exceedChart", w => lineChart(w, {
+  labels: hb.map(b => (b.x / 1e6).toFixed(0)), every: 4, rightPad: 46, height: 250,
+  series: [{ name: "P(run-rate ≥ x)", token: "--s1", values: exceed }],
+  fmtAxis: t => pc(t, 0), fmtEnd: v => pc(v, 0)
+}));
+$("#exCap").innerHTML = `Horizontal axis is final run-rate in £m at month ${MD.target_month}. The deal model
+  of ${m2(MD.total)} sits off the right-hand end of this distribution entirely: across
+  ${int(S.n)} simulations the programme reached it ${S.p_hit_model === 0 ? "not once" : pc(S.p_hit_model, 1) + " of the time"}.
+  With ${D.meta.initiatives} largely independent initiatives the aggregate is tightly distributed, so this is
+  not a variance problem that might come good — it is a shortfall.`;
+
+$("#ceilingCallout").innerHTML = `<h3>The model is not reachable from this pipeline</h3>
+  <p class="small">Give every remaining initiative a 100% conversion rate and full delivery of its current
+  estimate — an outcome no integration has ever achieved — and the register totals ${m2(SF.ceiling)} after
+  dis-synergy. That is ${m2(Math.abs(SF.unreachable_by))} short of the ${m2(MD.total)} model before any
+  discount for reality.</p>
+  <p class="small">Closing the gap at the historical realisation rate needs roughly
+  <strong>${m1(SF.new_runrate_required)}</strong> of genuinely new initiatives identified, validated and
+  executed inside ten months. That is a decision for the board this month, not a status update.</p>`;
+
+$("#landStats").innerHTML = [
+  ["Median outcome", m2(S.p50), `P10 ${m1(S.p10)} · P90 ${m1(S.p90)}`],
+  ["Perfect-execution ceiling", m2(SF.ceiling), "Every initiative, full value"],
+  ["P(reaching the model)", S.p_hit_model === 0 ? "0%" : pc(S.p_hit_model, 1), `${int(S.n)} simulations`],
+  ["New run-rate required", m1(SF.new_runrate_required), "Initiatives not yet identified"]
+].map(([k, v, d]) => `<div class="stat"><div class="k">${k}</div><div class="v num">${v}</div><div class="d">${d}</div></div>`).join("");
+
+/* ---------------- workstreams ---------------- */
+const maxPlan = Math.max(...D.workstreams.map(w => Math.max(w.plan, w.expected)));
+$("#wsBoard").innerHTML = D.workstreams.map(w => {
+  const pctPlan = w.expected / w.plan;
+  const col = pctPlan >= 0.85 ? "--s1" : pctPlan >= 0.6 ? "--warn" : "--neg";
+  const tot = STAGES.reduce((a, s) => a + w.stages[s], 0) || 1;
+  return `<div class="wsrow">
+    <div class="nm"><strong>${w.workstream}</strong>
+      <span>${w.type} · ${w.n} initiatives${w.stalled ? ` · <span style="color:var(--neg)">${w.stalled} stalled</span>` : ""}</span></div>
+    <div class="bar"><div class="dualbar" title="${m2(w.expected)} of ${m2(w.plan)}">
+      <i style="width:${(100 * w.expected / maxPlan).toFixed(1)}%; background:var(${col})"></i>
+      <u style="left:${(100 * w.plan / maxPlan).toFixed(1)}%"></u></div>
+      <div class="tiny" style="margin-top:5px">${m2(w.expected)} expected of ${m2(w.plan)} plan</div></div>
+    <div class="kv"><b>${pc(pctPlan, 0)}</b><s>of plan</s></div>
+    <div class="kv"><b>${w.spi === null ? "—" : w.spi.toFixed(2)}</b><s>SPI</s></div>
+    <div class="stages"><div class="stagebar">
+      ${STAGES.map((s, i) => w.stages[s] ? `<i style="flex:${w.stages[s]}; background:var(--ord${i + 1})" title="${s}: ${w.stages[s]}"></i>` : "").join("")}
+    </div><div class="tiny" style="margin-top:5px">${STAGES.map((s, i) => w.stages[s] ? `${w.stages[s]} ${s.toLowerCase()}` : "").filter(Boolean).join(" · ")}</div></div>
+  </div>`;
+}).join("");
+
+/* ---------------- run-rate vs P&L ---------------- */
+reg("curveChart", w => lineChart(w, {
+  labels: D.curve.map(c => "M" + c.month), every: 2, rightPad: 52, height: 280,
+  series: [{ name: "Plan, cumulative run-rate", token: "--total", values: D.curve.map(c => c.plan) },
+           { name: "Run-rate recognised", token: "--s1", values: D.curve.map(c => c.runrate) },
+           { name: "Cumulative P&L benefit", token: "--s2", values: D.curve.map(c => c.in_year_cum) }],
+  fmtAxis: t => (t / 1e6).toFixed(0), fmtEnd: v => m1(v)
+}));
+$("#plStats").innerHTML = [
+  ["Run-rate recognised", m2(G.runrate), "Annualised value secured to date"],
+  ["Reached the P&L", m2(G.ltm_pl), "Last twelve months of EBITDA benefit"],
+  ["Annualisation gap", m2(G.annualisation_gap), `Only ${pc(G.ratio, 0)} has converted to cash earnings`],
+  ["Cost to achieve", m2(C.spent), `${pc(C.ratio, 0)} of a ${m1(C.budget)} budget`]
+].map(([k, v, d]) => `<div class="stat"><div class="k">${k}</div><div class="v num">${v}</div><div class="d">${d}</div></div>`).join("");
+
+/* ---------------- escalation ---------------- */
+$("#escTable").innerHTML = `<table style="min-width:680px"><thead><tr><th>Initiative</th><th>Workstream</th>
+  <th>Stage</th><th>Days</th><th>Estimate</th><th>p(convert)</th><th>At risk</th><th>Flag</th></tr></thead><tbody>
+  ${D.escalate.map(e => `<tr><td>${e.name}<div class="tiny">${e.owner}</div></td>
+    <td class="tiny">${e.workstream}</td><td class="tiny">${e.stage}</td>
+    <td class="n ${e.stalled ? "neg" : ""}">${e.days_in_stage}</td>
+    <td class="n">${m2(e.estimate)}</td><td class="n">${pc(e.p_convert, 0)}</td>
+    <td class="n neg">${m2(e.at_risk)}</td>
+    <td>${e.stalled ? '<span class="chip crit"><i></i>Stalled</span>' : e.overdue ? '<span class="chip warn"><i></i>Overdue</span>' : '<span class="chip neutral"><i></i>Tracking</span>'}</td></tr>`).join("")}
+  </tbody></table><p class="tiny" style="margin-top:8px">Value at risk is the current estimate less what
+  history expects it to convert and realise. Stalled means longer in stage than 75% of comparable initiatives.</p>`;
+
+reg("ctaChart", w => hBars(w, C.by_ws.map(c => ({
+  label: c.workstream, value: c.over,
+  rows: [["Budget", m2(c.budget)], ["Spent", m2(c.spent)], ["Variance", m2(c.over)]]
+})), { fmt: v => m2(v), left: w < 600 ? 132 : 170, rowH: 38 }));
+const under = C.by_ws.filter(c => c.over < 0).map(c => c.workstream);
+$("#ctaCap").innerHTML = `Variance against budget by workstream. Total spend ${m2(C.spent)} against
+  ${m2(C.budget)} budgeted — ${pc(C.ratio, 0)} — which looks like control until you see where the
+  underspend is. ${under.join(", ")} are all beneath budget, and all three are revenue workstreams. You do
+  not deliver cross-sell synergies without spending on them: the underspend is not thrift, it is the same
+  stall showing up in a different ledger.`;
+
+$("#disTable").innerHTML = `<table style="min-width:340px"><thead><tr><th>Item</th><th>Annual</th></tr></thead><tbody>
+  ${D.dissynergies.map(d => `<tr><td>${d.item}<div class="tiny" style="white-space:normal;max-width:40ch">${d.note}</div></td>
+    <td class="n neg">${m2(d.annual_impact)}</td></tr>`).join("")}
+  <tr class="totalrow"><td>Total</td><td class="n neg">${m2(P.dis_synergy)}</td></tr></tbody></table>`;
+
+/* ---------------- so what ---------------- */
+$("#soNow").innerHTML = `The forecast is ${m2(P.gap)} short and the distribution does not reach the model.
+  Re-forecast to ${m2(P.net_forecast)} now, at month ${D.meta.month}, while there are ten months to act.
+  A programme that re-forecasts at month 20 has told the board something it can no longer do anything about.`;
+$("#soPipe").innerHTML = `Roughly ${m1(SF.new_runrate_required)} of run-rate has to come from initiatives that
+  do not yet exist. That is an identification exercise with a deadline, not a push on the existing register —
+  and the register itself is the evidence that pushing harder on stalled revenue initiatives has not worked.`;
+$("#soRev").innerHTML = `Revenue synergies convert at ${pc(D.conversion.find(c => c.stage === "Validated" && c.type === "Revenue").smoothed, 0)}
+  from validated against ${pc(D.conversion.find(c => c.stage === "Validated" && c.type === "Cost").smoothed, 0)}
+  for cost. They need different governance: named accounts, a seller compensated on the cross-sell, and a
+  monthly pipeline review rather than a quarterly status paper.`;
+
+$("#ingredients").innerHTML = [
+  "<strong>Initiative register</strong> — value, owner, workstream, stage and the date it entered that stage. The stage date is what makes stall detection possible and is the field most often missing.",
+  "<strong>Monthly realised benefit</strong> — actual P&L impact by initiative, so run-rate and in-year can be reported separately.",
+  "<strong>Deal model synergy schedule</strong> — the committed value and its phasing, by category.",
+  "<strong>Cost to achieve</strong> — budget and spend by initiative.",
+  "<strong>Prior deal outcomes</strong> — the same register from previous integrations, with what each initiative was worth in the end. Without this the confidence weighting is opinion."
+].map(s => `<li><span>${s}</span></li>`).join("");
+$("#notes").innerHTML = [
+  "<strong>Run-rate and in-year are reported separately</strong>, never blended. They answer different questions and only one of them is EBITDA.",
+  "<strong>Conversion is estimated, not assigned.</strong> Stage-to-delivery rates come from 260 prior initiatives, split by cost versus revenue and smoothed toward the overall rate where a cell is thin.",
+  "<strong>Realisation is a distribution, not a factor.</strong> Delivered initiatives land at a mean of " + pc(P.mu_real, 0) + " of estimate with a standard deviation of " + pc(P.sd_real, 0) + "; the simulation draws from a gamma matched to those moments.",
+  "<strong>Schedule index is earned value</strong> — credit by stage against what the plan said should have been earned by now — rather than a count of initiatives closed.",
+  "<strong>The ceiling is reported alongside the forecast.</strong> Knowing a target is unreachable from the current pipeline is a different conversation from being behind, and most trackers cannot tell you which one you are in."
+].map(s => `<li><span>${s}</span></li>`).join("");
+
+onRender(() => {
+  legend("#brLegend", [{ swatch: tok("--pos"), name: "Increase" }, { swatch: tok("--neg"), name: "Reduction" },
+                       { swatch: tok("--total"), name: "Position" }]);
+  legend("#tyLegend", [{ swatch: tok("--total"), name: "Deal model" }, { swatch: tok("--s1"), name: "Secured" },
+                       { swatch: tok("--s2"), name: "Risk-adjusted expected" }]);
+  legend("#cvLegend", [{ swatch: tok("--total"), name: "Plan" }, { swatch: tok("--s1"), name: "Run-rate recognised" },
+                       { swatch: tok("--s2"), name: "Cumulative P&L benefit" }]);
+  legend("#wsLegend", STAGES.map((s, i) => ({ swatch: `var(--ord${i + 1})`, name: s })));
+});
+window.V.boot();
+})();
+</script>
