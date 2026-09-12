@@ -1,0 +1,76 @@
+question_id,date,week,bidder,category,days_to_answer,status
+Q0001,2026-01-13,1,Marlowe Partners,Environmental & H&S,1.8,Answered
+Q0002,2026-01-13,1,Marlowe Partners,HR & Pensions,9.2,Answered
+Q0003,2026-01-17,1,Marlowe Partners,Operations & Sites,2.8,Answered
+Q0004,2026-01-18,1,Marlowe Partners,Legal & Corporate,7.8,Answered
+Q0005,2026-01-19,2,Marlowe Partners,Operations & Sites,2.9,Answered
+Q0006,2026-01-19,2,Marlowe Partners,Financial,2.4,Answered
+Q0007,2026-01-20,2,Marlowe Partners,Tax,1.2,Answered
+Q0008,2026-01-20,2,Marlowe Partners,Financial,3.7,Answered
+Q0009,2026-01-20,2,Marlowe Partners,Legal & Corporate,4.4,Answered
+Q0010,2026-01-29,3,Marlowe Partners,Financial,2.2,Answered
+Q0011,2026-02-02,4,Marlowe Partners,HR & Pensions,5.4,Answered
+Q0012,2026-02-03,4,Marlowe Partners,Operations & Sites,10.6,Answered
+Q0013,2026-02-03,4,Marlowe Partners,Commercial & Customers,6.3,Answered
+Q0014,2026-02-04,4,Marlowe Partners,HR & Pensions,4.0,Answered
+Q0015,2026-02-05,4,Marlowe Partners,Legal & Corporate,2.7,Answered
+Q0016,2026-02-05,4,Marlowe Partners,Legal & Corporate,5.4,Answered
+Q0017,2026-02-06,4,Marlowe Partners,HR & Pensions,3.7,Answered
+Q0018,2026-02-08,4,Marlowe Partners,Commercial & Customers,1.6,Answered
+Q0019,2026-02-09,5,Marlowe Partners,Tax,3.9,Answered
+Q0020,2026-02-10,5,Marlowe Partners,Legal & Corporate,3.6,Answered
+Q0021,2026-02-11,5,Marlowe Partners,Operations & Sites,6.1,Answered
+Q0022,2026-02-13,5,Marlowe Partners,Commercial & Customers,2.9,Answered
+Q0023,2026-02-13,5,Marlowe Partners,Financial,6.7,Answered
+Q0024,2026-02-14,5,Marlowe Partners,Legal & Corporate,6.1,Answered
+Q0025,2026-02-14,5,Marlowe Partners,Environmental & H&S,2.3,Answered
+Q0026,2026-02-15,5,Marlowe Partners,IT & Data,5.7,Answered
+Q0027,2026-02-15,5,Marlowe Partners,Operations & Sites,2.9,Answered
+Q0028,2026-02-16,6,Marlowe Partners,HR & Pensions,3.4,Answered
+Q0029,2026-02-20,6,Marlowe Partners,Financial,5.8,Answered
+Q0030,2026-02-21,6,Marlowe Partners,Commercial & Customers,2.8,Answered
+Q0031,2026-02-22,6,Marlowe Partners,Commercial & Customers,2.3,Answered
+Q0032,2026-02-25,7,Marlowe Partners,Commercial & Customers,6.2,Answered
+Q0033,2026-03-01,7,Marlowe Partners,HR & Pensions,9.6,Answered
+Q0034,2026-03-02,8,Marlowe Partners,Financial,3.1,Answered
+Q0035,2026-03-03,8,Marlowe Partners,Financial,1.7,Answered
+Q0036,2026-03-04,8,Marlowe Partners,IT & Data,7.9,Answered
+Q0037,2026-03-05,8,Marlowe Partners,IT & Data,2.4,Answered
+Q0038,2026-03-07,8,Marlowe Partners,HR & Pensions,4.5,Answered
+Q0039,2026-03-09,9,Marlowe Partners,Legal & Corporate,2.8,Answered
+Q0040,2026-02-07,4,Granton Equity,Commercial & Customers,3.2,Answered
+Q0041,2026-02-12,5,Granton Equity,Financial,2.6,Answered
+Q0042,2026-02-16,6,Granton Equity,Commercial & Customers,4.0,Answered
+Q0043,2026-02-19,6,Granton Equity,HR & Pensions,4.5,Answered
+Q0044,2026-02-21,6,Granton Equity,Environmental & H&S,3.2,Answered
+Q0045,2026-02-24,7,Granton Equity,Environmental & H&S,3.8,Answered
+Q0046,2026-02-24,7,Granton Equity,Financial,2.0,Answered
+Q0047,2026-02-27,7,Granton Equity,Insurance,5.4,Answered
+Q0048,2026-03-02,8,Granton Equity,HR & Pensions,5.0,Answered
+Q0049,2026-03-03,8,Granton Equity,Financial,4.0,Answered
+Q0050,2026-03-03,8,Granton Equity,Commercial & Customers,6.3,Answered
+Q0051,2026-03-06,8,Granton Equity,HR & Pensions,5.6,Answered
+Q0052,2026-03-07,8,Granton Equity,Commercial & Customers,7.8,Answered
+Q0053,2026-03-08,8,Granton Equity,Commercial & Customers,2.6,Answered
+Q0054,2026-03-10,9,Granton Equity,IT & Data,1.2,Answered
+Q0055,2026-03-10,9,Granton Equity,Commercial & Customers,1.6,Answered
+Q0056,2026-03-12,9,Granton Equity,Operations & Sites,3.6,Open
+Q0057,2026-03-12,9,Granton Equity,HR & Pensions,4.4,Open
+Q0058,2026-03-15,9,Granton Equity,HR & Pensions,4.7,Open
+Q0059,2026-02-02,4,Aldermoor Industrial,Operations & Sites,7.1,Answered
+Q0060,2026-02-06,4,Aldermoor Industrial,HR & Pensions,5.1,Answered
+Q0061,2026-02-17,6,Aldermoor Industrial,Financial,4.0,Answered
+Q0062,2026-02-23,7,Aldermoor Industrial,Commercial & Customers,6.1,Answered
+Q0063,2026-03-03,8,Aldermoor Industrial,Insurance,5.6,Answered
+Q0064,2026-01-25,2,Pennine Capital,Financial,4.3,Answered
+Q0065,2026-01-26,3,Pennine Capital,Insurance,5.0,Answered
+Q0066,2026-02-10,5,Pennine Capital,Legal & Corporate,6.4,Answered
+Q0067,2026-01-28,3,Dunmore Family Office,HR & Pensions,6.2,Answered
+Q0068,2026-02-01,3,Dunmore Family Office,Financial,2.8,Answered
+Q0069,2026-02-05,4,Dunmore Family Office,Commercial & Customers,3.2,Answered
+Q0070,2026-02-14,5,Dunmore Family Office,Operations & Sites,2.4,Answered
+Q0071,2026-02-17,6,Dunmore Family Office,HR & Pensions,5.0,Answered
+Q0072,2026-02-26,7,Dunmore Family Office,HR & Pensions,10.4,Answered
+Q0073,2026-02-27,7,Dunmore Family Office,Environmental & H&S,4.2,Answered
+Q0074,2026-03-04,8,Dunmore Family Office,Financial,5.0,Answered
+Q0075,2026-03-13,9,Dunmore Family Office,Operations & Sites,2.9,Open

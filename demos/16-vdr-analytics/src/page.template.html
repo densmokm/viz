@@ -1,0 +1,365 @@
+<title>Project Lantern Dataroom</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;450;500;600;700&display=swap">
+<style>
+__CSS__
+</style>
+
+<div class="topbar"><div class="wrap">
+  <div class="brandmark"><i></i> Project Lantern</div>
+  <nav class="navlinks">
+    <a href="#board">Bidder board</a><a href="#model">Drop-out model</a><a href="#attention">Attention</a>
+    <a href="#risk">Deal risk</a><a href="#prep">Sell-side</a><a href="#sowhat">So what</a><a href="#method">Method</a>
+  </nav>
+</div></div>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="eyebrow label"><span class="codename">Project Lantern</span><span>Sell-side / transaction support</span><span>&middot;</span><span>Data room analytics</span></div>
+  <h1>Thornbury Precision Group</h1>
+  <p class="lede" style="margin-top:14px">Nine weeks of Phase 2. Every document opened, by whom, for how long.
+     Behaviour is a more honest read on bidder intent than anything said on a Friday call.</p>
+  <dl class="metarow" id="metarow"></dl>
+</header>
+
+<div class="verdict">
+  <div class="reported">
+    <div class="label">Bidders in Phase 2</div>
+    <div class="fig num" id="figHeadline">&mdash;</div>
+    <div class="cap">All still formally in the process</div>
+  </div>
+  <div class="underlying">
+    <div class="label">Expected live bids at the deadline</div>
+    <div class="fig num" id="figExpected">&mdash;</div>
+    <div class="cap" id="capExpected"></div>
+  </div>
+</div>
+
+<p class="thesis" id="thesis"></p>
+
+<section id="board">
+  <div class="sechead"><h2>Who is actually working the deal</h2></div>
+  <p class="secintro lede">Engagement measures effort invested &mdash; coverage, dwell time, seniority of the
+     people reading, adviser firms onboarded, questions asked &mdash; scored against the same measures taken
+     from 140 bidders in past processes. Withdrawal risk comes from a model fitted on those outcomes.</p>
+  <div class="panel" style="padding-block:4px"><div class="board" id="boardRows"></div></div>
+  <div class="legend" style="margin-top:14px" id="boardLegend"></div>
+</section>
+
+<section id="model">
+  <div class="sechead"><h2>The drop-out model</h2><span class="amt" id="modelAmt"></span></div>
+  <p class="secintro lede">Fitted by logistic regression on prior processes, not hand-weighted. The coefficients
+     are what the history says, and they are worth reading on their own: going quiet is the loudest signal,
+     and onboarding advisers is close behind.</p>
+  <div class="grid2" style="align-items:start">
+    <div class="panel">
+      <div class="panelhead"><h3>What predicts a withdrawal</h3><span class="tiny">log-odds, standardised</span></div>
+      <figure style="margin:0"><div class="chart" id="coefChart"></div>
+        <figcaption>Positive pushes toward withdrawal, negative toward bidding. Each is the effect of a
+          one standard deviation move in that feature, holding the others constant.</figcaption></figure>
+    </div>
+    <div class="panel">
+      <div class="panelhead"><h3>Does it hold up?</h3></div>
+      <figure style="margin:0"><div class="chart" id="calChart"></div>
+        <div class="legend" id="calLegend"></div>
+        <figcaption id="calCap"></figcaption></figure>
+      <div class="stats" style="margin-top:16px" id="modelStats"></div>
+    </div>
+  </div>
+  <div class="panel" style="margin-top:18px">
+    <div class="panelhead"><h3>How many bids actually arrive</h3></div>
+    <figure style="margin:0"><div class="chart" id="tensionChart"></div>
+      <figcaption id="tensionCap"></figcaption></figure>
+  </div>
+</section>
+
+<section id="attention">
+  <div class="sechead"><h2>What each bidder came to read</h2></div>
+  <p class="secintro lede">Attention share by category, indexed against the room average. A buyer builds a model,
+     so reads broadly with weight on financial, legal and pensions. A pattern concentrated in customers and
+     operations, with no advisers and almost no questions, looks like something else.</p>
+  <div class="panel">
+    <figure style="margin:0"><div class="chart" id="attMatrix"></div>
+      <div class="legend" id="attLegend"></div>
+      <figcaption>Blue means the bidder spends more time on that category than the room does; red, less.
+        Index 1.00 is the room average.</figcaption></figure>
+  </div>
+  <div class="callout" style="margin-top:18px" id="reconCallout"></div>
+</section>
+
+<section id="risk">
+  <div class="sechead"><h2>Where the deal risk is concentrated</h2></div>
+  <p class="secintro lede">The documents every bidder opens, and keeps going back to, are the issues that will
+     show up in the SPA. You can see them weeks before the first mark-up arrives &mdash; which is time enough
+     to get in front of them.</p>
+  <div class="panel">
+    <div class="panelhead"><h3>Hottest documents in the room</h3></div>
+    <div class="tablewrap" id="docTable"></div>
+  </div>
+  <div class="grid2" style="margin-top:18px; align-items:start">
+    <div class="panel">
+      <div class="panelhead"><h3>Attention by category</h3><span class="tiny">total reading hours</span></div>
+      <figure style="margin:0"><div class="chart" id="catChart"></div>
+        <figcaption>Read alongside question volume: a category that draws both heavy reading and heavy
+          Q&amp;A is where the price adjustment will be argued.</figcaption></figure>
+    </div>
+    <div class="panel">
+      <div class="panelhead"><h3>Reading against questions</h3></div>
+      <div class="tablewrap" id="catTable"></div>
+    </div>
+  </div>
+</section>
+
+<section id="prep">
+  <div class="sechead"><h2>What the sell-side wasted</h2></div>
+  <p class="secintro lede">The same log that reads bidders also grades the vendor's own preparation. Pages
+     nobody opened cost management time to assemble and redaction time to clear.</p>
+  <div class="stats" id="prepStats"></div>
+  <div class="panel" style="margin-top:18px">
+    <div class="panelhead"><h3>Pages uploaded versus pages read</h3></div>
+    <figure style="margin:0"><div class="chart" id="prepChart"></div>
+      <figcaption>Unread pages by category. On the next process these folders start as an index with
+        documents released on request, rather than uploaded up front.</figcaption></figure>
+  </div>
+</section>
+
+<section id="sowhat">
+  <div class="sechead"><h2>So what</h2></div>
+  <div class="grid3">
+    <div class="panel"><div class="label">Process</div><h3 style="margin-block:8px 10px">Run the timetable for the bidders you have</h3>
+      <p class="small" id="soProcess"></p></div>
+    <div class="panel"><div class="label">Preparation</div><h3 style="margin-block:8px 10px">Get in front of the two issues</h3>
+      <p class="small" id="soPrep"></p></div>
+    <div class="panel"><div class="label">Information control</div><h3 style="margin-block:8px 10px">Stage the commercial detail</h3>
+      <p class="small" id="soControl"></p></div>
+  </div>
+</section>
+
+<section id="method">
+  <div class="sechead"><h2>How it is built</h2></div>
+  <div class="grid2" style="align-items:start">
+    <div class="panel">
+      <div class="panelhead"><h3>Ingredients</h3></div>
+      <p class="small" style="margin-block:6px 14px">Four exports, all of which every major VDR platform
+        produces as standard. No bespoke instrumentation, no vendor cooperation beyond a report request.</p>
+      <ul class="plain" id="ingredients"></ul>
+    </div>
+    <div class="panel">
+      <div class="panelhead"><h3>Method notes</h3></div>
+      <ul class="plain" id="notes"></ul>
+    </div>
+  </div>
+  <div class="panel" style="margin-top:18px">
+    <div class="panelhead"><h3>About this data</h3></div>
+    <p class="small" style="margin-top:8px">Thornbury Precision is synthetic. The generator models six bidders
+      with distinct attention profiles, team structures and activity paths, a document set with a realistic
+      long tail of material nobody opens, and a handful of documents carrying the issues that end up in the
+      SPA &mdash; unlabelled, so the heat scoring has to find them. It emits
+      <span class="num" id="nEvents"></span> access events. The withdrawal model is fitted on a separate
+      register of 140 bidders from prior processes.</p>
+    <p class="small" style="margin-top:12px"><strong>A caution worth stating.</strong> This is behavioural
+      inference, not fact. A quiet bidder may be waiting on an investment committee; a bidder reading only
+      customer contracts may have a thesis rather than an ulterior motive. The output is a ranked set of
+      questions for the deal team, not a verdict on anyone's intent.</p>
+  </div>
+</section>
+
+<footer>
+  <strong style="color:var(--ink)">Technique 16 &mdash; Virtual Data Room Analytics.</strong>
+  SPA and transaction support stage of the D&amp;A technique series. All figures synthetic.
+</footer>
+
+</div>
+<div id="tip" role="status" aria-live="polite"></div>
+<script id="payload" type="application/json">__DATA__</script>
+<script>__VIZ__</script>
+<script>
+(() => {
+"use strict";
+const { el, tok, $, pc, pcs, int, hit, hBars, groupBars, heatmap, spark, legend, reg, onRender } = window.V;
+const D = JSON.parse(document.getElementById("payload").textContent);
+const M = D.model, T = D.tension, P = D.prep;
+const B = D.bidders, byName = Object.fromEntries(B.map(b => [b.bidder, b]));
+const h1 = v => v.toFixed(1);
+
+/* ---------------- static ---------------- */
+$("#metarow").innerHTML = [
+  ["Process", `Phase 2, ${D.meta.weeks} weeks elapsed`],
+  ["Room", `${int(D.meta.documents)} documents, ${int(D.meta.pages)} pages`],
+  ["Activity", `${int(D.meta.events)} access events, ${D.meta.users} users`],
+  ["Q&A", `${D.meta.questions} questions submitted`]
+].map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join("");
+
+$("#figHeadline").textContent = T.headline;
+$("#figExpected").textContent = h1(T.expected);
+$("#capExpected").innerHTML = `Probability of at least two live bids ${pc(T.p_at_least_two, 0)};
+  at least three ${pc(T.p_at_least_three, 0)}.`;
+$("#modelAmt").textContent = `AUC ${M.auc.toFixed(2)} on ${M.n} prior bidders`;
+$("#nEvents").textContent = int(D.meta.events);
+
+const real = B.filter(b => b.p_drop < 0.5);
+const quiet = B.filter(b => b.days_idle >= 10);
+const recon = B.filter(b => b.recon_score >= 0.3);
+$("#thesis").innerHTML = `Six bidders sit in Phase 2 and all six are formally still in the process. The access
+  log says <strong>${real.length} are doing the work</strong>. ${quiet.map(b => `${b.bidder} has not logged in for ${b.days_idle} days`)
+    .join("; ")}${quiet.length ? "." : ""}
+  ${recon.length ? `<strong>${recon[0].bidder}</strong> has read the commercial folders and very little else,
+  with no advisers onboarded and ${recon[0].qa_count} questions — a pattern worth testing before more customer
+  detail is released.` : ""} Expected live bids at the deadline: <strong>${h1(T.expected)}</strong>, not ${T.headline}.`;
+
+/* ---------------- bidder board ---------------- */
+function flags(b) {
+  const f = [];
+  if (b.p_drop >= 0.6) f.push(["crit", "Likely to withdraw"]);
+  if (b.days_idle >= 10) f.push(["warn", `Quiet ${b.days_idle} days`]);
+  if (b.recon_score >= 0.3) f.push(["warn", "Commercial-only reading"]);
+  if (b.advisers >= 3) f.push(["good", "Full adviser team"]);
+  if (b.p_drop < 0.1 && b.advisers >= 2 && b.qa_count >= 8) f.push(["good", "Preparing to bid"]);
+  if (!f.length) f.push(["neutral", "Active, no flags"]);
+  return f.map(([c, t]) => `<span class="chip ${c}"><i></i>${t}</span>`).join("");
+}
+$("#boardRows").innerHTML = B.map(b => `<div class="brow">
+  <div class="who"><strong>${b.bidder}</strong><span>${b.kind} · ${b.users} users · ${b.advisers} adviser ${b.advisers === 1 ? "firm" : "firms"}</span>
+    <div class="mini" style="margin-top:6px">
+      <span>hours<b>${Math.round(b.hours)}</b></span><span>coverage<b>${pc(b.coverage, 0)}</b></span>
+      <span>questions<b>${b.qa_count}</b></span><span>last seen<b>${b.days_idle}d ago</b></span></div></div>
+  <div class="meter"><u><i style="width:${b.engagement}%; background:var(--s1)"></i></u>
+    <s>engagement ${Math.round(b.engagement)}</s></div>
+  <div class="meter"><u><i style="width:${(b.p_drop * 100).toFixed(0)}%; background:var(--${b.p_drop >= 0.6 ? "neg" : b.p_drop >= 0.3 ? "warn" : "ink-3"})"></i></u>
+    <s>p(withdraw) ${pc(b.p_drop, 0)}</s></div>
+  <div class="spark" id="sp-${b.bidder.replace(/\W/g, "")}"></div>
+  <div class="flags">${flags(b)}</div></div>`).join("");
+B.forEach(b => reg("sp-" + b.bidder.replace(/\W/g, ""), w => {
+  const s = spark(w, b.weekly, { height: 38, token: b.p_drop >= 0.6 ? "--neg" : "--s1" });
+  hit(s, b.bidder, [["Weekly hours", b.weekly.map(v => v.toFixed(0)).join(" · ")],
+                    ["Trend, last 3 weeks", b.trend >= 0 ? "+" + b.trend.toFixed(2) : b.trend.toFixed(2)]]);
+  return s;
+}));
+
+/* ---------------- model ---------------- */
+reg("coefChart", w => hBars(w, M.coefficients.map(c => ({
+  label: c.label, value: c.beta,
+  rows: [["Coefficient", c.beta.toFixed(2)], ["Odds ratio", c.odds.toFixed(2) + "×"]]
+})), { fmt: v => (v >= 0 ? "+" : "−") + Math.abs(v).toFixed(2), left: w < 600 ? 150 : 216, rowH: 38 }));
+
+reg("calChart", w => groupBars(w, M.calibration.map(c => c.bucket),
+  [{ name: "Predicted", token: "--s1", values: M.calibration.map(c => c.predicted) },
+   { name: "Actually withdrew", token: "--s2", values: M.calibration.map(c => c.actual) }],
+  { fmt: v => pc(v, 0), fmtAxis: t => pc(t, 0), height: 230 }));
+
+reg("tensionChart", w => hBars(w, T.distribution.map((p, i) => ({
+  label: i === 1 ? "1 bid" : `${i} bids`, value: p, token: i >= 2 ? "--s1" : "--neg",
+  rows: [["Probability", pc(p, 1)]]
+})).filter(d => d.value > 0.001), { fmt: v => pc(v, 1), left: 92, rowH: 36 }));
+
+$("#modelStats").innerHTML = [
+  ["Discrimination", M.auc.toFixed(2), "AUC on the fitted sample"],
+  ["Accuracy", pc(M.accuracy, 0), "At a 50% threshold"],
+  ["Brier score", M.brier.toFixed(3), "Lower is better calibrated"],
+  ["Sample", `${M.withdrew}/${M.n}`, "Prior bidders who withdrew"]
+].map(([k, v, d]) => `<div class="stat"><div class="k">${k}</div><div class="v num">${v}</div><div class="d">${d}</div></div>`).join("");
+$("#calCap").innerHTML = `Bidders grouped by predicted risk, against how many in each group actually withdrew.
+  The bars track reasonably well, which is what matters more than AUC for a model whose output gets read as a
+  probability. Fitted and evaluated on the same ${M.n} records — on a live desk this would be cross-validated.`;
+$("#tensionCap").innerHTML = `Treating the six withdrawal probabilities as independent gives the full
+  distribution of how many bids arrive. Six names on a process letter is not six-way tension: the realistic
+  outcome is ${h1(T.expected)} bids, and the probability of fewer than two — the point at which price
+  discipline collapses — is ${pc(1 - T.p_at_least_two, 1)}.`;
+
+/* ---------------- attention ---------------- */
+reg("attMatrix", w => heatmap(w, {
+  rows: D.matrix.map(m => ({ label: m.bidder.split(" ")[0] })), cols: D.categories,
+  left: w < 640 ? 78 : 96, top: 108, cellH: w < 640 ? 34 : 42,
+  cell: (i, j) => ({ d: Math.tanh(Math.log(Math.max(D.matrix[i].cells[j].index, 0.02))) }),
+  title: (i, j) => `${D.matrix[i].bidder} · ${D.categories[j]}`,
+  rowsOf: (i, j) => [["Index vs room", D.matrix[i].cells[j].index.toFixed(2) + "×"],
+                     ["Share of their time", pc(D.matrix[i].cells[j].share, 1)]]
+}));
+
+const r0 = B.reduce((a, b) => b.recon_score > a.recon_score ? b : a);
+$("#reconCallout").innerHTML = `<h3>${r0.bidder}: reading the commercial file, not the deal</h3>
+  <p class="small">Over-indexed on ${r0.over.join(" and ")}; under-indexed on ${r0.under.join(" and ")}.
+  No adviser firms onboarded in nine weeks, ${r0.qa_count} questions submitted, and
+  ${pc(r0.senior_share, 0)} of reading time from senior staff. A trade buyer preparing an offer
+  commissions legal and financial diligence before it reads pricing schedules this closely.</p>
+  <p class="small">This is a flag, not a finding. The action is proportionate: confirm their process
+  with their adviser, and hold the customer-level pricing detail behind a further confidentiality
+  undertaking until they do.</p>`;
+
+/* ---------------- deal risk ---------------- */
+$("#docTable").innerHTML = `<table style="min-width:620px"><thead><tr><th>Document</th><th>Category</th>
+  <th>Pages</th><th>Bidders</th><th>Revisits</th><th>Hours</th></tr></thead><tbody>
+  ${D.top_docs.map(d => `<tr><td>${d.name}</td><td class="tiny">${d.category}</td>
+    <td class="n">${d.pages}</td><td class="n">${d.bidders}/${D.meta.bidders}</td>
+    <td class="n">${d.revisits.toFixed(1)}</td><td class="n">${d.hours.toFixed(1)}</td></tr>`).join("")}
+  </tbody></table><p class="tiny" style="margin-top:8px">Revisits is the average number of separate days a
+  bidder came back to the document. Ranked on total attention, breadth across bidders and revisit frequency.</p>`;
+
+reg("catChart", w => hBars(w, [...D.category_heat].sort((a, b) => b.hours - a.hours).map(c => ({
+  label: c.category, value: c.hours, token: "--s1",
+  rows: [["Reading hours", c.hours.toFixed(1)], ["Questions", String(c.questions)],
+         ["Documents", String(c.documents)]]
+})), { fmt: v => v.toFixed(0) + "h", left: w < 600 ? 132 : 170, rowH: 36 }));
+
+$("#catTable").innerHTML = `<table style="min-width:400px"><thead><tr><th>Category</th><th>Hours</th>
+  <th>Questions</th><th>Median answer</th></tr></thead><tbody>
+  ${[...D.category_heat].sort((a, b) => b.questions - a.questions).map(c => `<tr><td>${c.category}</td>
+    <td class="n">${c.hours.toFixed(0)}</td><td class="n">${c.questions}</td>
+    <td class="n">${c.days_to_answer ? c.days_to_answer.toFixed(1) + "d" : "—"}</td></tr>`).join("")}
+  </tbody></table>`;
+
+/* ---------------- sell-side prep ---------------- */
+$("#prepStats").innerHTML = [
+  ["Pages uploaded", int(P.pages), `${P.documents} documents`],
+  ["Never opened", int(P.unread_pages), `${pc(P.unread_pct, 0)} of the room, ${P.unread_docs} documents`],
+  ["Read by one bidder only", int(P.single_bidder_docs), "Documents"],
+  ["Read by all six", int(P.all_bidder_docs), "Documents — the deal risk set"]
+].map(([k, v, d]) => `<div class="stat"><div class="k">${k}</div><div class="v num">${v}</div><div class="d">${d}</div></div>`).join("");
+
+reg("prepChart", w => hBars(w, [...D.category_heat].sort((a, b) => b.unread_pages - a.unread_pages).map(c => ({
+  label: c.category, sub: `${c.pages} pages total`, value: c.unread_pages, token: "--s2",
+  rows: [["Unread pages", int(c.unread_pages)], ["Total pages", int(c.pages)],
+         ["Share unread", pc(c.unread_pages / c.pages, 0)]]
+})), { fmt: v => int(v), left: w < 600 ? 132 : 170, rowH: 42 }));
+
+/* ---------------- so what ---------------- */
+const top2 = D.top_docs.slice(0, 2);
+$("#soProcess").innerHTML = `Management's time is finite and currently split six ways. Two bidders carry
+  ${pc((B[0].hours + B[1].hours) / B.reduce((a, b) => a + b.hours, 0), 0)} of all reading hours between them.
+  Concentrate site visits and management sessions there, and set the bid deadline for the tension you
+  actually have — ${h1(T.expected)} bids — rather than the six on the process letter.`;
+$("#soPrep").innerHTML = `<strong>${top2[0].name}</strong> and <strong>${top2[1].name}</strong> are the two most
+  read documents in the room, by every bidder, repeatedly. They will come back as a pension indemnity and a
+  change-of-control condition. Commission a vendor-side actuarial position and open the consent conversation
+  now, while it is still a preparation task rather than a negotiation.`;
+$("#soControl").innerHTML = `The commercial folders draw the heaviest reading from the bidder least likely to
+  transact. Staging customer-level pricing behind a supplementary undertaking costs a genuine buyer nothing
+  and costs a competitor the thing they came for.`;
+
+$("#ingredients").innerHTML = [
+  "<strong>Access log</strong> — timestamp, user, document, action and duration. Every major platform exports this.",
+  "<strong>Document index</strong> — folder, category and page count, so attention can be normalised.",
+  "<strong>User register</strong> — organisation, role and whether they are an adviser. Seniority is the signal.",
+  "<strong>Q&amp;A log</strong> — question, category, bidder, and time to answer.",
+  "<strong>Prior process outcomes</strong> — the same bidder features from past deals, with who bid and who walked. This is what makes the model a model."
+].map(s => `<li><span>${s}</span></li>`).join("");
+$("#notes").innerHTML = [
+  "<strong>Fitted, not asserted.</strong> Withdrawal probability comes from logistic regression on 140 prior bidders. A hand-weighted health score would not survive the first partner who asked where the weights came from.",
+  "<strong>Live features are clipped</strong> to the range the model was fitted on, so no prediction is an extrapolation beyond the evidence.",
+  "<strong>Dwell time is shrunk</strong> toward coverage for bidders with little activity — thirty page-views is not enough to estimate how carefully someone reads.",
+  "<strong>Document heat</strong> combines total attention, breadth across bidders and revisit frequency. Per-page intensity alone penalises exactly the long documents that carry the risk.",
+  "<strong>Bid-count distribution</strong> is the exact Poisson-binomial over the six probabilities, not a simulation."
+].map(s => `<li><span>${s}</span></li>`).join("");
+
+onRender(() => {
+  legend("#boardLegend", [{ swatch: tok("--s1"), name: "Engagement, percentile against prior processes" },
+                          { swatch: tok("--neg"), name: "Withdrawal risk, fitted model" }]);
+  legend("#calLegend", [{ swatch: tok("--s1"), name: "Predicted" }, { swatch: tok("--s2"), name: "Actually withdrew" }]);
+  legend("#attLegend", [{ swatch: tok("--pos"), name: "Reads more than the room" },
+                        { swatch: tok("--neg"), name: "Reads less" }]);
+});
+window.V.boot();
+})();
+</script>

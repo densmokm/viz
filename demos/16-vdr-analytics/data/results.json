@@ -1,0 +1,1127 @@
+{
+ "meta": {
+  "company": "Thornbury Precision Group",
+  "codename": "Project Lantern",
+  "sector": "Precision components, aerospace and medical",
+  "stage": "Sell-side / transaction support",
+  "weeks": 9,
+  "events": 9846,
+  "documents": 432,
+  "pages": 9505,
+  "users": 64,
+  "questions": 75,
+  "bidders": 6
+ },
+ "bidders": [
+  {
+   "bidder": "Marlowe Partners",
+   "kind": "Sponsor",
+   "engagement": 83.8,
+   "p_drop": 0.01489451591123681,
+   "events": 5107,
+   "hours": 45.024055555555556,
+   "users": 20,
+   "docs": 334,
+   "downloads": 801,
+   "coverage": 0.7731481481481481,
+   "depth": 0.8997252747252747,
+   "senior_share": 0.2811756184656844,
+   "advisers": 4,
+   "trend": -0.02091364745435787,
+   "days_idle": 1,
+   "qa_count": 39,
+   "last_seen": "2026-03-14",
+   "weekly": [
+    4.872722222222222,
+    4.934416666666667,
+    4.442555555555556,
+    4.208694444444444,
+    6.3684722222222225,
+    4.9710833333333335,
+    4.905222222222222,
+    5.596694444444444,
+    4.724194444444444
+   ],
+   "divergence": 0.1933811697792454,
+   "recon_score": 0.0,
+   "over": [
+    "HR & Pensions",
+    "Legal & Corporate"
+   ],
+   "under": [
+    "Environmental & H&S",
+    "Commercial & Customers"
+   ]
+  },
+  {
+   "bidder": "Granton Equity",
+   "kind": "Sponsor",
+   "engagement": 81.8,
+   "p_drop": 0.008389990682775192,
+   "events": 1926,
+   "hours": 19.37125,
+   "users": 16,
+   "docs": 307,
+   "downloads": 305,
+   "coverage": 0.7106481481481481,
+   "depth": 1.0397398300624108,
+   "senior_share": 0.4876757508621741,
+   "advisers": 3,
+   "trend": 0.7067094336630795,
+   "days_idle": 0,
+   "qa_count": 19,
+   "last_seen": "2026-03-15",
+   "weekly": [
+    0.0,
+    0.0,
+    0.014583333333333334,
+    1.3264999999999998,
+    1.9477222222222226,
+    3.114138888888889,
+    3.8712777777777774,
+    3.8500833333333335,
+    5.246944444444445
+   ],
+   "divergence": 0.21543100002593024,
+   "recon_score": 0.0,
+   "over": [
+    "Financial",
+    "Legal & Corporate"
+   ],
+   "under": [
+    "Environmental & H&S",
+    "Commercial & Customers"
+   ]
+  },
+  {
+   "bidder": "Dunmore Family Office",
+   "kind": "Family office",
+   "engagement": 65.9,
+   "p_drop": 0.1790365026838581,
+   "events": 1074,
+   "hours": 16.26336111111111,
+   "users": 11,
+   "docs": 251,
+   "downloads": 185,
+   "coverage": 0.5810185185185185,
+   "depth": 1.4438585607940444,
+   "senior_share": 0.8346402359769147,
+   "advisers": 2,
+   "trend": -0.2239880595457859,
+   "days_idle": 2,
+   "qa_count": 9,
+   "last_seen": "2026-03-13",
+   "weekly": [
+    1.503111111111111,
+    2.0108333333333333,
+    1.7255,
+    1.644,
+    2.811972222222222,
+    1.6725833333333333,
+    1.7971666666666668,
+    1.4777500000000001,
+    1.6204444444444444
+   ],
+   "divergence": 0.2053729309440476,
+   "recon_score": 0.0,
+   "over": [
+    "Financial",
+    "Legal & Corporate"
+   ],
+   "under": [
+    "Operations & Sites",
+    "Commercial & Customers"
+   ]
+  },
+  {
+   "bidder": "Pennine Capital",
+   "kind": "Sponsor",
+   "engagement": 63.0,
+   "p_drop": 0.9699391895847304,
+   "events": 944,
+   "hours": 11.47938888888889,
+   "users": 10,
+   "docs": 237,
+   "downloads": 176,
+   "coverage": 0.5486111111111112,
+   "depth": 1.3048328305681247,
+   "senior_share": 0.8151445344070773,
+   "advisers": 2,
+   "trend": -1.6,
+   "days_idle": 15,
+   "qa_count": 3,
+   "last_seen": "2026-02-28",
+   "weekly": [
+    2.0100277777777777,
+    2.3923333333333336,
+    1.8979722222222224,
+    1.8131944444444446,
+    1.3244722222222225,
+    1.2080277777777777,
+    0.8333611111111111,
+    0.0,
+    0.0
+   ],
+   "divergence": 0.2659184408638385,
+   "recon_score": 0.0,
+   "over": [
+    "Tax",
+    "Legal & Corporate"
+   ],
+   "under": [
+    "Operations & Sites",
+    "Commercial & Customers"
+   ]
+  },
+  {
+   "bidder": "Aldermoor Industrial",
+   "kind": "Trade",
+   "engagement": 23.9,
+   "p_drop": 0.8001184776196612,
+   "events": 765,
+   "hours": 6.060777777777777,
+   "users": 5,
+   "docs": 144,
+   "downloads": 120,
+   "coverage": 0.3333333333333333,
+   "depth": 1.0027472527472527,
+   "senior_share": 0.0,
+   "advisers": 0,
+   "trend": -0.03415798602688446,
+   "days_idle": 0,
+   "qa_count": 5,
+   "last_seen": "2026-03-15",
+   "weekly": [
+    0.6630555555555557,
+    0.842138888888889,
+    0.5191944444444445,
+    0.6535277777777777,
+    0.833138888888889,
+    0.5662777777777778,
+    0.5330833333333332,
+    0.5329444444444443,
+    0.9174166666666667
+   ],
+   "divergence": 0.38959899375456863,
+   "recon_score": 0.3713695356338254,
+   "over": [
+    "Commercial & Customers",
+    "Insurance"
+   ],
+   "under": [
+    "HR & Pensions",
+    "Tax"
+   ]
+  },
+  {
+   "bidder": "Selby Holdings",
+   "kind": "Trade",
+   "engagement": 20.7,
+   "p_drop": 0.998710715261833,
+   "events": 30,
+   "hours": 0.5028888888888888,
+   "users": 2,
+   "docs": 20,
+   "downloads": 6,
+   "coverage": 0.046296296296296294,
+   "depth": 1.1902618657937807,
+   "senior_share": 0.7994918250110474,
+   "advisers": 0,
+   "trend": -1.6,
+   "days_idle": 35,
+   "qa_count": 0,
+   "last_seen": "2026-02-08",
+   "weekly": [
+    0.29875,
+    0.06494444444444444,
+    0.01813888888888889,
+    0.12105555555555554,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "divergence": 0.477351274021224,
+   "recon_score": 0.7004749041336863,
+   "over": [
+    "Commercial & Customers",
+    "Environmental & H&S"
+   ],
+   "under": [
+    "Legal & Corporate",
+    "Tax"
+   ]
+  }
+ ],
+ "categories": [
+  "Commercial & Customers",
+  "Environmental & H&S",
+  "Financial",
+  "HR & Pensions",
+  "IT & Data",
+  "Insurance",
+  "Legal & Corporate",
+  "Operations & Sites",
+  "Tax"
+ ],
+ "profiles": [
+  {
+   "bidder": "Aldermoor Industrial",
+   "divergence": 0.38959899375456863,
+   "recon_score": 0.3713695356338254,
+   "shares": {
+    "Commercial & Customers": 0.6880305058023355,
+    "Environmental & H&S": 0.08991786899371183,
+    "Financial": 0.03160118796634095,
+    "HR & Pensions": 0.014780831209782387,
+    "IT & Data": 0.025844684400608647,
+    "Insurance": 0.03496525931765266,
+    "Legal & Corporate": 0.03487359524813463,
+    "Operations & Sites": 0.07763946688177167,
+    "Tax": 0.002346600179661576
+   },
+   "index": {
+    "Commercial & Customers": 1.9157021365274833,
+    "Environmental & H&S": 1.3808132394077914,
+    "Financial": 0.1595221958869912,
+    "HR & Pensions": 0.1335207149190783,
+    "IT & Data": 1.4640054745531654,
+    "Insurance": 1.6594132449298205,
+    "Legal & Corporate": 0.2598159928816665,
+    "Operations & Sites": 1.2168842360467522,
+    "Tax": 0.07776033834998392
+   },
+   "over": [
+    "Commercial & Customers",
+    "Insurance"
+   ],
+   "under": [
+    "HR & Pensions",
+    "Tax"
+   ]
+  },
+  {
+   "bidder": "Dunmore Family Office",
+   "divergence": 0.2053729309440476,
+   "recon_score": 0.0,
+   "shares": {
+    "Commercial & Customers": 0.1847762779663217,
+    "Environmental & H&S": 0.05518368657565318,
+    "Financial": 0.3207311595081651,
+    "HR & Pensions": 0.12263250216488665,
+    "IT & Data": 0.021563466619753672,
+    "Insurance": 0.015906579376615125,
+    "Legal & Corporate": 0.18938103883815188,
+    "Operations & Sites": 0.04790590984165157,
+    "Tax": 0.04191937910880114
+   },
+   "index": {
+    "Commercial & Customers": 0.5144776394280585,
+    "Environmental & H&S": 0.8474218292286336,
+    "Financial": 1.6190447937786026,
+    "HR & Pensions": 1.107784746945375,
+    "IT & Data": 1.2214903727329076,
+    "Insurance": 0.7549089872116725,
+    "Legal & Corporate": 1.4109305991709526,
+    "Operations & Sites": 0.7508545439725267,
+    "Tax": 1.389101190383327
+   },
+   "over": [
+    "Financial",
+    "Legal & Corporate"
+   ],
+   "under": [
+    "Operations & Sites",
+    "Commercial & Customers"
+   ]
+  },
+  {
+   "bidder": "Granton Equity",
+   "divergence": 0.21543100002593024,
+   "recon_score": 0.0,
+   "shares": {
+    "Commercial & Customers": 0.1784431395323826,
+    "Environmental & H&S": 0.03727029604296172,
+    "Financial": 0.30636180479375935,
+    "HR & Pensions": 0.148527672022542,
+    "IT & Data": 0.014612147153929434,
+    "Insurance": 0.01988915417320915,
+    "Legal & Corporate": 0.19591748940655182,
+    "Operations & Sites": 0.0611530547130986,
+    "Tax": 0.037825242161565326
+   },
+   "index": {
+    "Commercial & Customers": 0.4968441090445859,
+    "Environmental & H&S": 0.5723369424643316,
+    "Financial": 1.5465085644456231,
+    "HR & Pensions": 1.3417053934416834,
+    "IT & Data": 0.8277239178755595,
+    "Insurance": 0.9439176631191699,
+    "Legal & Corporate": 1.459628600689497,
+    "Operations & Sites": 0.9584840192140189,
+    "Tax": 1.2534319455637255
+   },
+   "over": [
+    "Financial",
+    "Legal & Corporate"
+   ],
+   "under": [
+    "Environmental & H&S",
+    "Commercial & Customers"
+   ]
+  },
+  {
+   "bidder": "Marlowe Partners",
+   "divergence": 0.1933811697792454,
+   "recon_score": 0.0,
+   "shares": {
+    "Commercial & Customers": 0.17664075870553148,
+    "Environmental & H&S": 0.05448383765221801,
+    "Financial": 0.25596872289257716,
+    "HR & Pensions": 0.19264886795083613,
+    "IT & Data": 0.01742031728717858,
+    "Insurance": 0.023553458459860344,
+    "Legal & Corporate": 0.17516870611142438,
+    "Operations & Sites": 0.06558901229342833,
+    "Tax": 0.03852631864694552
+   },
+   "index": {
+    "Commercial & Customers": 0.491825690861502,
+    "Environmental & H&S": 0.8366746810824498,
+    "Financial": 1.2921252453453451,
+    "HR & Pensions": 1.7402684742196888,
+    "IT & Data": 0.9867963362045148,
+    "Insurance": 1.11782156617566,
+    "Legal & Corporate": 1.3050455789347088,
+    "Operations & Sites": 1.0280111175839164,
+    "Tax": 1.2766638302217432
+   },
+   "over": [
+    "HR & Pensions",
+    "Legal & Corporate"
+   ],
+   "under": [
+    "Environmental & H&S",
+    "Commercial & Customers"
+   ]
+  },
+  {
+   "bidder": "Pennine Capital",
+   "divergence": 0.2659184408638385,
+   "recon_score": 0.0,
+   "shares": {
+    "Commercial & Customers": 0.0932347347177792,
+    "Environmental & H&S": 0.08603100242463546,
+    "Financial": 0.2516708690454873,
+    "HR & Pensions": 0.16280144607000951,
+    "IT & Data": 0.02647982616186498,
+    "Insurance": 0.03211069114209525,
+    "Legal & Corporate": 0.21000440402847614,
+    "Operations & Sites": 0.07722052567645392,
+    "Tax": 0.06044650073319814
+   },
+   "index": {
+    "Commercial & Customers": 0.2595960193496648,
+    "Environmental & H&S": 1.3211250275044653,
+    "Financial": 1.2704297608585158,
+    "HR & Pensions": 1.4706456734815438,
+    "IT & Data": 1.4999838986338525,
+    "Insurance": 1.5239385385636752,
+    "Legal & Corporate": 1.5645792283231736,
+    "Operations & Sites": 1.2103179499933212,
+    "Tax": 2.0030426954812204
+   },
+   "over": [
+    "Tax",
+    "Legal & Corporate"
+   ],
+   "under": [
+    "Operations & Sites",
+    "Commercial & Customers"
+   ]
+  },
+  {
+   "bidder": "Selby Holdings",
+   "divergence": 0.477351274021224,
+   "recon_score": 0.7004749041336863,
+   "shares": {
+    "Commercial & Customers": 0.8337936367653558,
+    "Environmental & H&S": 0.06783031374281927,
+    "Financial": 0.02226027397260274,
+    "HR & Pensions": 0.022812638091029607,
+    "IT & Data": 0.0,
+    "Insurance": 0.0,
+    "Legal & Corporate": 0.0,
+    "Operations & Sites": 0.05330313742819267,
+    "Tax": 0.0
+   },
+   "index": {
+    "Commercial & Customers": 2.3215544047887047,
+    "Environmental & H&S": 1.0416282803123265,
+    "Financial": 0.11236943968492182,
+    "HR & Pensions": 0.20607499699262957,
+    "IT & Data": 0.0,
+    "Insurance": 0.0,
+    "Legal & Corporate": 0.0,
+    "Operations & Sites": 0.835448133189463,
+    "Tax": 0.0
+   },
+   "over": [
+    "Commercial & Customers",
+    "Environmental & H&S"
+   ],
+   "under": [
+    "Legal & Corporate",
+    "Tax"
+   ]
+  }
+ ],
+ "matrix": [
+  {
+   "bidder": "Marlowe Partners",
+   "cells": [
+    {
+     "category": "Commercial & Customers",
+     "index": 0.491825690861502,
+     "share": 0.17664075870553148
+    },
+    {
+     "category": "Environmental & H&S",
+     "index": 0.8366746810824498,
+     "share": 0.05448383765221801
+    },
+    {
+     "category": "Financial",
+     "index": 1.2921252453453451,
+     "share": 0.25596872289257716
+    },
+    {
+     "category": "HR & Pensions",
+     "index": 1.7402684742196888,
+     "share": 0.19264886795083613
+    },
+    {
+     "category": "IT & Data",
+     "index": 0.9867963362045148,
+     "share": 0.01742031728717858
+    },
+    {
+     "category": "Insurance",
+     "index": 1.11782156617566,
+     "share": 0.023553458459860344
+    },
+    {
+     "category": "Legal & Corporate",
+     "index": 1.3050455789347088,
+     "share": 0.17516870611142438
+    },
+    {
+     "category": "Operations & Sites",
+     "index": 1.0280111175839164,
+     "share": 0.06558901229342833
+    },
+    {
+     "category": "Tax",
+     "index": 1.2766638302217432,
+     "share": 0.03852631864694552
+    }
+   ]
+  },
+  {
+   "bidder": "Granton Equity",
+   "cells": [
+    {
+     "category": "Commercial & Customers",
+     "index": 0.4968441090445859,
+     "share": 0.1784431395323826
+    },
+    {
+     "category": "Environmental & H&S",
+     "index": 0.5723369424643316,
+     "share": 0.03727029604296172
+    },
+    {
+     "category": "Financial",
+     "index": 1.5465085644456231,
+     "share": 0.30636180479375935
+    },
+    {
+     "category": "HR & Pensions",
+     "index": 1.3417053934416834,
+     "share": 0.148527672022542
+    },
+    {
+     "category": "IT & Data",
+     "index": 0.8277239178755595,
+     "share": 0.014612147153929434
+    },
+    {
+     "category": "Insurance",
+     "index": 0.9439176631191699,
+     "share": 0.01988915417320915
+    },
+    {
+     "category": "Legal & Corporate",
+     "index": 1.459628600689497,
+     "share": 0.19591748940655182
+    },
+    {
+     "category": "Operations & Sites",
+     "index": 0.9584840192140189,
+     "share": 0.0611530547130986
+    },
+    {
+     "category": "Tax",
+     "index": 1.2534319455637255,
+     "share": 0.037825242161565326
+    }
+   ]
+  },
+  {
+   "bidder": "Dunmore Family Office",
+   "cells": [
+    {
+     "category": "Commercial & Customers",
+     "index": 0.5144776394280585,
+     "share": 0.1847762779663217
+    },
+    {
+     "category": "Environmental & H&S",
+     "index": 0.8474218292286336,
+     "share": 0.05518368657565318
+    },
+    {
+     "category": "Financial",
+     "index": 1.6190447937786026,
+     "share": 0.3207311595081651
+    },
+    {
+     "category": "HR & Pensions",
+     "index": 1.107784746945375,
+     "share": 0.12263250216488665
+    },
+    {
+     "category": "IT & Data",
+     "index": 1.2214903727329076,
+     "share": 0.021563466619753672
+    },
+    {
+     "category": "Insurance",
+     "index": 0.7549089872116725,
+     "share": 0.015906579376615125
+    },
+    {
+     "category": "Legal & Corporate",
+     "index": 1.4109305991709526,
+     "share": 0.18938103883815188
+    },
+    {
+     "category": "Operations & Sites",
+     "index": 0.7508545439725267,
+     "share": 0.04790590984165157
+    },
+    {
+     "category": "Tax",
+     "index": 1.389101190383327,
+     "share": 0.04191937910880114
+    }
+   ]
+  },
+  {
+   "bidder": "Pennine Capital",
+   "cells": [
+    {
+     "category": "Commercial & Customers",
+     "index": 0.2595960193496648,
+     "share": 0.0932347347177792
+    },
+    {
+     "category": "Environmental & H&S",
+     "index": 1.3211250275044653,
+     "share": 0.08603100242463546
+    },
+    {
+     "category": "Financial",
+     "index": 1.2704297608585158,
+     "share": 0.2516708690454873
+    },
+    {
+     "category": "HR & Pensions",
+     "index": 1.4706456734815438,
+     "share": 0.16280144607000951
+    },
+    {
+     "category": "IT & Data",
+     "index": 1.4999838986338525,
+     "share": 0.02647982616186498
+    },
+    {
+     "category": "Insurance",
+     "index": 1.5239385385636752,
+     "share": 0.03211069114209525
+    },
+    {
+     "category": "Legal & Corporate",
+     "index": 1.5645792283231736,
+     "share": 0.21000440402847614
+    },
+    {
+     "category": "Operations & Sites",
+     "index": 1.2103179499933212,
+     "share": 0.07722052567645392
+    },
+    {
+     "category": "Tax",
+     "index": 2.0030426954812204,
+     "share": 0.06044650073319814
+    }
+   ]
+  },
+  {
+   "bidder": "Aldermoor Industrial",
+   "cells": [
+    {
+     "category": "Commercial & Customers",
+     "index": 1.9157021365274833,
+     "share": 0.6880305058023355
+    },
+    {
+     "category": "Environmental & H&S",
+     "index": 1.3808132394077914,
+     "share": 0.08991786899371183
+    },
+    {
+     "category": "Financial",
+     "index": 0.1595221958869912,
+     "share": 0.03160118796634095
+    },
+    {
+     "category": "HR & Pensions",
+     "index": 0.1335207149190783,
+     "share": 0.014780831209782387
+    },
+    {
+     "category": "IT & Data",
+     "index": 1.4640054745531654,
+     "share": 0.025844684400608647
+    },
+    {
+     "category": "Insurance",
+     "index": 1.6594132449298205,
+     "share": 0.03496525931765266
+    },
+    {
+     "category": "Legal & Corporate",
+     "index": 0.2598159928816665,
+     "share": 0.03487359524813463
+    },
+    {
+     "category": "Operations & Sites",
+     "index": 1.2168842360467522,
+     "share": 0.07763946688177167
+    },
+    {
+     "category": "Tax",
+     "index": 0.07776033834998392,
+     "share": 0.002346600179661576
+    }
+   ]
+  },
+  {
+   "bidder": "Selby Holdings",
+   "cells": [
+    {
+     "category": "Commercial & Customers",
+     "index": 2.3215544047887047,
+     "share": 0.8337936367653558
+    },
+    {
+     "category": "Environmental & H&S",
+     "index": 1.0416282803123265,
+     "share": 0.06783031374281927
+    },
+    {
+     "category": "Financial",
+     "index": 0.11236943968492182,
+     "share": 0.02226027397260274
+    },
+    {
+     "category": "HR & Pensions",
+     "index": 0.20607499699262957,
+     "share": 0.022812638091029607
+    },
+    {
+     "category": "IT & Data",
+     "index": 0.0,
+     "share": 0.0
+    },
+    {
+     "category": "Insurance",
+     "index": 0.0,
+     "share": 0.0
+    },
+    {
+     "category": "Legal & Corporate",
+     "index": 0.0,
+     "share": 0.0
+    },
+    {
+     "category": "Operations & Sites",
+     "index": 0.835448133189463,
+     "share": 0.05330313742819267
+    },
+    {
+     "category": "Tax",
+     "index": 0.0,
+     "share": 0.0
+    }
+   ]
+  }
+ ],
+ "model": {
+  "coefficients": [
+   {
+    "feature": "trend",
+    "beta": -1.185074048510086,
+    "odds": 0.3057235402878657,
+    "label": "Activity trend, last 3 weeks"
+   },
+   {
+    "feature": "coverage",
+    "beta": -0.6407591152658673,
+    "odds": 0.5268923002036532,
+    "label": "Document coverage"
+   },
+   {
+    "feature": "days_idle",
+    "beta": 0.6299972073102988,
+    "odds": 1.8776053356879374,
+    "label": "Days since last login"
+   },
+   {
+    "feature": "qa_count",
+    "beta": -0.5102345614786225,
+    "odds": 0.6003547421994613,
+    "label": "Questions submitted"
+   },
+   {
+    "feature": "depth",
+    "beta": -0.5002903108033098,
+    "odds": 0.606354602866419,
+    "label": "Dwell time per page"
+   },
+   {
+    "feature": "advisers",
+    "beta": -0.4573104299648577,
+    "odds": 0.6329838124176587,
+    "label": "Adviser firms engaged"
+   },
+   {
+    "feature": "senior_share",
+    "beta": -0.35350801327415016,
+    "odds": 0.7022203654812187,
+    "label": "Share of time by senior staff"
+   }
+  ],
+  "auc": 0.8324829931972789,
+  "accuracy": 0.7285714285714285,
+  "brier": 0.1632777061136865,
+  "n": 140,
+  "withdrew": 56,
+  "calibration": [
+   {
+    "bucket": "0\u201320%",
+    "n": 49,
+    "predicted": 0.10680656532167257,
+    "actual": 0.10204081632653061
+   },
+   {
+    "bucket": "20\u201340%",
+    "n": 24,
+    "predicted": 0.28862711424687976,
+    "actual": 0.2916666666666667
+   },
+   {
+    "bucket": "40\u201360%",
+    "n": 31,
+    "predicted": 0.48647756928740443,
+    "actual": 0.5161290322580645
+   },
+   {
+    "bucket": "60\u201380%",
+    "n": 18,
+    "predicted": 0.6927873313726846,
+    "actual": 0.6111111111111112
+   },
+   {
+    "bucket": "80\u2013100%",
+    "n": 18,
+    "predicted": 0.9052239856788079,
+    "actual": 0.9444444444444444
+   }
+  ],
+  "clipped": {
+   "senior_share": 4,
+   "days_idle": 3,
+   "qa_count": 4
+  }
+ },
+ "tension": {
+  "headline": 6,
+  "expected": 3.028910608255906,
+  "p_at_least_two": 0.9967018579779107,
+  "p_at_least_three": 0.8455693559168066,
+  "distribution": [
+   1.734075384521726e-05,
+   0.003280801268244097,
+   0.15113250206110407,
+   0.6639642560748774,
+   0.17655967711544904,
+   0.005039210179856245,
+   6.2125466239477634e-06
+  ]
+ },
+ "top_docs": [
+  {
+   "name": "Master supply agreement \u2014 Halstead Aerospace",
+   "category": "Commercial & Customers",
+   "pages": 94,
+   "bidders": 6,
+   "revisits": 21.666666666666668,
+   "hours": 5.81125,
+   "score": 12.233090692328812
+  },
+  {
+   "name": "Actuarial valuation \u2014 Thornbury Pension Scheme",
+   "category": "HR & Pensions",
+   "pages": 168,
+   "bidders": 4,
+   "revisits": 19.0,
+   "hours": 4.065083333333333,
+   "score": 9.546232620058749
+  },
+  {
+   "name": "Working capital: 36-month normalisation",
+   "category": "Financial",
+   "pages": 62,
+   "bidders": 5,
+   "revisits": 15.6,
+   "hours": 2.9231111111111114,
+   "score": 8.775244147882939
+  },
+  {
+   "name": "Capex schedule 14",
+   "category": "Financial",
+   "pages": 21,
+   "bidders": 5,
+   "revisits": 16.8,
+   "hours": 2.2918333333333334,
+   "score": 8.277165176930723
+  },
+  {
+   "name": "Distribution agreement 13",
+   "category": "Commercial & Customers",
+   "pages": 22,
+   "bidders": 6,
+   "revisits": 14.0,
+   "hours": 1.953861111111111,
+   "score": 7.974355218618666
+  },
+  {
+   "name": "Net debt bridge 33",
+   "category": "Financial",
+   "pages": 31,
+   "bidders": 5,
+   "revisits": 16.6,
+   "hours": 1.6959722222222222,
+   "score": 7.1687412440783955
+  },
+  {
+   "name": "Distribution agreement 17",
+   "category": "Commercial & Customers",
+   "pages": 21,
+   "bidders": 5,
+   "revisits": 15.0,
+   "hours": 1.3908888888888888,
+   "score": 6.546937108078291
+  },
+  {
+   "name": "Phase I environmental report \u2014 Tipton site",
+   "category": "Environmental & H&S",
+   "pages": 77,
+   "bidders": 5,
+   "revisits": 11.4,
+   "hours": 1.508638888888889,
+   "score": 6.129720110334726
+  },
+  {
+   "name": "Budget and forecast model 23",
+   "category": "Financial",
+   "pages": 27,
+   "bidders": 4,
+   "revisits": 15.25,
+   "hours": 1.3037222222222222,
+   "score": 5.850391974927919
+  },
+  {
+   "name": "Management accounts \u2014 December 2025",
+   "category": "Financial",
+   "pages": 38,
+   "bidders": 5,
+   "revisits": 11.2,
+   "hours": 1.2929722222222222,
+   "score": 5.8391264756136465
+  },
+  {
+   "name": "Revenue and margin by customer, FY22\u2013FY25",
+   "category": "Commercial & Customers",
+   "pages": 41,
+   "bidders": 5,
+   "revisits": 9.8,
+   "hours": 1.06025,
+   "score": 5.123322895436348
+  },
+  {
+   "name": "Capex schedule 9",
+   "category": "Financial",
+   "pages": 27,
+   "bidders": 4,
+   "revisits": 14.25,
+   "hours": 0.9513333333333334,
+   "score": 4.927589497734958
+  }
+ ],
+ "category_heat": [
+  {
+   "category": "Commercial & Customers",
+   "documents": 60,
+   "pages": 1219,
+   "hours": 20.074416666666664,
+   "bidders": 3.0166666666666666,
+   "revisits": 5.140555555555556,
+   "questions": 14,
+   "days_to_answer": 3.2,
+   "unread_pages": 149
+  },
+  {
+   "category": "Environmental & H&S",
+   "documents": 25,
+   "pages": 509,
+   "hours": 5.639194444444444,
+   "bidders": 3.44,
+   "revisits": 4.0406666666666675,
+   "questions": 5,
+   "days_to_answer": 3.2,
+   "unread_pages": 48
+  },
+  {
+   "category": "Financial",
+   "documents": 76,
+   "pages": 2088,
+   "hours": 25.76727777777778,
+   "bidders": 3.1315789473684212,
+   "revisits": 5.723684210526316,
+   "questions": 14,
+   "days_to_answer": 3.4000000000000004,
+   "unread_pages": 248
+  },
+  {
+   "category": "HR & Pensions",
+   "documents": 48,
+   "pages": 1589,
+   "hours": 15.515333333333334,
+   "bidders": 2.8333333333333335,
+   "revisits": 4.739583333333333,
+   "questions": 16,
+   "days_to_answer": 5.0,
+   "unread_pages": 350
+  },
+  {
+   "category": "IT & Data",
+   "documents": 28,
+   "pages": 321,
+   "hours": 1.8786944444444442,
+   "bidders": 2.642857142857143,
+   "revisits": 2.9505952380952385,
+   "questions": 4,
+   "days_to_answer": 4.05,
+   "unread_pages": 57
+  },
+  {
+   "category": "Insurance",
+   "documents": 18,
+   "pages": 301,
+   "hours": 2.284972222222222,
+   "bidders": 3.0555555555555554,
+   "revisits": 3.755555555555555,
+   "questions": 3,
+   "days_to_answer": 5.4,
+   "unread_pages": 31
+  },
+  {
+   "category": "Legal & Corporate",
+   "documents": 92,
+   "pages": 2007,
+   "hours": 17.384027777777774,
+   "bidders": 2.891304347826087,
+   "revisits": 4.371376811594203,
+   "questions": 8,
+   "days_to_answer": 4.9,
+   "unread_pages": 297
+  },
+  {
+   "category": "Operations & Sites",
+   "documents": 52,
+   "pages": 680,
+   "hours": 6.300611111111111,
+   "bidders": 3.076923076923077,
+   "revisits": 3.8544871794871796,
+   "questions": 9,
+   "days_to_answer": 2.9,
+   "unread_pages": 104
+  },
+  {
+   "category": "Tax",
+   "documents": 33,
+   "pages": 791,
+   "hours": 3.857194444444444,
+   "bidders": 2.9393939393939394,
+   "revisits": 3.193434343434343,
+   "questions": 2,
+   "days_to_answer": 2.55,
+   "unread_pages": 24
+  }
+ ],
+ "prep": {
+  "documents": 432,
+  "pages": 9505,
+  "unread_docs": 60,
+  "unread_pages": 1308,
+  "unread_pct": 0.13761178327196213,
+  "single_bidder_docs": 48,
+  "all_bidder_docs": 13
+ },
+ "qa_weekly": [
+  4,
+  6,
+  4,
+  12,
+  12,
+  9,
+  8,
+  13,
+  7
+ ],
+ "weeks": [
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9
+ ]
+}

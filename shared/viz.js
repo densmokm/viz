@@ -229,9 +229,11 @@ function hBars(w, items, cfg) {
       "font-size": 12, "font-weight": 500 }, d.label));
     if (d.sub) g.appendChild(el("text", { x: -12, y: yy + rowH / 2 + 13, "text-anchor": "end",
       fill: tok("--ink-3"), "font-size": 10.5 }, d.sub));
-    const tx = d.value >= 0 ? xa + bw + 8 : xa - 8;
-    g.appendChild(el("text", { x: tx, y: yy + rowH / 2 + 4, "text-anchor": d.value >= 0 ? "start" : "end",
-      fill: tok("--ink"), "font-size": 11.5, "font-weight": 600,
+    const outside = d.value >= 0 ? xa + bw + 8 : xa - 8;
+    const fits = d.value >= 0 ? true : outside > 34;
+    g.appendChild(el("text", { x: fits ? outside : xa + 7, y: yy + rowH / 2 + 4,
+      "text-anchor": fits ? (d.value >= 0 ? "start" : "end") : "start",
+      fill: fits ? tok("--ink") : "#fff", "font-size": 11.5, "font-weight": 600,
       "font-family": "IBM Plex Mono, monospace" }, cfg.fmt(d.value)));
     const hr = el("rect", { x: -M.l, y: yy - 2, width: w - 8, height: rowH, fill: "transparent" });
     hit(hr, d.label, d.rows || [[cfg.valueName || "Value", cfg.fmt(d.value)]]); g.appendChild(hr);
@@ -300,6 +302,25 @@ function dumbbell(w, items, cfg) {
     hit(hr, d.label, d.rows); g.appendChild(hr);
   });
   svg.appendChild(g); return svg;
+}
+
+/* ---------- sparkline ---------- */
+function spark(w, values, o = {}) {
+  const h = o.height || 34, pad = 3;
+  const svg = el("svg", { viewBox: `0 0 ${w} ${h}`, width: w, height: h, role: "img",
+                          "aria-label": o.label || "trend" });
+  const lo = Math.min(...values), hi = Math.max(...values), span = (hi - lo) || 1;
+  const x = i => pad + i * (w - 2 * pad) / Math.max(values.length - 1, 1);
+  const y = v => h - pad - (v - lo) / span * (h - 2 * pad);
+  const d = values.map((v, i) => (i ? "L" : "M") + x(i) + "," + y(v)).join(" ");
+  const col = tok(o.token || "--s1");
+  svg.appendChild(el("path", { d: `${d} L${x(values.length - 1)},${h} L${x(0)},${h} Z`,
+    fill: col, opacity: .12 }));
+  svg.appendChild(el("path", { d, fill: "none", stroke: col, "stroke-width": 1.8,
+    "stroke-linejoin": "round", "stroke-linecap": "round" }));
+  const li = values.length - 1;
+  svg.appendChild(el("circle", { cx: x(li), cy: y(values[li]), r: 3, fill: col }));
+  return svg;
 }
 
 /* ---------- diverging heatmap ---------- */
@@ -372,6 +393,6 @@ function boot() {
 
 return { el, tok, $, MINUS, m2, m2s, m1, acct, pc, pcs, pp, int,
          showTip, moveTip, hideTip, hit, lin, niceTicks, axisScale, gridY, xLabels,
-         waterfall, lineChart, hBars, groupBars, dumbbell, heatmap, legend,
+         waterfall, lineChart, hBars, groupBars, dumbbell, heatmap, spark, legend,
          reg, onRender, render, boot };
 })();

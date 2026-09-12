@@ -1,0 +1,65 @@
+user_id,bidder,org,role,is_adviser
+U001,Marlowe Partners,Marlowe Partners,Partner / MD,0
+U002,Marlowe Partners,Marlowe Partners,Associate,0
+U003,Marlowe Partners,Marlowe Partners,Analyst,0
+U004,Marlowe Partners,Marlowe Partners,Associate,0
+U005,Marlowe Partners,Marlowe Partners,Director,0
+U006,Marlowe Partners,Marlowe Partners,Associate,0
+U007,Marlowe Partners,Marlowe Partners,Analyst,0
+U008,Marlowe Partners,Marlowe Partners,Analyst,0
+U009,Marlowe Partners,Marlowe Partners,Analyst,0
+U010,Marlowe Partners,Legal DD adviser,Analyst,1
+U011,Marlowe Partners,Legal DD adviser,Associate,1
+U012,Marlowe Partners,Financial DD adviser,Analyst,1
+U013,Marlowe Partners,Financial DD adviser,Analyst,1
+U014,Marlowe Partners,Financial DD adviser,Director,1
+U015,Marlowe Partners,Commercial DD adviser,Analyst,1
+U016,Marlowe Partners,Commercial DD adviser,Analyst,1
+U017,Marlowe Partners,Commercial DD adviser,Associate,1
+U018,Marlowe Partners,Insurance & Pensions adviser,Associate,1
+U019,Marlowe Partners,Insurance & Pensions adviser,Analyst,1
+U020,Marlowe Partners,Insurance & Pensions adviser,Associate,1
+U021,Granton Equity,Granton Equity,Partner / MD,0
+U022,Granton Equity,Granton Equity,Associate,0
+U023,Granton Equity,Granton Equity,Associate,0
+U024,Granton Equity,Granton Equity,Associate,0
+U025,Granton Equity,Granton Equity,Director,0
+U026,Granton Equity,Granton Equity,Analyst,0
+U027,Granton Equity,Granton Equity,Director,0
+U028,Granton Equity,Legal DD adviser,Analyst,1
+U029,Granton Equity,Legal DD adviser,Analyst,1
+U030,Granton Equity,Legal DD adviser,Analyst,1
+U031,Granton Equity,Legal DD adviser,Analyst,1
+U032,Granton Equity,Financial DD adviser,Analyst,1
+U033,Granton Equity,Financial DD adviser,Associate,1
+U034,Granton Equity,Financial DD adviser,Director,1
+U035,Granton Equity,Commercial DD adviser,Associate,1
+U036,Granton Equity,Commercial DD adviser,Director,1
+U037,Aldermoor Industrial,Aldermoor Industrial,Analyst,0
+U038,Aldermoor Industrial,Aldermoor Industrial,Associate,0
+U039,Aldermoor Industrial,Aldermoor Industrial,Associate,0
+U040,Aldermoor Industrial,Aldermoor Industrial,Associate,0
+U041,Aldermoor Industrial,Aldermoor Industrial,Associate,0
+U042,Pennine Capital,Pennine Capital,Partner / MD,0
+U043,Pennine Capital,Pennine Capital,Analyst,0
+U044,Pennine Capital,Pennine Capital,Director,0
+U045,Pennine Capital,Pennine Capital,Analyst,0
+U046,Pennine Capital,Pennine Capital,Analyst,0
+U047,Pennine Capital,Pennine Capital,Analyst,0
+U048,Pennine Capital,Legal DD adviser,Partner / MD,1
+U049,Pennine Capital,Legal DD adviser,Director,1
+U050,Pennine Capital,Financial DD adviser,Director,1
+U051,Pennine Capital,Financial DD adviser,Director,1
+U052,Dunmore Family Office,Dunmore Family Office,Partner / MD,0
+U053,Dunmore Family Office,Dunmore Family Office,Analyst,0
+U054,Dunmore Family Office,Dunmore Family Office,Director,0
+U055,Dunmore Family Office,Legal DD adviser,Director,1
+U056,Dunmore Family Office,Legal DD adviser,Partner / MD,1
+U057,Dunmore Family Office,Legal DD adviser,Director,1
+U058,Dunmore Family Office,Legal DD adviser,Partner / MD,1
+U059,Dunmore Family Office,Financial DD adviser,Associate,1
+U060,Dunmore Family Office,Financial DD adviser,Analyst,1
+U061,Dunmore Family Office,Financial DD adviser,Partner / MD,1
+U062,Dunmore Family Office,Financial DD adviser,Analyst,1
+U063,Selby Holdings,Selby Holdings,Partner / MD,0
+U064,Selby Holdings,Selby Holdings,Analyst,0

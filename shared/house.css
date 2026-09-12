@@ -216,3 +216,17 @@ footer{padding-block:34px 60px; border-top:1px solid var(--rule); color:var(--in
   .claimhead .cverdict{grid-column:2; justify-self:start}
   .claimbody{padding-left:12px}
 }
+
+/* ---------- entity board (bidders, portcos, workstreams) ---------- */
+.board{display:grid}
+.brow{display:grid; gap:14px; align-items:center; padding:16px 6px; border-bottom:1px solid var(--rule);
+  grid-template-columns:minmax(0,1.5fr) 108px 108px minmax(120px,1fr) minmax(0,1.4fr)}
+.brow:last-child{border-bottom:0}
+.brow .who{display:grid; gap:3px}
+.brow .who strong{font-size:.95rem; font-weight:600}
+.brow .who span{font-size:.76rem; color:var(--ink-3)}
+.brow .flags{display:flex; flex-wrap:wrap; gap:6px}
+.brow .mini{display:flex; gap:14px; font-size:.75rem; color:var(--ink-3); flex-wrap:wrap}
+.brow .mini b{display:block; font-family:"IBM Plex Mono",monospace; font-size:.86rem; font-weight:600; color:var(--ink)}
+@media (max-width:900px){ .brow{grid-template-columns:minmax(0,1fr) 100px 100px} 
+  .brow .spark, .brow .flags{grid-column:1 / -1} }
