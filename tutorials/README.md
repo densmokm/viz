@@ -6,6 +6,7 @@ taken apart step by step, with runnable code.
 | Technique | Tutorial | What it teaches |
 |---|---|---|
 | 01 Alt Data Triangulation | [How to triangulate outside-in data](https://claude.ai/code/artifact/902859a7-3384-4a18-8c3e-b6d734b3c9f1) | Standardising signals of unequal quality; weighting by reliability, latency and sample; scoring evidence and confidence separately; independence by source family |
+| 04 Trade Area & Footfall | [How to build a trade area model](https://claude.ai/code/artifact/55ce8a12-02a9-4a4f-a926-ec7f7e45ce8d) | Stop detection and venue attribution at ping scale; panel expansion with shrinkage; maximum-likelihood distance decay; portfolio cannibalisation |
 | 09 Revenue Decomposition | [How to build a revenue bridge that ties](https://claude.ai/code/artifact/2ba6fc7e-e46b-4bba-960f-5a281011aea6) | The price/volume/mix identity and why it is exact; the customer partition; nesting two lenses; constant currency and one-off carve-out |
 | 16 Data Room Analytics | [How to read bidder intent](https://claude.ai/code/artifact/746bf3be-f3ae-48d2-94bb-8c36f813f3e3) | Sessionising an access log; feature parity between training and scoring; IRLS logistic regression; exact Poisson-binomial |
 | 18 Synergy Tracking | [How to build a synergy tracker](https://claude.ai/code/artifact/58926809-5c81-487f-8011-24b2ebe2cc68) | Run-rate versus in-year P&L; conversion estimated from prior deals; realisation as a distribution; time-phased earned value; the ceiling |

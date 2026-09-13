@@ -375,6 +375,77 @@ function heatmap(w, cfg) {
   svg.appendChild(g); return svg;
 }
 
+/* ---------- scatter map: projected points, equal aspect, layered ---------- */
+function scatterMap(w, cfg) {
+  const B = cfg.bounds;
+  const aspect = (B.y1 - B.y0) / (B.x1 - B.x0);
+  const H = cfg.height || Math.round(w * aspect);
+  const svg = el("svg", { viewBox: `0 0 ${w} ${H}`, width: w, height: H, role: "img",
+                          "aria-label": cfg.label || "site map" });
+  svg.appendChild(el("rect", { x: 0, y: 0, width: w, height: H, rx: 5, fill: tok("--surface-3") }));
+  const g = el("g");
+  const sx = v => (v - B.x0) / (B.x1 - B.x0) * w;
+  const sy = v => H - (v - B.y0) / (B.y1 - B.y0) * H;      // north up
+
+  for (const layer of cfg.layers) {
+    if (layer.hidden) continue;
+    for (const d of layer.points) {
+      const r = layer.r(d);
+      if (r <= 0) continue;
+      const c = el("circle", { cx: sx(d.x), cy: sy(d.y), r,
+        fill: layer.fill ? tok(layer.fill(d)) : "none",
+        stroke: layer.stroke ? tok(layer.stroke(d)) : "none",
+        "stroke-width": layer.strokeWidth || 1.4,
+        opacity: layer.opacity ? layer.opacity(d) : 1 });
+      if (layer.tip) {
+        const hitArea = el("circle", { cx: sx(d.x), cy: sy(d.y), r: Math.max(r, 11), fill: "transparent" });
+        hit(hitArea, layer.tip(d).title, layer.tip(d).rows);
+        g.appendChild(c); g.appendChild(hitArea);
+      } else {
+        g.appendChild(c);
+      }
+    }
+  }
+  (cfg.labels || []).forEach(l => {
+    g.appendChild(el("text", { x: sx(l.x), y: sy(l.y) - 20, "text-anchor": "middle",
+      fill: tok("--ink-2"), "font-size": 10, "font-weight": 600, "letter-spacing": ".05em",
+      stroke: tok("--surface-3"), "stroke-width": 3.5, "paint-order": "stroke",
+      "stroke-linejoin": "round" }, l.name.toUpperCase()));
+  });
+  svg.appendChild(g); return svg;
+}
+
+/* ---------- x/y scatter with a reference line ---------- */
+function scatterXY(w, cfg) {
+  const H = cfg.height || Math.max(260, Math.min(340, w * 0.72));
+  const M = { t: 14, r: 14, b: 40, l: 56 };
+  const iw = Math.max(40, w - M.l - M.r), ih = H - M.t - M.b;
+  const svg = el("svg", { viewBox: `0 0 ${w} ${H}`, width: w, height: H, role: "img" });
+  const g = el("g", { transform: `translate(${M.l},${M.t})` });
+  const xs = cfg.points.map(p => p.x), ys = cfg.points.map(p => p.y);
+  const lo = Math.min(...xs, ...ys), hi = Math.max(...xs, ...ys);
+  const sc = axisScale(lo, hi, ih, 0, { n: 4 });
+  const y = sc.y, x = lin(sc.dlo, sc.dhi, 0, iw);
+  gridY(g, sc.ticks, y, 0, iw, cfg.fmtAxis);
+  sc.ticks.forEach(t => {
+    g.appendChild(el("line", { x1: x(t), x2: x(t), y1: 0, y2: ih, stroke: tok("--rule"), "stroke-width": 1 }));
+    g.appendChild(el("text", { x: x(t), y: ih + 20, "text-anchor": "middle", fill: tok("--ink-3"),
+      "font-size": 11, "font-family": "IBM Plex Mono, monospace" }, cfg.fmtAxis(t)));
+  });
+  g.appendChild(el("line", { x1: x(sc.dlo), y1: y(sc.dlo), x2: x(sc.dhi), y2: y(sc.dhi),
+    stroke: tok("--rule-2"), "stroke-width": 1.5 }));
+  cfg.points.forEach(p => {
+    const c = el("circle", { cx: x(p.x), cy: y(p.y), r: 4.5, fill: tok(cfg.token || "--s1"),
+      opacity: .72, stroke: tok("--surface"), "stroke-width": 1.2 });
+    const hr = el("circle", { cx: x(p.x), cy: y(p.y), r: 12, fill: "transparent" });
+    if (cfg.tip) hit(hr, cfg.tip(p).title, cfg.tip(p).rows);
+    g.appendChild(c); g.appendChild(hr);
+  });
+  if (cfg.xLabel) g.appendChild(el("text", { x: iw / 2, y: ih + 36, "text-anchor": "middle",
+    fill: tok("--ink-3"), "font-size": 11 }, cfg.xLabel));
+  svg.appendChild(g); return svg;
+}
+
 /* ---------- legends ---------- */
 function legend(id, items) {
   const n = $(id); if (!n) return;
@@ -404,6 +475,6 @@ function boot() {
 
 return { el, tok, $, MINUS, m2, m2s, m1, acct, pc, pcs, pp, int,
          showTip, moveTip, hideTip, hit, lin, niceTicks, axisScale, gridY, xLabels,
-         waterfall, lineChart, hBars, groupBars, dumbbell, heatmap, spark, legend,
+         waterfall, lineChart, hBars, groupBars, dumbbell, heatmap, spark, scatterMap, scatterXY, legend,
          reg, onRender, render, boot };
 })();

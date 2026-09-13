@@ -1,0 +1,426 @@
+<title>Project Ferryman Trade Area</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;450;500;600;700&display=swap">
+<style>
+__CSS__
+</style>
+
+<div class="topbar"><div class="wrap">
+  <div class="brandmark"><i></i> Project Ferryman</div>
+  <nav class="navlinks">
+    <a href="#map">The estate</a><a href="#panel">Panel bias</a><a href="#model">The model</a>
+    <a href="#pipeline">The pipeline</a><a href="#incumbents">Who pays</a><a href="#sowhat">So what</a><a href="#method">Method</a><a href="https://claude.ai/code/artifact/55ce8a12-02a9-4a4f-a926-ec7f7e45ce8d" target="_blank" rel="noopener">Tutorial ↗</a>
+  </nav>
+</div></div>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="eyebrow label"><span class="codename">Project Ferryman</span><span>Commercial due diligence</span><span>&middot;</span><span>Trade area &amp; footfall</span></div>
+  <h1>Tarnbrook Bakehouse</h1>
+  <p class="lede" style="margin-top:14px">Eighty-four sites, and a forty-site roll-out plan the equity story
+     rests on. Mobile-device footfall and Experian demographics, run through a gravity model calibrated on how
+     the estate actually trades.</p>
+  <dl class="metarow" id="metarow"></dl>
+</header>
+
+<div class="verdict">
+  <div class="reported">
+    <div class="label">Roll-out plan, at estate-average revenue</div>
+    <div class="fig num" id="figClaim">&mdash;</div>
+    <div class="cap" id="capClaim"></div>
+  </div>
+  <div class="underlying">
+    <div class="label">Modelled, net of cannibalisation</div>
+    <div class="fig num" id="figNet">&mdash;</div>
+    <div class="cap" id="capNet"></div>
+  </div>
+</div>
+
+<p class="thesis" id="thesis"></p>
+
+<section id="map">
+  <div class="sechead"><h2>The estate, the field and the plan</h2></div>
+  <p class="secintro lede">Every output area in the region, sized by population. The chain in blue, the
+     competing field in outline, and the forty proposed sites. Switch the view to see which proposed sites
+     are genuinely new trade and which are taking it off the existing estate.</p>
+  <div class="panel">
+    <div class="controls">
+      <div class="tabs" role="tablist" aria-label="Map view">
+        <button role="tab" aria-selected="true" data-view="estate">Estate today</button>
+        <button role="tab" aria-selected="false" data-view="pipeline">With the pipeline</button>
+        <button role="tab" aria-selected="false" data-view="cannibal">Cannibalisation</button>
+      </div>
+    </div>
+    <figure style="margin:0"><div class="chart" id="mapChart"></div>
+      <div class="legend" id="mapLegend"></div>
+      <figcaption id="mapCap"></figcaption></figure>
+  </div>
+</section>
+
+<section id="panel">
+  <div class="sechead"><h2>The panel is not the population</h2><span class="amt" id="biasAmt"></span></div>
+  <p class="secintro lede">A mobile footfall panel is a sample, and a badly biased one: penetration runs
+     nearly six times higher in young urban segments than in older rural ones. Expanding it with a single
+     national factor &mdash; which is what almost everyone does first &mdash; inflates the market by a fifth,
+     because the panel over-represents exactly the people who use this format most.</p>
+  <div class="grid2" style="align-items:start">
+    <div class="panel">
+      <div class="panelhead"><h3>Panel penetration by Mosaic group</h3><span class="tiny">share of adults carrying a panel device</span></div>
+      <figure style="margin:0"><div class="chart" id="penChart"></div>
+        <figcaption id="penCap"></figcaption></figure>
+    </div>
+    <div class="panel">
+      <div class="panelhead"><h3>What the naive expansion costs</h3></div>
+      <div class="stats" style="margin-top:10px" id="biasStats"></div>
+      <p class="small" style="margin-top:16px" id="biasBody"></p>
+    </div>
+  </div>
+</section>
+
+<section id="model">
+  <div class="sechead"><h2>Calibrating the gravity model</h2><span class="amt" id="betaAmt"></span></div>
+  <p class="secintro lede">The distance decay is not assumed, it is estimated &mdash; by maximum likelihood on
+     the choice shares the panel actually observed. Because panel penetration is a single factor per output
+     area, it cancels out of the within-area shares entirely: the decay parameter comes from the raw counts,
+     and only the volumes need expanding.</p>
+  <div class="grid2" style="align-items:start">
+    <div class="panel">
+      <div class="panelhead"><h3>Observed visit rate by distance</h3><span class="tiny">expanded visits per adult per year, log scale</span></div>
+      <figure style="margin:0"><div class="chart" id="decayChart"></div>
+        <figcaption>Log scale on the vertical axis, so a power-law decay reads as a straight line — and it
+          very nearly does, which is the justification for the functional form. Distances are straight-line
+          with a road factor; on a live build these are drive-time isochrones.</figcaption></figure>
+    </div>
+    <div class="panel">
+      <div class="panelhead"><h3>Likelihood profile</h3><span class="tiny">where the decay parameter sits</span></div>
+      <figure style="margin:0"><div class="chart" id="profileChart"></div>
+        <figcaption id="profCap"></figcaption></figure>
+    </div>
+  </div>
+  <div class="panel" style="margin-top:18px">
+    <div class="panelhead"><h3>Does it explain how sites actually trade?</h3></div>
+    <div class="grid2" style="align-items:center">
+      <figure style="margin:0"><div class="chart" id="fitChart"></div>
+        <figcaption id="fitCap"></figcaption></figure>
+      <div>
+        <div class="stats" id="fitStats"></div>
+        <p class="small" style="margin-top:16px">A catchment model cannot see manager quality, frontage,
+          seating or whether there is a bus stop outside. Explaining four fifths of the variance in site
+          revenue from geography and demographics alone is the evidence that the forecast for a site that
+          does not exist yet is worth something.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pipeline">
+  <div class="sechead"><h2>The forty-site plan</h2><span class="amt" id="pipeAmt"></span></div>
+  <p class="secintro lede">Three numbers, and the distance between them is the finding. The plan values new
+     sites at estate-average revenue. The model says the marginal sites are worth a fraction of that &mdash;
+     and a third of what they do generate comes off stores the buyer already owns.</p>
+  <div class="panel">
+    <figure style="margin:0"><div class="chart" id="claimChart"></div>
+      <figcaption id="claimCap"></figcaption></figure>
+  </div>
+  <div class="callout" style="margin-top:18px" id="selfCallout"></div>
+  <div class="panel" style="margin-top:18px">
+    <div class="panelhead"><h3>Site by site</h3><span class="tiny" id="hurdleNote"></span></div>
+    <div class="tablewrap" id="pipeTable"></div>
+  </div>
+</section>
+
+<section id="incumbents">
+  <div class="sechead"><h2>Who pays for the roll-out</h2></div>
+  <p class="secintro lede">Cannibalisation is not evenly spread. A handful of existing stores absorb most of
+     it, and they are the ones the roll-out case never mentions.</p>
+  <div class="panel"><div class="tablewrap" id="hitTable"></div></div>
+</section>
+
+<section id="sowhat">
+  <div class="sechead"><h2>So what</h2></div>
+  <div class="grid3">
+    <div class="panel"><div class="label">Valuation</div><h3 style="margin-block:8px 10px">Price the plan, not the site count</h3>
+      <p class="small" id="soVal"></p></div>
+    <div class="panel"><div class="label">Diligence</div><h3 style="margin-block:8px 10px">Ask for the site appraisals</h3>
+      <p class="small" id="soDil"></p></div>
+    <div class="panel"><div class="label">Post-close</div><h3 style="margin-block:8px 10px">The model is the asset</h3>
+      <p class="small" id="soPost"></p></div>
+  </div>
+</section>
+
+<section id="method">
+  <div class="sechead"><h2>How it is built</h2></div>
+  <div class="grid2" style="align-items:start">
+    <div class="panel">
+      <div class="panelhead"><h3>Ingredients</h3></div>
+      <ul class="plain" id="ingredients" style="margin-top:12px"></ul>
+    </div>
+    <div class="panel">
+      <div class="panelhead"><h3>Method notes</h3></div>
+      <ul class="plain" id="notes" style="margin-top:12px"></ul>
+    </div>
+  </div>
+  <div class="panel" style="margin-top:18px">
+    <div class="panelhead"><h3>About this data</h3></div>
+    <p class="small" style="margin-top:8px">Tarnbrook Bakehouse is synthetic. The generator builds a region of
+      <span class="num" id="nAreas"></span> output areas with population and Mosaic mix, places the estate and
+      a competing field, then runs a gravity model with a <strong>known</strong> distance decay to produce true
+      visits and true site revenue. It then samples a mobile panel from those visits with deliberate
+      demographic bias in penetration.</p>
+    <p class="small" style="margin-top:12px">The analysis sees only the panel, the demographics and the site
+      locations. It has to recover the decay parameter on its own &mdash; and the build asserts that the
+      likelihood interval contains the true value. Fitted <span class="num" id="betaFit"></span> against a
+      true <span class="num" id="betaTrue"></span>.</p>
+  </div>
+</section>
+
+<footer>
+  <strong style="color:var(--ink)">Technique 04 &mdash; Trade Area &amp; Footfall.</strong>
+  Commercial diligence stage of the D&amp;A technique series. All figures synthetic.
+</footer>
+
+</div>
+<div id="tip" role="status" aria-live="polite"></div>
+<script id="payload" type="application/json">__DATA__</script>
+<script>__VIZ__</script>
+<script>
+(() => {
+"use strict";
+const { el, tok, $, pc, pcs, int, hit, lineChart, hBars, scatterMap, scatterXY, legend, reg, onRender } = window.V;
+const D = JSON.parse(document.getElementById("payload").textContent);
+const M = D.model, PB = D.panel, BI = PB.bias, PF = D.portfolio, CL = D.claim;
+const m1 = v => (v < 0 ? "−" : "") + "£" + (Math.abs(v) / 1e6).toFixed(1) + "m";
+const m2 = v => (v < 0 ? "−" : "") + "£" + (Math.abs(v) / 1e6).toFixed(2) + "m";
+const k0 = v => "£" + Math.round(v / 1000) + "k";
+const soloBy = Object.fromEntries(D.solo.map(s => [s.site_id, s]));
+let view = "estate";
+
+/* ---------------- static ---------------- */
+$("#metarow").innerHTML = [
+  ["Estate", `${D.meta.sites} sites, ${D.meta.competitors} competing`],
+  ["Geography", `${int(D.meta.areas)} output areas, ${(D.meta.population / 1e6).toFixed(2)}m adults`],
+  ["Panel", `${int(D.meta.panel_devices)} devices, ${int(D.meta.panel_records)} area-site pairs`],
+  ["Plan", `${D.meta.pipeline} proposed sites`]
+].map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join("");
+
+$("#figClaim").textContent = m1(CL.seller);
+$("#capClaim").innerHTML = `${CL.sites} sites × ${k0(CL.estate_mean)} estate average unit revenue`;
+$("#figNet").textContent = m1(CL.model_net);
+$("#capNet").innerHTML = `${pc(CL.model_net / CL.seller, 0)} of the headline. Gap of ${m1(CL.gap)}.`;
+$("#biasAmt").textContent = `${BI.penetration_spread.toFixed(1)}× spread`;
+$("#betaAmt").textContent = `β = ${M.beta.toFixed(2)}`;
+$("#pipeAmt").textContent = `${m1(CL.seller)} → ${m1(CL.model_net)}`;
+$("#nAreas").textContent = int(D.meta.areas);
+$("#betaFit").textContent = M.beta.toFixed(3);
+$("#betaTrue").textContent = "1.850";
+$("#hurdleNote").textContent = `hurdle ${k0(D.meta.hurdle)} net new revenue`;
+
+const accretive = D.solo.filter(s => s.accretive).length;
+$("#thesis").innerHTML = `The roll-out plan carries <strong>${CL.sites} sites</strong> at the estate average,
+  which is <strong>${m1(CL.seller)}</strong> of revenue. A gravity model calibrated on how the existing estate
+  actually trades — it explains <strong>${pc(M.r2, 0)}</strong> of the variance in site revenue — puts the
+  pipeline at ${m1(PF.gross)} gross. Take off what comes straight from stores the buyer already owns and it is
+  <strong>${m1(PF.net)}</strong>. Only <strong>${accretive} of the ${CL.sites}</strong> clear a
+  ${k0(D.meta.hurdle)} hurdle once cannibalisation is charged to them.`;
+
+/* ---------------- the map ---------------- */
+const xs = D.areas.map(a => a.x), ys = D.areas.map(a => a.y);
+const BOUNDS = { x0: Math.min(...xs) - 6, x1: Math.max(...xs) + 6,
+                 y0: Math.min(...ys) - 6, y1: Math.max(...ys) + 10 };
+const maxRev = Math.max(...D.estate.sites.map(s => s.revenue));
+
+const VIEWS = {
+  estate: "The chain today. Circle area is site revenue; the competing field is shown in outline. " +
+          "Note how much of the estate sits inside the same few catchments.",
+  pipeline: "The forty proposed sites in orange. Several land squarely inside catchments the chain already " +
+            "serves, which is where the cannibalisation comes from.",
+  cannibal: "Existing sites shaded by how much revenue the pipeline takes off them. The darker the red, " +
+            "the more of that store's trade the roll-out plan is simply moving."
+};
+
+reg("mapChart", w => {
+  const layers = [
+    { points: D.areas, r: d => Math.min(4.2, 0.9 + Math.sqrt(d.pop) / 34),
+      fill: () => "--rule-2", opacity: () => 0.5 },
+    { points: D.competitor_pts, r: () => 2.6, stroke: () => "--ink-3", strokeWidth: 1,
+      opacity: () => 0.55 },
+  ];
+  if (view === "cannibal") {
+    layers.push({ points: D.estate.sites, r: d => 3 + 9 * Math.sqrt(d.revenue / maxRev),
+      fill: d => d.transferred_pct > 0.05 ? "--neg" : "--s1",
+      opacity: d => d.transferred_pct > 0.05 ? Math.min(1, 0.28 + d.transferred_pct * 2.4) : 0.35,
+      tip: d => ({ title: d.name, rows: [["Revenue", k0(d.revenue)],
+        ["Taken by the pipeline", k0(d.transferred)], ["Share of the store", pc(d.transferred_pct, 1)]] }) });
+  } else {
+    layers.push({ points: D.estate.sites, r: d => 3 + 9 * Math.sqrt(d.revenue / maxRev),
+      fill: () => "--s1", opacity: () => 0.85,
+      tip: d => ({ title: d.name, rows: [["Town", d.town], ["Format", d.fmt],
+        ["Revenue", k0(d.revenue)]] }) });
+  }
+  if (view !== "estate") {
+    layers.push({ points: D.pipeline_pts, r: () => 6,
+      fill: d => (soloBy[d.site_id] || {}).accretive ? "--s2" : "--surface",
+      stroke: () => "--s2", strokeWidth: 2,
+      tip: d => { const s = soloBy[d.site_id] || {};
+        return { title: d.name, rows: [["Gross", k0(s.gross || 0)],
+          ["Taken from the estate", k0(s.transferred || 0)], ["Net new", k0(s.net || 0)],
+          ["Cannibalisation", pc(s.cannibalisation || 0, 0)],
+          ["Verdict", s.accretive ? "Clears the hurdle" : "Below hurdle"]] }; } });
+  }
+  return scatterMap(w, { bounds: BOUNDS, height: Math.round(w * 0.70),
+                         labels: D.towns.filter(t => t.pop > 60000), layers });
+});
+
+/* ---------------- panel bias ---------------- */
+reg("penChart", w => hBars(w, [...PB.by_group].map(g => ({
+  label: g.name, sub: `${int(g.population / 1000)}k adults`, value: g.penetration, token: "--s1",
+  rows: [["Penetration", pc(g.penetration, 2)], ["Output areas", String(g.areas)],
+         ["Population", int(g.population)]]
+})), { fmt: v => pc(v, 1), left: w < 620 ? 138 : 178, rowH: 34 }));
+$("#penCap").innerHTML = `Rental Hubs and City Prosperity carry devices at
+  ${BI.penetration_spread.toFixed(1)}× the rate of Vintage Value and Rural Reality — and they are also the
+  segments that use a food-to-go format most. Bias in the panel and bias in the behaviour point the same way,
+  which is what makes the error large.`;
+
+$("#biasStats").innerHTML = [
+  ["Naive market estimate", m1(BI.market_naive), "One national expansion factor"],
+  ["Properly expanded", m1(BI.market_proper), "Per area, shrunk to group"],
+  ["Overstatement", pcs(BI.market_error), "Applied to every roll-out case"],
+  ["Site catchment error", `${pcs(BI.catchment_p10, 0)} to ${pcs(BI.catchment_p90, 0)}`, "P10 to P90 across sites"]
+].map(([k, v, d]) => `<div class="stat"><div class="k">${k}</div><div class="v num">${v}</div><div class="d">${d}</div></div>`).join("");
+$("#biasBody").innerHTML = `The striking part is the second pair of numbers. Panel bias barely moves the
+  <em>relative</em> ranking of sites — catchments mix several Mosaic groups and the errors largely wash out,
+  so the site league table looks fine. It is the <em>level</em> that is wrong, by ${pcs(BI.market_error)}. That
+  is precisely why the error survives: nothing in the output looks broken, and every market-size and
+  whitespace number built on it is a fifth too big.`;
+
+/* ---------------- the model ---------------- */
+reg("decayChart", w => lineChart(w, {
+  labels: M.decay.map(d => d.km.toFixed(1)), every: 2, rightPad: 48, height: 240,
+  series: [{ name: "Visits per adult", token: "--s1",
+             values: M.decay.map(d => Math.log10(Math.max(d.rate, 1e-6))) }],
+  fmtAxis: t => Math.pow(10, t).toFixed(Math.pow(10, t) < 1 ? 2 : 1),
+  fmtEnd: v => Math.pow(10, v).toFixed(2)
+}));
+reg("profileChart", w => lineChart(w, {
+  labels: M.profile.map(p => p.beta.toFixed(1)), every: 4, rightPad: 20, height: 240,
+  series: [{ name: "Log-likelihood", token: "--s2", values: M.profile.map(p => p.ll) }],
+  markIndex: M.profile.reduce((b, p, i) => p.ll > M.profile[b].ll ? i : b, 0),
+  markLabel: `β ${M.beta.toFixed(2)}`,
+  fmtAxis: t => (t / 1e6).toFixed(1) + "m", fmtEnd: v => (v / 1e6).toFixed(2) + "m"
+}));
+$("#profCap").innerHTML = `Maximum likelihood over the decay exponent. With ${int(D.meta.panel_records)}
+  area-site pairs the peak is sharp: the interval within two log-likelihood units is
+  ${M.beta_lo.toFixed(3)} to ${M.beta_hi.toFixed(3)}. The uncertainty that matters is not in this number —
+  it is whether one decay applies to every format, which is the first thing to test on a real estate.`;
+
+reg("fitChart", w => scatterXY(w, {
+  points: D.site_metrics.map(s => ({ x: s.pred_revenue, y: s.revenue, n: s.name, t: s.town })),
+  fmtAxis: t => "£" + (t / 1e6).toFixed(1) + "m", xLabel: "modelled revenue →  (line is parity)",
+  tip: p => ({ title: p.n, rows: [["Town", p.t], ["Modelled", k0(p.x)], ["Actual", k0(p.y)],
+                                  ["Variance", pcs(p.y / p.x - 1, 0)]] })
+}));
+$("#fitCap").innerHTML = `Each point is one of the ${D.meta.sites} trading sites. Vertical axis is what it
+  actually turns over; horizontal is what the catchment model says it should.`;
+$("#fitStats").innerHTML = [
+  ["Variance explained", pc(M.r2, 0), "R² against actual site revenue"],
+  ["Mean absolute error", pc(M.mape, 0), "Per site"],
+  ["Fitted decay", M.beta.toFixed(3), `Interval ${M.beta_lo.toFixed(3)}–${M.beta_hi.toFixed(3)}`],
+  ["Own share of demand", pc(M.own_share, 0), "Against the competing field"]
+].map(([k, v, d]) => `<div class="stat"><div class="k">${k}</div><div class="v num">${v}</div><div class="d">${d}</div></div>`).join("");
+
+/* ---------------- the pipeline ---------------- */
+reg("claimChart", w => hBars(w, [
+  { label: "Roll-out plan", sub: `${CL.sites} × estate average`, value: CL.seller, token: "--s2",
+    rows: [["Claimed", m2(CL.seller)]] },
+  { label: "Modelled gross", sub: "what the sites actually draw", value: PF.gross, token: "--s1",
+    rows: [["Gross", m2(PF.gross)]] },
+  { label: "Net of cannibalisation", sub: "new trade to the group", value: PF.net, token: "--total",
+    rows: [["Net", m2(PF.net)], ["Taken from the estate", m2(PF.transferred_from_estate)]] },
+], { fmt: v => m1(v), left: w < 600 ? 142 : 196, rowH: 46 }));
+$("#claimCap").innerHTML = `The gap between the first and second bar is site quality: the estate average is set
+  by mature stores in the best catchments, and the remaining whitespace is not those catchments. The gap
+  between the second and third is cannibalisation — ${m1(PF.transferred_from_estate)}, or
+  ${pc(PF.cannibalisation_rate, 0)} of everything the new sites draw.`;
+
+$("#selfCallout").innerHTML = `<h3>Site-by-site appraisal misses ${m1(PF.self_cannibalisation)}</h3>
+  <p class="small">Appraised one at a time against today's estate, the forty sites net
+  ${m1(PF.solo_net_sum)}. Opened together, they net ${m1(PF.net)} — because several of them compete with each
+  other as well as with the existing stores. Every site appraisal in a roll-out pack is built the first way.</p>
+  <p class="small">On a real deal this is the question to put to the property director: were these sites
+  appraised individually or as a programme? The answer is almost always individually, and the difference is
+  real money.</p>`;
+
+$("#pipeTable").innerHTML = `<table style="min-width:700px"><thead><tr><th>#</th><th>Proposed site</th>
+  <th>Format</th><th>Gross</th><th>From the estate</th><th>Net new</th><th>Cannibalisation</th><th></th></tr></thead><tbody>
+  ${D.solo.map(s => `<tr><td class="n tiny">${s.rank}</td><td>${s.name}<div class="tiny">${s.town}</div></td>
+    <td class="tiny">${s.fmt}</td><td class="n">${k0(s.gross)}</td>
+    <td class="n neg">${k0(-s.transferred)}</td><td class="n">${k0(s.net)}</td>
+    <td class="n ${s.cannibalisation > 0.35 ? "neg" : ""}">${pc(s.cannibalisation, 0)}</td>
+    <td>${s.accretive ? '<span class="chip good"><i></i>Clears</span>'
+                      : '<span class="chip crit"><i></i>Below hurdle</span>'}</td></tr>`).join("")}
+  </tbody></table><p class="tiny" style="margin-top:8px">Ranked by net new revenue, each appraised against
+  today's estate. Cannibalisation is the share of the site's own draw that comes from existing stores.</p>`;
+
+$("#hitTable").innerHTML = `<table style="min-width:440px"><thead><tr><th>Existing site</th><th>Town</th>
+  <th>Revenue</th><th>Lost to the plan</th><th>Share</th></tr></thead><tbody>
+  ${D.worst_hit.map(h => `<tr><td>${h.name}</td><td class="tiny">${h.town}</td>
+    <td class="n">${k0(h.base)}</td><td class="n neg">${k0(-h.transferred)}</td>
+    <td class="n neg">${pc(h.pct, 1)}</td></tr>`).join("")}
+  </tbody></table><p class="tiny" style="margin-top:8px">The eight stores absorbing most of the transfer. A
+  store losing a quarter of its trade to a new opening will miss its own budget, and the area manager will be
+  asked why.</p>`;
+
+/* ---------------- so what ---------------- */
+$("#soVal").innerHTML = `The plan is in the model at ${m1(CL.seller)}. On this analysis it is worth
+  ${m1(CL.model_net)} of new group revenue — ${pc(CL.model_net / CL.seller, 0)} of the headline. That is not a
+  haircut on execution risk, it is a different number: the whitespace left is structurally weaker than the
+  estate that has already been built, and a third of what it draws was going to the group anyway.`;
+$("#soDil").innerHTML = `Ask for the individual site appraisals and the assumptions behind them. Two questions
+  settle it: what unit revenue does each assume, and were they appraised as a programme or one at a time?
+  ${m1(PF.self_cannibalisation)} of the gap sits in that second question alone.`;
+$("#soPost").innerHTML = `The calibrated model is worth more after completion than during diligence. It
+  explains ${pc(M.r2, 0)} of the variance in how the current estate trades, which makes it a site-selection
+  tool: rank every candidate net of cannibalisation, and stop opening stores that move trade around the
+  portfolio.`;
+
+$("#ingredients").innerHTML = [
+  "<strong>Mobile device footfall</strong> — visits by inferred home output area to each venue. Home location comes from overnight device clusters; this is what makes a catchment observable rather than assumed.",
+  "<strong>Panel penetration by area</strong> — devices resident in each output area. Without it you cannot expand the panel, and expansion is the whole game.",
+  "<strong>Experian Mosaic</strong> — segment classification and consumer expenditure by output area. Drives both the demographic fit and the spend per visit.",
+  "<strong>Population by output area</strong> — census or mid-year estimates, the denominator for everything.",
+  "<strong>Own estate</strong> — location, floor area, format, trading revenue. Revenue is what calibrates and validates the model.",
+  "<strong>Competitor locations</strong> — the rest of the choice set. A gravity model without competitors gives the chain 100% of demand everywhere and makes cannibalisation meaningless.",
+  "<strong>Drive-time matrix</strong> — on a live build, isochrones from a routing engine rather than straight-line distance with a road factor.",
+].map(s => `<li><span>${s}</span></li>`).join("");
+$("#notes").innerHTML = [
+  "<strong>Expansion is shrunk toward the segment mean.</strong> Twelve devices in a population of 300 gives a factor that swings on one commuter; an empirical-Bayes pseudo-population of " + PB.pseudo + " stabilises it without flattening genuine variation.",
+  "<strong>The decay parameter comes from raw panel counts.</strong> Penetration is one scalar per area, so it cancels out of within-area choice shares. Only the volumes need expanding — a useful property, and not an obvious one.",
+  "<strong>Total demand is inferred, not assumed.</strong> Expanded own-chain visits divided by the modelled own-capture share gives each area's total demand, including trade going to competitors.",
+  "<strong>Cannibalisation is computed twice</strong> — site by site, which is how sellers appraise, and as a portfolio, which is what actually happens.",
+  "<strong>The model is validated against trading revenue</strong> before it is used to forecast anything. A catchment model that cannot explain the estate you can see has no business forecasting one you cannot.",
+].map(s => `<li><span>${s}</span></li>`).join("");
+
+/* ---------------- controls ---------------- */
+document.querySelectorAll('.tabs [role="tab"]').forEach(b => b.addEventListener("click", () => {
+  document.querySelectorAll('.tabs [role="tab"]').forEach(x => x.setAttribute("aria-selected", String(x === b)));
+  view = b.dataset.view; window.V.render();
+}));
+
+onRender(() => {
+  $("#mapCap").textContent = VIEWS[view];
+  const base = [{ swatch: tok("--rule-2"), name: "Output area, sized by population" },
+                { swatch: tok("--ink-3"), name: "Competitor site" }];
+  legend("#mapLegend", view === "cannibal"
+    ? base.concat([{ swatch: tok("--s1"), name: "Largely unaffected" },
+                   { swatch: tok("--neg"), name: "Trade taken by the pipeline" }])
+    : view === "pipeline"
+      ? base.concat([{ swatch: tok("--s1"), name: "Tarnbrook site" },
+                     { swatch: tok("--s2"), name: "Proposed site" }])
+      : base.concat([{ swatch: tok("--s1"), name: "Tarnbrook site, sized by revenue" }]));
+});
+window.V.boot();
+})();
+</script>

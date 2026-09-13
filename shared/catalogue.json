@@ -46,8 +46,10 @@
         {
           "n": 4,
           "name": "Trade Area & Footfall",
-          "status": "next",
-          "blurb": "Mobile-device footfall and Experian purchase data to size catchments, test demographic fit, measure competitive density and quantify cannibalisation between sites."
+          "status": "live",
+          "blurb": "Mobile footfall and Experian demographics through a gravity model calibrated on how the estate actually trades. A 40-site roll-out plan worth £13.1m of new trade against a £42.6m headline.",
+          "url": "https://claude.ai/code/artifact/5cf358a8-34ea-4190-9b5a-cc7217fd63b4",
+          "tutorial_url": "https://claude.ai/code/artifact/55ce8a12-02a9-4a4f-a926-ec7f7e45ce8d"
         },
         {
           "n": 32,

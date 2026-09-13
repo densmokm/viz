@@ -1,0 +1,492 @@
+<title>How to build a trade area model from device data</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;450;500;600;700&display=swap">
+<style>
+:root{
+  --ground:#eef1f5; --surface:#ffffff; --surface-2:#e4e9ef; --surface-3:#f6f8fa;
+  --ink:#101519; --ink-2:#495568; --ink-3:#79869a; --rule:#d5dce5; --rule-2:#c0cad6;
+  --accent:#173a5e; --accent-soft:#dce8f5;
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a;
+  --pos:#2a78d6; --neg:#e34948; --total:#334155;
+  --good:#0ca30c; --warn:#fab219; --serious:#ec835a; --crit:#d03b3b;
+  --chip-good:#e3f4e3; --chip-warn:#fdf1d6; --chip-serious:#fbe7dd; --chip-neutral:#e7ebf1;
+  --shadow:0 1px 2px rgba(16,21,25,.06), 0 8px 24px -12px rgba(16,21,25,.18);
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --ground:#0f1318; --surface:#171c23; --surface-2:#232a34; --surface-3:#1b2129;
+  --ink:#eef2f7; --ink-2:#aab6c6; --ink-3:#78859a; --rule:#2a323d; --rule-2:#3a4450;
+  --accent:#8fb8e2; --accent-soft:#1d2c3d;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70;
+  --pos:#3987e5; --neg:#e66767; --total:#94a3b5;
+  --chip-good:#12301a; --chip-warn:#332709; --chip-serious:#33210f; --chip-neutral:#242b35;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --ground:#0f1318; --surface:#171c23; --surface-2:#232a34; --surface-3:#1b2129;
+  --ink:#eef2f7; --ink-2:#aab6c6; --ink-3:#78859a; --rule:#2a323d; --rule-2:#3a4450;
+  --accent:#8fb8e2; --accent-soft:#1d2c3d;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70;
+  --pos:#3987e5; --neg:#e66767; --total:#94a3b5;
+  --chip-good:#12301a; --chip-warn:#332709; --chip-serious:#33210f; --chip-neutral:#242b35;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--ground); color:var(--ink);
+  font-family:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  font-size:16px; line-height:1.6; -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1120px; margin:0 auto; padding-inline:clamp(16px,4vw,40px)}
+h1,h2,h3{text-wrap:balance; margin:0}
+h1{font-family:Newsreader,Georgia,serif; font-weight:500; font-size:clamp(2rem,4.6vw,2.9rem); line-height:1.1; letter-spacing:-.015em}
+h2{font-family:Newsreader,Georgia,serif; font-weight:500; font-size:clamp(1.4rem,3vw,1.85rem); line-height:1.2; letter-spacing:-.01em}
+h3{font-size:1rem; font-weight:600; letter-spacing:-.005em}
+p{margin:0}
+a{color:var(--accent)}
+.label{font-size:.7rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-3)}
+.lede{font-size:1.06rem; color:var(--ink-2); max-width:66ch}
+.small{font-size:.84rem; color:var(--ink-2)}
+.tiny{font-size:.76rem; color:var(--ink-3)}
+.num{font-family:"IBM Plex Mono",ui-monospace,monospace; font-variant-numeric:tabular-nums}
+
+/* ---------- top bar ---------- */
+.topbar{position:sticky; top:0; z-index:40; background:color-mix(in srgb,var(--ground) 88%,transparent);
+  backdrop-filter:blur(10px); border-bottom:1px solid var(--rule)}
+.topbar .wrap{display:flex; align-items:center; gap:20px; height:52px}
+.brandmark{display:flex; align-items:center; gap:9px; font-weight:600; font-size:.9rem; white-space:nowrap}
+.brandmark i{width:9px; height:9px; border-radius:2px; background:var(--s1); display:block}
+.navlinks{display:flex; gap:18px; margin-left:auto; overflow-x:auto; scrollbar-width:none}
+.navlinks::-webkit-scrollbar{display:none}
+.navlinks a{color:var(--ink-2); text-decoration:none; font-size:.83rem; white-space:nowrap; padding:4px 0; border-bottom:2px solid transparent}
+.navlinks a:hover{color:var(--ink); border-bottom-color:var(--rule-2)}
+@media (max-width:720px){ .navlinks{display:none} }
+
+/* ---------- header ---------- */
+header.hero{padding-block:clamp(34px,6vw,60px) 30px}
+.eyebrow{display:flex; align-items:center; gap:10px; margin-bottom:16px; flex-wrap:wrap}
+.eyebrow span{color:var(--ink-3)}
+.codename{background:var(--accent-soft); color:var(--accent); padding:2px 9px; border-radius:3px; font-weight:600}
+.metarow{display:flex; flex-wrap:wrap; gap:0; margin-top:26px; border-top:1px solid var(--rule); border-bottom:1px solid var(--rule)}
+.metarow div{flex:1 1 165px; padding:13px 18px 13px 0; border-right:1px solid var(--rule)}
+.metarow div:last-child{border-right:0}
+.metarow dt{font-size:.7rem; font-weight:600; letter-spacing:.09em; text-transform:uppercase; color:var(--ink-3); margin-bottom:3px}
+.metarow dd{margin:0; font-size:.9rem; font-weight:450}
+
+/* ---------- verdict ---------- */
+.verdict{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:1px; background:var(--rule);
+  border:1px solid var(--rule); border-radius:6px; overflow:hidden; margin-block:8px 26px}
+.verdict > div{background:var(--surface); padding:24px 26px 22px}
+.verdict .fig{font-size:clamp(2.4rem,6.5vw,3.4rem); font-weight:600; line-height:1; letter-spacing:-.03em; margin:10px 0 6px}
+.verdict .reported .fig{color:var(--ink)}
+.verdict .underlying .fig{color:var(--neg)}
+.verdict .cap{font-size:.85rem; color:var(--ink-2)}
+@media (max-width:620px){ .verdict{grid-template-columns:1fr} }
+.thesis{background:var(--surface); border:1px solid var(--rule); border-left:3px solid var(--s2);
+  border-radius:4px; padding:20px 24px; margin-bottom:40px; font-size:1.02rem; color:var(--ink-2); max-width:none}
+.thesis strong{color:var(--ink); font-weight:600}
+
+/* ---------- sections ---------- */
+section{padding-block:34px; border-top:1px solid var(--rule)}
+.sechead{display:flex; align-items:baseline; gap:16px; flex-wrap:wrap; margin-bottom:8px}
+.sechead .amt{font-family:"IBM Plex Mono",monospace; font-size:.82rem; font-weight:500; color:var(--ink-3);
+  background:var(--surface-2); padding:3px 9px; border-radius:3px; white-space:nowrap}
+.secintro{margin-block:12px 26px}
+@media (max-width:620px){ .sechead .amt{white-space:normal} }
+
+/* ---------- panels & charts ---------- */
+.panel{background:var(--surface); border:1px solid var(--rule); border-radius:6px; padding:22px clamp(14px,2.4vw,24px)}
+.panelhead{display:flex; align-items:flex-start; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-bottom:6px}
+.chart{width:100%; min-height:60px}
+.chart svg{display:block; width:100%; height:auto; overflow:visible}
+figcaption{font-size:.78rem; color:var(--ink-3); margin-top:12px; line-height:1.5}
+.grid2{display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:18px}
+.grid3{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:18px}
+
+/* ---------- controls ---------- */
+.controls{display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-bottom:18px}
+.tabs{display:inline-flex; background:var(--surface-2); border-radius:5px; padding:3px; gap:2px}
+.tabs button{appearance:none; border:0; background:transparent; color:var(--ink-2); font:inherit; font-size:.84rem;
+  font-weight:500; padding:6px 13px; border-radius:3px; cursor:pointer; white-space:nowrap}
+.tabs button[aria-selected="true"]{background:var(--surface); color:var(--ink); box-shadow:0 1px 2px rgba(0,0,0,.10); font-weight:600}
+.tabs button:focus-visible, .toggle:focus-visible{outline:2px solid var(--s1); outline-offset:2px}
+.toggle{appearance:none; border:1px solid var(--rule-2); background:var(--surface); color:var(--ink-2); font:inherit;
+  font-size:.8rem; font-weight:500; padding:6px 12px; border-radius:5px; cursor:pointer; display:inline-flex; align-items:center; gap:7px}
+.toggle[aria-pressed="true"]{border-color:var(--s1); color:var(--ink); background:var(--accent-soft)}
+.toggle i{width:8px; height:8px; border-radius:50%; background:var(--rule-2); display:block}
+.toggle[aria-pressed="true"] i{background:var(--s1)}
+
+/* ---------- legend ---------- */
+.legend{display:flex; gap:16px; flex-wrap:wrap; align-items:center; font-size:.8rem; color:var(--ink-2); margin-top:14px}
+.legend span{display:inline-flex; align-items:center; gap:7px}
+.legend b{width:11px; height:11px; border-radius:2px; display:block}
+
+/* ---------- tables ---------- */
+.tablewrap{overflow-x:auto; margin-top:4px}
+table{border-collapse:collapse; width:100%; font-size:.85rem; min-width:480px}
+th,td{text-align:right; padding:9px 10px; border-bottom:1px solid var(--rule); white-space:nowrap}
+th:first-child,td:first-child{text-align:left; white-space:normal}
+thead th{font-size:.7rem; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-3);
+  border-bottom:1px solid var(--rule-2); vertical-align:bottom}
+tbody tr:last-child td{border-bottom:0}
+tbody tr.totalrow td{border-top:1px solid var(--rule-2); font-weight:600; background:var(--surface-3)}
+td.n{font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums}
+td.neg{color:var(--neg)}
+.bar-cell{position:relative; min-width:96px}
+.bar-cell i{position:absolute; left:10px; top:50%; transform:translateY(-50%); height:9px; border-radius:2px; display:block}
+
+/* ---------- chips ---------- */
+.chip{display:inline-flex; align-items:center; gap:6px; font-size:.74rem; font-weight:600; padding:2px 8px; border-radius:3px; white-space:nowrap}
+.chip i{width:7px; height:7px; border-radius:50%; display:block; flex:none}
+.chip.good{background:var(--chip-good); color:var(--good)} .chip.good i{background:var(--good)}
+.chip.warn{background:var(--chip-warn); color:#8a6200} .chip.warn i{background:var(--warn)}
+.chip.serious{background:var(--chip-serious); color:#a8501f} .chip.serious i{background:var(--serious)}
+.chip.neutral{background:var(--chip-neutral); color:var(--ink-2)} .chip.neutral i{background:var(--ink-3)}
+:root[data-theme="dark"] .chip.warn, :root[data-theme="dark"] .chip.serious{color:var(--ink)}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]) .chip.warn,
+  :root:not([data-theme="light"]) .chip.serious{color:var(--ink)} }
+
+/* ---------- stat tiles ---------- */
+.stats{display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:1px; background:var(--rule);
+  border:1px solid var(--rule); border-radius:6px; overflow:hidden}
+.stat{background:var(--surface); padding:16px 18px}
+.stat .v{font-size:1.6rem; font-weight:600; line-height:1.15; letter-spacing:-.02em; margin:6px 0 3px}
+.stat .k{font-size:.7rem; font-weight:600; letter-spacing:.09em; text-transform:uppercase; color:var(--ink-3)}
+.stat .d{font-size:.78rem; color:var(--ink-3); line-height:1.45}
+
+/* ---------- callout ---------- */
+.callout{border:1px solid var(--rule); border-left:3px solid var(--crit); background:var(--surface);
+  border-radius:4px; padding:18px 22px; display:grid; gap:8px}
+.callout.ok{border-left-color:var(--good)}
+.callout h3{display:flex; align-items:center; gap:9px}
+.callout h3::before{content:""; width:7px; height:7px; border-radius:50%; background:var(--crit); flex:none}
+.callout.ok h3::before{background:var(--good)}
+
+/* ---------- lists ---------- */
+ol.qs{counter-reset:q; list-style:none; padding:0; margin:0; display:grid; gap:14px}
+ol.qs li{counter-increment:q; display:grid; grid-template-columns:auto 1fr; gap:14px; align-items:start}
+ol.qs li::before{content:"Q" counter(q); font-family:"IBM Plex Mono",monospace; font-size:.74rem; font-weight:600;
+  color:var(--accent); background:var(--accent-soft); padding:3px 7px; border-radius:3px; margin-top:2px}
+ul.plain{list-style:none; padding:0; margin:0; display:grid; gap:10px}
+ul.plain li{display:grid; grid-template-columns:auto 1fr; gap:11px; align-items:start; font-size:.9rem; color:var(--ink-2)}
+ul.plain li::before{content:""; width:5px; height:5px; border-radius:50%; background:var(--rule-2); margin-top:9px}
+code{font-family:"IBM Plex Mono",monospace; font-size:.86em; background:var(--surface-2); padding:1px 5px; border-radius:3px}
+.formula{font-family:"IBM Plex Mono",monospace; font-size:.82rem; background:var(--surface-3); border:1px solid var(--rule);
+  border-radius:4px; padding:14px 16px; overflow-x:auto; white-space:pre; line-height:1.7; color:var(--ink-2)}
+
+/* ---------- tooltip ---------- */
+#tip{position:fixed; z-index:80; pointer-events:none; opacity:0; transition:opacity .1s;
+  background:var(--surface); color:var(--ink); border:1px solid var(--rule-2); border-radius:5px;
+  box-shadow:var(--shadow); padding:9px 12px; font-size:.8rem; line-height:1.5; max-width:270px}
+#tip .t{font-weight:600; margin-bottom:3px}
+#tip .r{display:flex; justify-content:space-between; gap:16px}
+#tip .r span:last-child{font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums}
+
+footer{padding-block:34px 60px; border-top:1px solid var(--rule); color:var(--ink-3); font-size:.82rem}
+[hidden]{display:none !important}
+@media (prefers-reduced-motion:reduce){ *{transition:none !important; animation:none !important} }
+
+/* ---------- verdict chips: critical state ---------- */
+.chip.crit{background:var(--chip-crit); color:var(--crit)} .chip.crit i{background:var(--crit)}
+:root{--chip-crit:#fbe3e3}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){--chip-crit:#3a1717} }
+:root[data-theme="dark"]{--chip-crit:#3a1717}
+
+/* ---------- claim scorecard ---------- */
+.claim{border-bottom:1px solid var(--rule)}
+.claim:last-child{border-bottom:0}
+.claimhead{width:100%; appearance:none; background:transparent; border:0; font:inherit; color:inherit;
+  text-align:left; cursor:pointer; display:grid; align-items:center; gap:16px; padding:15px 6px;
+  grid-template-columns:38px minmax(0,1fr) 150px 104px 132px}
+.claimhead:hover{background:var(--surface-3)}
+.claimhead:focus-visible{outline:2px solid var(--s1); outline-offset:-2px}
+.claimhead .cid{font-family:"IBM Plex Mono",monospace; font-size:.76rem; font-weight:600; color:var(--ink-3)}
+.claimhead .ctext{font-size:.93rem; line-height:1.45}
+.claimhead .ctext em{display:block; font-style:normal; font-size:.76rem; color:var(--ink-3); margin-top:3px}
+.divbar{display:block; position:relative; height:22px; background:var(--surface-2); border-radius:3px; overflow:hidden}
+.divbar::before{content:""; position:absolute; left:50%; top:0; bottom:0; width:1px; background:var(--rule-2)}
+.divbar i{position:absolute; top:4px; bottom:4px; border-radius:2px; display:block}
+.divbar b{position:absolute; right:6px; top:50%; transform:translateY(-50%); font-family:"IBM Plex Mono",monospace;
+  font-size:.72rem; font-weight:600; color:var(--ink-2)}
+.meter{display:flex; flex-direction:column; gap:4px}
+.meter u{height:6px; background:var(--surface-2); border-radius:3px; display:block; text-decoration:none; position:relative}
+.meter u i{position:absolute; left:0; top:0; bottom:0; border-radius:3px; background:var(--ink-3); display:block}
+.meter s{text-decoration:none; font-size:.7rem; color:var(--ink-3); font-family:"IBM Plex Mono",monospace}
+.claimbody{padding:2px 6px 20px 56px; display:grid; gap:14px}
+@media (max-width:860px){
+  .claimhead{grid-template-columns:34px minmax(0,1fr); gap:8px 12px}
+  .claimhead .cscore, .claimhead .cconf{grid-column:2}
+  .claimhead .cverdict{grid-column:2; justify-self:start}
+  .claimbody{padding-left:12px}
+}
+
+/* ---------- entity board (bidders, portcos, workstreams) ---------- */
+.board{display:grid}
+.brow{display:grid; gap:14px; align-items:center; padding:16px 6px; border-bottom:1px solid var(--rule);
+  grid-template-columns:minmax(0,1.5fr) 108px 108px minmax(120px,1fr) minmax(0,1.4fr)}
+.brow:last-child{border-bottom:0}
+.brow .who{display:grid; gap:3px}
+.brow .who strong{font-size:.95rem; font-weight:600}
+.brow .who span{font-size:.76rem; color:var(--ink-3)}
+.brow .flags{display:flex; flex-wrap:wrap; gap:6px}
+.brow .mini{display:flex; gap:14px; font-size:.75rem; color:var(--ink-3); flex-wrap:wrap}
+.brow .mini b{display:block; font-family:"IBM Plex Mono",monospace; font-size:.86rem; font-weight:600; color:var(--ink)}
+@media (max-width:900px){ .brow{grid-template-columns:minmax(0,1fr) 100px 100px} 
+  .brow .spark, .brow .flags{grid-column:1 / -1} }
+
+/* ---------- ordinal ramp: stage pipelines, funnel steps, tiers ---------- */
+:root{--ord1:#86b6ef; --ord2:#5598e7; --ord3:#2a78d6; --ord4:#1c5cab; --ord5:#104281}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --ord1:#184f95; --ord2:#256abf; --ord3:#3987e5; --ord4:#86b6ef; --ord5:#cde2fb} }
+:root[data-theme="dark"]{--ord1:#184f95; --ord2:#256abf; --ord3:#3987e5; --ord4:#86b6ef; --ord5:#cde2fb}
+.stagebar{display:flex; height:10px; border-radius:3px; overflow:hidden; gap:2px; background:var(--surface-2)}
+.stagebar i{display:block; min-width:2px}
+
+/* ---------- code ---------- */
+:root{
+  --code-bg:#f6f8fb; --code-rule:#dde4ec; --code-ink:#1c2430;
+  --code-kw:#8250df; --code-str:#0a7a4f; --code-num:#b3541e; --code-com:#79869a;
+  --code-fn:#0550ae; --code-op:#495568; --code-cls:#0b6b6b;
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --code-bg:#10151b; --code-rule:#252d38; --code-ink:#dbe3ec;
+  --code-kw:#c0a6f5; --code-str:#56d4a0; --code-num:#f0883e; --code-com:#7f8a99;
+  --code-fn:#79b8ff; --code-op:#aab6c6; --code-cls:#4fd1c5;
+}}
+:root[data-theme="dark"]{
+  --code-bg:#10151b; --code-rule:#252d38; --code-ink:#dbe3ec;
+  --code-kw:#c0a6f5; --code-str:#56d4a0; --code-num:#f0883e; --code-com:#7f8a99;
+  --code-fn:#79b8ff; --code-op:#aab6c6; --code-cls:#4fd1c5;
+}
+.codewrap{border:1px solid var(--code-rule); border-radius:6px; overflow:hidden; background:var(--code-bg)}
+.codebar{display:flex; align-items:center; gap:8px; padding:7px 10px 7px 12px;
+  border-bottom:1px solid var(--code-rule); background:var(--code-bg)}
+.codebar .lang{font-family:"IBM Plex Mono",monospace; font-size:.7rem; font-weight:600;
+  letter-spacing:.07em; text-transform:uppercase; color:var(--code-com)}
+.codebar .spacer{flex:1}
+.codebar button{appearance:none; border:1px solid transparent; background:transparent; color:var(--code-com);
+  font:inherit; font-size:.72rem; font-weight:600; padding:3px 8px; border-radius:4px; cursor:pointer}
+.codebar button:hover{color:var(--code-ink); border-color:var(--code-rule)}
+.codebar button[aria-selected="true"]{color:var(--code-ink); background:var(--surface); border-color:var(--code-rule)}
+.codebar button:focus-visible{outline:2px solid var(--s1); outline-offset:1px}
+pre.code{margin:0; padding:14px 16px; overflow-x:auto; background:var(--code-bg)}
+pre.code code{font-family:"IBM Plex Mono",ui-monospace,monospace; font-size:.795rem; line-height:1.72;
+  color:var(--code-ink); background:none; padding:0; white-space:pre; display:block; tab-size:4}
+.hljs-keyword,.hljs-literal,.hljs-selector-tag{color:var(--code-kw)}
+.hljs-string,.hljs-meta .hljs-string{color:var(--code-str)}
+.hljs-number{color:var(--code-num)}
+.hljs-comment{color:var(--code-com); font-style:italic}
+.hljs-title,.hljs-title.function_,.hljs-section{color:var(--code-fn); font-weight:600}
+.hljs-title.class_,.hljs-type,.hljs-built_in{color:var(--code-cls)}
+.hljs-params,.hljs-operator,.hljs-punctuation{color:var(--code-op)}
+.hljs-attr,.hljs-variable,.hljs-property{color:var(--code-ink)}
+.hljs-meta{color:var(--code-com)}
+
+/* ---------- tutorial steps ---------- */
+.step{display:grid; grid-template-columns:44px minmax(0,1fr); gap:0 20px; padding-block:30px;
+  border-top:1px solid var(--rule)}
+.step:first-of-type{border-top:0}
+.step .sn{font-family:"IBM Plex Mono",monospace; font-size:.8rem; font-weight:600; color:var(--s1);
+  background:var(--accent-soft); border-radius:4px; height:30px; display:grid; place-items:center}
+.step .body{display:grid; gap:14px; min-width:0}
+.step h3{font-size:1.12rem; font-weight:600; line-height:1.3}
+.step .why{font-size:.95rem; color:var(--ink-2); line-height:1.65; max-width:70ch}
+.step .out{font-family:"IBM Plex Mono",monospace; font-size:.75rem; color:var(--ink-2);
+  background:var(--surface-3); border:1px solid var(--rule); border-left:2px solid var(--rule-2);
+  border-radius:0 4px 4px 0; padding:10px 14px; overflow-x:auto; white-space:pre; line-height:1.6}
+@media (max-width:620px){ .step{grid-template-columns:1fr; gap:12px} .step .sn{width:36px} }
+.pitfall{border:1px solid var(--rule); border-left:3px solid var(--warn); border-radius:0 5px 5px 0;
+  background:var(--surface); padding:16px 20px; display:grid; gap:8px}
+.pitfall h4{margin:0; font-size:.92rem; font-weight:600; display:flex; gap:9px; align-items:center}
+.pitfall h4::before{content:""; width:6px; height:6px; border-radius:50%; background:var(--warn); flex:none}
+.pitfall p{font-size:.86rem; color:var(--ink-2); line-height:1.6}
+.schema td:first-child{font-family:"IBM Plex Mono",monospace; font-size:.8rem}
+.schema th,.schema td{text-align:left}
+.schema td:nth-child(3){white-space:normal; min-width:260px}
+.tocbox{display:grid; gap:2px; margin-top:18px}
+.tocbox a{display:grid; grid-template-columns:30px 1fr; gap:12px; padding:9px 10px; border-radius:5px;
+  text-decoration:none; color:var(--ink-2); font-size:.9rem; align-items:baseline}
+.tocbox a:hover{background:var(--surface-3); color:var(--ink)}
+.tocbox a b{font-family:"IBM Plex Mono",monospace; font-size:.74rem; color:var(--ink-3); font-weight:600}
+
+</style>
+
+<div class="topbar"><div class="wrap">
+  <div class="brandmark"><i></i> <span id="brand"></span></div>
+  <nav class="navlinks">
+    <a href="#inputs">Inputs</a><a href="#walkthrough">Walkthrough</a><a href="#pitfalls">Pitfalls</a>
+    <a href="#validate">Validation</a><a href="#scale">Scale</a><a id="demoLink" href="#" target="_blank" rel="noopener">Open the demo ↗</a>
+  </nav>
+</div></div>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="eyebrow label"><span class="codename" id="tag"></span><span id="phase"></span><span>&middot;</span><span>Tutorial</span></div>
+  <h1 id="title"></h1>
+  <p class="lede" style="margin-top:14px" id="subtitle"></p>
+  <dl class="metarow" id="metarow"></dl>
+</header>
+
+<section style="border-top:0; padding-top:20px">
+  <div class="grid2" style="align-items:start">
+    <div class="panel">
+      <h3 style="margin-bottom:10px">What you are building</h3>
+      <p class="small" id="intro"></p>
+      <p class="small" style="margin-top:14px"><a id="demoLink2" href="#" target="_blank" rel="noopener"><strong>See the finished analysis ↗</strong></a></p>
+    </div>
+    <div class="panel">
+      <h3 style="margin-bottom:4px">Steps</h3>
+      <div class="tocbox" id="toc"></div>
+    </div>
+  </div>
+</section>
+
+<section id="inputs">
+  <div class="sechead"><h2>The input</h2><span class="amt" id="grainTag"></span></div>
+  <p class="secintro lede" id="inputIntro"></p>
+  <div class="panel"><div class="tablewrap"><table class="schema" id="schema"></table></div></div>
+</section>
+
+<section id="walkthrough">
+  <div class="sechead"><h2>Walkthrough</h2></div>
+  <p class="secintro lede" id="walkIntro"></p>
+  <div class="controls" style="position:sticky; top:60px; z-index:20; padding:8px 0;
+       background:color-mix(in srgb,var(--ground) 92%,transparent); backdrop-filter:blur(6px)">
+    <div class="tabs" role="tablist" aria-label="Code flavour">
+      <button role="tab" aria-selected="true" data-flavour="spark">PySpark</button>
+      <button role="tab" aria-selected="false" data-flavour="pandas">pandas</button>
+    </div>
+    <span class="tiny">Switches every block below. Steps that only make sense one way show that one.</span>
+  </div>
+  <div class="panel" style="padding-block:4px"><div id="steps"></div></div>
+</section>
+
+<section id="pitfalls">
+  <div class="sechead"><h2>What goes wrong</h2></div>
+  <p class="secintro lede">Every one of these is a bug that was actually in this analysis at some point.
+     They are here because they are the failure modes that survive a code review and get caught in a
+     partner meeting instead.</p>
+  <div class="grid2" id="pitfalls" style="align-items:start"></div>
+</section>
+
+<section id="validate">
+  <div class="sechead"><h2>Proving it works</h2></div>
+  <p class="secintro lede" id="validIntro"></p>
+  <div class="panel"><div id="validateBlock"></div></div>
+</section>
+
+<section id="scale">
+  <div class="sechead"><h2>Running it for real</h2></div>
+  <div class="grid2" style="align-items:start">
+    <div class="panel"><h3 style="margin-bottom:12px">Where Spark earns its keep</h3>
+      <p class="small" id="scaleBody"></p></div>
+    <div class="panel"><h3 style="margin-bottom:12px">Practical notes</h3>
+      <ul class="plain" id="scaleNotes"></ul></div>
+  </div>
+</section>
+
+<footer>
+  <strong style="color:var(--ink)" id="footTitle"></strong>
+  <span id="footBody"></span>
+</footer>
+
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script id="payload" type="application/json">{"brand":"Trade Area & Footfall","tag":"Technique 04","phase":"Commercial due diligence","title":"How to build a trade area model from device data","subtitle":"From raw mobile pings to a calibrated gravity model that forecasts a new site and charges it for the trade it takes off the ones you already own.","demo_url":"https://claude.ai/code/artifact/5cf358a8-34ea-4190-9b5a-cc7217fd63b4","grain":"billions of pings in, one row per area-site pair out","meta":[["Engine","PySpark end to end for steps 1-3, NumPy after"],["Input","Device pings, Experian Mosaic, census, estate"],["Runtime","Hours on the pings, seconds on the model"],["Output","A fitted decay, a validated forecast, cannibalisation"]],"intro":"A model that says how much trade a site draws, from where, and what a new one would do to the rest of the estate. Two things separate a credible build from a map with dots on it: expanding the panel properly, and validating the model against how the existing estate actually trades before using it to forecast a site that does not exist.","input_intro":"Five inputs, and the first is orders of magnitude larger than the other four combined. Most of the engineering in this technique is getting from that first input to something small enough to model.","inputs":[["device_id, ts, lat, lon","string, ts, double","Raw pings. Billions of rows a month for a national panel. Everything else is small."],["horizontal_accuracy","double","<strong>Filter on this early.<\/strong> A ping with 500m accuracy cannot be attributed to a venue and will quietly inflate urban catchments."],["venue polygons or points","geometry","Your estate and the competing field. Points with a radius are usually enough for a high-street format."],["population by output area","int","Census or mid-year estimates. The denominator for penetration and for demand."],["Experian Mosaic","string, double","Segment per output area, plus consumer expenditure. Drives spend per visit and the demographic fit."],["site trading revenue","decimal","<strong>The calibration target.<\/strong> A catchment model that cannot explain the estate you can see has no business forecasting one you cannot."]],"walk_intro":"Eight steps. The first three are genuinely heavy and belong in Spark; by step four you are holding a matrix of a few hundred output areas by a few hundred sites, and everything after that is NumPy.","steps":[{"title":"Turn pings into stops","why":"A device sitting in a shop emits a cluster of pings in one place over several minutes. A device driving past emits a line. Stop detection is what separates a visit from a passer-by, and doing it badly is the difference between a catchment and a traffic count.","code":{"spark":"from pyspark.sql import SparkSession, functions as F, Window\n\nspark = SparkSession.builder.appName(\"ferryman-footfall\").getOrCreate()\n\npings = (spark.read.parquet(\"s3://ferryman/pings/\")\n   .filter(F.col(\"horizontal_accuracy\") <= 60)          # metres; drop the rest\n   .filter(F.col(\"lat\").between(49.8, 60.9) & F.col(\"lon\").between(-8.2, 2.1)))\n\nw = Window.partitionBy(\"device_id\").orderBy(\"ts\")\n\n# Rough metres between consecutive pings. A local equirectangular approximation is\n# accurate enough at these distances and avoids a trig-heavy haversine per row.\nstops = (pings\n  .withColumn(\"plat\", F.lag(\"lat\").over(w)).withColumn(\"plon\", F.lag(\"lon\").over(w))\n  .withColumn(\"pts\",  F.lag(\"ts\").over(w))\n  .withColumn(\"dm\", F.sqrt(\n      F.pow((F.col(\"lat\") - F.col(\"plat\")) * 111_320, 2) +\n      F.pow((F.col(\"lon\") - F.col(\"plon\")) * 111_320 * F.cos(F.radians(\"lat\")), 2)))\n  .withColumn(\"gap_s\", F.col(\"ts\").cast(\"long\") - F.col(\"pts\").cast(\"long\"))\n  # a new stop starts when the device has moved more than 90m or been silent an hour\n  .withColumn(\"new_stop\", (F.col(\"dm\").isNull() | (F.col(\"dm\") > 90) | (F.col(\"gap_s\") > 3600)).cast(\"int\"))\n  .withColumn(\"stop_id\", F.sum(\"new_stop\").over(w)))\n\nstop_summary = (stops.groupBy(\"device_id\", \"stop_id\")\n  .agg(F.avg(\"lat\").alias(\"lat\"), F.avg(\"lon\").alias(\"lon\"),\n       F.min(\"ts\").alias(\"arrived\"), F.max(\"ts\").alias(\"left\"), F.count(\"*\").alias(\"pings\"))\n  .withColumn(\"dwell_s\", F.col(\"left\").cast(\"long\") - F.col(\"arrived\").cast(\"long\"))\n  .filter((F.col(\"dwell_s\") >= 240) & (F.col(\"pings\") >= 3)))","pandas":"# Only viable on a sampled extract -- a national ping feed will not fit in memory.\npings = pd.read_parquet(\"pings_sample.parquet\")\npings = pings[pings.horizontal_accuracy <= 60].sort_values([\"device_id\", \"ts\"])\n\ng = pings.groupby(\"device_id\")\ndlat = (pings.lat - g.lat.shift()) * 111_320\ndlon = (pings.lon - g.lon.shift()) * 111_320 * np.cos(np.radians(pings.lat))\ndm = np.hypot(dlat, dlon)\ngap = (pings.ts - g.ts.shift()).dt.total_seconds()\n\npings[\"stop_id\"] = (dm.isna() | (dm > 90) | (gap > 3600)).groupby(pings.device_id).cumsum()\n\nstop_summary = (pings.groupby([\"device_id\", \"stop_id\"])\n    .agg(lat=(\"lat\", \"mean\"), lon=(\"lon\", \"mean\"), arrived=(\"ts\", \"min\"),\n         left=(\"ts\", \"max\"), pings=(\"ts\", \"size\")))\nstop_summary[\"dwell_s\"] = (stop_summary.left - stop_summary.arrived).dt.total_seconds()\nstop_summary = stop_summary.query(\"dwell_s >= 240 and pings >= 3\")"},"note":"The 90 metre and four minute thresholds are format-specific and worth tuning against a handful of sites where you know the transaction count. A drive-through needs a much shorter dwell floor; a garden centre a much longer one."},{"title":"Attribute stops to venues without a cross join","why":"Joining a billion stops to a few hundred venues on distance is a cross join, and it will not finish. Bin both sides onto a grid, join on the bin, then filter on exact distance. Replicate each venue into its neighbouring cells so a stop just over a boundary still matches.","code":{"spark":"CELL = 0.0025      # degrees, roughly 275m of latitude\n\ndef cell_expr(lat, lon, dlat=0, dlon=0):\n    return F.concat_ws(\"_\", (F.floor(lat / CELL) + dlat).cast(\"int\"),\n                            (F.floor(lon / CELL) + dlon).cast(\"int\"))\n\noffsets = [(i, j) for i in (-1, 0, 1) for j in (-1, 0, 1)]\nvenue_cells = venues.select(\n    \"venue_id\", \"lat\", \"lon\", \"brand\", \"own\",\n    F.explode(F.array(*[cell_expr(F.col(\"lat\"), F.col(\"lon\"), i, j) for i, j in offsets])).alias(\"cell\"))\n\nvisits = (stop_summary\n  .withColumn(\"cell\", cell_expr(F.col(\"lat\"), F.col(\"lon\")))\n  .join(F.broadcast(venue_cells), \"cell\")               # a few hundred rows: broadcast it\n  .withColumn(\"dm\", F.sqrt(\n      F.pow((F.col(\"lat\") - F.col(\"v_lat\")) * 111_320, 2) +\n      F.pow((F.col(\"lon\") - F.col(\"v_lon\")) * 111_320 * F.cos(F.radians(\"lat\")), 2)))\n  .filter(F.col(\"dm\") <= 45)                            # inside the venue footprint\n  # a stop can match two venues in a dense parade -- keep the nearest\n  .withColumn(\"rk\", F.row_number().over(\n      Window.partitionBy(\"device_id\", \"stop_id\").orderBy(\"dm\")))\n  .filter(F.col(\"rk\") == 1))","pandas":"from scipy.spatial import cKDTree   # or sklearn BallTree\n\nxy = np.c_[stop_summary.lat * 111_320,\n           stop_summary.lon * 111_320 * np.cos(np.radians(stop_summary.lat))]\nvxy = np.c_[venues.lat * 111_320,\n            venues.lon * 111_320 * np.cos(np.radians(venues.lat))]\n\ndist, idx = cKDTree(vxy).query(xy, k=1, distance_upper_bound=45)\nhit = np.isfinite(dist)\n\nvisits = stop_summary[hit].assign(venue_id=venues.venue_id.to_numpy()[idx[hit]],\n                                  dm=dist[hit])"},"note":"On a platform with Apache Sedona or an H3 UDF available, use those instead \u2014 the grid here is the dependency-free version of the same idea. What matters is that you never write a join predicate that Spark cannot turn into a hash join."},{"title":"Infer where each device lives","why":"A catchment is a statement about where customers come from, so every visit needs a home output area. The overnight cluster is the standard proxy: the modal location between one and five in the morning, over a month, is where the device sleeps.","code":{"spark":"home = (pings\n  .withColumn(\"hour\", F.hour(\"ts\"))\n  .filter(F.col(\"hour\").between(1, 4))\n  .withColumn(\"cell\", cell_expr(F.col(\"lat\"), F.col(\"lon\")))\n  .groupBy(\"device_id\", \"cell\")\n  .agg(F.count(\"*\").alias(\"n\"), F.countDistinct(F.to_date(\"ts\")).alias(\"nights\"))\n  .withColumn(\"rk\", F.row_number().over(\n      Window.partitionBy(\"device_id\").orderBy(F.desc(\"nights\"), F.desc(\"n\"))))\n  .filter(F.col(\"rk\") == 1)\n  # a device seen on fewer than five separate nights has no reliable home\n  .filter(F.col(\"nights\") >= 5)\n  .join(F.broadcast(cell_to_oa), \"cell\")\n  .select(\"device_id\", \"oa_id\"))\n\npanel_visits = (visits.join(home, \"device_id\")\n  .groupBy(\"oa_id\", \"venue_id\").agg(F.count(\"*\").alias(\"panel_visits\")))","pandas":"night = pings[pings.ts.dt.hour.between(1, 4)].copy()\nnight[\"cell\"] = (np.floor(night.lat / CELL).astype(int).astype(str) + \"_\"\n                 + np.floor(night.lon / CELL).astype(int).astype(str))\n\nby_cell = (night.groupby([\"device_id\", \"cell\"])\n                .agg(n=(\"ts\", \"size\"), nights=(\"ts\", lambda s: s.dt.date.nunique()))\n                .reset_index())\nhome = (by_cell.sort_values([\"nights\", \"n\"], ascending=False)\n               .drop_duplicates(\"device_id\")\n               .query(\"nights >= 5\")\n               .merge(cell_to_oa, on=\"cell\")[[\"device_id\", \"oa_id\"]])\n\npanel_visits = (visits.merge(home, on=\"device_id\")\n                      .groupby([\"oa_id\", \"venue_id\"]).size().rename(\"panel_visits\").reset_index())"},"note":"Devices with no stable overnight cluster are tourists, commercial vehicles or shift workers. Dropping them is right for a catchment, but count them \u2014 if they are a large share of visits at a transport-hub site, that site's catchment is genuinely different and should be modelled separately rather than forced into the same framework."},{"title":"Expand the panel, and shrink the expansion","why":"This is the step that decides whether the numbers mean anything. The panel is a biased sample: penetration in this build runs nearly six times higher in young urban segments than in older rural ones. Expand each output area by its own penetration \u2014 but shrink that penetration toward the segment mean, because twelve devices in a population of three hundred gives a factor that swings on one commuter.","code":{"python":"M_PSEUDO = 400.0        # pseudo-population for the shrinkage\n\npen_group = (oa.groupby(\"mosaic\")\n               .apply(lambda g: g.panel_devices.sum() / g.population.sum())\n               .rename(\"pen_group\"))\noa = oa.join(pen_group, on=\"mosaic\")\n\n# Empirical Bayes: each area's penetration pulled toward its segment\noa[\"pen_hat\"]   = (oa.panel_devices + M_PSEUDO * oa.pen_group) / (oa.population + M_PSEUDO)\noa[\"expansion\"] = 1.0 / oa.pen_hat\n\npanel = panel.merge(oa[[\"oa_id\", \"expansion\"]], on=\"oa_id\")\npanel[\"visits\"] = panel.panel_visits * panel.expansion"},"out":"penetration by Mosaic group\n  Rental Hubs        7.1%\n  City Prosperity    6.8%\n  ...\n  Senior Security    1.4%\n  Vintage Value      1.2%\n\nspread 5.8x","note":"Pool at the level the bias actually operates on. Mosaic segment is the right choice here because device ownership tracks age and affluence; if your panel provider skews by handset OS instead, pool on something that correlates with that."},{"title":"Fit the distance decay by maximum likelihood","why":"Do not assume a decay exponent. Estimate it from the choice shares the panel observed, using a multinomial likelihood. There is a useful property hiding here: panel penetration is a single scalar per output area, so it cancels out of the within-area shares completely. The decay comes from the raw counts; only the volumes need expanding.","code":{"python":"def dmat(oa, sites, road_factor=1.25):\n    d = np.hypot(oa.x.to_numpy()[:, None] - sites.x.to_numpy()[None, :],\n                 oa.y.to_numpy()[:, None] - sites.y.to_numpy()[None, :])\n    return np.maximum(d, 0.35) * road_factor      # floor stops a co-located area exploding\n\nD = dmat(oa, own_sites)\nA = own_sites.attract.to_numpy()          # (sqft/1000)**0.55 * format multiplier\n\ndef conditional_ll(beta):\n    util = A[None, :] * D ** (-beta)\n    logp = np.log(util / util.sum(axis=1, keepdims=True))\n    return float((V_panel * logp).sum())   # V_panel: RAW counts, area x site\n\n# Coarse sweep, then refine -- with this many observations the peak is very sharp\ngrid = np.arange(0.60, 4.001, 0.01)\nlls  = np.array([conditional_ll(b) for b in grid])\npeak = grid[lls.argmax()]\n\nfine  = np.arange(peak - 0.05, peak + 0.05, 0.0005)\nflls  = np.array([conditional_ll(b) for b in fine])\nBETA  = float(fine[flls.argmax()])\ninside = fine[flls >= flls.max() - 2.0]          # 2 log-likelihood units\nBETA_LO, BETA_HI = inside.min(), inside.max()"},"out":"fitted beta 1.847  [1.844, 1.850]     (true value in the generator: 1.85)","note":"The interval is narrow because the panel is large, and that precision is slightly misleading. The real uncertainty is not in the value of a single decay parameter \u2014 it is whether one decay applies to every format. Fit it separately for high street, retail park and transport hub before you trust it on a mixed estate."},{"title":"Recover total demand, including what goes to competitors","why":"You observe visits to your own sites. You need total demand in each area, because a new site draws from competitors as well as from you. Divide expanded own-chain visits by the modelled own-capture share and the rest follows.","code":{"python":"choice = pd.concat([own_sites.assign(own=1), competitors.assign(own=0)], ignore_index=True)\n\ndef huff(sites, beta=BETA):\n    util = sites.attract.to_numpy()[None, :] * dmat(oa, sites) ** (-beta)\n    return util / util.sum(axis=1, keepdims=True)\n\nP_all     = huff(choice)\nown_share = P_all[:, choice.own.to_numpy() == 1].sum(axis=1)\n\n# total demand implied by what we actually observed\nDEMAND = V_expanded.sum(axis=1) / np.clip(own_share, 1e-6, None)\n\ndef predict(estate):\n    ch = pd.concat([estate.assign(own=1), competitors.assign(own=0)], ignore_index=True)\n    P = huff(ch)\n    return DEMAND[:, None] * P[:, ch.own.to_numpy() == 1]"},"out":"own share of modelled demand  38%\nimplied total market            43.0m visits a year","note":"Leaving competitors out of the choice set is the most common error in applied Huff work. Without them the chain captures 100% of demand everywhere, catchments are far too large, and displaced trade has nowhere to go \u2014 so cannibalisation comes out enormous."},{"title":"Validate against how the estate actually trades","why":"Before forecasting a site that does not exist, show the model explains the ones that do. This is the step that earns the right to the rest of the analysis, and it is the one most often skipped because it is the one that can fail.","code":{"python":"V_fit = predict(own_sites)\nown_sites[\"pred_revenue\"] = (V_fit * oa.spend.to_numpy()[:, None]).sum(axis=0)\n\nx, y = own_sites.pred_revenue.to_numpy(), own_sites.revenue.to_numpy()\nslope, intercept = np.polyfit(x, y, 1)\nresid = y - (slope * x + intercept)\nr2   = 1 - (resid ** 2).sum() / ((y - y.mean()) ** 2).sum()\nmape = np.mean(np.abs(resid) / y)\n\nprint(f\"R2 {r2:.2f}   MAPE {mape:.1%}\")"},"out":"R2 0.82   MAPE 22.1%","note":"Do not expect 0.95. A catchment model cannot see manager quality, frontage, seating or the bus stop outside, and a model that fits that well on trading revenue is almost certainly overfitted or leaking the target. Four fifths of the variance from geography and demographics alone is a good result and a defensible one."},{"title":"Charge every new site for what it takes","why":"A new site's forecast is not its gross draw. Recompute the whole choice model with the site added, and the difference at every existing store is trade the group already had. Then do it again with the entire pipeline at once, because the proposed sites compete with each other too \u2014 and no seller's appraisal pack has ever been built that way.","code":{"python":"def appraise(new_sites, incumbent=own_sites):\n    before = predict(incumbent)\n    after  = predict(pd.concat([incumbent, new_sites], ignore_index=True))\n    n = len(incumbent)\n    new_rev     = (after[:, n:] * spend[:, None]).sum(axis=0)\n    transferred = ((before - after[:, :n]) * spend[:, None]).sum(axis=0)\n    return new_rev, transferred.sum()\n\n# (a) how a seller appraises: one at a time against today's estate\nsolo = [appraise(pipeline.iloc[[i]]) for i in range(len(pipeline))]\nsolo_net = sum(float(r[0]) - r[1] for r in solo)\n\n# (b) what actually happens: all forty open\ngross, transferred = appraise(pipeline)\nportfolio_net = gross.sum() - transferred\n\nprint(f\"solo appraisal  {solo_net/1e6:.1f}m\")\nprint(f\"as a portfolio  {portfolio_net/1e6:.1f}m\")\nprint(f\"missed by appraising individually  {(solo_net - portfolio_net)/1e6:.1f}m\")"},"out":"solo appraisal  14.6m\nas a portfolio  13.1m\nmissed by appraising individually  1.5m"}],"pitfalls":[{"title":"Expanding the panel with one national factor","body":"The obvious first move, and it overstates the market by <strong>19%<\/strong> in this build \u2014 because the panel over-represents young urban segments and those are also the heaviest users of the format. Bias in the panel and bias in the behaviour point the same way, so the errors compound rather than cancel. What makes it dangerous is that it barely moves the relative ranking of sites: the league table looks fine while every market-size and whitespace number built on it is a fifth too big."},{"title":"A gravity model with no competitors in it","body":"Huff probabilities sum to one across the choice set. If the choice set is only your own estate, you capture 100% of demand in every area, catchments extend absurdly far, and displaced trade has nowhere to go \u2014 so cannibalisation looks catastrophic. Competitor locations are cheap and the model is wrong without them."},{"title":"Appraising pipeline sites one at a time","body":"Every site appraisal pack evaluates each site against the estate as it stands today. Open all of them and several compete with each other as well as with the incumbents. Here that gap is \u00a31.5m \u2014 small against the total, large against the marginal sites that decide whether the back half of a roll-out plan happens at all."},{"title":"Straight-line distance where geography bites","body":"A road factor on Euclidean distance is a reasonable approximation across a flat region and a bad one across an estuary, a motorway with no junction, or a city with a river through it. It will systematically overstate catchments on the wrong side of the barrier. Use drive-time isochrones from a routing engine for anything that reaches a valuation."}],"validate":{"intro":"Two of these check the arithmetic. The third checks the method itself, and it is only possible because the synthetic world has a known answer.","why":"The generator runs a gravity model with a decay of exactly 1.85 and then hands the analysis a biased panel sample. If the fitted interval stops containing the true value, something in the expansion or the likelihood has broken and the build should fail rather than publish.","code":{"python":"def check():\n    # 1. probabilities are probabilities\n    assert np.allclose(huff(choice).sum(axis=1), 1.0), \"Huff shares must sum to 1 per area\"\n\n    # 2. the model earns the right to forecast\n    assert r2 > 0.5, f\"gravity model explains too little of actual trade (R2 {r2:.2f})\"\n\n    # 3. the method recovers the truth it was never shown\n    assert BETA_LO <= TRUE_BETA <= BETA_HI, (\n        f\"fitted beta {BETA:.3f} [{BETA_LO:.3f}, {BETA_HI:.3f}] misses truth {TRUE_BETA}\")\n\n    # 4. a portfolio always cannibalises itself at least a little\n    assert portfolio_net < solo_net, \"portfolio net should sit below the sum of solo appraisals\"\n\n    print(f\"checks: beta interval contains {TRUE_BETA}, R2 {r2:.2f}, shares sum to 1\")"},"out":"checks: beta interval contains 1.85, R2 0.82, shares sum to 1"},"scale":{"body":"This is the one technique in the series where Spark is not a nicety. A national ping feed is billions of rows a month, and steps one to three \u2014 stop detection, venue attribution and home inference \u2014 all run against it. What comes out is one row per output area per venue: a few hundred thousand rows at most, and in this build twenty thousand. Every model step after that is a dense matrix of a few hundred by a few hundred, which NumPy handles in milliseconds and Spark would handle badly.","notes":["<strong>Filter on accuracy before anything else.<\/strong> It is the cheapest filter available and it removes the rows most likely to produce a false attribution.","<strong>Partition pings by date and bucket by device_id.<\/strong> Every window function in step one partitions by device; bucketing avoids re-shuffling the largest table in the job.","<strong>Broadcast the venue table.<\/strong> A few hundred rows against billions \u2014 without the hint Spark will plan a sort-merge join and the stage will never finish.","<strong>Never join on a distance predicate.<\/strong> Bin to a grid (or H3, or Sedona) and join on the bin, then filter exactly. This is the difference between minutes and days.","<strong>Persist the area-venue visit matrix<\/strong> with the panel snapshot date. Providers restate history, and a catchment you cannot reproduce is worthless in a dispute.","<strong>Keep device-level data out of the deliverable.<\/strong> Aggregate to output area inside the pipeline; nothing downstream needs a device id, and nothing downstream should have one."]},"foot_title":"Technique 04 \u2014 Trade Area & Footfall.","foot_body":"Tutorial companion to the Project Ferryman demo. All figures synthetic."}</script>
+<script>
+(() => {
+"use strict";
+const T = JSON.parse(document.getElementById("payload").textContent);
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const LANG = { spark: "PySpark", pandas: "pandas", python: "Python", sql: "SQL", numpy: "NumPy" };
+let flavour = "spark";
+
+document.title = T.title;
+$("#brand").textContent = T.brand;
+$("#tag").textContent = T.tag;
+$("#phase").textContent = T.phase;
+$("#title").textContent = T.title;
+$("#subtitle").textContent = T.subtitle;
+$("#intro").innerHTML = T.intro;
+$("#inputIntro").innerHTML = T.input_intro;
+$("#walkIntro").innerHTML = T.walk_intro;
+$("#validIntro").innerHTML = T.validate.intro;
+$("#scaleBody").innerHTML = T.scale.body;
+$("#grainTag").textContent = T.grain;
+$("#footTitle").textContent = T.foot_title;
+$("#footBody").textContent = " " + T.foot_body;
+for (const id of ["#demoLink", "#demoLink2"]) $(id).href = T.demo_url;
+$("#metarow").innerHTML = T.meta.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join("");
+$("#schema").innerHTML = `<thead><tr><th>Column</th><th>Type</th><th>Why it matters</th></tr></thead><tbody>
+  ${T.inputs.map(i => `<tr><td>${esc(i[0])}</td><td class="tiny">${esc(i[1])}</td><td class="small">${i[2]}</td></tr>`).join("")}</tbody>`;
+$("#toc").innerHTML = T.steps.map((s, i) => `<a href="#step-${i + 1}"><b>${String(i + 1).padStart(2, "0")}</b><span>${esc(s.title)}</span></a>`).join("");
+$("#pitfalls").innerHTML = T.pitfalls.map(p => `<div class="pitfall"><h4>${esc(p.title)}</h4><p>${p.body}</p></div>`).join("");
+$("#scaleNotes").innerHTML = T.scale.notes.map(n => `<li><span>${n}</span></li>`).join("");
+
+/* ---------- code blocks ---------- */
+let uid = 0;
+function block(variants) {
+  const keys = Object.keys(variants);
+  const id = "cb" + (++uid);
+  const bar = keys.length > 1
+    ? keys.map(k => `<button type="button" role="tab" data-flavour="${k}" data-for="${id}"
+        aria-selected="${k === flavour}">${LANG[k] || k}</button>`).join("")
+    : `<span class="lang">${LANG[keys[0]] || keys[0]}</span>`;
+  const panes = keys.map(k => `<pre class="code" data-flavour="${k}" data-for="${id}"
+      ${keys.length > 1 && k !== flavour ? "hidden" : ""}><code class="language-python">${esc(variants[k])}</code></pre>`).join("");
+  return `<div class="codewrap" id="${id}">
+    <div class="codebar">${bar}<span class="spacer"></span>
+      <button type="button" class="copy" data-for="${id}">Copy</button></div>${panes}</div>`;
+}
+
+$("#steps").innerHTML = T.steps.map((s, i) => `<div class="step" id="step-${i + 1}">
+  <div class="sn">${String(i + 1).padStart(2, "0")}</div>
+  <div class="body">
+    <h3>${esc(s.title)}</h3>
+    <p class="why">${s.why}</p>
+    ${block(s.code)}
+    ${s.out ? `<div class="out">${esc(s.out)}</div>` : ""}
+    ${s.note ? `<p class="tiny" style="line-height:1.6">${s.note}</p>` : ""}
+  </div></div>`).join("");
+$("#validateBlock").innerHTML = `<p class="small" style="margin-bottom:14px">${T.validate.why}</p>`
+  + block(T.validate.code)
+  + (T.validate.out ? `<div class="out" style="margin-top:14px">${esc(T.validate.out)}</div>` : "");
+
+/* ---------- flavour switching, per block and globally ---------- */
+function setFlavour(f, scope) {
+  document.querySelectorAll(scope ? `[data-for="${scope}"]` : "[data-flavour]").forEach(el => {
+    const mine = el.dataset.flavour === f;
+    if (el.tagName === "PRE") {
+      // a block without this flavour keeps whatever it has -- never blank the pane
+      const wrap = el.closest(".codewrap");
+      if (wrap.querySelector(`pre[data-flavour="${f}"]`)) el.hidden = !mine;
+    } else if (el.tagName === "BUTTON") {
+      const wrap = el.closest(".codewrap");
+      if (!wrap || wrap.querySelector(`pre[data-flavour="${f}"]`)) el.setAttribute("aria-selected", String(mine));
+    }
+  });
+}
+document.addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b) return;
+  if (b.classList.contains("copy")) {
+    const pre = document.querySelector(`#${b.dataset.for} pre:not([hidden]) code`);
+    navigator.clipboard?.writeText(pre.textContent).then(() => {
+      b.textContent = "Copied"; setTimeout(() => { b.textContent = "Copy"; }, 1400);
+    }).catch(() => { b.textContent = "Select and copy"; });
+  } else if (b.dataset.flavour) {
+    flavour = b.dataset.flavour;
+    setFlavour(flavour, null);
+  }
+});
+
+if (window.hljs) {
+  hljs.configure({ ignoreUnescapedHTML: true });
+  document.querySelectorAll("pre.code code").forEach(el => hljs.highlightElement(el));
+}
+})();
+</script>
