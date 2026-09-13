@@ -1,0 +1,184 @@
+<title>__TITLE__</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;450;500;600;700&display=swap">
+<style>
+__CSS__
+</style>
+
+<div class="topbar"><div class="wrap">
+  <div class="brandmark"><i></i> <span id="brand"></span></div>
+  <nav class="navlinks">
+    <a href="#inputs">Inputs</a><a href="#walkthrough">Walkthrough</a><a href="#pitfalls">Pitfalls</a>
+    <a href="#validate">Validation</a><a href="#scale">Scale</a><a id="demoLink" href="#" target="_blank" rel="noopener">Open the demo ↗</a>
+  </nav>
+</div></div>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="eyebrow label"><span class="codename" id="tag"></span><span id="phase"></span><span>&middot;</span><span>Tutorial</span></div>
+  <h1 id="title"></h1>
+  <p class="lede" style="margin-top:14px" id="subtitle"></p>
+  <dl class="metarow" id="metarow"></dl>
+</header>
+
+<section style="border-top:0; padding-top:20px">
+  <div class="grid2" style="align-items:start">
+    <div class="panel">
+      <h3 style="margin-bottom:10px">What you are building</h3>
+      <p class="small" id="intro"></p>
+      <p class="small" style="margin-top:14px"><a id="demoLink2" href="#" target="_blank" rel="noopener"><strong>See the finished analysis ↗</strong></a></p>
+    </div>
+    <div class="panel">
+      <h3 style="margin-bottom:4px">Steps</h3>
+      <div class="tocbox" id="toc"></div>
+    </div>
+  </div>
+</section>
+
+<section id="inputs">
+  <div class="sechead"><h2>The input</h2><span class="amt" id="grainTag"></span></div>
+  <p class="secintro lede" id="inputIntro"></p>
+  <div class="panel"><div class="tablewrap"><table class="schema" id="schema"></table></div></div>
+</section>
+
+<section id="walkthrough">
+  <div class="sechead"><h2>Walkthrough</h2></div>
+  <p class="secintro lede" id="walkIntro"></p>
+  <div class="controls" style="position:sticky; top:60px; z-index:20; padding:8px 0;
+       background:color-mix(in srgb,var(--ground) 92%,transparent); backdrop-filter:blur(6px)">
+    <div class="tabs" role="tablist" aria-label="Code flavour">
+      <button role="tab" aria-selected="true" data-flavour="spark">PySpark</button>
+      <button role="tab" aria-selected="false" data-flavour="pandas">pandas</button>
+    </div>
+    <span class="tiny">Switches every block below. Steps that only make sense one way show that one.</span>
+  </div>
+  <div class="panel" style="padding-block:4px"><div id="steps"></div></div>
+</section>
+
+<section id="pitfalls">
+  <div class="sechead"><h2>What goes wrong</h2></div>
+  <p class="secintro lede">Every one of these is a bug that was actually in this analysis at some point.
+     They are here because they are the failure modes that survive a code review and get caught in a
+     partner meeting instead.</p>
+  <div class="grid2" id="pitfalls" style="align-items:start"></div>
+</section>
+
+<section id="validate">
+  <div class="sechead"><h2>Proving it works</h2></div>
+  <p class="secintro lede" id="validIntro"></p>
+  <div class="panel"><div id="validateBlock"></div></div>
+</section>
+
+<section id="scale">
+  <div class="sechead"><h2>Running it for real</h2></div>
+  <div class="grid2" style="align-items:start">
+    <div class="panel"><h3 style="margin-bottom:12px">Where Spark earns its keep</h3>
+      <p class="small" id="scaleBody"></p></div>
+    <div class="panel"><h3 style="margin-bottom:12px">Practical notes</h3>
+      <ul class="plain" id="scaleNotes"></ul></div>
+  </div>
+</section>
+
+<footer>
+  <strong style="color:var(--ink)" id="footTitle"></strong>
+  <span id="footBody"></span>
+</footer>
+
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script id="payload" type="application/json">__DATA__</script>
+<script>
+(() => {
+"use strict";
+const T = JSON.parse(document.getElementById("payload").textContent);
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const LANG = { spark: "PySpark", pandas: "pandas", python: "Python", sql: "SQL", numpy: "NumPy" };
+let flavour = "spark";
+
+document.title = T.title;
+$("#brand").textContent = T.brand;
+$("#tag").textContent = T.tag;
+$("#phase").textContent = T.phase;
+$("#title").textContent = T.title;
+$("#subtitle").textContent = T.subtitle;
+$("#intro").innerHTML = T.intro;
+$("#inputIntro").innerHTML = T.input_intro;
+$("#walkIntro").innerHTML = T.walk_intro;
+$("#validIntro").innerHTML = T.validate.intro;
+$("#scaleBody").innerHTML = T.scale.body;
+$("#grainTag").textContent = T.grain;
+$("#footTitle").textContent = T.foot_title;
+$("#footBody").textContent = " " + T.foot_body;
+for (const id of ["#demoLink", "#demoLink2"]) $(id).href = T.demo_url;
+$("#metarow").innerHTML = T.meta.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join("");
+$("#schema").innerHTML = `<thead><tr><th>Column</th><th>Type</th><th>Why it matters</th></tr></thead><tbody>
+  ${T.inputs.map(i => `<tr><td>${esc(i[0])}</td><td class="tiny">${esc(i[1])}</td><td class="small">${i[2]}</td></tr>`).join("")}</tbody>`;
+$("#toc").innerHTML = T.steps.map((s, i) => `<a href="#step-${i + 1}"><b>${String(i + 1).padStart(2, "0")}</b><span>${esc(s.title)}</span></a>`).join("");
+$("#pitfalls").innerHTML = T.pitfalls.map(p => `<div class="pitfall"><h4>${esc(p.title)}</h4><p>${p.body}</p></div>`).join("");
+$("#scaleNotes").innerHTML = T.scale.notes.map(n => `<li><span>${n}</span></li>`).join("");
+
+/* ---------- code blocks ---------- */
+let uid = 0;
+function block(variants) {
+  const keys = Object.keys(variants);
+  const id = "cb" + (++uid);
+  const bar = keys.length > 1
+    ? keys.map(k => `<button type="button" role="tab" data-flavour="${k}" data-for="${id}"
+        aria-selected="${k === flavour}">${LANG[k] || k}</button>`).join("")
+    : `<span class="lang">${LANG[keys[0]] || keys[0]}</span>`;
+  const panes = keys.map(k => `<pre class="code" data-flavour="${k}" data-for="${id}"
+      ${keys.length > 1 && k !== flavour ? "hidden" : ""}><code class="language-python">${esc(variants[k])}</code></pre>`).join("");
+  return `<div class="codewrap" id="${id}">
+    <div class="codebar">${bar}<span class="spacer"></span>
+      <button type="button" class="copy" data-for="${id}">Copy</button></div>${panes}</div>`;
+}
+
+$("#steps").innerHTML = T.steps.map((s, i) => `<div class="step" id="step-${i + 1}">
+  <div class="sn">${String(i + 1).padStart(2, "0")}</div>
+  <div class="body">
+    <h3>${esc(s.title)}</h3>
+    <p class="why">${s.why}</p>
+    ${block(s.code)}
+    ${s.out ? `<div class="out">${esc(s.out)}</div>` : ""}
+    ${s.note ? `<p class="tiny" style="line-height:1.6">${s.note}</p>` : ""}
+  </div></div>`).join("");
+$("#validateBlock").innerHTML = `<p class="small" style="margin-bottom:14px">${T.validate.why}</p>`
+  + block(T.validate.code)
+  + (T.validate.out ? `<div class="out" style="margin-top:14px">${esc(T.validate.out)}</div>` : "");
+
+/* ---------- flavour switching, per block and globally ---------- */
+function setFlavour(f, scope) {
+  document.querySelectorAll(scope ? `[data-for="${scope}"]` : "[data-flavour]").forEach(el => {
+    const mine = el.dataset.flavour === f;
+    if (el.tagName === "PRE") {
+      // a block without this flavour keeps whatever it has -- never blank the pane
+      const wrap = el.closest(".codewrap");
+      if (wrap.querySelector(`pre[data-flavour="${f}"]`)) el.hidden = !mine;
+    } else if (el.tagName === "BUTTON") {
+      const wrap = el.closest(".codewrap");
+      if (!wrap || wrap.querySelector(`pre[data-flavour="${f}"]`)) el.setAttribute("aria-selected", String(mine));
+    }
+  });
+}
+document.addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b) return;
+  if (b.classList.contains("copy")) {
+    const pre = document.querySelector(`#${b.dataset.for} pre:not([hidden]) code`);
+    navigator.clipboard?.writeText(pre.textContent).then(() => {
+      b.textContent = "Copied"; setTimeout(() => { b.textContent = "Copy"; }, 1400);
+    }).catch(() => { b.textContent = "Select and copy"; });
+  } else if (b.dataset.flavour) {
+    flavour = b.dataset.flavour;
+    setFlavour(flavour, null);
+  }
+});
+
+if (window.hljs) {
+  hljs.configure({ ignoreUnescapedHTML: true });
+  document.querySelectorAll("pre.code code").forEach(el => hljs.highlightElement(el));
+}
+})();
+</script>

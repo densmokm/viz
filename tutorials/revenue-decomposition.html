@@ -1,0 +1,492 @@
+<title>How to build a revenue bridge that ties</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;450;500;600;700&display=swap">
+<style>
+:root{
+  --ground:#eef1f5; --surface:#ffffff; --surface-2:#e4e9ef; --surface-3:#f6f8fa;
+  --ink:#101519; --ink-2:#495568; --ink-3:#79869a; --rule:#d5dce5; --rule-2:#c0cad6;
+  --accent:#173a5e; --accent-soft:#dce8f5;
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a;
+  --pos:#2a78d6; --neg:#e34948; --total:#334155;
+  --good:#0ca30c; --warn:#fab219; --serious:#ec835a; --crit:#d03b3b;
+  --chip-good:#e3f4e3; --chip-warn:#fdf1d6; --chip-serious:#fbe7dd; --chip-neutral:#e7ebf1;
+  --shadow:0 1px 2px rgba(16,21,25,.06), 0 8px 24px -12px rgba(16,21,25,.18);
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --ground:#0f1318; --surface:#171c23; --surface-2:#232a34; --surface-3:#1b2129;
+  --ink:#eef2f7; --ink-2:#aab6c6; --ink-3:#78859a; --rule:#2a323d; --rule-2:#3a4450;
+  --accent:#8fb8e2; --accent-soft:#1d2c3d;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70;
+  --pos:#3987e5; --neg:#e66767; --total:#94a3b5;
+  --chip-good:#12301a; --chip-warn:#332709; --chip-serious:#33210f; --chip-neutral:#242b35;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --ground:#0f1318; --surface:#171c23; --surface-2:#232a34; --surface-3:#1b2129;
+  --ink:#eef2f7; --ink-2:#aab6c6; --ink-3:#78859a; --rule:#2a323d; --rule-2:#3a4450;
+  --accent:#8fb8e2; --accent-soft:#1d2c3d;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70;
+  --pos:#3987e5; --neg:#e66767; --total:#94a3b5;
+  --chip-good:#12301a; --chip-warn:#332709; --chip-serious:#33210f; --chip-neutral:#242b35;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--ground); color:var(--ink);
+  font-family:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  font-size:16px; line-height:1.6; -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1120px; margin:0 auto; padding-inline:clamp(16px,4vw,40px)}
+h1,h2,h3{text-wrap:balance; margin:0}
+h1{font-family:Newsreader,Georgia,serif; font-weight:500; font-size:clamp(2rem,4.6vw,2.9rem); line-height:1.1; letter-spacing:-.015em}
+h2{font-family:Newsreader,Georgia,serif; font-weight:500; font-size:clamp(1.4rem,3vw,1.85rem); line-height:1.2; letter-spacing:-.01em}
+h3{font-size:1rem; font-weight:600; letter-spacing:-.005em}
+p{margin:0}
+a{color:var(--accent)}
+.label{font-size:.7rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-3)}
+.lede{font-size:1.06rem; color:var(--ink-2); max-width:66ch}
+.small{font-size:.84rem; color:var(--ink-2)}
+.tiny{font-size:.76rem; color:var(--ink-3)}
+.num{font-family:"IBM Plex Mono",ui-monospace,monospace; font-variant-numeric:tabular-nums}
+
+/* ---------- top bar ---------- */
+.topbar{position:sticky; top:0; z-index:40; background:color-mix(in srgb,var(--ground) 88%,transparent);
+  backdrop-filter:blur(10px); border-bottom:1px solid var(--rule)}
+.topbar .wrap{display:flex; align-items:center; gap:20px; height:52px}
+.brandmark{display:flex; align-items:center; gap:9px; font-weight:600; font-size:.9rem; white-space:nowrap}
+.brandmark i{width:9px; height:9px; border-radius:2px; background:var(--s1); display:block}
+.navlinks{display:flex; gap:18px; margin-left:auto; overflow-x:auto; scrollbar-width:none}
+.navlinks::-webkit-scrollbar{display:none}
+.navlinks a{color:var(--ink-2); text-decoration:none; font-size:.83rem; white-space:nowrap; padding:4px 0; border-bottom:2px solid transparent}
+.navlinks a:hover{color:var(--ink); border-bottom-color:var(--rule-2)}
+@media (max-width:720px){ .navlinks{display:none} }
+
+/* ---------- header ---------- */
+header.hero{padding-block:clamp(34px,6vw,60px) 30px}
+.eyebrow{display:flex; align-items:center; gap:10px; margin-bottom:16px; flex-wrap:wrap}
+.eyebrow span{color:var(--ink-3)}
+.codename{background:var(--accent-soft); color:var(--accent); padding:2px 9px; border-radius:3px; font-weight:600}
+.metarow{display:flex; flex-wrap:wrap; gap:0; margin-top:26px; border-top:1px solid var(--rule); border-bottom:1px solid var(--rule)}
+.metarow div{flex:1 1 165px; padding:13px 18px 13px 0; border-right:1px solid var(--rule)}
+.metarow div:last-child{border-right:0}
+.metarow dt{font-size:.7rem; font-weight:600; letter-spacing:.09em; text-transform:uppercase; color:var(--ink-3); margin-bottom:3px}
+.metarow dd{margin:0; font-size:.9rem; font-weight:450}
+
+/* ---------- verdict ---------- */
+.verdict{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:1px; background:var(--rule);
+  border:1px solid var(--rule); border-radius:6px; overflow:hidden; margin-block:8px 26px}
+.verdict > div{background:var(--surface); padding:24px 26px 22px}
+.verdict .fig{font-size:clamp(2.4rem,6.5vw,3.4rem); font-weight:600; line-height:1; letter-spacing:-.03em; margin:10px 0 6px}
+.verdict .reported .fig{color:var(--ink)}
+.verdict .underlying .fig{color:var(--neg)}
+.verdict .cap{font-size:.85rem; color:var(--ink-2)}
+@media (max-width:620px){ .verdict{grid-template-columns:1fr} }
+.thesis{background:var(--surface); border:1px solid var(--rule); border-left:3px solid var(--s2);
+  border-radius:4px; padding:20px 24px; margin-bottom:40px; font-size:1.02rem; color:var(--ink-2); max-width:none}
+.thesis strong{color:var(--ink); font-weight:600}
+
+/* ---------- sections ---------- */
+section{padding-block:34px; border-top:1px solid var(--rule)}
+.sechead{display:flex; align-items:baseline; gap:16px; flex-wrap:wrap; margin-bottom:8px}
+.sechead .amt{font-family:"IBM Plex Mono",monospace; font-size:.82rem; font-weight:500; color:var(--ink-3);
+  background:var(--surface-2); padding:3px 9px; border-radius:3px; white-space:nowrap}
+.secintro{margin-block:12px 26px}
+@media (max-width:620px){ .sechead .amt{white-space:normal} }
+
+/* ---------- panels & charts ---------- */
+.panel{background:var(--surface); border:1px solid var(--rule); border-radius:6px; padding:22px clamp(14px,2.4vw,24px)}
+.panelhead{display:flex; align-items:flex-start; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-bottom:6px}
+.chart{width:100%; min-height:60px}
+.chart svg{display:block; width:100%; height:auto; overflow:visible}
+figcaption{font-size:.78rem; color:var(--ink-3); margin-top:12px; line-height:1.5}
+.grid2{display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:18px}
+.grid3{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:18px}
+
+/* ---------- controls ---------- */
+.controls{display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-bottom:18px}
+.tabs{display:inline-flex; background:var(--surface-2); border-radius:5px; padding:3px; gap:2px}
+.tabs button{appearance:none; border:0; background:transparent; color:var(--ink-2); font:inherit; font-size:.84rem;
+  font-weight:500; padding:6px 13px; border-radius:3px; cursor:pointer; white-space:nowrap}
+.tabs button[aria-selected="true"]{background:var(--surface); color:var(--ink); box-shadow:0 1px 2px rgba(0,0,0,.10); font-weight:600}
+.tabs button:focus-visible, .toggle:focus-visible{outline:2px solid var(--s1); outline-offset:2px}
+.toggle{appearance:none; border:1px solid var(--rule-2); background:var(--surface); color:var(--ink-2); font:inherit;
+  font-size:.8rem; font-weight:500; padding:6px 12px; border-radius:5px; cursor:pointer; display:inline-flex; align-items:center; gap:7px}
+.toggle[aria-pressed="true"]{border-color:var(--s1); color:var(--ink); background:var(--accent-soft)}
+.toggle i{width:8px; height:8px; border-radius:50%; background:var(--rule-2); display:block}
+.toggle[aria-pressed="true"] i{background:var(--s1)}
+
+/* ---------- legend ---------- */
+.legend{display:flex; gap:16px; flex-wrap:wrap; align-items:center; font-size:.8rem; color:var(--ink-2); margin-top:14px}
+.legend span{display:inline-flex; align-items:center; gap:7px}
+.legend b{width:11px; height:11px; border-radius:2px; display:block}
+
+/* ---------- tables ---------- */
+.tablewrap{overflow-x:auto; margin-top:4px}
+table{border-collapse:collapse; width:100%; font-size:.85rem; min-width:480px}
+th,td{text-align:right; padding:9px 10px; border-bottom:1px solid var(--rule); white-space:nowrap}
+th:first-child,td:first-child{text-align:left; white-space:normal}
+thead th{font-size:.7rem; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-3);
+  border-bottom:1px solid var(--rule-2); vertical-align:bottom}
+tbody tr:last-child td{border-bottom:0}
+tbody tr.totalrow td{border-top:1px solid var(--rule-2); font-weight:600; background:var(--surface-3)}
+td.n{font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums}
+td.neg{color:var(--neg)}
+.bar-cell{position:relative; min-width:96px}
+.bar-cell i{position:absolute; left:10px; top:50%; transform:translateY(-50%); height:9px; border-radius:2px; display:block}
+
+/* ---------- chips ---------- */
+.chip{display:inline-flex; align-items:center; gap:6px; font-size:.74rem; font-weight:600; padding:2px 8px; border-radius:3px; white-space:nowrap}
+.chip i{width:7px; height:7px; border-radius:50%; display:block; flex:none}
+.chip.good{background:var(--chip-good); color:var(--good)} .chip.good i{background:var(--good)}
+.chip.warn{background:var(--chip-warn); color:#8a6200} .chip.warn i{background:var(--warn)}
+.chip.serious{background:var(--chip-serious); color:#a8501f} .chip.serious i{background:var(--serious)}
+.chip.neutral{background:var(--chip-neutral); color:var(--ink-2)} .chip.neutral i{background:var(--ink-3)}
+:root[data-theme="dark"] .chip.warn, :root[data-theme="dark"] .chip.serious{color:var(--ink)}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]) .chip.warn,
+  :root:not([data-theme="light"]) .chip.serious{color:var(--ink)} }
+
+/* ---------- stat tiles ---------- */
+.stats{display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:1px; background:var(--rule);
+  border:1px solid var(--rule); border-radius:6px; overflow:hidden}
+.stat{background:var(--surface); padding:16px 18px}
+.stat .v{font-size:1.6rem; font-weight:600; line-height:1.15; letter-spacing:-.02em; margin:6px 0 3px}
+.stat .k{font-size:.7rem; font-weight:600; letter-spacing:.09em; text-transform:uppercase; color:var(--ink-3)}
+.stat .d{font-size:.78rem; color:var(--ink-3); line-height:1.45}
+
+/* ---------- callout ---------- */
+.callout{border:1px solid var(--rule); border-left:3px solid var(--crit); background:var(--surface);
+  border-radius:4px; padding:18px 22px; display:grid; gap:8px}
+.callout.ok{border-left-color:var(--good)}
+.callout h3{display:flex; align-items:center; gap:9px}
+.callout h3::before{content:""; width:7px; height:7px; border-radius:50%; background:var(--crit); flex:none}
+.callout.ok h3::before{background:var(--good)}
+
+/* ---------- lists ---------- */
+ol.qs{counter-reset:q; list-style:none; padding:0; margin:0; display:grid; gap:14px}
+ol.qs li{counter-increment:q; display:grid; grid-template-columns:auto 1fr; gap:14px; align-items:start}
+ol.qs li::before{content:"Q" counter(q); font-family:"IBM Plex Mono",monospace; font-size:.74rem; font-weight:600;
+  color:var(--accent); background:var(--accent-soft); padding:3px 7px; border-radius:3px; margin-top:2px}
+ul.plain{list-style:none; padding:0; margin:0; display:grid; gap:10px}
+ul.plain li{display:grid; grid-template-columns:auto 1fr; gap:11px; align-items:start; font-size:.9rem; color:var(--ink-2)}
+ul.plain li::before{content:""; width:5px; height:5px; border-radius:50%; background:var(--rule-2); margin-top:9px}
+code{font-family:"IBM Plex Mono",monospace; font-size:.86em; background:var(--surface-2); padding:1px 5px; border-radius:3px}
+.formula{font-family:"IBM Plex Mono",monospace; font-size:.82rem; background:var(--surface-3); border:1px solid var(--rule);
+  border-radius:4px; padding:14px 16px; overflow-x:auto; white-space:pre; line-height:1.7; color:var(--ink-2)}
+
+/* ---------- tooltip ---------- */
+#tip{position:fixed; z-index:80; pointer-events:none; opacity:0; transition:opacity .1s;
+  background:var(--surface); color:var(--ink); border:1px solid var(--rule-2); border-radius:5px;
+  box-shadow:var(--shadow); padding:9px 12px; font-size:.8rem; line-height:1.5; max-width:270px}
+#tip .t{font-weight:600; margin-bottom:3px}
+#tip .r{display:flex; justify-content:space-between; gap:16px}
+#tip .r span:last-child{font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums}
+
+footer{padding-block:34px 60px; border-top:1px solid var(--rule); color:var(--ink-3); font-size:.82rem}
+[hidden]{display:none !important}
+@media (prefers-reduced-motion:reduce){ *{transition:none !important; animation:none !important} }
+
+/* ---------- verdict chips: critical state ---------- */
+.chip.crit{background:var(--chip-crit); color:var(--crit)} .chip.crit i{background:var(--crit)}
+:root{--chip-crit:#fbe3e3}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){--chip-crit:#3a1717} }
+:root[data-theme="dark"]{--chip-crit:#3a1717}
+
+/* ---------- claim scorecard ---------- */
+.claim{border-bottom:1px solid var(--rule)}
+.claim:last-child{border-bottom:0}
+.claimhead{width:100%; appearance:none; background:transparent; border:0; font:inherit; color:inherit;
+  text-align:left; cursor:pointer; display:grid; align-items:center; gap:16px; padding:15px 6px;
+  grid-template-columns:38px minmax(0,1fr) 150px 104px 132px}
+.claimhead:hover{background:var(--surface-3)}
+.claimhead:focus-visible{outline:2px solid var(--s1); outline-offset:-2px}
+.claimhead .cid{font-family:"IBM Plex Mono",monospace; font-size:.76rem; font-weight:600; color:var(--ink-3)}
+.claimhead .ctext{font-size:.93rem; line-height:1.45}
+.claimhead .ctext em{display:block; font-style:normal; font-size:.76rem; color:var(--ink-3); margin-top:3px}
+.divbar{display:block; position:relative; height:22px; background:var(--surface-2); border-radius:3px; overflow:hidden}
+.divbar::before{content:""; position:absolute; left:50%; top:0; bottom:0; width:1px; background:var(--rule-2)}
+.divbar i{position:absolute; top:4px; bottom:4px; border-radius:2px; display:block}
+.divbar b{position:absolute; right:6px; top:50%; transform:translateY(-50%); font-family:"IBM Plex Mono",monospace;
+  font-size:.72rem; font-weight:600; color:var(--ink-2)}
+.meter{display:flex; flex-direction:column; gap:4px}
+.meter u{height:6px; background:var(--surface-2); border-radius:3px; display:block; text-decoration:none; position:relative}
+.meter u i{position:absolute; left:0; top:0; bottom:0; border-radius:3px; background:var(--ink-3); display:block}
+.meter s{text-decoration:none; font-size:.7rem; color:var(--ink-3); font-family:"IBM Plex Mono",monospace}
+.claimbody{padding:2px 6px 20px 56px; display:grid; gap:14px}
+@media (max-width:860px){
+  .claimhead{grid-template-columns:34px minmax(0,1fr); gap:8px 12px}
+  .claimhead .cscore, .claimhead .cconf{grid-column:2}
+  .claimhead .cverdict{grid-column:2; justify-self:start}
+  .claimbody{padding-left:12px}
+}
+
+/* ---------- entity board (bidders, portcos, workstreams) ---------- */
+.board{display:grid}
+.brow{display:grid; gap:14px; align-items:center; padding:16px 6px; border-bottom:1px solid var(--rule);
+  grid-template-columns:minmax(0,1.5fr) 108px 108px minmax(120px,1fr) minmax(0,1.4fr)}
+.brow:last-child{border-bottom:0}
+.brow .who{display:grid; gap:3px}
+.brow .who strong{font-size:.95rem; font-weight:600}
+.brow .who span{font-size:.76rem; color:var(--ink-3)}
+.brow .flags{display:flex; flex-wrap:wrap; gap:6px}
+.brow .mini{display:flex; gap:14px; font-size:.75rem; color:var(--ink-3); flex-wrap:wrap}
+.brow .mini b{display:block; font-family:"IBM Plex Mono",monospace; font-size:.86rem; font-weight:600; color:var(--ink)}
+@media (max-width:900px){ .brow{grid-template-columns:minmax(0,1fr) 100px 100px} 
+  .brow .spark, .brow .flags{grid-column:1 / -1} }
+
+/* ---------- ordinal ramp: stage pipelines, funnel steps, tiers ---------- */
+:root{--ord1:#86b6ef; --ord2:#5598e7; --ord3:#2a78d6; --ord4:#1c5cab; --ord5:#104281}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --ord1:#184f95; --ord2:#256abf; --ord3:#3987e5; --ord4:#86b6ef; --ord5:#cde2fb} }
+:root[data-theme="dark"]{--ord1:#184f95; --ord2:#256abf; --ord3:#3987e5; --ord4:#86b6ef; --ord5:#cde2fb}
+.stagebar{display:flex; height:10px; border-radius:3px; overflow:hidden; gap:2px; background:var(--surface-2)}
+.stagebar i{display:block; min-width:2px}
+
+/* ---------- code ---------- */
+:root{
+  --code-bg:#f6f8fb; --code-rule:#dde4ec; --code-ink:#1c2430;
+  --code-kw:#8250df; --code-str:#0a7a4f; --code-num:#b3541e; --code-com:#79869a;
+  --code-fn:#0550ae; --code-op:#495568; --code-cls:#0b6b6b;
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --code-bg:#10151b; --code-rule:#252d38; --code-ink:#dbe3ec;
+  --code-kw:#c0a6f5; --code-str:#56d4a0; --code-num:#f0883e; --code-com:#7f8a99;
+  --code-fn:#79b8ff; --code-op:#aab6c6; --code-cls:#4fd1c5;
+}}
+:root[data-theme="dark"]{
+  --code-bg:#10151b; --code-rule:#252d38; --code-ink:#dbe3ec;
+  --code-kw:#c0a6f5; --code-str:#56d4a0; --code-num:#f0883e; --code-com:#7f8a99;
+  --code-fn:#79b8ff; --code-op:#aab6c6; --code-cls:#4fd1c5;
+}
+.codewrap{border:1px solid var(--code-rule); border-radius:6px; overflow:hidden; background:var(--code-bg)}
+.codebar{display:flex; align-items:center; gap:8px; padding:7px 10px 7px 12px;
+  border-bottom:1px solid var(--code-rule); background:var(--code-bg)}
+.codebar .lang{font-family:"IBM Plex Mono",monospace; font-size:.7rem; font-weight:600;
+  letter-spacing:.07em; text-transform:uppercase; color:var(--code-com)}
+.codebar .spacer{flex:1}
+.codebar button{appearance:none; border:1px solid transparent; background:transparent; color:var(--code-com);
+  font:inherit; font-size:.72rem; font-weight:600; padding:3px 8px; border-radius:4px; cursor:pointer}
+.codebar button:hover{color:var(--code-ink); border-color:var(--code-rule)}
+.codebar button[aria-selected="true"]{color:var(--code-ink); background:var(--surface); border-color:var(--code-rule)}
+.codebar button:focus-visible{outline:2px solid var(--s1); outline-offset:1px}
+pre.code{margin:0; padding:14px 16px; overflow-x:auto; background:var(--code-bg)}
+pre.code code{font-family:"IBM Plex Mono",ui-monospace,monospace; font-size:.795rem; line-height:1.72;
+  color:var(--code-ink); background:none; padding:0; white-space:pre; display:block; tab-size:4}
+.hljs-keyword,.hljs-literal,.hljs-selector-tag{color:var(--code-kw)}
+.hljs-string,.hljs-meta .hljs-string{color:var(--code-str)}
+.hljs-number{color:var(--code-num)}
+.hljs-comment{color:var(--code-com); font-style:italic}
+.hljs-title,.hljs-title.function_,.hljs-section{color:var(--code-fn); font-weight:600}
+.hljs-title.class_,.hljs-type,.hljs-built_in{color:var(--code-cls)}
+.hljs-params,.hljs-operator,.hljs-punctuation{color:var(--code-op)}
+.hljs-attr,.hljs-variable,.hljs-property{color:var(--code-ink)}
+.hljs-meta{color:var(--code-com)}
+
+/* ---------- tutorial steps ---------- */
+.step{display:grid; grid-template-columns:44px minmax(0,1fr); gap:0 20px; padding-block:30px;
+  border-top:1px solid var(--rule)}
+.step:first-of-type{border-top:0}
+.step .sn{font-family:"IBM Plex Mono",monospace; font-size:.8rem; font-weight:600; color:var(--s1);
+  background:var(--accent-soft); border-radius:4px; height:30px; display:grid; place-items:center}
+.step .body{display:grid; gap:14px; min-width:0}
+.step h3{font-size:1.12rem; font-weight:600; line-height:1.3}
+.step .why{font-size:.95rem; color:var(--ink-2); line-height:1.65; max-width:70ch}
+.step .out{font-family:"IBM Plex Mono",monospace; font-size:.75rem; color:var(--ink-2);
+  background:var(--surface-3); border:1px solid var(--rule); border-left:2px solid var(--rule-2);
+  border-radius:0 4px 4px 0; padding:10px 14px; overflow-x:auto; white-space:pre; line-height:1.6}
+@media (max-width:620px){ .step{grid-template-columns:1fr; gap:12px} .step .sn{width:36px} }
+.pitfall{border:1px solid var(--rule); border-left:3px solid var(--warn); border-radius:0 5px 5px 0;
+  background:var(--surface); padding:16px 20px; display:grid; gap:8px}
+.pitfall h4{margin:0; font-size:.92rem; font-weight:600; display:flex; gap:9px; align-items:center}
+.pitfall h4::before{content:""; width:6px; height:6px; border-radius:50%; background:var(--warn); flex:none}
+.pitfall p{font-size:.86rem; color:var(--ink-2); line-height:1.6}
+.schema td:first-child{font-family:"IBM Plex Mono",monospace; font-size:.8rem}
+.schema th,.schema td{text-align:left}
+.schema td:nth-child(3){white-space:normal; min-width:260px}
+.tocbox{display:grid; gap:2px; margin-top:18px}
+.tocbox a{display:grid; grid-template-columns:30px 1fr; gap:12px; padding:9px 10px; border-radius:5px;
+  text-decoration:none; color:var(--ink-2); font-size:.9rem; align-items:baseline}
+.tocbox a:hover{background:var(--surface-3); color:var(--ink)}
+.tocbox a b{font-family:"IBM Plex Mono",monospace; font-size:.74rem; color:var(--ink-3); font-weight:600}
+
+</style>
+
+<div class="topbar"><div class="wrap">
+  <div class="brandmark"><i></i> <span id="brand"></span></div>
+  <nav class="navlinks">
+    <a href="#inputs">Inputs</a><a href="#walkthrough">Walkthrough</a><a href="#pitfalls">Pitfalls</a>
+    <a href="#validate">Validation</a><a href="#scale">Scale</a><a id="demoLink" href="#" target="_blank" rel="noopener">Open the demo ↗</a>
+  </nav>
+</div></div>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="eyebrow label"><span class="codename" id="tag"></span><span id="phase"></span><span>&middot;</span><span>Tutorial</span></div>
+  <h1 id="title"></h1>
+  <p class="lede" style="margin-top:14px" id="subtitle"></p>
+  <dl class="metarow" id="metarow"></dl>
+</header>
+
+<section style="border-top:0; padding-top:20px">
+  <div class="grid2" style="align-items:start">
+    <div class="panel">
+      <h3 style="margin-bottom:10px">What you are building</h3>
+      <p class="small" id="intro"></p>
+      <p class="small" style="margin-top:14px"><a id="demoLink2" href="#" target="_blank" rel="noopener"><strong>See the finished analysis ↗</strong></a></p>
+    </div>
+    <div class="panel">
+      <h3 style="margin-bottom:4px">Steps</h3>
+      <div class="tocbox" id="toc"></div>
+    </div>
+  </div>
+</section>
+
+<section id="inputs">
+  <div class="sechead"><h2>The input</h2><span class="amt" id="grainTag"></span></div>
+  <p class="secintro lede" id="inputIntro"></p>
+  <div class="panel"><div class="tablewrap"><table class="schema" id="schema"></table></div></div>
+</section>
+
+<section id="walkthrough">
+  <div class="sechead"><h2>Walkthrough</h2></div>
+  <p class="secintro lede" id="walkIntro"></p>
+  <div class="controls" style="position:sticky; top:60px; z-index:20; padding:8px 0;
+       background:color-mix(in srgb,var(--ground) 92%,transparent); backdrop-filter:blur(6px)">
+    <div class="tabs" role="tablist" aria-label="Code flavour">
+      <button role="tab" aria-selected="true" data-flavour="spark">PySpark</button>
+      <button role="tab" aria-selected="false" data-flavour="pandas">pandas</button>
+    </div>
+    <span class="tiny">Switches every block below. Steps that only make sense one way show that one.</span>
+  </div>
+  <div class="panel" style="padding-block:4px"><div id="steps"></div></div>
+</section>
+
+<section id="pitfalls">
+  <div class="sechead"><h2>What goes wrong</h2></div>
+  <p class="secintro lede">Every one of these is a bug that was actually in this analysis at some point.
+     They are here because they are the failure modes that survive a code review and get caught in a
+     partner meeting instead.</p>
+  <div class="grid2" id="pitfalls" style="align-items:start"></div>
+</section>
+
+<section id="validate">
+  <div class="sechead"><h2>Proving it works</h2></div>
+  <p class="secintro lede" id="validIntro"></p>
+  <div class="panel"><div id="validateBlock"></div></div>
+</section>
+
+<section id="scale">
+  <div class="sechead"><h2>Running it for real</h2></div>
+  <div class="grid2" style="align-items:start">
+    <div class="panel"><h3 style="margin-bottom:12px">Where Spark earns its keep</h3>
+      <p class="small" id="scaleBody"></p></div>
+    <div class="panel"><h3 style="margin-bottom:12px">Practical notes</h3>
+      <ul class="plain" id="scaleNotes"></ul></div>
+  </div>
+</section>
+
+<footer>
+  <strong style="color:var(--ink)" id="footTitle"></strong>
+  <span id="footBody"></span>
+</footer>
+
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script id="payload" type="application/json">{"brand":"Revenue Decomposition","tag":"Technique 09","phase":"Financial due diligence","title":"How to build a revenue bridge that ties","subtitle":"Decomposing a revenue movement into price, volume, mix, customer flows, one-offs and FX from an invoice-line extract \u2014 with an identity that holds exactly, so there is no residual to explain.","demo_url":"https://claude.ai/code/artifact/230bde63-86eb-44b4-a8fa-d86185f0a70f","grain":"one row per invoice line","meta":[["Engine","PySpark for the grain reduction, pandas for the maths"],["Input","Sales day-book or ERP invoice lines"],["Runtime","Minutes on 50m lines"],["Output","A bridge with a zero residual"]],"intro":"A revenue bridge that explains where a year's growth came from \u2014 and, more usefully, how much of it will still be there next year. The whole technique rests on one arithmetic identity, and the discipline is refusing to ship anything that does not satisfy it. A bridge with a residual is a bridge you will spend the management meeting defending instead of using.","input_intro":"Everything below comes from one table. On a live deal this is a sales day-book extract or an ERP invoice-line dump \u2014 usually a single overnight request, and the one dataset worth escalating for if it does not arrive.","inputs":[["invoice_id, line_no","string, int","Together they define the grain. Check this before anything else."],["date","date","Drives the fiscal-year split. Use the posting date, not the document date."],["customer_id","string","The customer lens needs a stable key across both years \u2014 watch for account renumbering after an ERP migration."],["sku","string","The price/volume/mix grain. A SKU master change mid-period will wreck the comparison."],["quantity","decimal","<strong>Without quantity you cannot separate price from volume<\/strong>, and that separation is the entire technique."],["revenue_local","decimal","Net of discounts and credits. Confirm whether credit notes are in this table or a separate one."],["currency, fx_rate","string, decimal","Needed to hold the comparison at constant currency and report FX as its own line."],["order_type","string","Standard / project / contract. Isolates one-off work so it can be quantified rather than argued about."]],"walk_intro":"Eight steps. The first three run in Spark against the full extract; from step four the frame is one row per SKU and everything is small-data work in pandas. Knowing where that boundary sits is most of the engineering.","steps":[{"title":"Land the extract and check the grain","why":"Before any analysis, prove the table is what you were told it is. Duplicated lines from a badly joined extract are the single most common cause of a bridge that will not tie, and they are invisible in a total \u2014 the totals still look plausible, they are just wrong.","code":{"spark":"from pyspark.sql import SparkSession, functions as F\n\nspark = SparkSession.builder.appName(\"revenue-bridge\").getOrCreate()\n\nFY_START = \"2024-04-01\"          # FY25 opens; anything before is FY24\n\ntx = (spark.read.parquet(\"s3://project-meridian/daybook/\")\n        .withColumn(\"fiscal_year\",\n                    F.when(F.col(\"date\") >= F.lit(FY_START), F.lit(\"FY25\"))\n                     .otherwise(F.lit(\"FY24\"))))\n\n# The grain check that saves you a week. If this fires, stop and fix the extract.\ndupes = tx.groupBy(\"invoice_id\", \"line_no\").count().filter(\"count > 1\").count()\nassert dupes == 0, f\"{dupes:,} duplicated invoice lines in the extract\"\n\n# Nulls in any of these silently drop rows from one side of the bridge\nfor c in (\"customer_id\", \"sku\", \"quantity\", \"revenue_local\"):\n    n = tx.filter(F.col(c).isNull()).count()\n    assert n == 0, f\"{n:,} null {c}\"","pandas":"import pandas as pd\n\nFY_START = pd.Timestamp(\"2024-04-01\")\n\ntx = pd.read_parquet(\"daybook.parquet\")\ntx[\"fiscal_year\"] = np.where(tx.date >= FY_START, \"FY25\", \"FY24\")\n\ndupes = tx.duplicated(subset=[\"invoice_id\", \"line_no\"]).sum()\nassert dupes == 0, f\"{dupes:,} duplicated invoice lines in the extract\"\n\nfor c in (\"customer_id\", \"sku\", \"quantity\", \"revenue_local\"):\n    assert tx[c].notna().all(), f\"nulls in {c}\""},"note":"Also reconcile the extract total to the filed or management accounts before you go further. A day-book that is 3% light because intercompany was excluded is a conversation to have on day one, not in the draft report."},{"title":"Hold the comparison at constant currency","why":"If you do not isolate FX first, it smears into price and you will spend a week arguing about which is which. Restate every line at one reference rate \u2014 the prior-year average \u2014 and carry the difference between actual and constant currency as a single reconciling line at the end.","code":{"spark":"FX_REF = 0.86204     # FY24 average GBP per EUR: the rate the comparison is held at\n\ntx = tx.withColumn(\n    \"revenue_cc\",\n    F.when(F.col(\"currency\") == \"GBP\", F.col(\"revenue_local\"))\n     .otherwise(F.col(\"revenue_local\") * F.lit(FX_REF)))\n\n# FX becomes one line in the bridge: the difference between the two movements\ntotals = (tx.groupBy(\"fiscal_year\")\n            .agg(F.sum(\"revenue_gbp\").alias(\"actual\"),\n                 F.sum(\"revenue_cc\").alias(\"cc\"))\n            .toPandas().set_index(\"fiscal_year\"))\n\ndelta_actual = totals.loc[\"FY25\", \"actual\"] - totals.loc[\"FY24\", \"actual\"]\ndelta_cc     = totals.loc[\"FY25\", \"cc\"]     - totals.loc[\"FY24\", \"cc\"]\nfx_effect    = delta_actual - delta_cc","pandas":"FX_REF = 0.86204\n\ntx[\"revenue_cc\"] = np.where(tx.currency.eq(\"GBP\"),\n                            tx.revenue_local,\n                            tx.revenue_local * FX_REF)\n\ntotals = tx.groupby(\"fiscal_year\")[[\"revenue_gbp\", \"revenue_cc\"]].sum()\ndelta_actual = totals.revenue_gbp.diff().iloc[-1]\ndelta_cc     = totals.revenue_cc.diff().iloc[-1]\nfx_effect    = delta_actual - delta_cc"},"out":"fx_effect = +382,104   # translation only, no trading effect"},{"title":"Collapse to the analysis grain \u2014 and stop using Spark","why":"This is the step that matters for performance and the one people get wrong in the other direction. Fifty million invoice lines collapse to a few tens of thousands of SKU rows. Do that reduction in Spark, then bring the result back and do every subsequent step in pandas. Running the statistics in Spark buys you nothing and costs you clarity.","code":{"spark":"# Standard lines only -- one-off project work is carved out separately in step 8\ngrain = (tx.filter(F.col(\"order_type\") == \"Standard\")\n           .groupBy(\"sku\")\n           .pivot(\"fiscal_year\", [\"FY24\", \"FY25\"])\n           .agg(F.sum(\"quantity\").alias(\"q\"), F.sum(\"revenue_cc\").alias(\"r\"))\n           .na.fill(0.0))\n\n# grain columns: sku, FY24_q, FY24_r, FY25_q, FY25_r\nprint(f\"{tx.count():,} lines -> {grain.count():,} SKU rows\")\n\ng = grain.toPandas().set_index(\"sku\")     # from here on it is small data","pandas":"std = tx[tx.order_type.eq(\"Standard\")]\n\ng = (std.pivot_table(index=\"sku\", columns=\"fiscal_year\",\n                     values=[\"quantity\", \"revenue_cc\"], aggfunc=\"sum\")\n        .fillna(0.0))\ng.columns = [f\"{fy}_{'q' if v == 'quantity' else 'r'}\" for v, fy in g.columns]\n\nprint(f\"{len(std):,} lines -> {len(g):,} SKU rows\")"},"out":"51,284,117 lines -> 64 SKU rows","note":"Pivoting with two aggregates gives Spark column names of the form <code>FY24_q<\/code>, <code>FY24_r<\/code>. Name them explicitly rather than relying on the ordering if you are pinning this into a pack that runs unattended."},{"title":"The price / volume / mix identity","why":"Three components, defined so they sum to the movement exactly. Volume is the change in units valued at last year's average price. Price is the per-SKU price change at this year's volumes. Mix is what shifting the basket did, valued at last year's prices. There is no fourth term and no residual \u2014 if you find yourself adding one, the definitions are wrong.","code":{"numpy":"import numpy as np\n\nq0, q1 = g.FY24_q.to_numpy(), g.FY25_q.to_numpy()\nr0, r1 = g.FY24_r.to_numpy(), g.FY25_r.to_numpy()\n\nQ0, Q1 = q0.sum(), q1.sum()\nR0, R1 = r0.sum(), r1.sum()\np0_bar = R0 / Q0                       # prior-year average price across the whole book\n\n# Per-SKU prices. SKUs absent last year fall back to the book average -- see step 5.\np0 = np.divide(r0, q0, out=np.full_like(r0, p0_bar), where=q0 > 0)\np1 = np.divide(r1, q1, out=np.zeros_like(r1),        where=q1 > 0)\n\nvolume = (Q1 - Q0) * p0_bar\nprice  = (q1 * (p1 - p0)).sum()\nmix    = (q1 * p0).sum() - Q1 * p0_bar\n\nassert abs((volume + price + mix) - (R1 - R0)) < 1e-6"},"out":"volume  -32,411\nprice  +4,752,908\nmix      -813,204\n           ---------\n         +3,907,293   == R1 - R0"},{"title":"Why the identity survives a moving catalogue","why":"Real ranges churn. SKUs launch, get discontinued, get renumbered. The identity holds for <em>any<\/em> choice of prior-year price on a SKU that did not trade last year, which is what makes it safe \u2014 and worth being able to prove on a whiteboard when someone challenges it.","code":{"python":"# Expand the three definitions and everything cancels except R1 - R0:\n#\n#   price  + volume            + mix\n# = sum q1(p1-p0) + (Q1-Q0)p0_bar + sum q1*p0 - Q1*p0_bar\n# = sum q1*p1 - sum q1*p0 + Q1*p0_bar - R0 + sum q1*p0 - Q1*p0_bar\n# = sum q1*p1 - R0\n# = R1 - R0\n#\n# Note that p0 appears twice with opposite signs, so whatever you choose for a\n# SKU with q0 == 0 cancels. The book average is the conventional choice: it puts\n# a genuinely new SKU's whole movement into volume and price, and none into mix.\n\nnew_skus = g.index[(g.FY24_q == 0) & (g.FY25_q > 0)]\ndead_skus = g.index[(g.FY24_q > 0) & (g.FY25_q == 0)]\nprint(f\"{len(new_skus)} new, {len(dead_skus)} discontinued -- identity unaffected\")"},"note":"The one thing that does break it is dropping those rows. A <code>dropna()<\/code> or an inner join in step 3 will silently remove them and your bridge will miss by exactly their revenue."},{"title":"The customer lens: the same movement, partitioned by account","why":"Price, volume and mix explain the commercial story. They say nothing about whether the customer base is growing or leaking. Partition the identical movement a second way \u2014 accounts that left, arrived, grew and shrank \u2014 and you have two independent readings that must agree on the total.","code":{"spark":"cust = (tx.groupBy(\"customer_id\")\n            .pivot(\"fiscal_year\", [\"FY24\", \"FY25\"])\n            .agg(F.sum(\"revenue_cc\").alias(\"r\"))\n            .na.fill(0.0)\n            .toPandas())\n\nr0c, r1c = cust.FY24_r.to_numpy(), cust.FY25_r.to_numpy()\nwas, now = r0c > 0, r1c > 0\n\nlost        = -r0c[was & ~now].sum()\nnew         =  r1c[~was & now].sum()\nd           = (r1c - r0c)[was & now]\nexpansion   =  d[d > 0].sum()\ncontraction =  d[d < 0].sum()\n\nassert abs(lost + new + expansion + contraction - (r1c.sum() - r0c.sum())) < 1e-6","pandas":"cust = (tx.pivot_table(index=\"customer_id\", columns=\"fiscal_year\",\n                       values=\"revenue_cc\", aggfunc=\"sum\")\n          .reindex(columns=[\"FY24\", \"FY25\"]).fillna(0.0))\n\nwas, now = cust.FY24 > 0, cust.FY25 > 0\nd = (cust.FY25 - cust.FY24)[was & now]\n\nlost        = -cust.FY24[was & ~now].sum()\nnew         =  cust.FY25[~was & now].sum()\nexpansion   =  d[d > 0].sum()\ncontraction =  d[d < 0].sum()"},"note":"Use the revenue test (<code>&gt; 0<\/code>), not a customer-master status flag. Accounts get marked inactive months after they stop buying, and a flag will put churn in the wrong year."},{"title":"Nest the two lenses into one bridge","why":"Two bridges that tie to the same number are good. One bridge that carries both readings is better, because it stops the meeting turning into an argument about which view is right. Decompose the <em>retained<\/em> book into price, volume and mix; carry accounts that arrived or left whole; and keep FX as a single translation line.","code":{"python":"retained = cust.index[(cust.FY24 > 0) & (cust.FY25 > 0)]\n\n# Re-run step 3 and step 4 restricted to retained customers, standard lines only\nret = tx[tx.customer_id.isin(retained) & tx.order_type.eq(\"Standard\")]\nvolume_r, price_r, mix_r = pvm(collapse_to_sku(ret))     # the step 3 + 4 functions\n\nbridge = [\n    (\"FY24 revenue\",     R0_actual,  \"total\"),\n    (\"Volume (organic)\", volume_r,   \"delta\"),\n    (\"Price\",            price_r,    \"delta\"),\n    (\"Mix\",              mix_r,      \"delta\"),\n    (\"One-off project\",  project_d,  \"delta\"),   # step 8\n    (\"New customers\",    new,        \"delta\"),\n    (\"Lost customers\",   lost,       \"delta\"),\n    (\"FX translation\",   fx_effect,  \"delta\"),\n    (\"FY25 revenue\",     R1_actual,  \"total\"),\n]"},"note":"Expansion and contraction do not appear as separate lines here \u2014 they are <em>decomposed<\/em> into the retained book's price, volume and mix. That is the point of nesting: expansion of \u00a39.3m that turns out to be \u00a33.4m of price and \u00a32.9m of a single contract is a very different fact from \u00a39.3m of customers buying more."},{"title":"Carve out the one-off work","why":"Lumpy contract revenue hides inside Volume and flatters it. Compute the identity on standard lines only, then carry the movement in project revenue as its own bridge line. The arithmetic stays exact because the two subsets partition the retained book.","code":{"spark":"ret_ids = spark.createDataFrame([(c,) for c in retained], [\"customer_id\"])\n\nproj = (tx.join(F.broadcast(ret_ids), \"customer_id\")\n          .filter(F.col(\"order_type\") == \"Project\")\n          .groupBy(\"fiscal_year\").agg(F.sum(\"revenue_cc\").alias(\"r\"))\n          .toPandas().set_index(\"fiscal_year\").r)\n\nproject_d = proj.get(\"FY25\", 0.0) - proj.get(\"FY24\", 0.0)\n\n# Retained delta = standard-line PVM + project movement, exactly\nassert abs((volume_r + price_r + mix_r + project_d) - retained_delta) < 1.0","pandas":"proj = (tx[tx.customer_id.isin(retained) & tx.order_type.eq(\"Project\")]\n          .groupby(\"fiscal_year\").revenue_cc.sum())\n\nproject_d = proj.get(\"FY25\", 0.0) - proj.get(\"FY24\", 0.0)\n\nassert abs((volume_r + price_r + mix_r + project_d) - retained_delta) < 1.0"},"note":"If the source has no order-type flag, ask for one before you model anything. Reconstructing it from order value or customer name is guesswork, and the number it produces will be the most contested figure in the report."}],"pitfalls":[{"title":"Per-group mix measured against the book average price","body":"Splitting mix by product family using the book-wide average price is arithmetically correct and completely unreadable. In this analysis it showed Marine &amp; Offshore contributing <strong>+\u00a33.9m of mix on flat revenue<\/strong>, purely because its average price sits above the book average. Re-cut each group's volume at <em>its own<\/em> prior price, report the unit-share shift separately, and state the between-group and within-group split."},{"title":"Letting FX smear into price","body":"Computing the identity on actual-currency revenue puts translation inside the price term, where it is indistinguishable from commercial pricing. Restate at a single reference rate first and carry the difference as one line. It costs four lines of code and removes an entire category of argument."},{"title":"A residual you decide to call rounding","body":"Any residual, however small, is the first thing a partner will ask about \u2014 and once they do, nothing else in the bridge gets discussed. Assert the identity in the code and fail the run. If it does not tie, something upstream is wrong, and the residual is telling you where."},{"title":"Truncating the vertical axis silently","body":"A waterfall on a \u00a342m base has to truncate its axis or the movements are invisible. That is conventional and fine \u2014 but label it. An unlabelled truncated axis is the single fastest way to lose credibility with an audience that reads charts for a living."}],"validate":{"intro":"Reconciliation is not a final check, it is a gate. Wire it into the run so a bridge that does not tie never reaches a slide.","why":"Three assertions cover the technique: the commercial identity, the customer partition, and the nested bridge that carries both. Any per-group breakdown gets a fourth \u2014 the parts must sum to the whole they claim to explain.","code":{"python":"TOL = 1.0        # pounds, against a book of ~50m\n\ndef check(bridge, opening, closing, tol=TOL):\n    deltas = sum(v for _, v, kind in bridge if kind == \"delta\")\n    residual = opening + deltas - closing\n    assert abs(residual) < tol, f\"bridge off by {residual:,.2f}\"\n    return residual\n\n# 1. the commercial identity\nassert abs((volume + price + mix) - (R1 - R0)) < TOL\n\n# 2. the customer partition\nassert abs((lost + new + expansion + contraction) - (R1 - R0)) < TOL\n\n# 3. the nested bridge, end to end\nresidual = check(bridge, R0_actual, R1_actual)\n\n# 4. any per-group cut must foot to the total it decomposes\nassert abs(family.price.sum() - price) < TOL\nassert abs(family.delta.sum() - (R1 - R0)) < TOL\n\nprint(f\"reconciliation: residual GBP {residual:,.2f}\")"},"out":"reconciliation: residual GBP -0.00"},"scale":{"body":"The only genuinely large step is the grain reduction. A 50-million-line day-book collapses to a few tens of thousands of SKU rows and a few hundred thousand customer rows \u2014 both comfortably small. Run the filter, the currency restatement and the two pivots in Spark, then <code>toPandas()<\/code> and do the identity, the customer partition and the whole bridge in NumPy. Trying to express the price/volume/mix arithmetic in Spark is possible and pointless: it obscures a four-line calculation and gives you nothing back.","notes":["<strong>Partition the source by fiscal year on read<\/strong> where the layout allows it. Both sides of the bridge scan the whole extract otherwise.","<strong>Watch for skew on customer_id.<\/strong> One national account can be 20% of the lines; a salted pre-aggregation is worth it if the customer pivot stalls.","<strong>Use <code>decimal<\/code> for money end to end<\/strong> if the source does. Casting to double for a 50m-row sum will give you a residual you cannot explain and will waste an afternoon.","<strong>Never <code>collect()<\/code> the line-level frame.<\/strong> If a step needs every row in the driver, the step is wrong.","<strong>Cache the filtered frame<\/strong> if it is reused across the SKU pivot, the customer pivot and the project carve-out \u2014 three scans of the same filter is the commonest avoidable cost here.","<strong>Keep the seeded generator in the repo.<\/strong> Being able to re-run the whole pack against synthetic data is what makes it a template rather than a one-off."]},"foot_title":"Technique 09 \u2014 Revenue Decomposition.","foot_body":"Tutorial companion to the Meridian Coatings demo. All figures synthetic."}</script>
+<script>
+(() => {
+"use strict";
+const T = JSON.parse(document.getElementById("payload").textContent);
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const LANG = { spark: "PySpark", pandas: "pandas", python: "Python", sql: "SQL", numpy: "NumPy" };
+let flavour = "spark";
+
+document.title = T.title;
+$("#brand").textContent = T.brand;
+$("#tag").textContent = T.tag;
+$("#phase").textContent = T.phase;
+$("#title").textContent = T.title;
+$("#subtitle").textContent = T.subtitle;
+$("#intro").innerHTML = T.intro;
+$("#inputIntro").innerHTML = T.input_intro;
+$("#walkIntro").innerHTML = T.walk_intro;
+$("#validIntro").innerHTML = T.validate.intro;
+$("#scaleBody").innerHTML = T.scale.body;
+$("#grainTag").textContent = T.grain;
+$("#footTitle").textContent = T.foot_title;
+$("#footBody").textContent = " " + T.foot_body;
+for (const id of ["#demoLink", "#demoLink2"]) $(id).href = T.demo_url;
+$("#metarow").innerHTML = T.meta.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join("");
+$("#schema").innerHTML = `<thead><tr><th>Column</th><th>Type</th><th>Why it matters</th></tr></thead><tbody>
+  ${T.inputs.map(i => `<tr><td>${esc(i[0])}</td><td class="tiny">${esc(i[1])}</td><td class="small">${i[2]}</td></tr>`).join("")}</tbody>`;
+$("#toc").innerHTML = T.steps.map((s, i) => `<a href="#step-${i + 1}"><b>${String(i + 1).padStart(2, "0")}</b><span>${esc(s.title)}</span></a>`).join("");
+$("#pitfalls").innerHTML = T.pitfalls.map(p => `<div class="pitfall"><h4>${esc(p.title)}</h4><p>${p.body}</p></div>`).join("");
+$("#scaleNotes").innerHTML = T.scale.notes.map(n => `<li><span>${n}</span></li>`).join("");
+
+/* ---------- code blocks ---------- */
+let uid = 0;
+function block(variants) {
+  const keys = Object.keys(variants);
+  const id = "cb" + (++uid);
+  const bar = keys.length > 1
+    ? keys.map(k => `<button type="button" role="tab" data-flavour="${k}" data-for="${id}"
+        aria-selected="${k === flavour}">${LANG[k] || k}</button>`).join("")
+    : `<span class="lang">${LANG[keys[0]] || keys[0]}</span>`;
+  const panes = keys.map(k => `<pre class="code" data-flavour="${k}" data-for="${id}"
+      ${keys.length > 1 && k !== flavour ? "hidden" : ""}><code class="language-python">${esc(variants[k])}</code></pre>`).join("");
+  return `<div class="codewrap" id="${id}">
+    <div class="codebar">${bar}<span class="spacer"></span>
+      <button type="button" class="copy" data-for="${id}">Copy</button></div>${panes}</div>`;
+}
+
+$("#steps").innerHTML = T.steps.map((s, i) => `<div class="step" id="step-${i + 1}">
+  <div class="sn">${String(i + 1).padStart(2, "0")}</div>
+  <div class="body">
+    <h3>${esc(s.title)}</h3>
+    <p class="why">${s.why}</p>
+    ${block(s.code)}
+    ${s.out ? `<div class="out">${esc(s.out)}</div>` : ""}
+    ${s.note ? `<p class="tiny" style="line-height:1.6">${s.note}</p>` : ""}
+  </div></div>`).join("");
+$("#validateBlock").innerHTML = `<p class="small" style="margin-bottom:14px">${T.validate.why}</p>`
+  + block(T.validate.code)
+  + (T.validate.out ? `<div class="out" style="margin-top:14px">${esc(T.validate.out)}</div>` : "");
+
+/* ---------- flavour switching, per block and globally ---------- */
+function setFlavour(f, scope) {
+  document.querySelectorAll(scope ? `[data-for="${scope}"]` : "[data-flavour]").forEach(el => {
+    const mine = el.dataset.flavour === f;
+    if (el.tagName === "PRE") {
+      // a block without this flavour keeps whatever it has -- never blank the pane
+      const wrap = el.closest(".codewrap");
+      if (wrap.querySelector(`pre[data-flavour="${f}"]`)) el.hidden = !mine;
+    } else if (el.tagName === "BUTTON") {
+      const wrap = el.closest(".codewrap");
+      if (!wrap || wrap.querySelector(`pre[data-flavour="${f}"]`)) el.setAttribute("aria-selected", String(mine));
+    }
+  });
+}
+document.addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b) return;
+  if (b.classList.contains("copy")) {
+    const pre = document.querySelector(`#${b.dataset.for} pre:not([hidden]) code`);
+    navigator.clipboard?.writeText(pre.textContent).then(() => {
+      b.textContent = "Copied"; setTimeout(() => { b.textContent = "Copy"; }, 1400);
+    }).catch(() => { b.textContent = "Select and copy"; });
+  } else if (b.dataset.flavour) {
+    flavour = b.dataset.flavour;
+    setFlavour(flavour, null);
+  }
+});
+
+if (window.hljs) {
+  hljs.configure({ ignoreUnescapedHTML: true });
+  document.querySelectorAll("pre.code code").forEach(el => hljs.highlightElement(el));
+}
+})();
+</script>

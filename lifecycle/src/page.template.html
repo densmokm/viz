@@ -48,10 +48,12 @@ __CSS__
 .tech h3{font-size:1rem; line-height:1.3}
 .tech p{font-size:.83rem; line-height:1.55; color:var(--ink-2)}
 .tech .st{margin-top:2px; font-size:.74rem; font-weight:600; display:inline-flex; align-items:center; gap:6px}
-a.tech{border-color:var(--rule-2)}
-a.tech:hover{border-color:var(--s1); transform:translateY(-2px)}
-a.tech:focus-visible{outline:2px solid var(--s1); outline-offset:2px}
-a.tech .st{color:var(--s1)}
+.tech.live{border-color:var(--rule-2)}
+.tech.live:hover{border-color:var(--s1)}
+.tech.live .st a{color:var(--s1); text-decoration:none}
+.tech.live .st a:hover{text-decoration:underline}
+.tech.live .st a:focus-visible{outline:2px solid var(--s1); outline-offset:2px; border-radius:2px}
+.tech .st .sep{color:var(--ink-3); margin:0 9px; font-weight:400}
 .tech:not(.live){background:transparent; border-style:dashed}
 .tech.planned h3{color:var(--ink-2)}
 .tech.planned .st{color:var(--ink-3)}
@@ -168,12 +170,14 @@ $("#band").innerHTML = `<strong>${esc(X.name)}</strong>
   <a href="#${X.id}">See the layer ↓</a>`;
 
 function card(t) {
-  const inner = `<span class="tnum">${String(t.n).padStart(2, "0")}</span>
+  const links = [];
+  if (t.url) links.push(`<a href="${t.url}" target="_blank" rel="noopener">Open the demo ↗</a>`);
+  if (t.tutorial_url) links.push(`<a href="${t.tutorial_url}" target="_blank" rel="noopener">Tutorial ↗</a>`);
+  const foot = links.length ? links.join('<span class="sep">·</span>') : `● ${LABEL[t.status]}`;
+  return `<div class="tech ${t.status}">
+    <span class="tnum">${String(t.n).padStart(2, "0")}</span>
     <h3>${esc(t.name)}</h3><p>${esc(t.blurb)}</p>
-    <span class="st">${t.status === "live" ? "" : "● "}${LABEL[t.status]}</span>`;
-  return t.status === "live"
-    ? `<a class="tech live" href="${t.url}" target="_blank" rel="noopener">${inner}</a>`
-    : `<div class="tech ${t.status}">${inner}</div>`;
+    <span class="st">${foot}</span></div>`;
 }
 
 function section(p, cross) {

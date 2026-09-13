@@ -95,6 +95,7 @@ section{padding-block:34px; border-top:1px solid var(--rule)}
 .sechead .amt{font-family:"IBM Plex Mono",monospace; font-size:.82rem; font-weight:500; color:var(--ink-3);
   background:var(--surface-2); padding:3px 9px; border-radius:3px; white-space:nowrap}
 .secintro{margin-block:12px 26px}
+@media (max-width:620px){ .sechead .amt{white-space:normal} }
 
 /* ---------- panels & charts ---------- */
 .panel{background:var(--surface); border:1px solid var(--rule); border-radius:6px; padding:22px clamp(14px,2.4vw,24px)}
@@ -244,6 +245,73 @@ footer{padding-block:34px 60px; border-top:1px solid var(--rule); color:var(--in
 .stagebar{display:flex; height:10px; border-radius:3px; overflow:hidden; gap:2px; background:var(--surface-2)}
 .stagebar i{display:block; min-width:2px}
 
+/* ---------- code ---------- */
+:root{
+  --code-bg:#f6f8fb; --code-rule:#dde4ec; --code-ink:#1c2430;
+  --code-kw:#8250df; --code-str:#0a7a4f; --code-num:#b3541e; --code-com:#79869a;
+  --code-fn:#0550ae; --code-op:#495568; --code-cls:#0b6b6b;
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --code-bg:#10151b; --code-rule:#252d38; --code-ink:#dbe3ec;
+  --code-kw:#c0a6f5; --code-str:#56d4a0; --code-num:#f0883e; --code-com:#7f8a99;
+  --code-fn:#79b8ff; --code-op:#aab6c6; --code-cls:#4fd1c5;
+}}
+:root[data-theme="dark"]{
+  --code-bg:#10151b; --code-rule:#252d38; --code-ink:#dbe3ec;
+  --code-kw:#c0a6f5; --code-str:#56d4a0; --code-num:#f0883e; --code-com:#7f8a99;
+  --code-fn:#79b8ff; --code-op:#aab6c6; --code-cls:#4fd1c5;
+}
+.codewrap{border:1px solid var(--code-rule); border-radius:6px; overflow:hidden; background:var(--code-bg)}
+.codebar{display:flex; align-items:center; gap:8px; padding:7px 10px 7px 12px;
+  border-bottom:1px solid var(--code-rule); background:var(--code-bg)}
+.codebar .lang{font-family:"IBM Plex Mono",monospace; font-size:.7rem; font-weight:600;
+  letter-spacing:.07em; text-transform:uppercase; color:var(--code-com)}
+.codebar .spacer{flex:1}
+.codebar button{appearance:none; border:1px solid transparent; background:transparent; color:var(--code-com);
+  font:inherit; font-size:.72rem; font-weight:600; padding:3px 8px; border-radius:4px; cursor:pointer}
+.codebar button:hover{color:var(--code-ink); border-color:var(--code-rule)}
+.codebar button[aria-selected="true"]{color:var(--code-ink); background:var(--surface); border-color:var(--code-rule)}
+.codebar button:focus-visible{outline:2px solid var(--s1); outline-offset:1px}
+pre.code{margin:0; padding:14px 16px; overflow-x:auto; background:var(--code-bg)}
+pre.code code{font-family:"IBM Plex Mono",ui-monospace,monospace; font-size:.795rem; line-height:1.72;
+  color:var(--code-ink); background:none; padding:0; white-space:pre; display:block; tab-size:4}
+.hljs-keyword,.hljs-literal,.hljs-selector-tag{color:var(--code-kw)}
+.hljs-string,.hljs-meta .hljs-string{color:var(--code-str)}
+.hljs-number{color:var(--code-num)}
+.hljs-comment{color:var(--code-com); font-style:italic}
+.hljs-title,.hljs-title.function_,.hljs-section{color:var(--code-fn); font-weight:600}
+.hljs-title.class_,.hljs-type,.hljs-built_in{color:var(--code-cls)}
+.hljs-params,.hljs-operator,.hljs-punctuation{color:var(--code-op)}
+.hljs-attr,.hljs-variable,.hljs-property{color:var(--code-ink)}
+.hljs-meta{color:var(--code-com)}
+
+/* ---------- tutorial steps ---------- */
+.step{display:grid; grid-template-columns:44px minmax(0,1fr); gap:0 20px; padding-block:30px;
+  border-top:1px solid var(--rule)}
+.step:first-of-type{border-top:0}
+.step .sn{font-family:"IBM Plex Mono",monospace; font-size:.8rem; font-weight:600; color:var(--s1);
+  background:var(--accent-soft); border-radius:4px; height:30px; display:grid; place-items:center}
+.step .body{display:grid; gap:14px; min-width:0}
+.step h3{font-size:1.12rem; font-weight:600; line-height:1.3}
+.step .why{font-size:.95rem; color:var(--ink-2); line-height:1.65; max-width:70ch}
+.step .out{font-family:"IBM Plex Mono",monospace; font-size:.75rem; color:var(--ink-2);
+  background:var(--surface-3); border:1px solid var(--rule); border-left:2px solid var(--rule-2);
+  border-radius:0 4px 4px 0; padding:10px 14px; overflow-x:auto; white-space:pre; line-height:1.6}
+@media (max-width:620px){ .step{grid-template-columns:1fr; gap:12px} .step .sn{width:36px} }
+.pitfall{border:1px solid var(--rule); border-left:3px solid var(--warn); border-radius:0 5px 5px 0;
+  background:var(--surface); padding:16px 20px; display:grid; gap:8px}
+.pitfall h4{margin:0; font-size:.92rem; font-weight:600; display:flex; gap:9px; align-items:center}
+.pitfall h4::before{content:""; width:6px; height:6px; border-radius:50%; background:var(--warn); flex:none}
+.pitfall p{font-size:.86rem; color:var(--ink-2); line-height:1.6}
+.schema td:first-child{font-family:"IBM Plex Mono",monospace; font-size:.8rem}
+.schema th,.schema td{text-align:left}
+.schema td:nth-child(3){white-space:normal; min-width:260px}
+.tocbox{display:grid; gap:2px; margin-top:18px}
+.tocbox a{display:grid; grid-template-columns:30px 1fr; gap:12px; padding:9px 10px; border-radius:5px;
+  text-decoration:none; color:var(--ink-2); font-size:.9rem; align-items:baseline}
+.tocbox a:hover{background:var(--surface-3); color:var(--ink)}
+.tocbox a b{font-family:"IBM Plex Mono",monospace; font-size:.74rem; color:var(--ink-3); font-weight:600}
+
 .wsrow{display:grid; gap:14px; align-items:center; padding:15px 6px; border-bottom:1px solid var(--rule);
   grid-template-columns:minmax(0,1.35fr) minmax(130px,1fr) 74px 74px minmax(110px,.8fr)}
 .wsrow:last-child{border-bottom:0}
@@ -266,7 +334,7 @@ footer{padding-block:34px 60px; border-top:1px solid var(--rule); color:var(--in
   <div class="brandmark"><i></i> Project Anvil</div>
   <nav class="navlinks">
     <a href="#bridge">Bridge</a><a href="#split">Cost vs revenue</a><a href="#land">Where it lands</a>
-    <a href="#workstreams">Workstreams</a><a href="#pl">Run-rate vs P&amp;L</a><a href="#escalate">Escalation</a><a href="#method">Method</a>
+    <a href="#workstreams">Workstreams</a><a href="#pl">Run-rate vs P&amp;L</a><a href="#escalate">Escalation</a><a href="#method">Method</a><a href="https://claude.ai/code/artifact/58926809-5c81-487f-8011-24b2ebe2cc68" target="_blank" rel="noopener">Tutorial ↗</a>
   </nav>
 </div></div>
 

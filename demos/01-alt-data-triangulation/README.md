@@ -1,6 +1,7 @@
 # 01 — Alt Data Triangulation
 
 **Live demo:** https://claude.ai/code/artifact/573d0f94-5d11-4e02-8ed7-064c98752cb3
+**Tutorial:** [How to triangulate outside-in data into a defensible view](https://claude.ai/code/artifact/902859a7-3384-4a18-8c3e-b6d734b3c9f1)
 
 Target: *Kestrel Veterinary Group* (synthetic), a UK veterinary practice roll-up
 preparing to come to market. Deal codename *Project Harrier*.

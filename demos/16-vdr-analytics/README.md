@@ -1,6 +1,7 @@
 # 16 — Virtual Data Room Analytics
 
 **Live demo:** https://claude.ai/code/artifact/b50804ed-996e-472a-9aa8-df7b184ec06c
+**Tutorial:** [How to read bidder intent from a data room log](https://claude.ai/code/artifact/746bf3be-f3ae-48d2-94bb-8c36f813f3e3)
 
 Target: *Thornbury Precision Group* (synthetic), a UK precision components
 manufacturer serving aerospace and medical, sold by its sponsor through a

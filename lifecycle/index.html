@@ -95,6 +95,7 @@ section{padding-block:34px; border-top:1px solid var(--rule)}
 .sechead .amt{font-family:"IBM Plex Mono",monospace; font-size:.82rem; font-weight:500; color:var(--ink-3);
   background:var(--surface-2); padding:3px 9px; border-radius:3px; white-space:nowrap}
 .secintro{margin-block:12px 26px}
+@media (max-width:620px){ .sechead .amt{white-space:normal} }
 
 /* ---------- panels & charts ---------- */
 .panel{background:var(--surface); border:1px solid var(--rule); border-radius:6px; padding:22px clamp(14px,2.4vw,24px)}
@@ -244,6 +245,73 @@ footer{padding-block:34px 60px; border-top:1px solid var(--rule); color:var(--in
 .stagebar{display:flex; height:10px; border-radius:3px; overflow:hidden; gap:2px; background:var(--surface-2)}
 .stagebar i{display:block; min-width:2px}
 
+/* ---------- code ---------- */
+:root{
+  --code-bg:#f6f8fb; --code-rule:#dde4ec; --code-ink:#1c2430;
+  --code-kw:#8250df; --code-str:#0a7a4f; --code-num:#b3541e; --code-com:#79869a;
+  --code-fn:#0550ae; --code-op:#495568; --code-cls:#0b6b6b;
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --code-bg:#10151b; --code-rule:#252d38; --code-ink:#dbe3ec;
+  --code-kw:#c0a6f5; --code-str:#56d4a0; --code-num:#f0883e; --code-com:#7f8a99;
+  --code-fn:#79b8ff; --code-op:#aab6c6; --code-cls:#4fd1c5;
+}}
+:root[data-theme="dark"]{
+  --code-bg:#10151b; --code-rule:#252d38; --code-ink:#dbe3ec;
+  --code-kw:#c0a6f5; --code-str:#56d4a0; --code-num:#f0883e; --code-com:#7f8a99;
+  --code-fn:#79b8ff; --code-op:#aab6c6; --code-cls:#4fd1c5;
+}
+.codewrap{border:1px solid var(--code-rule); border-radius:6px; overflow:hidden; background:var(--code-bg)}
+.codebar{display:flex; align-items:center; gap:8px; padding:7px 10px 7px 12px;
+  border-bottom:1px solid var(--code-rule); background:var(--code-bg)}
+.codebar .lang{font-family:"IBM Plex Mono",monospace; font-size:.7rem; font-weight:600;
+  letter-spacing:.07em; text-transform:uppercase; color:var(--code-com)}
+.codebar .spacer{flex:1}
+.codebar button{appearance:none; border:1px solid transparent; background:transparent; color:var(--code-com);
+  font:inherit; font-size:.72rem; font-weight:600; padding:3px 8px; border-radius:4px; cursor:pointer}
+.codebar button:hover{color:var(--code-ink); border-color:var(--code-rule)}
+.codebar button[aria-selected="true"]{color:var(--code-ink); background:var(--surface); border-color:var(--code-rule)}
+.codebar button:focus-visible{outline:2px solid var(--s1); outline-offset:1px}
+pre.code{margin:0; padding:14px 16px; overflow-x:auto; background:var(--code-bg)}
+pre.code code{font-family:"IBM Plex Mono",ui-monospace,monospace; font-size:.795rem; line-height:1.72;
+  color:var(--code-ink); background:none; padding:0; white-space:pre; display:block; tab-size:4}
+.hljs-keyword,.hljs-literal,.hljs-selector-tag{color:var(--code-kw)}
+.hljs-string,.hljs-meta .hljs-string{color:var(--code-str)}
+.hljs-number{color:var(--code-num)}
+.hljs-comment{color:var(--code-com); font-style:italic}
+.hljs-title,.hljs-title.function_,.hljs-section{color:var(--code-fn); font-weight:600}
+.hljs-title.class_,.hljs-type,.hljs-built_in{color:var(--code-cls)}
+.hljs-params,.hljs-operator,.hljs-punctuation{color:var(--code-op)}
+.hljs-attr,.hljs-variable,.hljs-property{color:var(--code-ink)}
+.hljs-meta{color:var(--code-com)}
+
+/* ---------- tutorial steps ---------- */
+.step{display:grid; grid-template-columns:44px minmax(0,1fr); gap:0 20px; padding-block:30px;
+  border-top:1px solid var(--rule)}
+.step:first-of-type{border-top:0}
+.step .sn{font-family:"IBM Plex Mono",monospace; font-size:.8rem; font-weight:600; color:var(--s1);
+  background:var(--accent-soft); border-radius:4px; height:30px; display:grid; place-items:center}
+.step .body{display:grid; gap:14px; min-width:0}
+.step h3{font-size:1.12rem; font-weight:600; line-height:1.3}
+.step .why{font-size:.95rem; color:var(--ink-2); line-height:1.65; max-width:70ch}
+.step .out{font-family:"IBM Plex Mono",monospace; font-size:.75rem; color:var(--ink-2);
+  background:var(--surface-3); border:1px solid var(--rule); border-left:2px solid var(--rule-2);
+  border-radius:0 4px 4px 0; padding:10px 14px; overflow-x:auto; white-space:pre; line-height:1.6}
+@media (max-width:620px){ .step{grid-template-columns:1fr; gap:12px} .step .sn{width:36px} }
+.pitfall{border:1px solid var(--rule); border-left:3px solid var(--warn); border-radius:0 5px 5px 0;
+  background:var(--surface); padding:16px 20px; display:grid; gap:8px}
+.pitfall h4{margin:0; font-size:.92rem; font-weight:600; display:flex; gap:9px; align-items:center}
+.pitfall h4::before{content:""; width:6px; height:6px; border-radius:50%; background:var(--warn); flex:none}
+.pitfall p{font-size:.86rem; color:var(--ink-2); line-height:1.6}
+.schema td:first-child{font-family:"IBM Plex Mono",monospace; font-size:.8rem}
+.schema th,.schema td{text-align:left}
+.schema td:nth-child(3){white-space:normal; min-width:260px}
+.tocbox{display:grid; gap:2px; margin-top:18px}
+.tocbox a{display:grid; grid-template-columns:30px 1fr; gap:12px; padding:9px 10px; border-radius:5px;
+  text-decoration:none; color:var(--ink-2); font-size:.9rem; align-items:baseline}
+.tocbox a:hover{background:var(--surface-3); color:var(--ink)}
+.tocbox a b{font-family:"IBM Plex Mono",monospace; font-size:.74rem; color:var(--ink-3); font-weight:600}
+
 
 /* ---------- lifecycle spine ---------- */
 .spine{list-style:none; margin:0; padding:0; display:grid; grid-template-columns:repeat(5,1fr);
@@ -288,10 +356,12 @@ footer{padding-block:34px 60px; border-top:1px solid var(--rule); color:var(--in
 .tech h3{font-size:1rem; line-height:1.3}
 .tech p{font-size:.83rem; line-height:1.55; color:var(--ink-2)}
 .tech .st{margin-top:2px; font-size:.74rem; font-weight:600; display:inline-flex; align-items:center; gap:6px}
-a.tech{border-color:var(--rule-2)}
-a.tech:hover{border-color:var(--s1); transform:translateY(-2px)}
-a.tech:focus-visible{outline:2px solid var(--s1); outline-offset:2px}
-a.tech .st{color:var(--s1)}
+.tech.live{border-color:var(--rule-2)}
+.tech.live:hover{border-color:var(--s1)}
+.tech.live .st a{color:var(--s1); text-decoration:none}
+.tech.live .st a:hover{text-decoration:underline}
+.tech.live .st a:focus-visible{outline:2px solid var(--s1); outline-offset:2px; border-radius:2px}
+.tech .st .sep{color:var(--ink-3); margin:0 9px; font-weight:400}
 .tech:not(.live){background:transparent; border-style:dashed}
 .tech.planned h3{color:var(--ink-2)}
 .tech.planned .st{color:var(--ink-3)}
@@ -379,7 +449,7 @@ a.tech .st{color:var(--s1)}
 </footer>
 
 </div>
-<script id="payload" type="application/json">{"owner":"Kevin Densmore","phases":[{"id":"origination","n":1,"name":"Origination","strap":"Before there is a deal","job":"Find the target before it comes to market, and know why it is going to move. The work is surveillance and pattern recognition across public signals, not analysis of a company that has already hired a banker.","techniques":[{"n":6,"name":"Deal Signal Monitoring","status":"planned","blurb":"Automated surveillance for M&A triggers: Gazette filings, Companies House changes, credit movements and sector transaction activity."},{"n":31,"name":"Predictive Deal Origination","status":"planned","blurb":"Score which companies are most likely to transact from financial stress indicators, ownership-change signals and sector consolidation patterns."},{"n":7,"name":"Data Subscription Rationalisation","status":"planned","blurb":"Usage-log analysis across the firm's own data estate to find underused subscriptions and quantify the saving."}]},{"id":"cdd","n":2,"name":"Commercial diligence","strap":"Outside-in, before the data room","job":"Form a view with no internal data. Everything here is bought or observed, so the discipline is knowing what each source is worth \u2014 and being explicit about the questions outside data cannot reach.","techniques":[{"n":1,"name":"Alt Data Triangulation","status":"live","url":"https://claude.ai/code/artifact/573d0f94-5d11-4e02-8ed7-064c98752cb3","blurb":"Eleven subscriptions and 23 signals tested against seven claims from the IM. Four challenged, one untestable, and a growth claim worth \u00a370m of enterprise value."},{"n":4,"name":"Trade Area & Footfall","status":"next","blurb":"Mobile-device footfall and Experian purchase data to size catchments, test demographic fit, measure competitive density and quantify cannibalisation between sites."},{"n":32,"name":"Telecoms: the Starlink Threat","status":"next","blurb":"Satellite broadband as a structural threat to fixed-line and rural fibre economics. Coverage overlap, addressable-base erosion and payback under displacement."},{"n":5,"name":"Churn Analysis","status":"planned","blurb":"Cohort retention curves, survival modelling, lifetime value and revenue stress-testing under attrition scenarios."},{"n":2,"name":"Web Traffic Analysis","status":"planned","blurb":"Traffic trend, channel mix and engagement against competitors. Declining organic and rising paid is a diligence red flag."},{"n":3,"name":"Sentiment Analytics","status":"planned","blurb":"NLP over reviews, app stores and Glassdoor for brand health, product-quality trend and employee sentiment as leading indicators."}]},{"id":"fdd","n":3,"name":"Financial diligence","strap":"Inside the numbers","job":"Transaction-level data, independently cut. The value is not reproducing management's analysis faster \u2014 it is producing the analysis management did not, and having it reconcile.","techniques":[{"n":9,"name":"Revenue Decomposition","status":"live","url":"https://claude.ai/code/artifact/230bde63-86eb-44b4-a8fa-d86185f0a70f","blurb":"Price, volume, mix, customer flows, one-offs and FX from 75k invoice lines. Reported growth +18.6%; underlying \u22121.8%."},{"n":11,"name":"EBITDA Adjustments Validation","status":"planned","blurb":"Rebuild management's pro forma adjustments bottom-up from transaction data and flag what does not reconcile."},{"n":10,"name":"Working Capital Analytics","status":"planned","blurb":"Debtor and creditor days, inventory turns and cash conversion, with seasonality and period-end manipulation risk flagged."},{"n":12,"name":"SKU-Level Performance","status":"planned","blurb":"Pareto and margin contribution across the range: what drives profit, what destroys it, and what the long tail really costs."},{"n":13,"name":"AI Document Review","status":"planned","blurb":"LLM extraction of change-of-control clauses, renewal terms, pricing escalators and risk provisions from contracts and leases."},{"n":8,"name":"Repeatable Analysis Packs","status":"planned","blurb":"Sector-specific templates that run on every deal \u2014 insurance loss triangles, software ARR and NRR, and a generic pack."}]},{"id":"spa","n":4,"name":"SPA & completion","strap":"Where the price actually moves","job":"The highest-stakes arithmetic on any deal, usually done under time pressure in spreadsheets nobody has time to check. Automation here is not efficiency \u2014 it is error reduction on numbers that settle the price.","techniques":[{"n":16,"name":"Data Room Analytics","status":"live","url":"https://claude.ai/code/artifact/b50804ed-996e-472a-9aa8-df7b184ec06c","blurb":"Nine weeks of bidder telemetry. Six names on the process letter, 3.0 expected live bids, and the SPA issues visible weeks before the first mark-up."},{"n":15,"name":"Balance Sheet Carve-Out","status":"next","blurb":"Segment an intermingled P&L from transaction data using explicit allocation bases, then drive the balance sheet off the segmented P&L and headcount."},{"n":14,"name":"SPA Automation","status":"planned","blurb":"Net debt, completion working capital against the peg, and earnout mechanics built from source data rather than retyped."},{"n":17,"name":"Dispute Investigation","status":"planned","blurb":"Forensic anomaly detection for revenue inflation, cut-off manipulation and channel stuffing after completion."}]},{"id":"value","n":5,"name":"Value creation","strap":"Owning the asset","job":"The deal model becomes an operating plan. Most synergy programmes fail quietly for eighteen months before anyone says so \u2014 the job is making the gap visible at month nine.","techniques":[{"n":18,"name":"Synergy Tracking","status":"live","blurb":"Realisation against the deal model at month 14 of 24, with conversion fitted on 260 prior initiatives. Forecast \u00a313.8m against \u00a324.5m \u2014 and the model is unreachable from the current pipeline.","url":"https://claude.ai/code/artifact/b18eee14-aa3a-497e-8b8c-7c07101062a8"},{"n":24,"name":"Portfolio KPI Dashboards","status":"planned","blurb":"Portfolio-company monitoring: financial and operational KPIs, covenant headroom with forward projection, automated RAG reporting."},{"n":23,"name":"Procurement & Spend","status":"planned","blurb":"Spend cube across a merged supplier base: category consolidation, maverick spend, tail rationalisation and phased savings."},{"n":21,"name":"Raw Material Passthrough","status":"planned","blurb":"Whether input cost moves reach customer pricing, how fast, and what the lag is costing in margin."},{"n":22,"name":"Segmentation & Cross-Sell","status":"planned","blurb":"RFM segmentation of the combined base, propensity modelling, cross-sell sizing and overlap analysis."},{"n":20,"name":"SKU Harmonisation","status":"planned","blurb":"Overlapping ranges across two merged portfolios, margin impact of rationalisation scenarios, optimal combined assortment."},{"n":19,"name":"Finance Close Effectiveness","status":"planned","blurb":"Task-level duration tracking, bottleneck identification and an automation roadmap from a 20-day close to seven."},{"n":25,"name":"Tax Operations Automation","status":"planned","blurb":"ERP extraction, automated calculation, filing timeline management and exception-based review."}]}],"crosscutting":{"id":"ai","name":"AI & emerging technology","strap":"Runs underneath every stage","job":"Not a phase \u2014 a capability layer. The constraint on AI in a deals environment is almost never the model; it is governance, data handling and whether anyone can audit what the thing did.","techniques":[{"n":30,"name":"Agentic Deal Workflows","status":"planned","blurb":"An agent running the repetitive diligence loop \u2014 IR tracking, document triage, Q&A prep, anomaly flagging \u2014 with a visible trace and human gates."},{"n":26,"name":"Text-to-SQL for Deal Teams","status":"planned","blurb":"Natural-language querying over deal data with schema grounding, generated SQL shown for inspection and row-level audit logging."},{"n":27,"name":"LLM Governance","status":"planned","blurb":"Data classification, prompt guardrails, client-name and PII redaction, output validation and audit trail. The actual blocker at most firms."},{"n":28,"name":"Computer Vision for Ops DD","status":"planned","blurb":"Site condition assessment, safety compliance and asset scoring from visual data."},{"n":29,"name":"Voice-to-Text for Field Ops","status":"planned","blurb":"Voice memo capture from field workers, entity extraction and structured output."}]}}</script>
+<script id="payload" type="application/json">{"owner":"Kevin Densmore","phases":[{"id":"origination","n":1,"name":"Origination","strap":"Before there is a deal","job":"Find the target before it comes to market, and know why it is going to move. The work is surveillance and pattern recognition across public signals, not analysis of a company that has already hired a banker.","techniques":[{"n":6,"name":"Deal Signal Monitoring","status":"planned","blurb":"Automated surveillance for M&A triggers: Gazette filings, Companies House changes, credit movements and sector transaction activity."},{"n":31,"name":"Predictive Deal Origination","status":"planned","blurb":"Score which companies are most likely to transact from financial stress indicators, ownership-change signals and sector consolidation patterns."},{"n":7,"name":"Data Subscription Rationalisation","status":"planned","blurb":"Usage-log analysis across the firm's own data estate to find underused subscriptions and quantify the saving."}]},{"id":"cdd","n":2,"name":"Commercial diligence","strap":"Outside-in, before the data room","job":"Form a view with no internal data. Everything here is bought or observed, so the discipline is knowing what each source is worth \u2014 and being explicit about the questions outside data cannot reach.","techniques":[{"n":1,"name":"Alt Data Triangulation","status":"live","url":"https://claude.ai/code/artifact/573d0f94-5d11-4e02-8ed7-064c98752cb3","blurb":"Eleven subscriptions and 23 signals tested against seven claims from the IM. Four challenged, one untestable, and a growth claim worth \u00a370m of enterprise value.","tutorial_url":"https://claude.ai/code/artifact/902859a7-3384-4a18-8c3e-b6d734b3c9f1"},{"n":4,"name":"Trade Area & Footfall","status":"next","blurb":"Mobile-device footfall and Experian purchase data to size catchments, test demographic fit, measure competitive density and quantify cannibalisation between sites."},{"n":32,"name":"Telecoms: the Starlink Threat","status":"next","blurb":"Satellite broadband as a structural threat to fixed-line and rural fibre economics. Coverage overlap, addressable-base erosion and payback under displacement."},{"n":5,"name":"Churn Analysis","status":"planned","blurb":"Cohort retention curves, survival modelling, lifetime value and revenue stress-testing under attrition scenarios."},{"n":2,"name":"Web Traffic Analysis","status":"planned","blurb":"Traffic trend, channel mix and engagement against competitors. Declining organic and rising paid is a diligence red flag."},{"n":3,"name":"Sentiment Analytics","status":"planned","blurb":"NLP over reviews, app stores and Glassdoor for brand health, product-quality trend and employee sentiment as leading indicators."}]},{"id":"fdd","n":3,"name":"Financial diligence","strap":"Inside the numbers","job":"Transaction-level data, independently cut. The value is not reproducing management's analysis faster \u2014 it is producing the analysis management did not, and having it reconcile.","techniques":[{"n":9,"name":"Revenue Decomposition","status":"live","url":"https://claude.ai/code/artifact/230bde63-86eb-44b4-a8fa-d86185f0a70f","blurb":"Price, volume, mix, customer flows, one-offs and FX from 75k invoice lines. Reported growth +18.6%; underlying \u22121.8%.","tutorial_url":"https://claude.ai/code/artifact/2ba6fc7e-e46b-4bba-960f-5a281011aea6"},{"n":11,"name":"EBITDA Adjustments Validation","status":"planned","blurb":"Rebuild management's pro forma adjustments bottom-up from transaction data and flag what does not reconcile."},{"n":10,"name":"Working Capital Analytics","status":"planned","blurb":"Debtor and creditor days, inventory turns and cash conversion, with seasonality and period-end manipulation risk flagged."},{"n":12,"name":"SKU-Level Performance","status":"planned","blurb":"Pareto and margin contribution across the range: what drives profit, what destroys it, and what the long tail really costs."},{"n":13,"name":"AI Document Review","status":"planned","blurb":"LLM extraction of change-of-control clauses, renewal terms, pricing escalators and risk provisions from contracts and leases."},{"n":8,"name":"Repeatable Analysis Packs","status":"planned","blurb":"Sector-specific templates that run on every deal \u2014 insurance loss triangles, software ARR and NRR, and a generic pack."}]},{"id":"spa","n":4,"name":"SPA & completion","strap":"Where the price actually moves","job":"The highest-stakes arithmetic on any deal, usually done under time pressure in spreadsheets nobody has time to check. Automation here is not efficiency \u2014 it is error reduction on numbers that settle the price.","techniques":[{"n":16,"name":"Data Room Analytics","status":"live","url":"https://claude.ai/code/artifact/b50804ed-996e-472a-9aa8-df7b184ec06c","blurb":"Nine weeks of bidder telemetry. Six names on the process letter, 3.0 expected live bids, and the SPA issues visible weeks before the first mark-up.","tutorial_url":"https://claude.ai/code/artifact/746bf3be-f3ae-48d2-94bb-8c36f813f3e3"},{"n":15,"name":"Balance Sheet Carve-Out","status":"next","blurb":"Segment an intermingled P&L from transaction data using explicit allocation bases, then drive the balance sheet off the segmented P&L and headcount."},{"n":14,"name":"SPA Automation","status":"planned","blurb":"Net debt, completion working capital against the peg, and earnout mechanics built from source data rather than retyped."},{"n":17,"name":"Dispute Investigation","status":"planned","blurb":"Forensic anomaly detection for revenue inflation, cut-off manipulation and channel stuffing after completion."}]},{"id":"value","n":5,"name":"Value creation","strap":"Owning the asset","job":"The deal model becomes an operating plan. Most synergy programmes fail quietly for eighteen months before anyone says so \u2014 the job is making the gap visible at month nine.","techniques":[{"n":18,"name":"Synergy Tracking","status":"live","blurb":"Realisation against the deal model at month 14 of 24, with conversion fitted on 260 prior initiatives. Forecast \u00a313.8m against \u00a324.5m \u2014 and the model is unreachable from the current pipeline.","url":"https://claude.ai/code/artifact/b18eee14-aa3a-497e-8b8c-7c07101062a8","tutorial_url":"https://claude.ai/code/artifact/58926809-5c81-487f-8011-24b2ebe2cc68"},{"n":24,"name":"Portfolio KPI Dashboards","status":"planned","blurb":"Portfolio-company monitoring: financial and operational KPIs, covenant headroom with forward projection, automated RAG reporting."},{"n":23,"name":"Procurement & Spend","status":"planned","blurb":"Spend cube across a merged supplier base: category consolidation, maverick spend, tail rationalisation and phased savings."},{"n":21,"name":"Raw Material Passthrough","status":"planned","blurb":"Whether input cost moves reach customer pricing, how fast, and what the lag is costing in margin."},{"n":22,"name":"Segmentation & Cross-Sell","status":"planned","blurb":"RFM segmentation of the combined base, propensity modelling, cross-sell sizing and overlap analysis."},{"n":20,"name":"SKU Harmonisation","status":"planned","blurb":"Overlapping ranges across two merged portfolios, margin impact of rationalisation scenarios, optimal combined assortment."},{"n":19,"name":"Finance Close Effectiveness","status":"planned","blurb":"Task-level duration tracking, bottleneck identification and an automation roadmap from a 20-day close to seven."},{"n":25,"name":"Tax Operations Automation","status":"planned","blurb":"ERP extraction, automated calculation, filing timeline management and exception-based review."}]}],"crosscutting":{"id":"ai","name":"AI & emerging technology","strap":"Runs underneath every stage","job":"Not a phase \u2014 a capability layer. The constraint on AI in a deals environment is almost never the model; it is governance, data handling and whether anyone can audit what the thing did.","techniques":[{"n":30,"name":"Agentic Deal Workflows","status":"planned","blurb":"An agent running the repetitive diligence loop \u2014 IR tracking, document triage, Q&A prep, anomaly flagging \u2014 with a visible trace and human gates."},{"n":26,"name":"Text-to-SQL for Deal Teams","status":"planned","blurb":"Natural-language querying over deal data with schema grounding, generated SQL shown for inspection and row-level audit logging."},{"n":27,"name":"LLM Governance","status":"planned","blurb":"Data classification, prompt guardrails, client-name and PII redaction, output validation and audit trail. The actual blocker at most firms."},{"n":28,"name":"Computer Vision for Ops DD","status":"planned","blurb":"Site condition assessment, safety compliance and asset scoring from visual data."},{"n":29,"name":"Voice-to-Text for Field Ops","status":"planned","blurb":"Voice memo capture from field workers, entity extraction and structured output."}]}}</script>
 <script>
 (() => {
 "use strict";
@@ -408,12 +478,14 @@ $("#band").innerHTML = `<strong>${esc(X.name)}</strong>
   <a href="#${X.id}">See the layer ↓</a>`;
 
 function card(t) {
-  const inner = `<span class="tnum">${String(t.n).padStart(2, "0")}</span>
+  const links = [];
+  if (t.url) links.push(`<a href="${t.url}" target="_blank" rel="noopener">Open the demo ↗</a>`);
+  if (t.tutorial_url) links.push(`<a href="${t.tutorial_url}" target="_blank" rel="noopener">Tutorial ↗</a>`);
+  const foot = links.length ? links.join('<span class="sep">·</span>') : `● ${LABEL[t.status]}`;
+  return `<div class="tech ${t.status}">
+    <span class="tnum">${String(t.n).padStart(2, "0")}</span>
     <h3>${esc(t.name)}</h3><p>${esc(t.blurb)}</p>
-    <span class="st">${t.status === "live" ? "" : "● "}${LABEL[t.status]}</span>`;
-  return t.status === "live"
-    ? `<a class="tech live" href="${t.url}" target="_blank" rel="noopener">${inner}</a>`
-    : `<div class="tech ${t.status}">${inner}</div>`;
+    <span class="st">${foot}</span></div>`;
 }
 
 function section(p, cross) {

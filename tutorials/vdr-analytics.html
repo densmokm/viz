@@ -1,0 +1,492 @@
+<title>How to read bidder intent from a data room log</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;450;500;600;700&display=swap">
+<style>
+:root{
+  --ground:#eef1f5; --surface:#ffffff; --surface-2:#e4e9ef; --surface-3:#f6f8fa;
+  --ink:#101519; --ink-2:#495568; --ink-3:#79869a; --rule:#d5dce5; --rule-2:#c0cad6;
+  --accent:#173a5e; --accent-soft:#dce8f5;
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a;
+  --pos:#2a78d6; --neg:#e34948; --total:#334155;
+  --good:#0ca30c; --warn:#fab219; --serious:#ec835a; --crit:#d03b3b;
+  --chip-good:#e3f4e3; --chip-warn:#fdf1d6; --chip-serious:#fbe7dd; --chip-neutral:#e7ebf1;
+  --shadow:0 1px 2px rgba(16,21,25,.06), 0 8px 24px -12px rgba(16,21,25,.18);
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --ground:#0f1318; --surface:#171c23; --surface-2:#232a34; --surface-3:#1b2129;
+  --ink:#eef2f7; --ink-2:#aab6c6; --ink-3:#78859a; --rule:#2a323d; --rule-2:#3a4450;
+  --accent:#8fb8e2; --accent-soft:#1d2c3d;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70;
+  --pos:#3987e5; --neg:#e66767; --total:#94a3b5;
+  --chip-good:#12301a; --chip-warn:#332709; --chip-serious:#33210f; --chip-neutral:#242b35;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --ground:#0f1318; --surface:#171c23; --surface-2:#232a34; --surface-3:#1b2129;
+  --ink:#eef2f7; --ink-2:#aab6c6; --ink-3:#78859a; --rule:#2a323d; --rule-2:#3a4450;
+  --accent:#8fb8e2; --accent-soft:#1d2c3d;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70;
+  --pos:#3987e5; --neg:#e66767; --total:#94a3b5;
+  --chip-good:#12301a; --chip-warn:#332709; --chip-serious:#33210f; --chip-neutral:#242b35;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--ground); color:var(--ink);
+  font-family:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  font-size:16px; line-height:1.6; -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1120px; margin:0 auto; padding-inline:clamp(16px,4vw,40px)}
+h1,h2,h3{text-wrap:balance; margin:0}
+h1{font-family:Newsreader,Georgia,serif; font-weight:500; font-size:clamp(2rem,4.6vw,2.9rem); line-height:1.1; letter-spacing:-.015em}
+h2{font-family:Newsreader,Georgia,serif; font-weight:500; font-size:clamp(1.4rem,3vw,1.85rem); line-height:1.2; letter-spacing:-.01em}
+h3{font-size:1rem; font-weight:600; letter-spacing:-.005em}
+p{margin:0}
+a{color:var(--accent)}
+.label{font-size:.7rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-3)}
+.lede{font-size:1.06rem; color:var(--ink-2); max-width:66ch}
+.small{font-size:.84rem; color:var(--ink-2)}
+.tiny{font-size:.76rem; color:var(--ink-3)}
+.num{font-family:"IBM Plex Mono",ui-monospace,monospace; font-variant-numeric:tabular-nums}
+
+/* ---------- top bar ---------- */
+.topbar{position:sticky; top:0; z-index:40; background:color-mix(in srgb,var(--ground) 88%,transparent);
+  backdrop-filter:blur(10px); border-bottom:1px solid var(--rule)}
+.topbar .wrap{display:flex; align-items:center; gap:20px; height:52px}
+.brandmark{display:flex; align-items:center; gap:9px; font-weight:600; font-size:.9rem; white-space:nowrap}
+.brandmark i{width:9px; height:9px; border-radius:2px; background:var(--s1); display:block}
+.navlinks{display:flex; gap:18px; margin-left:auto; overflow-x:auto; scrollbar-width:none}
+.navlinks::-webkit-scrollbar{display:none}
+.navlinks a{color:var(--ink-2); text-decoration:none; font-size:.83rem; white-space:nowrap; padding:4px 0; border-bottom:2px solid transparent}
+.navlinks a:hover{color:var(--ink); border-bottom-color:var(--rule-2)}
+@media (max-width:720px){ .navlinks{display:none} }
+
+/* ---------- header ---------- */
+header.hero{padding-block:clamp(34px,6vw,60px) 30px}
+.eyebrow{display:flex; align-items:center; gap:10px; margin-bottom:16px; flex-wrap:wrap}
+.eyebrow span{color:var(--ink-3)}
+.codename{background:var(--accent-soft); color:var(--accent); padding:2px 9px; border-radius:3px; font-weight:600}
+.metarow{display:flex; flex-wrap:wrap; gap:0; margin-top:26px; border-top:1px solid var(--rule); border-bottom:1px solid var(--rule)}
+.metarow div{flex:1 1 165px; padding:13px 18px 13px 0; border-right:1px solid var(--rule)}
+.metarow div:last-child{border-right:0}
+.metarow dt{font-size:.7rem; font-weight:600; letter-spacing:.09em; text-transform:uppercase; color:var(--ink-3); margin-bottom:3px}
+.metarow dd{margin:0; font-size:.9rem; font-weight:450}
+
+/* ---------- verdict ---------- */
+.verdict{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:1px; background:var(--rule);
+  border:1px solid var(--rule); border-radius:6px; overflow:hidden; margin-block:8px 26px}
+.verdict > div{background:var(--surface); padding:24px 26px 22px}
+.verdict .fig{font-size:clamp(2.4rem,6.5vw,3.4rem); font-weight:600; line-height:1; letter-spacing:-.03em; margin:10px 0 6px}
+.verdict .reported .fig{color:var(--ink)}
+.verdict .underlying .fig{color:var(--neg)}
+.verdict .cap{font-size:.85rem; color:var(--ink-2)}
+@media (max-width:620px){ .verdict{grid-template-columns:1fr} }
+.thesis{background:var(--surface); border:1px solid var(--rule); border-left:3px solid var(--s2);
+  border-radius:4px; padding:20px 24px; margin-bottom:40px; font-size:1.02rem; color:var(--ink-2); max-width:none}
+.thesis strong{color:var(--ink); font-weight:600}
+
+/* ---------- sections ---------- */
+section{padding-block:34px; border-top:1px solid var(--rule)}
+.sechead{display:flex; align-items:baseline; gap:16px; flex-wrap:wrap; margin-bottom:8px}
+.sechead .amt{font-family:"IBM Plex Mono",monospace; font-size:.82rem; font-weight:500; color:var(--ink-3);
+  background:var(--surface-2); padding:3px 9px; border-radius:3px; white-space:nowrap}
+.secintro{margin-block:12px 26px}
+@media (max-width:620px){ .sechead .amt{white-space:normal} }
+
+/* ---------- panels & charts ---------- */
+.panel{background:var(--surface); border:1px solid var(--rule); border-radius:6px; padding:22px clamp(14px,2.4vw,24px)}
+.panelhead{display:flex; align-items:flex-start; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-bottom:6px}
+.chart{width:100%; min-height:60px}
+.chart svg{display:block; width:100%; height:auto; overflow:visible}
+figcaption{font-size:.78rem; color:var(--ink-3); margin-top:12px; line-height:1.5}
+.grid2{display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:18px}
+.grid3{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:18px}
+
+/* ---------- controls ---------- */
+.controls{display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-bottom:18px}
+.tabs{display:inline-flex; background:var(--surface-2); border-radius:5px; padding:3px; gap:2px}
+.tabs button{appearance:none; border:0; background:transparent; color:var(--ink-2); font:inherit; font-size:.84rem;
+  font-weight:500; padding:6px 13px; border-radius:3px; cursor:pointer; white-space:nowrap}
+.tabs button[aria-selected="true"]{background:var(--surface); color:var(--ink); box-shadow:0 1px 2px rgba(0,0,0,.10); font-weight:600}
+.tabs button:focus-visible, .toggle:focus-visible{outline:2px solid var(--s1); outline-offset:2px}
+.toggle{appearance:none; border:1px solid var(--rule-2); background:var(--surface); color:var(--ink-2); font:inherit;
+  font-size:.8rem; font-weight:500; padding:6px 12px; border-radius:5px; cursor:pointer; display:inline-flex; align-items:center; gap:7px}
+.toggle[aria-pressed="true"]{border-color:var(--s1); color:var(--ink); background:var(--accent-soft)}
+.toggle i{width:8px; height:8px; border-radius:50%; background:var(--rule-2); display:block}
+.toggle[aria-pressed="true"] i{background:var(--s1)}
+
+/* ---------- legend ---------- */
+.legend{display:flex; gap:16px; flex-wrap:wrap; align-items:center; font-size:.8rem; color:var(--ink-2); margin-top:14px}
+.legend span{display:inline-flex; align-items:center; gap:7px}
+.legend b{width:11px; height:11px; border-radius:2px; display:block}
+
+/* ---------- tables ---------- */
+.tablewrap{overflow-x:auto; margin-top:4px}
+table{border-collapse:collapse; width:100%; font-size:.85rem; min-width:480px}
+th,td{text-align:right; padding:9px 10px; border-bottom:1px solid var(--rule); white-space:nowrap}
+th:first-child,td:first-child{text-align:left; white-space:normal}
+thead th{font-size:.7rem; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-3);
+  border-bottom:1px solid var(--rule-2); vertical-align:bottom}
+tbody tr:last-child td{border-bottom:0}
+tbody tr.totalrow td{border-top:1px solid var(--rule-2); font-weight:600; background:var(--surface-3)}
+td.n{font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums}
+td.neg{color:var(--neg)}
+.bar-cell{position:relative; min-width:96px}
+.bar-cell i{position:absolute; left:10px; top:50%; transform:translateY(-50%); height:9px; border-radius:2px; display:block}
+
+/* ---------- chips ---------- */
+.chip{display:inline-flex; align-items:center; gap:6px; font-size:.74rem; font-weight:600; padding:2px 8px; border-radius:3px; white-space:nowrap}
+.chip i{width:7px; height:7px; border-radius:50%; display:block; flex:none}
+.chip.good{background:var(--chip-good); color:var(--good)} .chip.good i{background:var(--good)}
+.chip.warn{background:var(--chip-warn); color:#8a6200} .chip.warn i{background:var(--warn)}
+.chip.serious{background:var(--chip-serious); color:#a8501f} .chip.serious i{background:var(--serious)}
+.chip.neutral{background:var(--chip-neutral); color:var(--ink-2)} .chip.neutral i{background:var(--ink-3)}
+:root[data-theme="dark"] .chip.warn, :root[data-theme="dark"] .chip.serious{color:var(--ink)}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]) .chip.warn,
+  :root:not([data-theme="light"]) .chip.serious{color:var(--ink)} }
+
+/* ---------- stat tiles ---------- */
+.stats{display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:1px; background:var(--rule);
+  border:1px solid var(--rule); border-radius:6px; overflow:hidden}
+.stat{background:var(--surface); padding:16px 18px}
+.stat .v{font-size:1.6rem; font-weight:600; line-height:1.15; letter-spacing:-.02em; margin:6px 0 3px}
+.stat .k{font-size:.7rem; font-weight:600; letter-spacing:.09em; text-transform:uppercase; color:var(--ink-3)}
+.stat .d{font-size:.78rem; color:var(--ink-3); line-height:1.45}
+
+/* ---------- callout ---------- */
+.callout{border:1px solid var(--rule); border-left:3px solid var(--crit); background:var(--surface);
+  border-radius:4px; padding:18px 22px; display:grid; gap:8px}
+.callout.ok{border-left-color:var(--good)}
+.callout h3{display:flex; align-items:center; gap:9px}
+.callout h3::before{content:""; width:7px; height:7px; border-radius:50%; background:var(--crit); flex:none}
+.callout.ok h3::before{background:var(--good)}
+
+/* ---------- lists ---------- */
+ol.qs{counter-reset:q; list-style:none; padding:0; margin:0; display:grid; gap:14px}
+ol.qs li{counter-increment:q; display:grid; grid-template-columns:auto 1fr; gap:14px; align-items:start}
+ol.qs li::before{content:"Q" counter(q); font-family:"IBM Plex Mono",monospace; font-size:.74rem; font-weight:600;
+  color:var(--accent); background:var(--accent-soft); padding:3px 7px; border-radius:3px; margin-top:2px}
+ul.plain{list-style:none; padding:0; margin:0; display:grid; gap:10px}
+ul.plain li{display:grid; grid-template-columns:auto 1fr; gap:11px; align-items:start; font-size:.9rem; color:var(--ink-2)}
+ul.plain li::before{content:""; width:5px; height:5px; border-radius:50%; background:var(--rule-2); margin-top:9px}
+code{font-family:"IBM Plex Mono",monospace; font-size:.86em; background:var(--surface-2); padding:1px 5px; border-radius:3px}
+.formula{font-family:"IBM Plex Mono",monospace; font-size:.82rem; background:var(--surface-3); border:1px solid var(--rule);
+  border-radius:4px; padding:14px 16px; overflow-x:auto; white-space:pre; line-height:1.7; color:var(--ink-2)}
+
+/* ---------- tooltip ---------- */
+#tip{position:fixed; z-index:80; pointer-events:none; opacity:0; transition:opacity .1s;
+  background:var(--surface); color:var(--ink); border:1px solid var(--rule-2); border-radius:5px;
+  box-shadow:var(--shadow); padding:9px 12px; font-size:.8rem; line-height:1.5; max-width:270px}
+#tip .t{font-weight:600; margin-bottom:3px}
+#tip .r{display:flex; justify-content:space-between; gap:16px}
+#tip .r span:last-child{font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums}
+
+footer{padding-block:34px 60px; border-top:1px solid var(--rule); color:var(--ink-3); font-size:.82rem}
+[hidden]{display:none !important}
+@media (prefers-reduced-motion:reduce){ *{transition:none !important; animation:none !important} }
+
+/* ---------- verdict chips: critical state ---------- */
+.chip.crit{background:var(--chip-crit); color:var(--crit)} .chip.crit i{background:var(--crit)}
+:root{--chip-crit:#fbe3e3}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){--chip-crit:#3a1717} }
+:root[data-theme="dark"]{--chip-crit:#3a1717}
+
+/* ---------- claim scorecard ---------- */
+.claim{border-bottom:1px solid var(--rule)}
+.claim:last-child{border-bottom:0}
+.claimhead{width:100%; appearance:none; background:transparent; border:0; font:inherit; color:inherit;
+  text-align:left; cursor:pointer; display:grid; align-items:center; gap:16px; padding:15px 6px;
+  grid-template-columns:38px minmax(0,1fr) 150px 104px 132px}
+.claimhead:hover{background:var(--surface-3)}
+.claimhead:focus-visible{outline:2px solid var(--s1); outline-offset:-2px}
+.claimhead .cid{font-family:"IBM Plex Mono",monospace; font-size:.76rem; font-weight:600; color:var(--ink-3)}
+.claimhead .ctext{font-size:.93rem; line-height:1.45}
+.claimhead .ctext em{display:block; font-style:normal; font-size:.76rem; color:var(--ink-3); margin-top:3px}
+.divbar{display:block; position:relative; height:22px; background:var(--surface-2); border-radius:3px; overflow:hidden}
+.divbar::before{content:""; position:absolute; left:50%; top:0; bottom:0; width:1px; background:var(--rule-2)}
+.divbar i{position:absolute; top:4px; bottom:4px; border-radius:2px; display:block}
+.divbar b{position:absolute; right:6px; top:50%; transform:translateY(-50%); font-family:"IBM Plex Mono",monospace;
+  font-size:.72rem; font-weight:600; color:var(--ink-2)}
+.meter{display:flex; flex-direction:column; gap:4px}
+.meter u{height:6px; background:var(--surface-2); border-radius:3px; display:block; text-decoration:none; position:relative}
+.meter u i{position:absolute; left:0; top:0; bottom:0; border-radius:3px; background:var(--ink-3); display:block}
+.meter s{text-decoration:none; font-size:.7rem; color:var(--ink-3); font-family:"IBM Plex Mono",monospace}
+.claimbody{padding:2px 6px 20px 56px; display:grid; gap:14px}
+@media (max-width:860px){
+  .claimhead{grid-template-columns:34px minmax(0,1fr); gap:8px 12px}
+  .claimhead .cscore, .claimhead .cconf{grid-column:2}
+  .claimhead .cverdict{grid-column:2; justify-self:start}
+  .claimbody{padding-left:12px}
+}
+
+/* ---------- entity board (bidders, portcos, workstreams) ---------- */
+.board{display:grid}
+.brow{display:grid; gap:14px; align-items:center; padding:16px 6px; border-bottom:1px solid var(--rule);
+  grid-template-columns:minmax(0,1.5fr) 108px 108px minmax(120px,1fr) minmax(0,1.4fr)}
+.brow:last-child{border-bottom:0}
+.brow .who{display:grid; gap:3px}
+.brow .who strong{font-size:.95rem; font-weight:600}
+.brow .who span{font-size:.76rem; color:var(--ink-3)}
+.brow .flags{display:flex; flex-wrap:wrap; gap:6px}
+.brow .mini{display:flex; gap:14px; font-size:.75rem; color:var(--ink-3); flex-wrap:wrap}
+.brow .mini b{display:block; font-family:"IBM Plex Mono",monospace; font-size:.86rem; font-weight:600; color:var(--ink)}
+@media (max-width:900px){ .brow{grid-template-columns:minmax(0,1fr) 100px 100px} 
+  .brow .spark, .brow .flags{grid-column:1 / -1} }
+
+/* ---------- ordinal ramp: stage pipelines, funnel steps, tiers ---------- */
+:root{--ord1:#86b6ef; --ord2:#5598e7; --ord3:#2a78d6; --ord4:#1c5cab; --ord5:#104281}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --ord1:#184f95; --ord2:#256abf; --ord3:#3987e5; --ord4:#86b6ef; --ord5:#cde2fb} }
+:root[data-theme="dark"]{--ord1:#184f95; --ord2:#256abf; --ord3:#3987e5; --ord4:#86b6ef; --ord5:#cde2fb}
+.stagebar{display:flex; height:10px; border-radius:3px; overflow:hidden; gap:2px; background:var(--surface-2)}
+.stagebar i{display:block; min-width:2px}
+
+/* ---------- code ---------- */
+:root{
+  --code-bg:#f6f8fb; --code-rule:#dde4ec; --code-ink:#1c2430;
+  --code-kw:#8250df; --code-str:#0a7a4f; --code-num:#b3541e; --code-com:#79869a;
+  --code-fn:#0550ae; --code-op:#495568; --code-cls:#0b6b6b;
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --code-bg:#10151b; --code-rule:#252d38; --code-ink:#dbe3ec;
+  --code-kw:#c0a6f5; --code-str:#56d4a0; --code-num:#f0883e; --code-com:#7f8a99;
+  --code-fn:#79b8ff; --code-op:#aab6c6; --code-cls:#4fd1c5;
+}}
+:root[data-theme="dark"]{
+  --code-bg:#10151b; --code-rule:#252d38; --code-ink:#dbe3ec;
+  --code-kw:#c0a6f5; --code-str:#56d4a0; --code-num:#f0883e; --code-com:#7f8a99;
+  --code-fn:#79b8ff; --code-op:#aab6c6; --code-cls:#4fd1c5;
+}
+.codewrap{border:1px solid var(--code-rule); border-radius:6px; overflow:hidden; background:var(--code-bg)}
+.codebar{display:flex; align-items:center; gap:8px; padding:7px 10px 7px 12px;
+  border-bottom:1px solid var(--code-rule); background:var(--code-bg)}
+.codebar .lang{font-family:"IBM Plex Mono",monospace; font-size:.7rem; font-weight:600;
+  letter-spacing:.07em; text-transform:uppercase; color:var(--code-com)}
+.codebar .spacer{flex:1}
+.codebar button{appearance:none; border:1px solid transparent; background:transparent; color:var(--code-com);
+  font:inherit; font-size:.72rem; font-weight:600; padding:3px 8px; border-radius:4px; cursor:pointer}
+.codebar button:hover{color:var(--code-ink); border-color:var(--code-rule)}
+.codebar button[aria-selected="true"]{color:var(--code-ink); background:var(--surface); border-color:var(--code-rule)}
+.codebar button:focus-visible{outline:2px solid var(--s1); outline-offset:1px}
+pre.code{margin:0; padding:14px 16px; overflow-x:auto; background:var(--code-bg)}
+pre.code code{font-family:"IBM Plex Mono",ui-monospace,monospace; font-size:.795rem; line-height:1.72;
+  color:var(--code-ink); background:none; padding:0; white-space:pre; display:block; tab-size:4}
+.hljs-keyword,.hljs-literal,.hljs-selector-tag{color:var(--code-kw)}
+.hljs-string,.hljs-meta .hljs-string{color:var(--code-str)}
+.hljs-number{color:var(--code-num)}
+.hljs-comment{color:var(--code-com); font-style:italic}
+.hljs-title,.hljs-title.function_,.hljs-section{color:var(--code-fn); font-weight:600}
+.hljs-title.class_,.hljs-type,.hljs-built_in{color:var(--code-cls)}
+.hljs-params,.hljs-operator,.hljs-punctuation{color:var(--code-op)}
+.hljs-attr,.hljs-variable,.hljs-property{color:var(--code-ink)}
+.hljs-meta{color:var(--code-com)}
+
+/* ---------- tutorial steps ---------- */
+.step{display:grid; grid-template-columns:44px minmax(0,1fr); gap:0 20px; padding-block:30px;
+  border-top:1px solid var(--rule)}
+.step:first-of-type{border-top:0}
+.step .sn{font-family:"IBM Plex Mono",monospace; font-size:.8rem; font-weight:600; color:var(--s1);
+  background:var(--accent-soft); border-radius:4px; height:30px; display:grid; place-items:center}
+.step .body{display:grid; gap:14px; min-width:0}
+.step h3{font-size:1.12rem; font-weight:600; line-height:1.3}
+.step .why{font-size:.95rem; color:var(--ink-2); line-height:1.65; max-width:70ch}
+.step .out{font-family:"IBM Plex Mono",monospace; font-size:.75rem; color:var(--ink-2);
+  background:var(--surface-3); border:1px solid var(--rule); border-left:2px solid var(--rule-2);
+  border-radius:0 4px 4px 0; padding:10px 14px; overflow-x:auto; white-space:pre; line-height:1.6}
+@media (max-width:620px){ .step{grid-template-columns:1fr; gap:12px} .step .sn{width:36px} }
+.pitfall{border:1px solid var(--rule); border-left:3px solid var(--warn); border-radius:0 5px 5px 0;
+  background:var(--surface); padding:16px 20px; display:grid; gap:8px}
+.pitfall h4{margin:0; font-size:.92rem; font-weight:600; display:flex; gap:9px; align-items:center}
+.pitfall h4::before{content:""; width:6px; height:6px; border-radius:50%; background:var(--warn); flex:none}
+.pitfall p{font-size:.86rem; color:var(--ink-2); line-height:1.6}
+.schema td:first-child{font-family:"IBM Plex Mono",monospace; font-size:.8rem}
+.schema th,.schema td{text-align:left}
+.schema td:nth-child(3){white-space:normal; min-width:260px}
+.tocbox{display:grid; gap:2px; margin-top:18px}
+.tocbox a{display:grid; grid-template-columns:30px 1fr; gap:12px; padding:9px 10px; border-radius:5px;
+  text-decoration:none; color:var(--ink-2); font-size:.9rem; align-items:baseline}
+.tocbox a:hover{background:var(--surface-3); color:var(--ink)}
+.tocbox a b{font-family:"IBM Plex Mono",monospace; font-size:.74rem; color:var(--ink-3); font-weight:600}
+
+</style>
+
+<div class="topbar"><div class="wrap">
+  <div class="brandmark"><i></i> <span id="brand"></span></div>
+  <nav class="navlinks">
+    <a href="#inputs">Inputs</a><a href="#walkthrough">Walkthrough</a><a href="#pitfalls">Pitfalls</a>
+    <a href="#validate">Validation</a><a href="#scale">Scale</a><a id="demoLink" href="#" target="_blank" rel="noopener">Open the demo ↗</a>
+  </nav>
+</div></div>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="eyebrow label"><span class="codename" id="tag"></span><span id="phase"></span><span>&middot;</span><span>Tutorial</span></div>
+  <h1 id="title"></h1>
+  <p class="lede" style="margin-top:14px" id="subtitle"></p>
+  <dl class="metarow" id="metarow"></dl>
+</header>
+
+<section style="border-top:0; padding-top:20px">
+  <div class="grid2" style="align-items:start">
+    <div class="panel">
+      <h3 style="margin-bottom:10px">What you are building</h3>
+      <p class="small" id="intro"></p>
+      <p class="small" style="margin-top:14px"><a id="demoLink2" href="#" target="_blank" rel="noopener"><strong>See the finished analysis ↗</strong></a></p>
+    </div>
+    <div class="panel">
+      <h3 style="margin-bottom:4px">Steps</h3>
+      <div class="tocbox" id="toc"></div>
+    </div>
+  </div>
+</section>
+
+<section id="inputs">
+  <div class="sechead"><h2>The input</h2><span class="amt" id="grainTag"></span></div>
+  <p class="secintro lede" id="inputIntro"></p>
+  <div class="panel"><div class="tablewrap"><table class="schema" id="schema"></table></div></div>
+</section>
+
+<section id="walkthrough">
+  <div class="sechead"><h2>Walkthrough</h2></div>
+  <p class="secintro lede" id="walkIntro"></p>
+  <div class="controls" style="position:sticky; top:60px; z-index:20; padding:8px 0;
+       background:color-mix(in srgb,var(--ground) 92%,transparent); backdrop-filter:blur(6px)">
+    <div class="tabs" role="tablist" aria-label="Code flavour">
+      <button role="tab" aria-selected="true" data-flavour="spark">PySpark</button>
+      <button role="tab" aria-selected="false" data-flavour="pandas">pandas</button>
+    </div>
+    <span class="tiny">Switches every block below. Steps that only make sense one way show that one.</span>
+  </div>
+  <div class="panel" style="padding-block:4px"><div id="steps"></div></div>
+</section>
+
+<section id="pitfalls">
+  <div class="sechead"><h2>What goes wrong</h2></div>
+  <p class="secintro lede">Every one of these is a bug that was actually in this analysis at some point.
+     They are here because they are the failure modes that survive a code review and get caught in a
+     partner meeting instead.</p>
+  <div class="grid2" id="pitfalls" style="align-items:start"></div>
+</section>
+
+<section id="validate">
+  <div class="sechead"><h2>Proving it works</h2></div>
+  <p class="secintro lede" id="validIntro"></p>
+  <div class="panel"><div id="validateBlock"></div></div>
+</section>
+
+<section id="scale">
+  <div class="sechead"><h2>Running it for real</h2></div>
+  <div class="grid2" style="align-items:start">
+    <div class="panel"><h3 style="margin-bottom:12px">Where Spark earns its keep</h3>
+      <p class="small" id="scaleBody"></p></div>
+    <div class="panel"><h3 style="margin-bottom:12px">Practical notes</h3>
+      <ul class="plain" id="scaleNotes"></ul></div>
+  </div>
+</section>
+
+<footer>
+  <strong style="color:var(--ink)" id="footTitle"></strong>
+  <span id="footBody"></span>
+</footer>
+
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script id="payload" type="application/json">{"brand":"Data Room Analytics","tag":"Technique 16","phase":"SPA and transaction support","title":"How to read bidder intent from a data room log","subtitle":"Turning VDR telemetry into a fitted view of who is real, who is about to walk, and which documents will come back as SPA mark-ups \u2014 from four exports every platform already produces.","demo_url":"https://claude.ai/code/artifact/b50804ed-996e-472a-9aa8-df7b184ec06c","grain":"one row per document open","meta":[["Engine","PySpark to sessionise, NumPy to fit"],["Input","Datasite / Intralinks / Ansarada exports"],["Runtime","Minutes on tens of millions of events"],["Output","Fitted withdrawal risk and a bid-count distribution"]],"intro":"A bidder board that scores engagement and withdrawal risk from behaviour rather than from what anyone said on a Friday call, plus a ranked view of where the deal risk sits. The modelling discipline is that nothing here is hand-weighted: withdrawal probability comes from a logistic regression fitted on bidders from prior processes whose outcomes are known.","input_intro":"Four exports, all standard. The only one that needs negotiating is the last, and it is the one that turns a dashboard into a model \u2014 without prior outcomes you are guessing at weights and calling it a framework.","inputs":[["event_ts","timestamp","Event time. Needed for sessionisation and for the idle-days feature, which turns out to be the strongest single predictor."],["user_id, org","string","Who, and which firm. Adviser organisations are distinguished from the bidder\u2019s own team."],["role","string","Partner / Director / Associate / Analyst. Seniority of attention is signal; raw click count is not."],["doc_id, action","string","View, download or print. Downloads weigh more than views in practice."],["duration_ms","long","Dwell time. Needs cleaning \u2014 see step one."],["pages","int","From the document index. Dwell must be normalised by length or every long document looks intensely read."],["category, folder","string","The taxonomy attention is measured against."],["prior_outcomes","table","<strong>The same features from past processes, with who bid and who walked.<\/strong> This is what makes the model a model."]],"walk_intro":"Eight steps. Sessionisation is the only genuinely large operation; from step two onward the frame is one row per bidder and the whole model fits in memory several times over.","steps":[{"title":"Sessionise, and clean the dwell times","why":"Raw VDR durations are dirty in a specific way: a tab left open overnight records eleven hours on one document. Cap dwell at a plausible per-page ceiling and stitch events into sessions with a gap threshold, or a single abandoned browser tab becomes your most engaged bidder.","code":{"spark":"from pyspark.sql import SparkSession, functions as F, Window\n\nspark = SparkSession.builder.appName(\"vdr\").getOrCreate()\n\nlog  = spark.read.parquet(\"s3://lantern/vdr/access/\")\ndocs = spark.read.parquet(\"s3://lantern/vdr/documents/\")\n\nGAP_MIN   = 30      # minutes of inactivity that ends a session\nMAX_SEC_PER_PAGE = 240\n\nw = Window.partitionBy(\"user_id\").orderBy(\"event_ts\")\n\nevents = (log.join(F.broadcast(docs.select(\"doc_id\", \"pages\", \"category\")), \"doc_id\")\n   .withColumn(\"prev_ts\", F.lag(\"event_ts\").over(w))\n   .withColumn(\"gap_min\", (F.col(\"event_ts\").cast(\"long\") - F.col(\"prev_ts\").cast(\"long\")) / 60)\n   .withColumn(\"new_session\", (F.col(\"prev_ts\").isNull() | (F.col(\"gap_min\") > GAP_MIN)).cast(\"int\"))\n   .withColumn(\"session_id\", F.sum(\"new_session\").over(w))\n   # a tab left open overnight is not eleven hours of reading\n   .withColumn(\"seconds\", F.least(F.col(\"duration_ms\") / 1000,\n                                  F.col(\"pages\") * F.lit(MAX_SEC_PER_PAGE)))\n   .withColumn(\"week\", F.weekofyear(\"event_ts\")))","pandas":"log = pd.read_parquet(\"access_log.parquet\")\ndocs = pd.read_parquet(\"documents.parquet\")\n\nGAP_MIN, MAX_SEC_PER_PAGE = 30, 240\n\nevents = log.merge(docs[[\"doc_id\", \"pages\", \"category\"]], on=\"doc_id\")\nevents = events.sort_values([\"user_id\", \"event_ts\"])\n\ngap = events.groupby(\"user_id\").event_ts.diff().dt.total_seconds() / 60\nevents[\"session_id\"] = (gap.isna() | (gap > GAP_MIN)).groupby(events.user_id).cumsum()\nevents[\"seconds\"] = np.minimum(events.duration_ms / 1000,\n                               events.pages * MAX_SEC_PER_PAGE)"},"note":"Pick the cap from the data, not from intuition: plot dwell per page and cut where the distribution stops looking like reading. On this process the 99th percentile of genuine reads sat around 200 seconds a page."},{"title":"Build bidder features on the same definitions as history","why":"This is the step that decides whether the model works. Every feature must be computed identically for the live bidders and for the historical register \u2014 same window, same normalisation, same denominator. A feature that means something slightly different in training and scoring is worse than no feature.","code":{"spark":"proc_median = events.selectExpr(\"percentile_approx(seconds / pages, 0.5)\").first()[0]\nN_WEEKS = events.agg(F.max(\"week\")).first()[0]\n\nfeat = (events.groupBy(\"bidder\").agg(\n    (F.countDistinct(\"doc_id\") / F.lit(N_DOCS)).alias(\"coverage\"),\n    (F.expr(\"percentile_approx(seconds / pages, 0.5)\") / F.lit(proc_median)).alias(\"depth\"),\n    (F.sum(F.when(F.col(\"role\").isin(\"Partner / MD\", \"Director\"), F.col(\"seconds\")).otherwise(0))\n       / F.sum(\"seconds\")).alias(\"senior_share\"),\n    F.countDistinct(F.when(F.col(\"is_adviser\") == 1, F.col(\"org\"))).alias(\"advisers\"),\n    F.datediff(F.lit(AS_AT), F.max(\"event_ts\")).alias(\"days_idle\"),\n    F.sum(F.when(F.col(\"week\") > N_WEEKS - 3, F.col(\"seconds\")).otherwise(0)).alias(\"recent\"),\n    F.sum(F.when((F.col(\"week\") > N_WEEKS - 6) & (F.col(\"week\") <= N_WEEKS - 3),\n                 F.col(\"seconds\")).otherwise(0)).alias(\"prior\"),\n  )\n  # +60 keeps the ratio finite for a bidder who has gone completely silent\n  .withColumn(\"trend\", F.log((F.col(\"recent\") + 60) / (F.col(\"prior\") + 60)))\n  .toPandas().set_index(\"bidder\"))\n\nfeat[\"qa_count\"] = qa.groupby(\"bidder\").size()","pandas":"proc_median = (events.seconds / events.pages).median()\nN_WEEKS = events.week.max()\n\ndef features(g):\n    recent = g.loc[g.week > N_WEEKS - 3, \"seconds\"].sum()\n    prior  = g.loc[(g.week > N_WEEKS - 6) & (g.week <= N_WEEKS - 3), \"seconds\"].sum()\n    senior = g.role.isin([\"Partner / MD\", \"Director\"])\n    return pd.Series({\n        \"coverage\":     g.doc_id.nunique() / N_DOCS,\n        \"depth\":        (g.seconds / g.pages).median() / proc_median,\n        \"senior_share\": g.loc[senior, \"seconds\"].sum() / g.seconds.sum(),\n        \"advisers\":     g.loc[g.is_adviser == 1, \"org\"].nunique(),\n        \"days_idle\":    (AS_AT - g.event_ts.max()).days,\n        \"trend\":        np.log((recent + 60) / (prior + 60)),\n    })\n\nfeat = events.groupby(\"bidder\").apply(features)"},"note":"Note <code>depth<\/code> is indexed to the process median rather than expressed in seconds. Absolute dwell is not comparable between a 400-document industrials process and a 40-document software one; a ratio is."},{"title":"Fit the withdrawal model by IRLS","why":"Logistic regression, fitted on prior bidders with known outcomes. Fifty lines of NumPy and no dependency. The point is not that logistic regression is sophisticated \u2014 it is that the coefficients are estimated from evidence, and a partner who asks where the weights came from gets an answer rather than a shrug.","code":{"python":"FEATURES = [\"coverage\", \"depth\", \"senior_share\", \"advisers\",\n            \"trend\", \"days_idle\", \"qa_count\"]\n\nmu, sd = HIST[FEATURES].mean(), HIST[FEATURES].std(ddof=0)\nstandardise = lambda df: ((df[FEATURES] - mu) / sd).to_numpy()\n\ndef fit_logistic(X, y, iters=80, ridge=1e-2):\n    \"\"\"Iteratively reweighted least squares. Ridge keeps it stable on small n.\"\"\"\n    X = np.c_[np.ones(len(X)), X]\n    b = np.zeros(X.shape[1])\n    for _ in range(iters):\n        p = 1 / (1 + np.exp(-X @ b))\n        W = np.clip(p * (1 - p), 1e-8, None)\n        A = X.T @ (X * W[:, None]) + ridge * np.eye(X.shape[1])\n        step = np.linalg.solve(A, X.T @ (y - p) - ridge * b)\n        b += step\n        if np.max(np.abs(step)) < 1e-9:\n            break\n    return b\n\nBETA = fit_logistic(standardise(HIST), HIST.withdrew.to_numpy().astype(float))"},"out":"days since last login     +0.63   strongest single predictor\nactivity trend           -1.19\ndocument coverage        -0.64\nquestions submitted      -0.51\nadviser firms engaged    -0.46","note":"Standardise before fitting so the coefficients are comparable \u2014 each is the effect of a one standard deviation move. Unstandardised, <code>days_idle<\/code> and <code>coverage<\/code> live on scales three orders of magnitude apart and the coefficient table tells you nothing."},{"title":"Check it separates, and check it is calibrated","why":"AUC says whether the model ranks correctly. Calibration says whether the number it produces can be read as a probability \u2014 which matters more here, because the output gets put in front of people who will treat 80% as meaning eighty percent.","code":{"python":"def auc(y, p):\n    \"\"\"Mann-Whitney U, which is exactly the area under the ROC curve.\"\"\"\n    r = pd.Series(p).rank().to_numpy()\n    pos, neg = (y == 1).sum(), (y == 0).sum()\n    return float((r[y == 1].sum() - pos * (pos + 1) / 2) / (pos * neg))\n\np_hist = predict(BETA, standardise(HIST))\nprint(f\"AUC {auc(y, p_hist):.3f}  Brier {np.mean((p_hist - y) ** 2):.3f}\")\n\nfor lo, hi in [(0, .2), (.2, .4), (.4, .6), (.6, .8), (.8, 1.01)]:\n    m = (p_hist >= lo) & (p_hist < hi)\n    if m.sum():\n        print(f\"{lo:.0%}-{min(hi,1):.0%}  n={m.sum():3d}  \"\n              f\"predicted {p_hist[m].mean():.0%}  actual {y[m].mean():.0%}\")"},"out":"AUC 0.832  Brier 0.163\n 0%-20%  n= 27  predicted 11%  actual 10%\n20%-40%  n= 31  predicted 29%  actual 29%\n40%-60%  n= 29  predicted 49%  actual 52%\n60%-80%  n= 26  predicted 69%  actual 61%\n80%-100%  n= 27  predicted 91%  actual 94%","note":"This is fitted and evaluated on the same records, which flatters both numbers. On a live desk, cross-validate \u2014 and say in the output that you did. An AUC quoted without saying how it was measured is not a number, it is a decoration."},{"title":"Clip live features into the fitted range","why":"A live bidder with 80 questions when the historical maximum was 44 is not a confident prediction, it is an extrapolation. Clip to the range the model actually saw, and count how often you had to \u2014 a feature that clips constantly is telling you the training set is not representative.","code":{"python":"live = feat.copy()\nclipped = {}\nfor f in FEATURES:\n    lo, hi = HIST[f].min(), HIST[f].max()\n    clipped[f] = int(((live[f] < lo) | (live[f] > hi)).sum())\n    live[f] = live[f].clip(lo, hi)\n\nfeat[\"p_drop\"] = predict(BETA, standardise(live))\n\nif any(clipped.values()):\n    print(\"clipped:\", {k: v for k, v in clipped.items() if v})"},"out":"clipped: {'qa_count': 1}\n\nMarlowe Partners       p(withdraw) 0.01\nGranton Equity         p(withdraw) 0.01\nDunmore Family Office  p(withdraw) 0.18\nPennine Capital        p(withdraw) 0.97\nAldermoor Industrial   p(withdraw) 0.80\nSelby Holdings         p(withdraw) 1.00"},{"title":"Turn six probabilities into a bid-count distribution","why":"Six names on a process letter is not six-way tension. Treating the withdrawal probabilities as independent gives the exact distribution of how many bids arrive \u2014 a Poisson-binomial, which is a four-line dynamic program and does not need simulating.","code":{"python":"def poisson_binomial(p):\n    \"\"\"Exact P(k successes) for independent, non-identical Bernoulli trials.\"\"\"\n    dist = np.zeros(len(p) + 1)\n    dist[0] = 1.0\n    for pi in p:\n        dist[1:] = dist[1:] * (1 - pi) + dist[:-1] * pi\n        dist[0] *= (1 - pi)\n    return dist\n\np_bid = 1 - feat.p_drop.to_numpy()\ndist  = poisson_binomial(p_bid)\n\nassert abs(dist.sum() - 1) < 1e-9\nprint(f\"expected {p_bid.sum():.1f} bids   \"\n      f\"P(>=2) {dist[2:].sum():.0%}   P(>=3) {dist[3:].sum():.0%}\")"},"out":"expected 3.0 bids   P(>=2) 100%   P(>=3) 85%\n\n1 bid   0.3%\n2 bids 15.1%\n3 bids 66.4%\n4 bids 17.7%\n5 bids  0.5%","note":"Independence is an assumption and a slightly generous one \u2014 bidders drop for correlated reasons such as a sector shock or a competitor\u2019s aggressive first-round bid. It biases the spread narrow, not the mean, so the expected count is sound and the tails are optimistic."},{"title":"Score document heat","why":"The documents the room keeps returning to are the issues that come back as SPA mark-ups, and you can see them weeks before the first draft arrives. Three components: total attention, breadth across bidders, and how many separate days a bidder came back to it.","code":{"spark":"revisits = (events.groupBy(\"doc_id\", \"bidder\")\n                  .agg(F.countDistinct(F.to_date(\"event_ts\")).alias(\"days\"))\n                  .groupBy(\"doc_id\").agg(F.avg(\"days\").alias(\"revisits\")))\n\nheat = (events.groupBy(\"doc_id\")\n    .agg((F.sum(\"seconds\") / 3600).alias(\"hours\"),\n         F.countDistinct(\"bidder\").alias(\"bidders\"))\n    .join(revisits, \"doc_id\")\n    .join(F.broadcast(docs), \"doc_id\")\n    .toPandas())\n\nz = lambda s: (s - s.mean()) / max(s.std(ddof=0), 1e-9)\nheat[\"sec_per_page\"] = heat.hours * 3600 / heat.pages\nheat[\"score\"] = (z(np.log1p(heat.hours))\n                 + 0.8 * z(heat.bidders.astype(float))\n                 + z(np.log1p(heat.revisits))\n                 + 0.4 * z(np.log1p(heat.sec_per_page)))","pandas":"revisits = (events.groupby([\"doc_id\", \"bidder\"])\n                  .event_ts.apply(lambda s: s.dt.date.nunique())\n                  .groupby(\"doc_id\").mean().rename(\"revisits\"))\n\nheat = (events.groupby(\"doc_id\")\n              .agg(hours=(\"seconds\", lambda s: s.sum() / 3600),\n                   bidders=(\"bidder\", \"nunique\"))\n              .join(revisits).join(docs.set_index(\"doc_id\")))\n\nz = lambda s: (s - s.mean()) / max(s.std(ddof=0), 1e-9)\nheat[\"sec_per_page\"] = heat.hours * 3600 / heat.pages\nheat[\"score\"] = (z(np.log1p(heat.hours)) + 0.8 * z(heat.bidders.astype(float))\n                 + z(np.log1p(heat.revisits)) + 0.4 * z(np.log1p(heat.sec_per_page)))"},"out":"Master supply agreement - Halstead Aerospace   6/6 bidders  21.7 revisits  5.8h\nActuarial valuation - Thornbury Pension Scheme 4/6 bidders  19.0 revisits  4.1h\nWorking capital: 36-month normalisation        5/6 bidders  15.6 revisits  2.9h"},{"title":"Profile attention against the right baseline","why":"A bidder deep in customer contracts and absent from financial and legal is not doing diligence. But measuring that needs care: index each bidder\u2019s category share against the mean of per-bidder shares, not against the pooled total. The pooled total is dominated by whoever reads most, so the heaviest reader scores 1.0 everywhere by construction.","code":{"python":"att   = events.pivot_table(index=\"bidder\", columns=\"category\",\n                          values=\"seconds\", aggfunc=\"sum\").fillna(0)\nshare = att.div(att.sum(axis=1), axis=0)\n\n# The baseline is the TYPICAL bidder, not the pooled room\nroom = share[share.sum(axis=1) > 0].mean(axis=0)\nroom = room / room.sum()\n\nindex = share.div(room, axis=1)\n\n# A pattern worth a question: heavy commercial, absent financial, no advisers, no Q&A\ncomm = index[[\"Commercial & Customers\", \"Operations & Sites\"]].mean(axis=1)\nfin  = index[[\"Financial\", \"Legal & Corporate\", \"Tax\"]].mean(axis=1)\nrecon = (np.clip((comm - fin) / 2.2, 0, 1)\n         * (feat.advisers == 0) * np.clip(1 - feat.qa_count / 12, 0, 1))"},"out":"                        Comm  Envir  Finan  HR&P  Legal    Tax\nMarlowe Partners        0.49   0.84   1.29  1.74   1.31   1.28\nAldermoor Industrial    1.92   1.38   0.16  0.13   0.26   0.08","note":"Report this as a flag, never as a finding. A trade buyer may have a genuine thesis that lives in the commercial folders. The proportionate action is to confirm their process with their adviser and stage the pricing detail \u2014 not to accuse anyone of anything."}],"pitfalls":[{"title":"Indexing attention against the pooled total","body":"The obvious baseline \u2014 total seconds per category across the room \u2014 is dominated by whichever bidder reads most. In this process Marlowe was 45 of 98 total hours, so Marlowe scored close to 1.0 in every category by construction and the matrix washed out to nothing. Index against the <em>mean of per-bidder shares<\/em> instead and the pattern appears immediately."},{"title":"Ranking documents by attention per page","body":"Per-page intensity looks like the right normalisation and penalises exactly the documents that carry the risk. A 168-page actuarial valuation read for six hours by every bidder scores below a four-page memo someone stared at. Rank on total attention, breadth and revisits, with per-page intensity as a minor term."},{"title":"Trusting an estimate built on thirty events","body":"Median dwell per page is meaningless for a bidder who has barely logged in, and an unshrunk estimate had a near-absent bidder out-ranking one with six times the hours. Shrink unstable features toward a stable one in proportion to how much data there is: <code>depth = depth\u00b7r + coverage\u00b7(1\u2212r)<\/code> with <code>r = min(1, events/300)<\/code>."},{"title":"Presenting behavioural inference as fact","body":"A quiet bidder may be waiting on an investment committee. A commercial-only reader may have a thesis. The output of this analysis is a ranked set of questions for the deal team, and the page should say so in as many words \u2014 the credibility of everything else depends on being visibly careful about this one."}],"validate":{"intro":"Three assertions, each catching a different class of error: an arithmetic slip, a model that is not doing its job, and a normalisation that has gone wrong.","why":"The distribution check catches the dynamic program; the AUC floor catches a model fitted on features that turned out to be useless; the share check catches a pivot that lost rows to nulls.","code":{"python":"def check():\n    # 1. the exact distribution must be a distribution\n    assert abs(dist.sum() - 1) < 1e-9, \"bid-count distribution does not sum to 1\"\n\n    # 2. a model that cannot separate should fail the build, not ship\n    assert AUC > 0.70, f\"model separates poorly (AUC {AUC:.2f})\"\n\n    # 3. every active bidder's attention shares must sum to 1\n    for b in share.index:\n        if feat.loc[b, \"events\"] > 0:\n            assert abs(share.loc[b].sum() - 1) < 1e-6, f\"{b}: shares do not sum to 1\"\n\n    print(f\"checks: AUC {AUC:.3f}, distribution sums to 1, shares sum to 1\")"},"out":"checks: AUC 0.832, distribution sums to 1, shares sum to 1"},"scale":{"body":"The access log is the only large object, and it is genuinely large: a firm with several years of processes behind it has tens of millions of events. Sessionisation is a window function over user and timestamp, which is exactly what Spark is for. Everything downstream operates on one row per bidder \u2014 six rows for the live process, a few hundred for the historical register \u2014 so the model, the simulation and the scoring all run in NumPy in milliseconds.","notes":["<strong>Broadcast the document index.<\/strong> It is a few hundred rows joined to tens of millions; without the hint Spark will shuffle both sides.","<strong>Partition the log by process<\/strong> and keep historical processes in the same layout, so building the training set is a filter rather than a migration.","<strong>Watch for skew on user_id.<\/strong> One adviser analyst working through the room systematically can be a large share of all events.","<strong>Never join the log to itself<\/strong> to compute revisits \u2014 a two-stage groupBy (doc \u00d7 bidder, then doc) is both faster and easier to read.","<strong>Anonymise before the model sees it.<\/strong> Bidder identity belongs in the presentation layer; the feature table should key on an opaque id, which also makes historical processes reusable without a confidentiality argument."]},"foot_title":"Technique 16 \u2014 Virtual Data Room Analytics.","foot_body":"Tutorial companion to the Project Lantern demo. All figures synthetic."}</script>
+<script>
+(() => {
+"use strict";
+const T = JSON.parse(document.getElementById("payload").textContent);
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const LANG = { spark: "PySpark", pandas: "pandas", python: "Python", sql: "SQL", numpy: "NumPy" };
+let flavour = "spark";
+
+document.title = T.title;
+$("#brand").textContent = T.brand;
+$("#tag").textContent = T.tag;
+$("#phase").textContent = T.phase;
+$("#title").textContent = T.title;
+$("#subtitle").textContent = T.subtitle;
+$("#intro").innerHTML = T.intro;
+$("#inputIntro").innerHTML = T.input_intro;
+$("#walkIntro").innerHTML = T.walk_intro;
+$("#validIntro").innerHTML = T.validate.intro;
+$("#scaleBody").innerHTML = T.scale.body;
+$("#grainTag").textContent = T.grain;
+$("#footTitle").textContent = T.foot_title;
+$("#footBody").textContent = " " + T.foot_body;
+for (const id of ["#demoLink", "#demoLink2"]) $(id).href = T.demo_url;
+$("#metarow").innerHTML = T.meta.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join("");
+$("#schema").innerHTML = `<thead><tr><th>Column</th><th>Type</th><th>Why it matters</th></tr></thead><tbody>
+  ${T.inputs.map(i => `<tr><td>${esc(i[0])}</td><td class="tiny">${esc(i[1])}</td><td class="small">${i[2]}</td></tr>`).join("")}</tbody>`;
+$("#toc").innerHTML = T.steps.map((s, i) => `<a href="#step-${i + 1}"><b>${String(i + 1).padStart(2, "0")}</b><span>${esc(s.title)}</span></a>`).join("");
+$("#pitfalls").innerHTML = T.pitfalls.map(p => `<div class="pitfall"><h4>${esc(p.title)}</h4><p>${p.body}</p></div>`).join("");
+$("#scaleNotes").innerHTML = T.scale.notes.map(n => `<li><span>${n}</span></li>`).join("");
+
+/* ---------- code blocks ---------- */
+let uid = 0;
+function block(variants) {
+  const keys = Object.keys(variants);
+  const id = "cb" + (++uid);
+  const bar = keys.length > 1
+    ? keys.map(k => `<button type="button" role="tab" data-flavour="${k}" data-for="${id}"
+        aria-selected="${k === flavour}">${LANG[k] || k}</button>`).join("")
+    : `<span class="lang">${LANG[keys[0]] || keys[0]}</span>`;
+  const panes = keys.map(k => `<pre class="code" data-flavour="${k}" data-for="${id}"
+      ${keys.length > 1 && k !== flavour ? "hidden" : ""}><code class="language-python">${esc(variants[k])}</code></pre>`).join("");
+  return `<div class="codewrap" id="${id}">
+    <div class="codebar">${bar}<span class="spacer"></span>
+      <button type="button" class="copy" data-for="${id}">Copy</button></div>${panes}</div>`;
+}
+
+$("#steps").innerHTML = T.steps.map((s, i) => `<div class="step" id="step-${i + 1}">
+  <div class="sn">${String(i + 1).padStart(2, "0")}</div>
+  <div class="body">
+    <h3>${esc(s.title)}</h3>
+    <p class="why">${s.why}</p>
+    ${block(s.code)}
+    ${s.out ? `<div class="out">${esc(s.out)}</div>` : ""}
+    ${s.note ? `<p class="tiny" style="line-height:1.6">${s.note}</p>` : ""}
+  </div></div>`).join("");
+$("#validateBlock").innerHTML = `<p class="small" style="margin-bottom:14px">${T.validate.why}</p>`
+  + block(T.validate.code)
+  + (T.validate.out ? `<div class="out" style="margin-top:14px">${esc(T.validate.out)}</div>` : "");
+
+/* ---------- flavour switching, per block and globally ---------- */
+function setFlavour(f, scope) {
+  document.querySelectorAll(scope ? `[data-for="${scope}"]` : "[data-flavour]").forEach(el => {
+    const mine = el.dataset.flavour === f;
+    if (el.tagName === "PRE") {
+      // a block without this flavour keeps whatever it has -- never blank the pane
+      const wrap = el.closest(".codewrap");
+      if (wrap.querySelector(`pre[data-flavour="${f}"]`)) el.hidden = !mine;
+    } else if (el.tagName === "BUTTON") {
+      const wrap = el.closest(".codewrap");
+      if (!wrap || wrap.querySelector(`pre[data-flavour="${f}"]`)) el.setAttribute("aria-selected", String(mine));
+    }
+  });
+}
+document.addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b) return;
+  if (b.classList.contains("copy")) {
+    const pre = document.querySelector(`#${b.dataset.for} pre:not([hidden]) code`);
+    navigator.clipboard?.writeText(pre.textContent).then(() => {
+      b.textContent = "Copied"; setTimeout(() => { b.textContent = "Copy"; }, 1400);
+    }).catch(() => { b.textContent = "Select and copy"; });
+  } else if (b.dataset.flavour) {
+    flavour = b.dataset.flavour;
+    setFlavour(flavour, null);
+  }
+});
+
+if (window.hljs) {
+  hljs.configure({ ignoreUnescapedHTML: true });
+  document.querySelectorAll("pre.code code").forEach(el => hljs.highlightElement(el));
+}
+})();
+</script>

@@ -1,6 +1,7 @@
 # 18 — Synergy Tracking
 
 **Live demo:** https://claude.ai/code/artifact/b18eee14-aa3a-497e-8b8c-7c07101062a8
+**Tutorial:** [How to build a synergy tracker a board can act on](https://claude.ai/code/artifact/58926809-5c81-487f-8011-24b2ebe2cc68)
 
 *Wexford Industrial Group* acquired *Pentland Technical Services* (both synthetic)
 14 months ago. Deal codename *Project Anvil*. The deal model carried £24.5m of

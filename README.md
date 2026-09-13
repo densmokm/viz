@@ -13,13 +13,18 @@ partners, PE deal teams and portfolio company CFOs.
 
 ## Built
 
-| # | Technique | Stage | Demo | The finding |
+| # | Technique | Stage | Demo | Tutorial |
 |---|---|---|---|---|
-| — | **Deal Lifecycle** | front door | [Lifecycle map](https://claude.ai/code/artifact/8f47772e-1d82-4096-9b06-7aa3de1988da) | 32 techniques across five phases of a transaction |
-| 01 | [Alt Data Triangulation](demos/01-alt-data-triangulation/) | Commercial DD | [Project Harrier](https://claude.ai/code/artifact/573d0f94-5d11-4e02-8ed7-064c98752cb3) | 4 of 7 IM claims challenged; implied organic growth 5.1% against 9% claimed |
-| 09 | [Revenue Decomposition](demos/09-revenue-decomposition/) | Financial DD | [Meridian Bridge](https://claude.ai/code/artifact/230bde63-86eb-44b4-a8fa-d86185f0a70f) | +18.6% reported growth is −1.8% underlying |
-| 16 | [Data Room Analytics](demos/16-vdr-analytics/) | SPA & completion | [Project Lantern](https://claude.ai/code/artifact/b50804ed-996e-472a-9aa8-df7b184ec06c) | Six bidders on the process letter, 3.0 expected live bids |
-| 18 | [Synergy Tracking](demos/18-synergy-tracking/) | Value creation | [Project Anvil](https://claude.ai/code/artifact/b18eee14-aa3a-497e-8b8c-7c07101062a8) | £13.8m forecast against a £24.5m model — and the model is unreachable |
+| — | **Deal lifecycle map** | front door | [Explore all 32](https://claude.ai/code/artifact/8f47772e-1d82-4096-9b06-7aa3de1988da) | — |
+| 01 | [Alt Data Triangulation](demos/01-alt-data-triangulation/) | Commercial DD | [Project Harrier](https://claude.ai/code/artifact/573d0f94-5d11-4e02-8ed7-064c98752cb3) | [How-to](https://claude.ai/code/artifact/902859a7-3384-4a18-8c3e-b6d734b3c9f1) |
+| 09 | [Revenue Decomposition](demos/09-revenue-decomposition/) | Financial DD | [Meridian Bridge](https://claude.ai/code/artifact/230bde63-86eb-44b4-a8fa-d86185f0a70f) | [How-to](https://claude.ai/code/artifact/2ba6fc7e-e46b-4bba-960f-5a281011aea6) |
+| 16 | [Data Room Analytics](demos/16-vdr-analytics/) | SPA & completion | [Project Lantern](https://claude.ai/code/artifact/b50804ed-996e-472a-9aa8-df7b184ec06c) | [How-to](https://claude.ai/code/artifact/746bf3be-f3ae-48d2-94bb-8c36f813f3e3) |
+| 18 | [Synergy Tracking](demos/18-synergy-tracking/) | Value creation | [Project Anvil](https://claude.ai/code/artifact/b18eee14-aa3a-497e-8b8c-7c07101062a8) | [How-to](https://claude.ai/code/artifact/58926809-5c81-487f-8011-24b2ebe2cc68) |
+
+Each technique ships as a **pair**: a demo that makes the finding land with a deal team, and a
+tutorial that shows how the analysis is actually performed — PySpark for the data work, pandas and
+NumPy for the modelling, with the failure modes that produced real bugs in these builds written up
+rather than quietly fixed.
 
 **Start here:** the [lifecycle map](https://claude.ai/code/artifact/8f47772e-1d82-4096-9b06-7aa3de1988da) is the front door — every technique in the catalogue placed against the phase of a deal it belongs to, with the built ones linked.
 
@@ -79,3 +84,18 @@ python3 src/generate_data.py   # synthetic source data
 python3 src/analyse.py         # analysis + reconciliation checks
 python3 src/build_page.py      # interactive page
 ```
+
+## Repository layout
+
+```
+shared/          house.css, viz.js and build.py — one stylesheet and one chart
+                 toolkit behind every page, plus catalogue.json as the single
+                 source of truth for what exists and what is built
+lifecycle/       the front door: 32 techniques against five phases of a deal
+demos/<n>/       src/ (generator, analysis, page template), data/, README
+tutorials/       src/content/t<n>.py holds each walkthrough; one template
+                 renders them all
+```
+
+A fix to a scale or a mark specification in `shared/viz.js` lands on every page at once. That is the
+same argument for repeatable analysis packs on live deals, made structurally rather than promised.

@@ -1,0 +1,492 @@
+<title>How to triangulate outside-in data into a defensible view</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;450;500;600;700&display=swap">
+<style>
+:root{
+  --ground:#eef1f5; --surface:#ffffff; --surface-2:#e4e9ef; --surface-3:#f6f8fa;
+  --ink:#101519; --ink-2:#495568; --ink-3:#79869a; --rule:#d5dce5; --rule-2:#c0cad6;
+  --accent:#173a5e; --accent-soft:#dce8f5;
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a;
+  --pos:#2a78d6; --neg:#e34948; --total:#334155;
+  --good:#0ca30c; --warn:#fab219; --serious:#ec835a; --crit:#d03b3b;
+  --chip-good:#e3f4e3; --chip-warn:#fdf1d6; --chip-serious:#fbe7dd; --chip-neutral:#e7ebf1;
+  --shadow:0 1px 2px rgba(16,21,25,.06), 0 8px 24px -12px rgba(16,21,25,.18);
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --ground:#0f1318; --surface:#171c23; --surface-2:#232a34; --surface-3:#1b2129;
+  --ink:#eef2f7; --ink-2:#aab6c6; --ink-3:#78859a; --rule:#2a323d; --rule-2:#3a4450;
+  --accent:#8fb8e2; --accent-soft:#1d2c3d;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70;
+  --pos:#3987e5; --neg:#e66767; --total:#94a3b5;
+  --chip-good:#12301a; --chip-warn:#332709; --chip-serious:#33210f; --chip-neutral:#242b35;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --ground:#0f1318; --surface:#171c23; --surface-2:#232a34; --surface-3:#1b2129;
+  --ink:#eef2f7; --ink-2:#aab6c6; --ink-3:#78859a; --rule:#2a323d; --rule-2:#3a4450;
+  --accent:#8fb8e2; --accent-soft:#1d2c3d;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70;
+  --pos:#3987e5; --neg:#e66767; --total:#94a3b5;
+  --chip-good:#12301a; --chip-warn:#332709; --chip-serious:#33210f; --chip-neutral:#242b35;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--ground); color:var(--ink);
+  font-family:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  font-size:16px; line-height:1.6; -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1120px; margin:0 auto; padding-inline:clamp(16px,4vw,40px)}
+h1,h2,h3{text-wrap:balance; margin:0}
+h1{font-family:Newsreader,Georgia,serif; font-weight:500; font-size:clamp(2rem,4.6vw,2.9rem); line-height:1.1; letter-spacing:-.015em}
+h2{font-family:Newsreader,Georgia,serif; font-weight:500; font-size:clamp(1.4rem,3vw,1.85rem); line-height:1.2; letter-spacing:-.01em}
+h3{font-size:1rem; font-weight:600; letter-spacing:-.005em}
+p{margin:0}
+a{color:var(--accent)}
+.label{font-size:.7rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-3)}
+.lede{font-size:1.06rem; color:var(--ink-2); max-width:66ch}
+.small{font-size:.84rem; color:var(--ink-2)}
+.tiny{font-size:.76rem; color:var(--ink-3)}
+.num{font-family:"IBM Plex Mono",ui-monospace,monospace; font-variant-numeric:tabular-nums}
+
+/* ---------- top bar ---------- */
+.topbar{position:sticky; top:0; z-index:40; background:color-mix(in srgb,var(--ground) 88%,transparent);
+  backdrop-filter:blur(10px); border-bottom:1px solid var(--rule)}
+.topbar .wrap{display:flex; align-items:center; gap:20px; height:52px}
+.brandmark{display:flex; align-items:center; gap:9px; font-weight:600; font-size:.9rem; white-space:nowrap}
+.brandmark i{width:9px; height:9px; border-radius:2px; background:var(--s1); display:block}
+.navlinks{display:flex; gap:18px; margin-left:auto; overflow-x:auto; scrollbar-width:none}
+.navlinks::-webkit-scrollbar{display:none}
+.navlinks a{color:var(--ink-2); text-decoration:none; font-size:.83rem; white-space:nowrap; padding:4px 0; border-bottom:2px solid transparent}
+.navlinks a:hover{color:var(--ink); border-bottom-color:var(--rule-2)}
+@media (max-width:720px){ .navlinks{display:none} }
+
+/* ---------- header ---------- */
+header.hero{padding-block:clamp(34px,6vw,60px) 30px}
+.eyebrow{display:flex; align-items:center; gap:10px; margin-bottom:16px; flex-wrap:wrap}
+.eyebrow span{color:var(--ink-3)}
+.codename{background:var(--accent-soft); color:var(--accent); padding:2px 9px; border-radius:3px; font-weight:600}
+.metarow{display:flex; flex-wrap:wrap; gap:0; margin-top:26px; border-top:1px solid var(--rule); border-bottom:1px solid var(--rule)}
+.metarow div{flex:1 1 165px; padding:13px 18px 13px 0; border-right:1px solid var(--rule)}
+.metarow div:last-child{border-right:0}
+.metarow dt{font-size:.7rem; font-weight:600; letter-spacing:.09em; text-transform:uppercase; color:var(--ink-3); margin-bottom:3px}
+.metarow dd{margin:0; font-size:.9rem; font-weight:450}
+
+/* ---------- verdict ---------- */
+.verdict{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:1px; background:var(--rule);
+  border:1px solid var(--rule); border-radius:6px; overflow:hidden; margin-block:8px 26px}
+.verdict > div{background:var(--surface); padding:24px 26px 22px}
+.verdict .fig{font-size:clamp(2.4rem,6.5vw,3.4rem); font-weight:600; line-height:1; letter-spacing:-.03em; margin:10px 0 6px}
+.verdict .reported .fig{color:var(--ink)}
+.verdict .underlying .fig{color:var(--neg)}
+.verdict .cap{font-size:.85rem; color:var(--ink-2)}
+@media (max-width:620px){ .verdict{grid-template-columns:1fr} }
+.thesis{background:var(--surface); border:1px solid var(--rule); border-left:3px solid var(--s2);
+  border-radius:4px; padding:20px 24px; margin-bottom:40px; font-size:1.02rem; color:var(--ink-2); max-width:none}
+.thesis strong{color:var(--ink); font-weight:600}
+
+/* ---------- sections ---------- */
+section{padding-block:34px; border-top:1px solid var(--rule)}
+.sechead{display:flex; align-items:baseline; gap:16px; flex-wrap:wrap; margin-bottom:8px}
+.sechead .amt{font-family:"IBM Plex Mono",monospace; font-size:.82rem; font-weight:500; color:var(--ink-3);
+  background:var(--surface-2); padding:3px 9px; border-radius:3px; white-space:nowrap}
+.secintro{margin-block:12px 26px}
+@media (max-width:620px){ .sechead .amt{white-space:normal} }
+
+/* ---------- panels & charts ---------- */
+.panel{background:var(--surface); border:1px solid var(--rule); border-radius:6px; padding:22px clamp(14px,2.4vw,24px)}
+.panelhead{display:flex; align-items:flex-start; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-bottom:6px}
+.chart{width:100%; min-height:60px}
+.chart svg{display:block; width:100%; height:auto; overflow:visible}
+figcaption{font-size:.78rem; color:var(--ink-3); margin-top:12px; line-height:1.5}
+.grid2{display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:18px}
+.grid3{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:18px}
+
+/* ---------- controls ---------- */
+.controls{display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-bottom:18px}
+.tabs{display:inline-flex; background:var(--surface-2); border-radius:5px; padding:3px; gap:2px}
+.tabs button{appearance:none; border:0; background:transparent; color:var(--ink-2); font:inherit; font-size:.84rem;
+  font-weight:500; padding:6px 13px; border-radius:3px; cursor:pointer; white-space:nowrap}
+.tabs button[aria-selected="true"]{background:var(--surface); color:var(--ink); box-shadow:0 1px 2px rgba(0,0,0,.10); font-weight:600}
+.tabs button:focus-visible, .toggle:focus-visible{outline:2px solid var(--s1); outline-offset:2px}
+.toggle{appearance:none; border:1px solid var(--rule-2); background:var(--surface); color:var(--ink-2); font:inherit;
+  font-size:.8rem; font-weight:500; padding:6px 12px; border-radius:5px; cursor:pointer; display:inline-flex; align-items:center; gap:7px}
+.toggle[aria-pressed="true"]{border-color:var(--s1); color:var(--ink); background:var(--accent-soft)}
+.toggle i{width:8px; height:8px; border-radius:50%; background:var(--rule-2); display:block}
+.toggle[aria-pressed="true"] i{background:var(--s1)}
+
+/* ---------- legend ---------- */
+.legend{display:flex; gap:16px; flex-wrap:wrap; align-items:center; font-size:.8rem; color:var(--ink-2); margin-top:14px}
+.legend span{display:inline-flex; align-items:center; gap:7px}
+.legend b{width:11px; height:11px; border-radius:2px; display:block}
+
+/* ---------- tables ---------- */
+.tablewrap{overflow-x:auto; margin-top:4px}
+table{border-collapse:collapse; width:100%; font-size:.85rem; min-width:480px}
+th,td{text-align:right; padding:9px 10px; border-bottom:1px solid var(--rule); white-space:nowrap}
+th:first-child,td:first-child{text-align:left; white-space:normal}
+thead th{font-size:.7rem; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-3);
+  border-bottom:1px solid var(--rule-2); vertical-align:bottom}
+tbody tr:last-child td{border-bottom:0}
+tbody tr.totalrow td{border-top:1px solid var(--rule-2); font-weight:600; background:var(--surface-3)}
+td.n{font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums}
+td.neg{color:var(--neg)}
+.bar-cell{position:relative; min-width:96px}
+.bar-cell i{position:absolute; left:10px; top:50%; transform:translateY(-50%); height:9px; border-radius:2px; display:block}
+
+/* ---------- chips ---------- */
+.chip{display:inline-flex; align-items:center; gap:6px; font-size:.74rem; font-weight:600; padding:2px 8px; border-radius:3px; white-space:nowrap}
+.chip i{width:7px; height:7px; border-radius:50%; display:block; flex:none}
+.chip.good{background:var(--chip-good); color:var(--good)} .chip.good i{background:var(--good)}
+.chip.warn{background:var(--chip-warn); color:#8a6200} .chip.warn i{background:var(--warn)}
+.chip.serious{background:var(--chip-serious); color:#a8501f} .chip.serious i{background:var(--serious)}
+.chip.neutral{background:var(--chip-neutral); color:var(--ink-2)} .chip.neutral i{background:var(--ink-3)}
+:root[data-theme="dark"] .chip.warn, :root[data-theme="dark"] .chip.serious{color:var(--ink)}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]) .chip.warn,
+  :root:not([data-theme="light"]) .chip.serious{color:var(--ink)} }
+
+/* ---------- stat tiles ---------- */
+.stats{display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:1px; background:var(--rule);
+  border:1px solid var(--rule); border-radius:6px; overflow:hidden}
+.stat{background:var(--surface); padding:16px 18px}
+.stat .v{font-size:1.6rem; font-weight:600; line-height:1.15; letter-spacing:-.02em; margin:6px 0 3px}
+.stat .k{font-size:.7rem; font-weight:600; letter-spacing:.09em; text-transform:uppercase; color:var(--ink-3)}
+.stat .d{font-size:.78rem; color:var(--ink-3); line-height:1.45}
+
+/* ---------- callout ---------- */
+.callout{border:1px solid var(--rule); border-left:3px solid var(--crit); background:var(--surface);
+  border-radius:4px; padding:18px 22px; display:grid; gap:8px}
+.callout.ok{border-left-color:var(--good)}
+.callout h3{display:flex; align-items:center; gap:9px}
+.callout h3::before{content:""; width:7px; height:7px; border-radius:50%; background:var(--crit); flex:none}
+.callout.ok h3::before{background:var(--good)}
+
+/* ---------- lists ---------- */
+ol.qs{counter-reset:q; list-style:none; padding:0; margin:0; display:grid; gap:14px}
+ol.qs li{counter-increment:q; display:grid; grid-template-columns:auto 1fr; gap:14px; align-items:start}
+ol.qs li::before{content:"Q" counter(q); font-family:"IBM Plex Mono",monospace; font-size:.74rem; font-weight:600;
+  color:var(--accent); background:var(--accent-soft); padding:3px 7px; border-radius:3px; margin-top:2px}
+ul.plain{list-style:none; padding:0; margin:0; display:grid; gap:10px}
+ul.plain li{display:grid; grid-template-columns:auto 1fr; gap:11px; align-items:start; font-size:.9rem; color:var(--ink-2)}
+ul.plain li::before{content:""; width:5px; height:5px; border-radius:50%; background:var(--rule-2); margin-top:9px}
+code{font-family:"IBM Plex Mono",monospace; font-size:.86em; background:var(--surface-2); padding:1px 5px; border-radius:3px}
+.formula{font-family:"IBM Plex Mono",monospace; font-size:.82rem; background:var(--surface-3); border:1px solid var(--rule);
+  border-radius:4px; padding:14px 16px; overflow-x:auto; white-space:pre; line-height:1.7; color:var(--ink-2)}
+
+/* ---------- tooltip ---------- */
+#tip{position:fixed; z-index:80; pointer-events:none; opacity:0; transition:opacity .1s;
+  background:var(--surface); color:var(--ink); border:1px solid var(--rule-2); border-radius:5px;
+  box-shadow:var(--shadow); padding:9px 12px; font-size:.8rem; line-height:1.5; max-width:270px}
+#tip .t{font-weight:600; margin-bottom:3px}
+#tip .r{display:flex; justify-content:space-between; gap:16px}
+#tip .r span:last-child{font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums}
+
+footer{padding-block:34px 60px; border-top:1px solid var(--rule); color:var(--ink-3); font-size:.82rem}
+[hidden]{display:none !important}
+@media (prefers-reduced-motion:reduce){ *{transition:none !important; animation:none !important} }
+
+/* ---------- verdict chips: critical state ---------- */
+.chip.crit{background:var(--chip-crit); color:var(--crit)} .chip.crit i{background:var(--crit)}
+:root{--chip-crit:#fbe3e3}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){--chip-crit:#3a1717} }
+:root[data-theme="dark"]{--chip-crit:#3a1717}
+
+/* ---------- claim scorecard ---------- */
+.claim{border-bottom:1px solid var(--rule)}
+.claim:last-child{border-bottom:0}
+.claimhead{width:100%; appearance:none; background:transparent; border:0; font:inherit; color:inherit;
+  text-align:left; cursor:pointer; display:grid; align-items:center; gap:16px; padding:15px 6px;
+  grid-template-columns:38px minmax(0,1fr) 150px 104px 132px}
+.claimhead:hover{background:var(--surface-3)}
+.claimhead:focus-visible{outline:2px solid var(--s1); outline-offset:-2px}
+.claimhead .cid{font-family:"IBM Plex Mono",monospace; font-size:.76rem; font-weight:600; color:var(--ink-3)}
+.claimhead .ctext{font-size:.93rem; line-height:1.45}
+.claimhead .ctext em{display:block; font-style:normal; font-size:.76rem; color:var(--ink-3); margin-top:3px}
+.divbar{display:block; position:relative; height:22px; background:var(--surface-2); border-radius:3px; overflow:hidden}
+.divbar::before{content:""; position:absolute; left:50%; top:0; bottom:0; width:1px; background:var(--rule-2)}
+.divbar i{position:absolute; top:4px; bottom:4px; border-radius:2px; display:block}
+.divbar b{position:absolute; right:6px; top:50%; transform:translateY(-50%); font-family:"IBM Plex Mono",monospace;
+  font-size:.72rem; font-weight:600; color:var(--ink-2)}
+.meter{display:flex; flex-direction:column; gap:4px}
+.meter u{height:6px; background:var(--surface-2); border-radius:3px; display:block; text-decoration:none; position:relative}
+.meter u i{position:absolute; left:0; top:0; bottom:0; border-radius:3px; background:var(--ink-3); display:block}
+.meter s{text-decoration:none; font-size:.7rem; color:var(--ink-3); font-family:"IBM Plex Mono",monospace}
+.claimbody{padding:2px 6px 20px 56px; display:grid; gap:14px}
+@media (max-width:860px){
+  .claimhead{grid-template-columns:34px minmax(0,1fr); gap:8px 12px}
+  .claimhead .cscore, .claimhead .cconf{grid-column:2}
+  .claimhead .cverdict{grid-column:2; justify-self:start}
+  .claimbody{padding-left:12px}
+}
+
+/* ---------- entity board (bidders, portcos, workstreams) ---------- */
+.board{display:grid}
+.brow{display:grid; gap:14px; align-items:center; padding:16px 6px; border-bottom:1px solid var(--rule);
+  grid-template-columns:minmax(0,1.5fr) 108px 108px minmax(120px,1fr) minmax(0,1.4fr)}
+.brow:last-child{border-bottom:0}
+.brow .who{display:grid; gap:3px}
+.brow .who strong{font-size:.95rem; font-weight:600}
+.brow .who span{font-size:.76rem; color:var(--ink-3)}
+.brow .flags{display:flex; flex-wrap:wrap; gap:6px}
+.brow .mini{display:flex; gap:14px; font-size:.75rem; color:var(--ink-3); flex-wrap:wrap}
+.brow .mini b{display:block; font-family:"IBM Plex Mono",monospace; font-size:.86rem; font-weight:600; color:var(--ink)}
+@media (max-width:900px){ .brow{grid-template-columns:minmax(0,1fr) 100px 100px} 
+  .brow .spark, .brow .flags{grid-column:1 / -1} }
+
+/* ---------- ordinal ramp: stage pipelines, funnel steps, tiers ---------- */
+:root{--ord1:#86b6ef; --ord2:#5598e7; --ord3:#2a78d6; --ord4:#1c5cab; --ord5:#104281}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --ord1:#184f95; --ord2:#256abf; --ord3:#3987e5; --ord4:#86b6ef; --ord5:#cde2fb} }
+:root[data-theme="dark"]{--ord1:#184f95; --ord2:#256abf; --ord3:#3987e5; --ord4:#86b6ef; --ord5:#cde2fb}
+.stagebar{display:flex; height:10px; border-radius:3px; overflow:hidden; gap:2px; background:var(--surface-2)}
+.stagebar i{display:block; min-width:2px}
+
+/* ---------- code ---------- */
+:root{
+  --code-bg:#f6f8fb; --code-rule:#dde4ec; --code-ink:#1c2430;
+  --code-kw:#8250df; --code-str:#0a7a4f; --code-num:#b3541e; --code-com:#79869a;
+  --code-fn:#0550ae; --code-op:#495568; --code-cls:#0b6b6b;
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --code-bg:#10151b; --code-rule:#252d38; --code-ink:#dbe3ec;
+  --code-kw:#c0a6f5; --code-str:#56d4a0; --code-num:#f0883e; --code-com:#7f8a99;
+  --code-fn:#79b8ff; --code-op:#aab6c6; --code-cls:#4fd1c5;
+}}
+:root[data-theme="dark"]{
+  --code-bg:#10151b; --code-rule:#252d38; --code-ink:#dbe3ec;
+  --code-kw:#c0a6f5; --code-str:#56d4a0; --code-num:#f0883e; --code-com:#7f8a99;
+  --code-fn:#79b8ff; --code-op:#aab6c6; --code-cls:#4fd1c5;
+}
+.codewrap{border:1px solid var(--code-rule); border-radius:6px; overflow:hidden; background:var(--code-bg)}
+.codebar{display:flex; align-items:center; gap:8px; padding:7px 10px 7px 12px;
+  border-bottom:1px solid var(--code-rule); background:var(--code-bg)}
+.codebar .lang{font-family:"IBM Plex Mono",monospace; font-size:.7rem; font-weight:600;
+  letter-spacing:.07em; text-transform:uppercase; color:var(--code-com)}
+.codebar .spacer{flex:1}
+.codebar button{appearance:none; border:1px solid transparent; background:transparent; color:var(--code-com);
+  font:inherit; font-size:.72rem; font-weight:600; padding:3px 8px; border-radius:4px; cursor:pointer}
+.codebar button:hover{color:var(--code-ink); border-color:var(--code-rule)}
+.codebar button[aria-selected="true"]{color:var(--code-ink); background:var(--surface); border-color:var(--code-rule)}
+.codebar button:focus-visible{outline:2px solid var(--s1); outline-offset:1px}
+pre.code{margin:0; padding:14px 16px; overflow-x:auto; background:var(--code-bg)}
+pre.code code{font-family:"IBM Plex Mono",ui-monospace,monospace; font-size:.795rem; line-height:1.72;
+  color:var(--code-ink); background:none; padding:0; white-space:pre; display:block; tab-size:4}
+.hljs-keyword,.hljs-literal,.hljs-selector-tag{color:var(--code-kw)}
+.hljs-string,.hljs-meta .hljs-string{color:var(--code-str)}
+.hljs-number{color:var(--code-num)}
+.hljs-comment{color:var(--code-com); font-style:italic}
+.hljs-title,.hljs-title.function_,.hljs-section{color:var(--code-fn); font-weight:600}
+.hljs-title.class_,.hljs-type,.hljs-built_in{color:var(--code-cls)}
+.hljs-params,.hljs-operator,.hljs-punctuation{color:var(--code-op)}
+.hljs-attr,.hljs-variable,.hljs-property{color:var(--code-ink)}
+.hljs-meta{color:var(--code-com)}
+
+/* ---------- tutorial steps ---------- */
+.step{display:grid; grid-template-columns:44px minmax(0,1fr); gap:0 20px; padding-block:30px;
+  border-top:1px solid var(--rule)}
+.step:first-of-type{border-top:0}
+.step .sn{font-family:"IBM Plex Mono",monospace; font-size:.8rem; font-weight:600; color:var(--s1);
+  background:var(--accent-soft); border-radius:4px; height:30px; display:grid; place-items:center}
+.step .body{display:grid; gap:14px; min-width:0}
+.step h3{font-size:1.12rem; font-weight:600; line-height:1.3}
+.step .why{font-size:.95rem; color:var(--ink-2); line-height:1.65; max-width:70ch}
+.step .out{font-family:"IBM Plex Mono",monospace; font-size:.75rem; color:var(--ink-2);
+  background:var(--surface-3); border:1px solid var(--rule); border-left:2px solid var(--rule-2);
+  border-radius:0 4px 4px 0; padding:10px 14px; overflow-x:auto; white-space:pre; line-height:1.6}
+@media (max-width:620px){ .step{grid-template-columns:1fr; gap:12px} .step .sn{width:36px} }
+.pitfall{border:1px solid var(--rule); border-left:3px solid var(--warn); border-radius:0 5px 5px 0;
+  background:var(--surface); padding:16px 20px; display:grid; gap:8px}
+.pitfall h4{margin:0; font-size:.92rem; font-weight:600; display:flex; gap:9px; align-items:center}
+.pitfall h4::before{content:""; width:6px; height:6px; border-radius:50%; background:var(--warn); flex:none}
+.pitfall p{font-size:.86rem; color:var(--ink-2); line-height:1.6}
+.schema td:first-child{font-family:"IBM Plex Mono",monospace; font-size:.8rem}
+.schema th,.schema td{text-align:left}
+.schema td:nth-child(3){white-space:normal; min-width:260px}
+.tocbox{display:grid; gap:2px; margin-top:18px}
+.tocbox a{display:grid; grid-template-columns:30px 1fr; gap:12px; padding:9px 10px; border-radius:5px;
+  text-decoration:none; color:var(--ink-2); font-size:.9rem; align-items:baseline}
+.tocbox a:hover{background:var(--surface-3); color:var(--ink)}
+.tocbox a b{font-family:"IBM Plex Mono",monospace; font-size:.74rem; color:var(--ink-3); font-weight:600}
+
+</style>
+
+<div class="topbar"><div class="wrap">
+  <div class="brandmark"><i></i> <span id="brand"></span></div>
+  <nav class="navlinks">
+    <a href="#inputs">Inputs</a><a href="#walkthrough">Walkthrough</a><a href="#pitfalls">Pitfalls</a>
+    <a href="#validate">Validation</a><a href="#scale">Scale</a><a id="demoLink" href="#" target="_blank" rel="noopener">Open the demo ↗</a>
+  </nav>
+</div></div>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="eyebrow label"><span class="codename" id="tag"></span><span id="phase"></span><span>&middot;</span><span>Tutorial</span></div>
+  <h1 id="title"></h1>
+  <p class="lede" style="margin-top:14px" id="subtitle"></p>
+  <dl class="metarow" id="metarow"></dl>
+</header>
+
+<section style="border-top:0; padding-top:20px">
+  <div class="grid2" style="align-items:start">
+    <div class="panel">
+      <h3 style="margin-bottom:10px">What you are building</h3>
+      <p class="small" id="intro"></p>
+      <p class="small" style="margin-top:14px"><a id="demoLink2" href="#" target="_blank" rel="noopener"><strong>See the finished analysis ↗</strong></a></p>
+    </div>
+    <div class="panel">
+      <h3 style="margin-bottom:4px">Steps</h3>
+      <div class="tocbox" id="toc"></div>
+    </div>
+  </div>
+</section>
+
+<section id="inputs">
+  <div class="sechead"><h2>The input</h2><span class="amt" id="grainTag"></span></div>
+  <p class="secintro lede" id="inputIntro"></p>
+  <div class="panel"><div class="tablewrap"><table class="schema" id="schema"></table></div></div>
+</section>
+
+<section id="walkthrough">
+  <div class="sechead"><h2>Walkthrough</h2></div>
+  <p class="secintro lede" id="walkIntro"></p>
+  <div class="controls" style="position:sticky; top:60px; z-index:20; padding:8px 0;
+       background:color-mix(in srgb,var(--ground) 92%,transparent); backdrop-filter:blur(6px)">
+    <div class="tabs" role="tablist" aria-label="Code flavour">
+      <button role="tab" aria-selected="true" data-flavour="spark">PySpark</button>
+      <button role="tab" aria-selected="false" data-flavour="pandas">pandas</button>
+    </div>
+    <span class="tiny">Switches every block below. Steps that only make sense one way show that one.</span>
+  </div>
+  <div class="panel" style="padding-block:4px"><div id="steps"></div></div>
+</section>
+
+<section id="pitfalls">
+  <div class="sechead"><h2>What goes wrong</h2></div>
+  <p class="secintro lede">Every one of these is a bug that was actually in this analysis at some point.
+     They are here because they are the failure modes that survive a code review and get caught in a
+     partner meeting instead.</p>
+  <div class="grid2" id="pitfalls" style="align-items:start"></div>
+</section>
+
+<section id="validate">
+  <div class="sechead"><h2>Proving it works</h2></div>
+  <p class="secintro lede" id="validIntro"></p>
+  <div class="panel"><div id="validateBlock"></div></div>
+</section>
+
+<section id="scale">
+  <div class="sechead"><h2>Running it for real</h2></div>
+  <div class="grid2" style="align-items:start">
+    <div class="panel"><h3 style="margin-bottom:12px">Where Spark earns its keep</h3>
+      <p class="small" id="scaleBody"></p></div>
+    <div class="panel"><h3 style="margin-bottom:12px">Practical notes</h3>
+      <ul class="plain" id="scaleNotes"></ul></div>
+  </div>
+</section>
+
+<footer>
+  <strong style="color:var(--ink)" id="footTitle"></strong>
+  <span id="footBody"></span>
+</footer>
+
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script id="payload" type="application/json">{"brand":"Alt Data Triangulation","tag":"Technique 01","phase":"Commercial due diligence","title":"How to triangulate outside-in data into a defensible view","subtitle":"Turning eleven subscriptions into a scored position on a management narrative \u2014 with confidence that depends on how independent the evidence is, not how much of it there is.","demo_url":"https://claude.ai/code/artifact/573d0f94-5d11-4e02-8ed7-064c98752cb3","grain":"one row per signal per month","meta":[["Engine","PySpark to build signals, NumPy to score them"],["Input","Vendor feeds, filings, reviews, job boards"],["Runtime","Minutes, once the feeds land"],["Output","A claim scorecard with an evidence and a confidence number"]],"intro":"A scorecard that tests each claim in the information memorandum against outside-in evidence, and says how much weight the evidence deserves. The hard part is not gathering signals \u2014 vendors sell those. It is combining sources of wildly different quality without either pretending they are equal or letting the loudest one dominate.","input_intro":"Signals arrive from eleven subscriptions in completely different shapes: monthly panels, event-level review text, dated filings, scraped postings. Normalise everything to one long table before you score anything \u2014 the scoring code should never know which vendor a number came from, only what that vendor is worth.","inputs":[["signal","string","Stable key. Everything downstream joins on this, so name it once and never rename it."],["source, family","string","The vendor, and the <strong>methodological family<\/strong> it belongs to. The family is what makes independence measurable."],["month","date","Monthly grain. Anything finer is noise at this altitude; anything coarser loses the trend."],["value","double","The measurement itself, in its own units."],["peer_value","double","The same measurement for a comparable set, where one exists. Null is fine and common."],["n","long","Observations behind the measurement. Drives the sample-adequacy haircut."],["latency_months","double","How stale the feed is at the point of analysis. Companies House is 2.5 months behind; Trustpilot is same-day."],["reliability","double","A stated prior per source, 0 to 1. Write it down so a client can argue with it."]],"walk_intro":"Nine steps. Steps one and two are genuinely large \u2014 millions of reviews and web-panel rows collapsing to a few hundred signal-months. Everything after that operates on a table small enough to print.","steps":[{"title":"Collapse event-level sources into monthly signals","why":"This is where Spark earns its place. Review platforms, app stores and job boards arrive as events \u2014 one row per review, per posting, per session. You need them as one row per signal per month, with an observation count attached, because the count drives how much the signal is worth.","code":{"spark":"from pyspark.sql import SparkSession, functions as F\n\nspark = SparkSession.builder.appName(\"outside-in\").getOrCreate()\n\nreviews = spark.read.parquet(\"s3://harrier/reviews/\")      # ~28m rows, all platforms\n\nPRICE_TERMS = r\"(?i)\\b(price|pricing|expensive|cost|bill|billing|charge|overcharg|invoice)\\b\"\n\nmonthly = (reviews\n  .withColumn(\"month\", F.trunc(\"posted_at\", \"month\"))\n  .withColumn(\"mentions_price\", F.col(\"body\").rlike(PRICE_TERMS).cast(\"int\"))\n  .groupBy(\"platform\", \"month\")\n  .agg(F.avg(\"rating\").alias(\"rating\"),\n       F.avg(\"mentions_price\").alias(\"price_complaint_rate\"),\n       F.count(\"*\").alias(\"n\")))\n\n# Reshape to the long signal table the scorer expects\nsignals = (monthly\n  .select(\"month\", \"n\",\n          F.col(\"platform\").alias(\"source\"),\n          F.explode(F.array(\n            F.struct(F.lit(\"tp_rating\").alias(\"signal\"), F.col(\"rating\").alias(\"value\")),\n            F.struct(F.lit(\"price_cmp\").alias(\"signal\"), F.col(\"price_complaint_rate\").alias(\"value\")),\n          )).alias(\"s\"))\n  .select(\"month\", \"n\", \"source\", \"s.signal\", \"s.value\"))","pandas":"reviews = pd.read_parquet(\"reviews.parquet\")\n\nPRICE_TERMS = r\"(?i)\\b(price|pricing|expensive|cost|bill|billing|charge|overcharg|invoice)\\b\"\nreviews[\"month\"] = reviews.posted_at.dt.to_period(\"M\")\nreviews[\"mentions_price\"] = reviews.body.str.contains(PRICE_TERMS, regex=True).astype(int)\n\nmonthly = (reviews.groupby([\"platform\", \"month\"])\n                  .agg(rating=(\"rating\", \"mean\"),\n                       price_complaint_rate=(\"mentions_price\", \"mean\"),\n                       n=(\"rating\", \"size\"))\n                  .reset_index())\n\nsignals = monthly.melt(id_vars=[\"platform\", \"month\", \"n\"],\n                       value_vars=[\"rating\", \"price_complaint_rate\"],\n                       var_name=\"signal\", value_name=\"value\")"},"note":"Do the text matching in Spark, not in a pandas UDF. A regex on 28 million review bodies is the one part of this analysis that genuinely needs a cluster, and <code>rlike<\/code> pushes down properly where a UDF will not."},{"title":"Derive per-unit signals rather than absolutes","why":"Absolute totals flatter a business that is growing by acquisition. Booking sessions rose 31% while the estate grew 32% \u2014 per practice, traffic <em>fell<\/em>. Almost every outside-in trap is this trap, so build the normalised version as a first-class signal rather than computing it in your head at the end.","code":{"spark":"# Estate size comes from dated Companies House filings, not from the vendor\nestate = (filings.filter(F.col(\"event\") == \"acquisition_completed\")\n                 .groupBy(F.trunc(\"filed_at\", \"month\").alias(\"month\"))\n                 .agg(F.count(\"*\").alias(\"acquired\"))\n                 .withColumn(\"estate\",\n                     F.lit(OPENING_ESTATE) +\n                     F.sum(\"acquired\").over(Window.orderBy(\"month\")\n                                                  .rowsBetween(Window.unboundedPreceding, 0))))\n\nper_practice = (web_panel.join(estate, \"month\")\n                         .withColumn(\"value\", F.col(\"sessions\") / F.col(\"estate\"))\n                         .withColumn(\"signal\", F.lit(\"sessions_pp\")))","pandas":"estate = (filings[filings.event.eq(\"acquisition_completed\")]\n            .groupby(filings.filed_at.dt.to_period(\"M\")).size()\n            .rename(\"acquired\").to_frame())\nestate[\"estate\"] = OPENING_ESTATE + estate.acquired.cumsum()\n\nper_practice = web_panel.join(estate, on=\"month\")\nper_practice[\"value\"] = per_practice.sessions / per_practice.estate\nper_practice[\"signal\"] = \"sessions_pp\""},"note":"Note the deliberate cross-source construction: the numerator is a web panel, the denominator a regulatory filing. Signals built this way are far harder for a management team to dismiss than anything a single vendor produces."},{"title":"Compare two windows, peer-adjusted","why":"Compare the last six months to the same six months a year earlier. That kills seasonality without needing a seasonal model. Where a peer series exists, subtract its movement \u2014 a rating that falls while the whole sector falls is not a company-specific finding.","code":{"python":"WIN = 6       # months in each comparison window\n\ndef window_delta(v, peer=None, additive=False):\n    \"\"\"Peer-adjusted move: last WIN months vs the same WIN months a year earlier.\"\"\"\n    x = v if additive else np.log(np.maximum(v, 1e-9))\n    delta = x[-WIN:].mean() - x[-(WIN + 12):-12].mean()\n    if peer is not None:\n        q = peer if additive else np.log(np.maximum(peer, 1e-9))\n        delta -= q[-WIN:].mean() - q[-(WIN + 12):-12].mean()\n    return delta"},"note":"Work on logs for anything strictly positive so the result is a proportional change, and additively for anything that can be zero or negative. Getting this wrong is the subject of the second pitfall below."},{"title":"Standardise by the right denominator","why":"A raw delta is meaningless until you know how noisy the series is. The denominator is the standard error of the difference between two six-month means \u2014 not the month-to-month volatility. This distinction is worth more than it looks: getting it wrong scaled every signal in this analysis down by roughly a factor of six and made a tripling of price complaints read as 0.20.","code":{"python":"def resid_sd(x):\n    \"\"\"Noise AROUND the trend, not the trend itself.\"\"\"\n    t = np.arange(len(x))\n    fit = np.polyval(np.polyfit(t, x, 1), t)\n    return max(float((x - fit).std(ddof=2)), 1e-9)\n\ndef standardise(v, peer=None, additive=False):\n    x = v if additive else np.log(np.maximum(v, 1e-9))\n    delta = window_delta(v, peer, additive)\n    se = resid_sd(x) * np.sqrt(2.0 / WIN)      # two independent WIN-month means\n    return float(np.tanh((delta / se) / 6.0))  # squash to [-1, 1]"},"out":"price_cmp   delta +0.42 log   se 0.046   z 9.1   d -0.98\ngd_rating   delta -0.19 log   se 0.031   z 6.2   d -0.87","note":"Detrend before measuring noise. Taking the standard deviation of a trending series measures the trend you are trying to detect and guarantees you conclude nothing is happening. The <code>tanh<\/code> squash is a presentation choice \u2014 it bounds the scale without a hard clip, so a nine-sigma move reads as decisive without a twelve-sigma move reading as three times more so."},{"title":"Two test modes: is it moving, and is it the right number","why":"Direction is not enough when a claim carries a figure. \u201cLike-for-like growth of 9%\u201d is not tested by observing that review volume is rising \u2014 it is tested by observing that review volume is rising at 5.4%. Add a level mode alongside the trend mode and declare which one each link uses.","code":{"python":"def level_d(observed, claimed, tolerance):\n    \"\"\"How far the observed value sits from the claimed one, in tolerances.\"\"\"\n    return float(np.tanh((observed - claimed) / tolerance))\n\nLEVEL_TESTS = {\n    # key:               (observed,              claimed, tolerance)\n    \"implied_organic\":   (implied_organic(0.80), 0.090,   0.020),\n    \"rev_vol_growth\":    (annualised(\"rev_vol_pp\"), 0.090, 0.025),\n    \"indep_level\":       (indep_share[-1],       0.600,   0.040),\n}\n\n# align = +1 means the claim is supported when the signal reads HIGH\nd = level_d(*LEVEL_TESTS[\"implied_organic\"]) * align"},"out":"implied_organic   5.1% observed vs 9% claimed   ->  d = -0.96","note":"Set the tolerance to the width of a difference you would actually argue about, not to a statistical threshold. Two percentage points on an organic growth rate changes the valuation; 0.2 does not."},{"title":"Weight each signal by what it is worth","why":"Three multiplicative haircuts, each defensible on its own: how much you trust the source, how stale the feed is, and how many observations sit behind the number. Write them down. A client who disagrees with your Glassdoor prior can argue with a number instead of with your judgement.","code":{"python":"N_REF = 500      # observations at which the sample haircut disappears\n\ndef weight(sig):\n    recency  = np.exp(-sig.latency_months / 9.0)\n    adequacy = min(1.0, np.log1p(sig.n) / np.log1p(N_REF))\n    return sig.reliability * recency * adequacy\n\n# Companies House: reliable but lagged      0.95 x 0.76 x 0.84 = 0.61\n# Trustpilot:      same-day but self-selecting 0.58 x 0.98 x 1.00 = 0.57\n# Glassdoor:       low n, self-selecting    0.55 x 0.95 x 0.86 = 0.45"},"note":"Relevance to the specific claim is a fourth multiplier, set per link rather than per signal. The same Glassdoor rating is strong evidence about being an employer of choice and weak evidence about pricing."},{"title":"Score the claim \u2014 and score the confidence separately","why":"Evidence and confidence are different questions and collapsing them loses the more useful one. Evidence is which way the data points. Confidence is whether you are entitled to an opinion, and it depends on three things that cannot substitute for one another: enough evidence, enough <em>independent<\/em> sources, and agreement between them.","code":{"python":"def score(links):\n    w = np.array([l.weight for l in links])\n    d = np.array([l.d for l in links])\n\n    E = float((w * d).sum() / w.sum())                    # evidence,  -1 .. +1\n    C = float(abs((w * d).sum()) / (w * abs(d)).sum())    # coherence,  0 .. 1\n\n    families = len({l.family for l in links})\n    F_ = 1 - np.exp(-0.9 * (families - 1))                # independence\n    M  = 1 - np.exp(-w.sum() / 1.6)                       # evidence mass\n\n    confidence = float(M * np.sqrt(F_) * np.sqrt(C))\n    return E, C, families, confidence"},"out":"C1  E -0.95   coherence 1.00   4 families   confidence 0.75\nC2  E -0.89   coherence 1.00   2 families   confidence 0.14","note":"The square roots matter. Multiplying three sub-one factors compounds into pessimism fast \u2014 an unsmoothed product rated a hard fact from Gain.Pro, corroborated twice, as not testable."},{"title":"Count families, not sources","why":"Trustpilot and Google agreeing is not corroboration: they are the same methodology sampling the same self-selecting population, and they will be wrong together. Group sources into methodological families and let only the family count feed independence. This one line is the difference between a framework and a weighted average with extra steps.","code":{"python":"FAMILY = {\n    \"Companies House\": \"Regulatory filings\",\n    \"S&P Capital IQ\":  \"Market data\",\n    \"Preqin\":          \"Market data\",      # same family as CapIQ -- adds weight, not independence\n    \"Gain.Pro\":        \"Market data\",\n    \"Google Reviews\":  \"User reviews\",\n    \"Trustpilot\":      \"User reviews\",     # ditto\n    \"Glassdoor\":       \"Employee reviews\",\n    \"Indeed\":          \"Labour market\",\n    \"SimilarWeb\":      \"Web panel\",\n    \"AlphaSense\":      \"Expert network\",\n    \"Quid\":            \"Media\",\n}\n\n# 4 sources, 2 families -> independence 0.59, not 0.96\nfamilies = len({FAMILY[s] for s in sources})"},"note":"The grouping is a judgement and should be visible in the output. Anyone who thinks Preqin and CapIQ are genuinely independent for a given question is welcome to move one and see what happens to the score."},{"title":"Give the unobservable an honest band","why":"Some claims cannot be seen from outside, and saying so is a finding. Others can be bounded even though they cannot be measured. Group revenue comes from filed accounts and acquisition dates from Companies House; the only unknown is how big an acquired unit is relative to an existing one. That gives a closed form in one parameter \u2014 so report a band and name the assumption.","code":{"python":"def implied_organic(alpha):\n    \"\"\"\n    r      = revenue per legacy unit-month\n    alpha  = size of an acquired unit relative to a legacy one\n\n        R0 = r * (LPM0 + alpha*APM0)\n        R1 = r * (1+g) * (LPM1 + alpha*APM1)\n\n    Everything is observable except alpha, so the honest answer is a band.\n    \"\"\"\n    return (R1 * (LPM0 + alpha * APM0)) / (R0 * (LPM1 + alpha * APM1)) - 1\n\nband = {a: implied_organic(a) for a in np.arange(0.65, 1.01, 0.05)}"},"out":"alpha 0.65 -> 7.4%\nalpha 0.80 -> 5.1%\nalpha 1.00 -> 2.3%\n\nclaimed in the IM: 9.0%","note":"The width of the band is itself the deliverable: it names the single number to request first. An information request built from what outside data could <em>not<\/em> settle is worth more than a generic checklist."}],"pitfalls":[{"title":"Dividing by month-to-month volatility","body":"The comparison is between two six-month means, so the denominator is the standard error of that difference \u2014 roughly <code>sd \u00d7 \u221a(2/6)<\/code>. Using annualised single-month volatility instead is about <strong>six times too large<\/strong> and crushes every signal toward zero. In this analysis a tripling of price complaints against a flat peer group scored \u22120.20, and the whole scorecard read as inconclusive."},{"title":"Log-transforming a count that touches zero","body":"Monthly acquisition filings include months with none. <code>log(0)<\/code> guarded to <code>log(1e-9)<\/code> gives \u221220.7, which destroys the residual standard deviation and produced a reported change of <strong>+110,192%<\/strong>. Detect it \u2014 <code>min(v) &lt;= 0<\/code> \u2014 and switch that series to additive differences automatically rather than remembering to flag it."},{"title":"Counting correlated sources as corroboration","body":"Two review platforms, four market-data vendors and three news aggregators can look like nine independent confirmations. They are three. Confidence must key off family count, or the framework will be most confident exactly where the vendor market is most crowded."},{"title":"Double-counting a signal the level test already carries","body":"The acquisition-count trend was linked to the organic growth claim alongside the acquisition-adjusted level test \u2014 which is computed <em>from<\/em> that same count. It added apparent evidence without adding information. When a level test derives from a signal, drop the signal's trend link."}],"validate":{"intro":"You cannot check an outside-in view against the truth on a live deal \u2014 that is the whole premise. But you can check the method on data where the truth is known, which is exactly what the synthetic generator is for.","why":"The generator produces a company whose real same-store growth is known. The engine never reads it. The assertion is that the band the method produces actually contains the answer \u2014 if it stops doing so, the build fails rather than shipping a confident number.","code":{"python":"def check():\n    # The engine is only allowed to see filings and vendor feeds. This line reads\n    # the ground-truth panel, and it is the only place in the codebase that does.\n    truth = same_store_growth(panel)\n\n    assert ORG_LO < truth < ORG_HI, (\n        f\"outside-in band [{ORG_LO:.1%}, {ORG_HI:.1%}] misses the truth {truth:.1%}\")\n\n    for c in SCORED:\n        assert -1.001 <= c[\"score\"] <= 1.001\n        assert 0 <= c[\"confidence\"] <= 1\n        assert c[\"families\"] == len({e[\"family\"] for e in c[\"evidence\"]})\n\n    print(f\"band {ORG_LO:.1%}-{ORG_HI:.1%} contains truth {truth:.1%}\")"},"out":"band 2.3%-7.4% contains truth 5.6%   (central estimate 5.1%, error 0.5pp)"},"scale":{"body":"The weight is all at the front. Review corpora, app-store feeds and web-panel exports run to tens of millions of rows and want Spark: regex matching, sentiment scoring, sessionisation, and the joins that build per-unit signals from a vendor numerator and a filings denominator. What comes out the other side is a few hundred signal-months \u2014 a table you could print. Every line of the scoring engine runs on that, in NumPy, in milliseconds.","notes":["<strong>Persist the signal table with the vendor snapshot date.<\/strong> Vendors restate history quietly; a scorecard you cannot reproduce six weeks later is worthless in a dispute.","<strong>Cache the review corpus after the text pass.<\/strong> Theme extraction, rating trend and complaint rate all scan the same rows.","<strong>Keep raw and derived signals in the same table<\/strong> with a flag, so a reviewer can see that sessions-per-practice is a construction and not something SimilarWeb sells.","<strong>Never put vendor identity into the scoring code.<\/strong> It should read reliability, latency and family from the table \u2014 swapping Trustpilot for Feefo should be a data change, not a code change.","<strong>Log the priors with the output.<\/strong> The reliability numbers are the most contestable part of the method, which is an argument for exposing them, not burying them."]},"foot_title":"Technique 01 \u2014 Alt Data Triangulation.","foot_body":"Tutorial companion to the Project Harrier demo. All figures synthetic."}</script>
+<script>
+(() => {
+"use strict";
+const T = JSON.parse(document.getElementById("payload").textContent);
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const LANG = { spark: "PySpark", pandas: "pandas", python: "Python", sql: "SQL", numpy: "NumPy" };
+let flavour = "spark";
+
+document.title = T.title;
+$("#brand").textContent = T.brand;
+$("#tag").textContent = T.tag;
+$("#phase").textContent = T.phase;
+$("#title").textContent = T.title;
+$("#subtitle").textContent = T.subtitle;
+$("#intro").innerHTML = T.intro;
+$("#inputIntro").innerHTML = T.input_intro;
+$("#walkIntro").innerHTML = T.walk_intro;
+$("#validIntro").innerHTML = T.validate.intro;
+$("#scaleBody").innerHTML = T.scale.body;
+$("#grainTag").textContent = T.grain;
+$("#footTitle").textContent = T.foot_title;
+$("#footBody").textContent = " " + T.foot_body;
+for (const id of ["#demoLink", "#demoLink2"]) $(id).href = T.demo_url;
+$("#metarow").innerHTML = T.meta.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join("");
+$("#schema").innerHTML = `<thead><tr><th>Column</th><th>Type</th><th>Why it matters</th></tr></thead><tbody>
+  ${T.inputs.map(i => `<tr><td>${esc(i[0])}</td><td class="tiny">${esc(i[1])}</td><td class="small">${i[2]}</td></tr>`).join("")}</tbody>`;
+$("#toc").innerHTML = T.steps.map((s, i) => `<a href="#step-${i + 1}"><b>${String(i + 1).padStart(2, "0")}</b><span>${esc(s.title)}</span></a>`).join("");
+$("#pitfalls").innerHTML = T.pitfalls.map(p => `<div class="pitfall"><h4>${esc(p.title)}</h4><p>${p.body}</p></div>`).join("");
+$("#scaleNotes").innerHTML = T.scale.notes.map(n => `<li><span>${n}</span></li>`).join("");
+
+/* ---------- code blocks ---------- */
+let uid = 0;
+function block(variants) {
+  const keys = Object.keys(variants);
+  const id = "cb" + (++uid);
+  const bar = keys.length > 1
+    ? keys.map(k => `<button type="button" role="tab" data-flavour="${k}" data-for="${id}"
+        aria-selected="${k === flavour}">${LANG[k] || k}</button>`).join("")
+    : `<span class="lang">${LANG[keys[0]] || keys[0]}</span>`;
+  const panes = keys.map(k => `<pre class="code" data-flavour="${k}" data-for="${id}"
+      ${keys.length > 1 && k !== flavour ? "hidden" : ""}><code class="language-python">${esc(variants[k])}</code></pre>`).join("");
+  return `<div class="codewrap" id="${id}">
+    <div class="codebar">${bar}<span class="spacer"></span>
+      <button type="button" class="copy" data-for="${id}">Copy</button></div>${panes}</div>`;
+}
+
+$("#steps").innerHTML = T.steps.map((s, i) => `<div class="step" id="step-${i + 1}">
+  <div class="sn">${String(i + 1).padStart(2, "0")}</div>
+  <div class="body">
+    <h3>${esc(s.title)}</h3>
+    <p class="why">${s.why}</p>
+    ${block(s.code)}
+    ${s.out ? `<div class="out">${esc(s.out)}</div>` : ""}
+    ${s.note ? `<p class="tiny" style="line-height:1.6">${s.note}</p>` : ""}
+  </div></div>`).join("");
+$("#validateBlock").innerHTML = `<p class="small" style="margin-bottom:14px">${T.validate.why}</p>`
+  + block(T.validate.code)
+  + (T.validate.out ? `<div class="out" style="margin-top:14px">${esc(T.validate.out)}</div>` : "");
+
+/* ---------- flavour switching, per block and globally ---------- */
+function setFlavour(f, scope) {
+  document.querySelectorAll(scope ? `[data-for="${scope}"]` : "[data-flavour]").forEach(el => {
+    const mine = el.dataset.flavour === f;
+    if (el.tagName === "PRE") {
+      // a block without this flavour keeps whatever it has -- never blank the pane
+      const wrap = el.closest(".codewrap");
+      if (wrap.querySelector(`pre[data-flavour="${f}"]`)) el.hidden = !mine;
+    } else if (el.tagName === "BUTTON") {
+      const wrap = el.closest(".codewrap");
+      if (!wrap || wrap.querySelector(`pre[data-flavour="${f}"]`)) el.setAttribute("aria-selected", String(mine));
+    }
+  });
+}
+document.addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b) return;
+  if (b.classList.contains("copy")) {
+    const pre = document.querySelector(`#${b.dataset.for} pre:not([hidden]) code`);
+    navigator.clipboard?.writeText(pre.textContent).then(() => {
+      b.textContent = "Copied"; setTimeout(() => { b.textContent = "Copy"; }, 1400);
+    }).catch(() => { b.textContent = "Select and copy"; });
+  } else if (b.dataset.flavour) {
+    flavour = b.dataset.flavour;
+    setFlavour(flavour, null);
+  }
+});
+
+if (window.hljs) {
+  hljs.configure({ ignoreUnescapedHTML: true });
+  document.querySelectorAll("pre.code code").forEach(el => hljs.highlightElement(el));
+}
+})();
+</script>

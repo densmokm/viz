@@ -1,6 +1,7 @@
 # 09 — Revenue Decomposition
 
 **Live demo:** https://claude.ai/code/artifact/230bde63-86eb-44b4-a8fa-d86185f0a70f
+**Tutorial:** [How to build a revenue bridge that ties](https://claude.ai/code/artifact/2ba6fc7e-e46b-4bba-960f-5a281011aea6)
 
 Target: *Meridian Coatings Ltd* (synthetic), a UK specialty industrial coatings
 distributor. Comparison: FY24 → FY25, years ending 31 March. Deal codename
