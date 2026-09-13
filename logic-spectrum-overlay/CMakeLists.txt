@@ -18,6 +18,7 @@ option (LSO_BUILD_TESTS "Build the framework-free core tests" ON)
 # anywhere, including on a build machine with no plugin host.
 #==============================================================================
 add_library (lso_core STATIC
+    src/core/CollisionFinder.cpp
     src/core/Fft.cpp
     src/core/Palette.cpp
     src/core/SpectrumAnalyser.cpp
@@ -78,6 +79,7 @@ if (LSO_BUILD_PLUGIN)
         COPY_PLUGIN_AFTER_BUILD TRUE)
 
     target_sources (SpectrumOverlay PRIVATE
+        src/plugin/CollisionListView.cpp
         src/plugin/PluginProcessor.cpp
         src/plugin/PluginEditor.cpp
         src/plugin/SpectrumView.cpp
@@ -105,6 +107,7 @@ if (LSO_BUILD_PLUGIN)
 
     target_sources (lso_preview PRIVATE
         tools/RenderPreview.cpp
+        src/plugin/CollisionListView.cpp
         src/plugin/PluginProcessor.cpp
         src/plugin/PluginEditor.cpp
         src/plugin/SpectrumView.cpp

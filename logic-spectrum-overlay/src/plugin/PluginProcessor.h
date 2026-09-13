@@ -22,6 +22,8 @@ struct ViewSettings
     std::atomic<float> tiltDbPerOctave { 3.0f };
     std::atomic<bool> fillOwnCurve { true };
     std::atomic<bool> soloThisTrack { false };
+    /** 0 tight, 1 normal, 2 loose: how readily an overlap is called one. */
+    std::atomic<int> overlapSensitivity { 1 };
 };
 
 /** One instance per track. Passes audio through untouched, measures the

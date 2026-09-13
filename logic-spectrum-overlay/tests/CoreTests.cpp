@@ -1,6 +1,7 @@
 // Tests for the framework-free core: FFT, analyser calibration, and the
 // cross-process registry. Runs anywhere, no plugin host needed.
 
+#include "../src/core/CollisionFinder.h"
 #include "../src/core/Fft.h"
 #include "../src/core/Palette.h"
 #include "../src/core/SpectrumAnalyser.h"
@@ -638,6 +639,245 @@ void testAppearanceAssignment()
         check (lso::hueName (i) != nullptr && lso::styleName (i) != nullptr, "missing palette name");
     }
 }
+
+//==============================================================================
+namespace
+{
+std::vector<float> testBinCentres()
+{
+    std::vector<float> centres ((size_t) lso::kNumBins);
+
+    for (int i = 0; i < lso::kNumBins; ++i)
+        centres[(size_t) i] = lso::SpectrumAnalyser::binCentreHz (i, lso::kNumBins, 20.0f, 20000.0f);
+
+    return centres;
+}
+
+/** Broadband material with a hump: a smooth peak of the given width in
+    octaves over a continuous bed, which is what real instruments look like.
+*/
+std::vector<float> trackWithHump (const std::vector<float>& centres, float peakHz, float peakDb,
+                                  float widthOctaves, float bedDb)
+{
+    std::vector<float> bins (centres.size(), bedDb);
+
+    for (size_t i = 0; i < centres.size(); ++i)
+    {
+        const auto octavesAway = std::log2 (centres[i] / peakHz) / widthOctaves;
+        const auto hump = (peakDb - bedDb) * std::exp (-octavesAway * octavesAway);
+        bins[i] = bedDb + hump;
+    }
+
+    return bins;
+}
+
+/** A flat -80 dB track with a raised plateau between two frequencies. */
+std::vector<float> trackWithPlateau (const std::vector<float>& centres, float lowHz, float highHz, float levelDb)
+{
+    std::vector<float> bins (centres.size(), -80.0f);
+
+    for (size_t i = 0; i < centres.size(); ++i)
+        if (centres[i] >= lowHz && centres[i] <= highHz)
+            bins[i] = levelDb;
+
+    return bins;
+}
+} // namespace
+
+void testCollisionFinder()
+{
+    const auto centres = testBinCentres();
+
+    startTest ("two tracks sharing a band are reported as one overlap");
+    {
+        const auto vocal = trackWithPlateau (centres, 1000.0f, 4000.0f, -12.0f);
+        const auto synth = trackWithPlateau (centres, 2000.0f, 8000.0f, -14.0f);
+        const std::vector<const float*> tracks { vocal.data(), synth.data() };
+
+        const auto collisions = lso::findCollisions (tracks, centres);
+
+        if (collisions.size() != 1)
+        {
+            fail ("expected one overlap, got " + std::to_string (collisions.size()));
+        }
+        else
+        {
+            const auto& collision = collisions.front();
+            checkNear (collision.lowHz, 2000.0, 2000.0 * 0.05, "overlap low edge");
+            checkNear (collision.highHz, 4000.0, 4000.0 * 0.05, "overlap high edge");
+            // The quieter track is what makes the overlap audible.
+            checkNear (collision.strengthDb, -14.0, 0.01, "overlap strength");
+            check (collision.severity == lso::CollisionSeverity::severe, "a loud overlap was not marked severe");
+            checkNear (collision.widthOctaves, 1.0, 0.1, "overlap width in octaves");
+        }
+    }
+
+    startTest ("tracks in different registers do not collide");
+    {
+        const auto bass = trackWithPlateau (centres, 40.0f, 160.0f, -10.0f);
+        const auto air = trackWithPlateau (centres, 6000.0f, 16000.0f, -10.0f);
+        const std::vector<const float*> tracks { bass.data(), air.data() };
+
+        check (lso::findCollisions (tracks, centres).empty(), "reported an overlap between separate registers");
+    }
+
+    startTest ("a track 40 dB down is not competing, however much it shares");
+    {
+        const auto loud = trackWithPlateau (centres, 500.0f, 5000.0f, -8.0f);
+        const auto quiet = trackWithPlateau (centres, 500.0f, 5000.0f, -60.0f);
+        const std::vector<const float*> tracks { loud.data(), quiet.data() };
+
+        check (lso::findCollisions (tracks, centres).empty(),
+               "a track far below the mix was reported as colliding");
+    }
+
+    startTest ("a one-bin coincidence is ignored, a wide one is not");
+    {
+        auto narrowA = trackWithPlateau (centres, 1000.0f, 1000.0f, -10.0f);
+        auto narrowB = narrowA;
+
+        // Widen to exactly one bin either side of a single shared bin.
+        const std::vector<const float*> narrow { narrowA.data(), narrowB.data() };
+        const auto narrowResults = lso::findCollisions (narrow, centres);
+
+        for (const auto& collision : narrowResults)
+            if (collision.lastBin - collision.firstBin + 1 < 5)
+            {
+                fail ("a coincidence narrower than the minimum was reported");
+                break;
+            }
+
+        const auto wideA = trackWithPlateau (centres, 900.0f, 1200.0f, -10.0f);
+        const auto wideB = trackWithPlateau (centres, 900.0f, 1200.0f, -11.0f);
+        const std::vector<const float*> wide { wideA.data(), wideB.data() };
+        check (lso::findCollisions (wide, centres).size() == 1, "a wide shared band was not reported");
+    }
+
+    startTest ("overlaps come back strongest first, and every pair is checked");
+    {
+        const auto kick = trackWithPlateau (centres, 60.0f, 120.0f, -6.0f);
+        const auto bass = trackWithPlateau (centres, 60.0f, 120.0f, -9.0f);
+        const auto vocal = trackWithPlateau (centres, 2000.0f, 5000.0f, -20.0f);
+        const auto guitar = trackWithPlateau (centres, 2000.0f, 5000.0f, -24.0f);
+        const std::vector<const float*> tracks { kick.data(), bass.data(), vocal.data(), guitar.data() };
+
+        const auto collisions = lso::findCollisions (tracks, centres);
+
+        if (collisions.size() < 2)
+        {
+            fail ("expected at least two overlaps, got " + std::to_string (collisions.size()));
+        }
+        else
+        {
+            check (collisions[0].strengthDb >= collisions[1].strengthDb, "overlaps were not sorted by strength");
+            check (collisions[0].trackA == 0 && collisions[0].trackB == 1, "the loudest overlap named the wrong pair");
+            check (collisions[0].severity == lso::CollisionSeverity::severe
+                       && collisions[1].severity != lso::CollisionSeverity::severe,
+                   "severity did not separate a loud overlap from a quiet one");
+        }
+
+        startTest ("a bin lookup finds the overlap covering it");
+        const auto* atLowEnd = lso::strongestCollisionAt (collisions, collisions[0].firstBin);
+        check (atLowEnd != nullptr, "no overlap found at a bin inside one");
+
+        const auto outsideBin = lso::kNumBins - 1;
+        check (lso::strongestCollisionAt (collisions, outsideBin) == nullptr,
+               "found an overlap at a bin with no signal");
+    }
+
+    startTest ("broadband tracks peaking apart do not report one huge overlap");
+    {
+        // Both cover the whole spectrum, as real instruments do, but they are
+        // strong in different places. Measuring shared level alone would call
+        // this one overlap from 20 Hz to 20 kHz, which is true and useless.
+        const auto bass = trackWithHump (centres, 120.0f, -8.0f, 1.6f, -46.0f);
+        const auto air = trackWithHump (centres, 6000.0f, -10.0f, 1.6f, -46.0f);
+        const std::vector<const float*> tracks { bass.data(), air.data() };
+
+        const auto collisions = lso::findCollisions (tracks, centres);
+
+        for (const auto& collision : collisions)
+        {
+            if (collision.widthOctaves > 2.0f)
+            {
+                fail ("reported an overlap " + std::to_string (collision.widthOctaves)
+                      + " octaves wide between tracks peaking three octaves apart");
+                break;
+            }
+
+            if (collision.lowHz < 200.0f && collision.highHz > 4000.0f)
+            {
+                fail ("one overlap spanned both tracks' peaks");
+                break;
+            }
+        }
+    }
+
+    startTest ("broadband tracks peaking together report a band around the peak");
+    {
+        const auto vocal = trackWithHump (centres, 2600.0f, -9.0f, 1.0f, -46.0f);
+        const auto rhodes = trackWithHump (centres, 2800.0f, -11.0f, 1.0f, -46.0f);
+        const std::vector<const float*> tracks { vocal.data(), rhodes.data() };
+
+        const auto collisions = lso::findCollisions (tracks, centres);
+
+        if (collisions.empty())
+        {
+            fail ("two tracks peaking in the same place reported no overlap");
+        }
+        else
+        {
+            const auto& collision = collisions.front();
+            check (collision.peakHz > 1500.0f && collision.peakHz < 4500.0f,
+                   "the overlap did not centre on the shared peak (" + std::to_string (collision.peakHz) + " Hz)");
+            check (collision.widthOctaves < 3.0f,
+                   "the overlap was " + std::to_string (collision.widthOctaves) + " octaves wide");
+        }
+    }
+
+    startTest ("a pair competing in two places is listed once, at its worst");
+    {
+        auto vocal = trackWithPlateau (centres, 200.0f, 400.0f, -30.0f);
+        auto guitar = trackWithPlateau (centres, 200.0f, 400.0f, -30.0f);
+
+        // A second, louder shared region for the same pair.
+        const auto presence = trackWithPlateau (centres, 2000.0f, 4000.0f, -12.0f);
+
+        for (size_t i = 0; i < centres.size(); ++i)
+        {
+            vocal[i] = std::max (vocal[i], presence[i]);
+            guitar[i] = std::max (guitar[i], presence[i]);
+        }
+
+        const std::vector<const float*> tracks { vocal.data(), guitar.data() };
+        const auto collisions = lso::findCollisions (tracks, centres);
+
+        check (collisions.size() == 1, "expected one entry for one pair, got " + std::to_string (collisions.size()));
+
+        if (! collisions.empty())
+            check (collisions.front().peakHz > 1500.0f,
+                   "the entry kept was not the pair's worst band");
+    }
+
+    startTest ("a single track cannot collide with itself");
+    {
+        const auto only = trackWithPlateau (centres, 100.0f, 8000.0f, -6.0f);
+        const std::vector<const float*> tracks { only.data() };
+        check (lso::findCollisions (tracks, centres).empty(), "one track reported an overlap");
+    }
+
+    startTest ("the result limit keeps the strongest overlaps");
+    {
+        const auto a = trackWithPlateau (centres, 100.0f, 8000.0f, -6.0f);
+        const auto b = trackWithPlateau (centres, 100.0f, 8000.0f, -8.0f);
+        const auto c = trackWithPlateau (centres, 100.0f, 8000.0f, -10.0f);
+        const std::vector<const float*> tracks { a.data(), b.data(), c.data() };
+
+        const auto limited = lso::findCollisions (tracks, centres, {}, 2);
+        check (limited.size() == 2, "the result limit was not applied");
+        checkNear (limited.front().strengthDb, -8.0, 0.01, "the strongest overlap was not kept");
+    }
+}
 } // namespace
 
 int main()
@@ -652,6 +892,7 @@ int main()
     testRegistryConcurrency();
     testRegistryLocationFallback();
     testAppearanceAssignment();
+    testCollisionFinder();
 
     std::printf ("\n%d checks groups run, %d failed\n", testsRun, testsFailed);
     return testsFailed == 0 ? 0 : 1;

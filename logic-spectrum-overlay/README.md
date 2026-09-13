@@ -8,7 +8,8 @@ per-track show/hide list to isolate the ones you care about.
 
 Put an instance on each track you want to see. Every instance publishes what it
 measures, and every instance draws all of them, so whichever plugin window you
-happen to open shows the whole session.
+happen to open shows the whole session — and the **Overlaps** tab names the pairs
+that are fighting, so you are not left eyeballing ten curves either.
 
 ---
 
@@ -39,8 +40,33 @@ Audio passes through completely untouched.
 | **Highlight** | Hover a track in the list and the rest fade back |
 | **Readout** | Hover the plot for a crosshair listing every visible track's level at that frequency, loudest first, with the note name |
 | **This track** | Your own track is drawn thicker, listed in bold, and optionally shaded |
+| **Overlaps** | A ranked list of which two tracks are competing, over what band, and how badly — click one to show just that pair |
 | **Tilt** | 0 / 3 / 4.5 / 6 dB per octave, so broadband material reads flat instead of sloping |
 | **Range** | 60 / 90 / 120 dB |
+
+### Overlaps
+
+![The overlaps panel](docs/preview/overlay-overlaps.png)
+
+Each row leads with the frequency you would reach for, then the band it spans and
+the pair involved. Hover a row and the plot bands that range and dims everything
+but those two tracks; click it and only those two stay on screen. The strip under
+the plot marks every overlap across the spectrum, so you can see at a glance
+whether the session is crowded low, high, or through the middle.
+
+**What counts as an overlap.** Not simply "both tracks have energy here" — two
+broadband tracks share energy nearly everywhere, which is true and useless. An
+overlap is where both tracks are within a few dB of *their own* loudest point at
+the same frequency, and the quieter of the two is still within 30 dB of the
+loudest thing on screen. A track 40 dB down is not competing, whatever it shares.
+Its strength is the level of the *quieter* track there, since that is what makes
+the clash audible, and only the worst band per pair is listed so one pair cannot
+bury the rest.
+
+The thresholds behind that are a starting point, not a law — material varies, and
+they were tuned against synthetic test signals rather than your mixes. The
+**Only the worst / Normal / Everything** selector adjusts them, and the setting is
+saved with the project.
 
 Hover readout, and the same session with two tracks hidden:
 
@@ -123,6 +149,11 @@ plugin or quitting Logic cleans up by itself. Because Logic is sandboxed, the
 registry tries several locations in order and uses the first writable one; the
 footer shows which.
 
+**Overlaps.** Rescanned a few times a second rather than every frame, so the
+list holds still while you read it, and immediately when the set of visible
+tracks changes. Severity uses the reserved status colours, never the categorical
+hues, and always alongside the word — an overlap is a state, not another series.
+
 **Colour.** Hues are handed out in a fixed, validated order — the ordering is
 what keeps adjacent pairs apart for colourblind viewers, so hues are never
 generated or re-ordered. Each instance derives its own appearance from what the
@@ -155,12 +186,15 @@ plugin host.
 ctest --test-dir build --output-on-failure
 ```
 
-19 groups covering the FFT against a naive DFT; level calibration (a full-scale
+30 groups covering the FFT against a naive DFT; level calibration (a full-scale
 sine reads 0 dBFS, a −24 dBFS sine reads −24, tones between bins still read their
 true level); frequency placement; decay; the tilt; registry round-trips;
 truncation of over-long names; staleness and reclamation; **a second process
 publishing and being seen**; a reader hammered by a concurrent writer never
-seeing a torn frame; appearance assignment; and the location fallback.
+seeing a torn frame; appearance assignment; the location fallback; and overlap
+detection — including the case that caught the first version out, where two
+broadband tracks peaking three octaves apart must not be reported as one overlap
+spanning the whole spectrum.
 
 ### Looking at the UI without a host
 
@@ -169,9 +203,11 @@ cmake --build build --target lso_preview
 ./build/lso_preview_artefacts/Release/lso_preview docs/preview
 ```
 
-This runs five plugin instances in one process, feeds each different test
-material, and renders the real editor to PNG — which is how the screenshots above
-were made.
+This runs five plugin instances in one process, feeds each a different
+arrangement of resonances (deliberately set up so the kick and bass compete low
+and the vocal and Rhodes compete through the presence region), and renders the
+real editor to PNG — which is how the screenshots above were made. It also prints
+the overlap count over a couple of seconds, as a check that the list holds still.
 
 ---
 
@@ -183,6 +219,11 @@ were made.
 - **Silent tracks still appear** in the list (with `--` for level) so you can see
   which tracks are publishing.
 - **One instance per track.** Two on the same track appear as two entries.
+- **Overlaps are measured on the tilted curve**, the one you can see. The tilt is
+  a crude loudness weighting, which is closer to what masking follows than raw
+  FFT magnitude is, but it does mean the tilt setting shifts the results.
+- **Overlap detection is a triage tool, not a verdict.** It points at pairs worth
+  listening to; it does not know what the arrangement is meant to sound like.
 - **CPU** is roughly one 4096-point FFT per instance per 30 ms, on a low-priority
   background thread — not on the audio thread.
 - **Latency is unaffected**: nothing is added to the signal path.
@@ -195,7 +236,7 @@ were made.
 ## Possible next steps
 
 - Peak-hold / freeze, and an A-B of a stored curve against live
-- A collision indicator that highlights where two visible tracks overlap within
-  a few dB over a wide band
+- Weighting overlaps by how long they persist, so a passing clash ranks below a
+  constant one
 - Grouping tracks (drums, guitars) into a single summed curve
 - Per-instance choice of pre- or post-fader tap using a second plugin slot

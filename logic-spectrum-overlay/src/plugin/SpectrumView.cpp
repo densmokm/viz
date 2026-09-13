@@ -1,5 +1,7 @@
 #include "SpectrumView.h"
 
+#include "CollisionListView.h"
+
 #include "../core/SpectrumAnalyser.h"
 
 #include <algorithm>
@@ -141,13 +143,61 @@ void SpectrumView::setTracks (const std::vector<DisplayTrack>& newTracks)
     repaint();
 }
 
+void SpectrumView::setCollisions (const std::vector<Collision>& newCollisions)
+{
+    collisions = newCollisions;
+
+    if (focusedCollision >= (int) collisions.size())
+        focusedCollision = -1;
+
+    repaint();
+}
+
 void SpectrumView::setHighlightedTrack (int index)
 {
-    if (highlightedTrack == index)
+    setHighlightedTracks (index >= 0 ? std::vector<int> { index } : std::vector<int> {});
+}
+
+void SpectrumView::setHighlightedTracks (std::vector<int> indices)
+{
+    if (highlightedTracks == indices)
         return;
 
-    highlightedTrack = index;
+    highlightedTracks = std::move (indices);
     repaint();
+}
+
+void SpectrumView::setFocusedCollision (int index)
+{
+    if (focusedCollision == index)
+        return;
+
+    focusedCollision = index;
+    focusCameFromRibbon = false;
+    repaint();
+}
+
+bool SpectrumView::isDimmed (int trackIndex) const
+{
+    return ! highlightedTracks.empty()
+           && std::find (highlightedTracks.begin(), highlightedTracks.end(), trackIndex) == highlightedTracks.end();
+}
+
+int SpectrumView::collisionAtX (float x) const
+{
+    const auto plot = getPlotBounds();
+    auto best = -1;
+
+    for (int i = (int) collisions.size() - 1; i >= 0; --i)
+    {
+        const auto& collision = collisions[(size_t) i];
+
+        if (x >= xForFrequency (collision.lowHz, plot) - 2.0f
+            && x <= xForFrequency (collision.highHz, plot) + 2.0f)
+            best = i;
+    }
+
+    return best;
 }
 
 void SpectrumView::setRange (float newTopDb, float newBottomDb)
@@ -172,7 +222,13 @@ void SpectrumView::setFillOwnCurve (bool shouldFill)
 //==============================================================================
 juce::Rectangle<float> SpectrumView::getPlotBounds() const
 {
-    return getLocalBounds().toFloat().reduced (2.0f).withTrimmedBottom (18.0f).withTrimmedRight (34.0f);
+    return getLocalBounds().toFloat().reduced (2.0f).withTrimmedBottom (32.0f).withTrimmedRight (34.0f);
+}
+
+juce::Rectangle<float> SpectrumView::getRibbonBounds() const
+{
+    const auto plot = getPlotBounds();
+    return { plot.getX(), plot.getBottom() + 2.0f, plot.getWidth(), 10.0f };
 }
 
 float SpectrumView::xForFrequency (float hz, juce::Rectangle<float> plot) const
@@ -212,13 +268,16 @@ void SpectrumView::paint (juce::Graphics& g)
         return;
     }
 
+
     {
         const juce::Graphics::ScopedSaveState saved (g);
         g.reduceClipRegion (plot.toNearestInt());
+        paintFocusedCollision (g, plot);
         paintCurves (g, plot);
     }
 
     paintDirectLabels (g, plot);
+    paintRibbon (g, getRibbonBounds());
 
     if (mouseIsOver && plot.contains (mousePosition))
         paintReadout (g, plot);
@@ -287,7 +346,7 @@ void SpectrumView::paintCurves (juce::Graphics& g, juce::Rectangle<float> plot) 
         if (! track.visible)
             return;
 
-        const auto dimmed = highlightedTrack >= 0 && highlightedTrack != index;
+        const auto dimmed = isDimmed (index);
         const auto alpha = dimmed ? 0.22f : 1.0f;
         const auto path = buildPath (track);
 
@@ -309,15 +368,16 @@ void SpectrumView::paintCurves (juce::Graphics& g, juce::Rectangle<float> plot) 
     };
 
     for (int i = 0; i < (int) tracks.size(); ++i)
-        if (! tracks[(size_t) i].isOwn && i != highlightedTrack)
+        if (! tracks[(size_t) i].isOwn && isDimmed (i))
             drawTrack (i, tracks[(size_t) i]);
 
     for (int i = 0; i < (int) tracks.size(); ++i)
-        if (tracks[(size_t) i].isOwn && i != highlightedTrack)
+        if (tracks[(size_t) i].isOwn && isDimmed (i))
             drawTrack (i, tracks[(size_t) i]);
 
-    if (highlightedTrack >= 0 && highlightedTrack < (int) tracks.size())
-        drawTrack (highlightedTrack, tracks[(size_t) highlightedTrack]);
+    for (int i = 0; i < (int) tracks.size(); ++i)
+        if (! isDimmed (i))
+            drawTrack (i, tracks[(size_t) i]);
 }
 
 void SpectrumView::paintDirectLabels (juce::Graphics& g, juce::Rectangle<float> plot) const
@@ -372,6 +432,79 @@ void SpectrumView::paintDirectLabels (juce::Graphics& g, juce::Rectangle<float> 
     }
 }
 
+void SpectrumView::paintRibbon (juce::Graphics& g, juce::Rectangle<float> ribbon) const
+{
+    g.setColour (toJuceColour (kSurfaceRaised));
+    g.fillRoundedRectangle (ribbon, 2.0f);
+
+    if (collisions.empty())
+        return;
+
+    const auto plot = getPlotBounds();
+
+    // Weakest first, so the worst overlap is the one you see on top.
+    for (int i = (int) collisions.size() - 1; i >= 0; --i)
+    {
+        const auto& collision = collisions[(size_t) i];
+        const auto left = xForFrequency (collision.lowHz, plot);
+        const auto right = xForFrequency (collision.highHz, plot);
+
+        const juce::Rectangle<float> segment (left, ribbon.getY(),
+                                              juce::jmax (3.0f, right - left), ribbon.getHeight());
+
+        const auto focused = i == focusedCollision;
+        g.setColour (colourForSeverity (collision.severity).withAlpha (focused ? 1.0f : 0.72f));
+        g.fillRoundedRectangle (segment, 2.0f);
+
+        if (focused)
+        {
+            g.setColour (toJuceColour (kTextPrimary));
+            g.drawRoundedRectangle (segment, 2.0f, 1.0f);
+        }
+    }
+}
+
+void SpectrumView::paintFocusedCollision (juce::Graphics& g, juce::Rectangle<float> plot) const
+{
+    if (! juce::isPositiveAndBelow (focusedCollision, (int) collisions.size()))
+        return;
+
+    const auto& collision = collisions[(size_t) focusedCollision];
+    const auto left = xForFrequency (collision.lowHz, plot);
+    const auto right = xForFrequency (collision.highHz, plot);
+    const juce::Rectangle<float> band (left, plot.getY(), juce::jmax (2.0f, right - left), plot.getHeight());
+
+    const auto colour = colourForSeverity (collision.severity);
+    g.setColour (colour.withAlpha (0.12f));
+    g.fillRect (band);
+    g.setColour (colour.withAlpha (0.55f));
+    g.drawVerticalLine (juce::roundToInt (band.getX()), band.getY(), band.getBottom());
+    g.drawVerticalLine (juce::roundToInt (band.getRight()), band.getY(), band.getBottom());
+
+    auto nameOf = [this] (int index)
+    {
+        return juce::isPositiveAndBelow (index, (int) tracks.size()) ? tracks[(size_t) index].name
+                                                                     : juce::String ("?");
+    };
+
+    const auto text = nameOf (collision.trackA) + "  vs  " + nameOf (collision.trackB)
+                      + separator() + nameForSeverity (collision.severity)
+                      + separator() + juce::String (collision.strengthDb, 1) + " dB";
+
+    g.setFont (juce::FontOptions (11.0f, juce::Font::bold));
+    const auto width = juce::GlyphArrangement::getStringWidth (juce::Font (juce::FontOptions (11.0f, juce::Font::bold)), text) + 16.0f;
+    const auto labelX = juce::jlimit (plot.getX(), juce::jmax (plot.getX(), plot.getRight() - width),
+                                      band.getCentreX() - width * 0.5f);
+    const juce::Rectangle<float> label (labelX, plot.getY() + 4.0f, width, 17.0f);
+
+    g.setColour (toJuceColour (kSurfaceRaised).withAlpha (0.95f));
+    g.fillRoundedRectangle (label, 3.0f);
+    g.setColour (colour);
+    g.drawRoundedRectangle (label, 3.0f, 1.0f);
+    g.setColour (toJuceColour (kTextPrimary));
+    g.drawText (text, label, juce::Justification::centred);
+}
+
 void SpectrumView::paintReadout (juce::Graphics& g, juce::Rectangle<float> plot) const
 {
     const auto hz = frequencyForX (mousePosition.x, plot);
@@ -401,10 +534,12 @@ void SpectrumView::paintReadout (juce::Graphics& g, juce::Rectangle<float> plot)
     std::sort (readings.begin(), readings.end(),
                [] (const Reading& a, const Reading& b) { return a.db > b.db; });
 
+    const auto* collision = strongestCollisionAt (collisions, nearestBin);
+
     const auto maxRows = juce::jmin ((int) readings.size(), 9);
     const auto rowHeight = 15.0f;
-    const auto panelWidth = 186.0f;
-    const auto panelHeight = 26.0f + rowHeight * (float) maxRows;
+    const auto panelWidth = 208.0f;
+    const auto panelHeight = 26.0f + rowHeight * (float) maxRows + (collision != nullptr ? 20.0f : 0.0f);
 
     auto panel = juce::Rectangle<float> (mousePosition.x + 12.0f, plot.getY() + 8.0f, panelWidth, panelHeight);
 
@@ -443,6 +578,32 @@ void SpectrumView::paintReadout (juce::Graphics& g, juce::Rectangle<float> plot)
                                                   : juce::String (reading.db, 1) + " dB",
                     row.withTrimmedLeft (row.getWidth() - 44.0f), juce::Justification::centredRight);
     }
+
+    if (collision == nullptr)
+        return;
+
+    // What is actually competing here, named rather than left to the eye.
+    const auto footer = juce::Rectangle<float> (panel.getX() + 8.0f,
+                                                panel.getBottom() - 19.0f,
+                                                panel.getWidth() - 16.0f, 16.0f);
+
+    g.setColour (toJuceColour (kGridLineStrong));
+    g.drawHorizontalLine (juce::roundToInt (footer.getY() - 1.0f), footer.getX(), footer.getRight());
+
+    g.setColour (colourForSeverity (collision->severity));
+    g.fillRoundedRectangle (juce::Rectangle<float> (footer.getX(), footer.getCentreY() - 4.0f, 3.0f, 8.0f), 1.5f);
+
+    auto nameOf = [this] (int index)
+    {
+        return juce::isPositiveAndBelow (index, (int) tracks.size()) ? tracks[(size_t) index].name
+                                                                     : juce::String ("?");
+    };
+
+    g.setColour (toJuceColour (kTextSecondary));
+    g.setFont (juce::FontOptions (10.0f));
+    g.drawText (nameForSeverity (collision->severity) + " overlap: " + nameOf (collision->trackA)
+                    + " vs " + nameOf (collision->trackB),
+                footer.withTrimmedLeft (8.0f), juce::Justification::centredLeft, true);
 }
 
 void SpectrumView::paintEmptyState (juce::Graphics& g, juce::Rectangle<float> plot) const
@@ -459,12 +620,45 @@ void SpectrumView::mouseMove (const juce::MouseEvent& event)
 {
     mousePosition = event.position;
     mouseIsOver = true;
+
+    if (getRibbonBounds().expanded (0.0f, 3.0f).contains (event.position))
+    {
+        const auto index = collisionAtX (event.position.x);
+
+        if (index != focusedCollision)
+        {
+            focusedCollision = index;
+            focusCameFromRibbon = true;
+
+            if (onCollisionHovered != nullptr)
+                onCollisionHovered (index);
+        }
+    }
+    else if (focusCameFromRibbon)
+    {
+        focusedCollision = -1;
+        focusCameFromRibbon = false;
+
+        if (onCollisionHovered != nullptr)
+            onCollisionHovered (-1);
+    }
+
     repaint();
 }
 
 void SpectrumView::mouseExit (const juce::MouseEvent&)
 {
     mouseIsOver = false;
+
+    if (focusCameFromRibbon)
+    {
+        focusedCollision = -1;
+        focusCameFromRibbon = false;
+
+        if (onCollisionHovered != nullptr)
+            onCollisionHovered (-1);
+    }
+
     repaint();
 }
 

@@ -15,6 +15,7 @@ const juce::Identifier bottomDb { "bottomDb" };
 const juce::Identifier tilt { "tilt" };
 const juce::Identifier fill { "fillOwnCurve" };
 const juce::Identifier solo { "soloThisTrack" };
+const juce::Identifier overlapSensitivity { "overlapSensitivity" };
 } // namespace ids
 
 SpectrumOverlayProcessor::SpectrumOverlayProcessor()
@@ -274,6 +275,7 @@ void SpectrumOverlayProcessor::getStateInformation (juce::MemoryBlock& destData)
     tree.setProperty (ids::tilt, view.tiltDbPerOctave.load(), nullptr);
     tree.setProperty (ids::fill, view.fillOwnCurve.load(), nullptr);
     tree.setProperty (ids::solo, view.soloThisTrack.load(), nullptr);
+    tree.setProperty (ids::overlapSensitivity, view.overlapSensitivity.load(), nullptr);
 
     if (auto xml = tree.createXml())
         copyXmlToBinary (*xml, destData);
@@ -305,6 +307,7 @@ void SpectrumOverlayProcessor::setStateInformation (const void* data, int sizeIn
     view.tiltDbPerOctave.store ((float) tree.getProperty (ids::tilt, 3.0f));
     view.fillOwnCurve.store ((bool) tree.getProperty (ids::fill, true));
     view.soloThisTrack.store ((bool) tree.getProperty (ids::solo, false));
+    view.overlapSensitivity.store ((int) tree.getProperty (ids::overlapSensitivity, 1));
 }
 
 juce::AudioProcessorEditor* SpectrumOverlayProcessor::createEditor()

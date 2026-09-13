@@ -8,6 +8,7 @@
 #include <cmath>
 #include <thread>
 
+#include "../src/plugin/CollisionListView.h"
 #include "../src/plugin/PluginEditor.h"
 #include "../src/plugin/PluginProcessor.h"
 
@@ -16,48 +17,72 @@ namespace
 constexpr double sampleRate = 48000.0;
 constexpr int blockSize = 512;
 
-struct Partial
+/** A two-pole bandpass, so test material can be built from resonances rather
+    than pure tones and looks like something a microphone produced.
+*/
+struct Resonator
 {
-    float frequencyHz, amplitude;
+    float g = 0.0f, k = 1.0f, a1 = 0.0f, a2 = 0.0f, a3 = 0.0f;
+    float ic1 = 0.0f, ic2 = 0.0f;
+
+    void set (float frequencyHz, float q)
+    {
+        g = (float) std::tan (juce::MathConstants<double>::pi * (double) frequencyHz / sampleRate);
+        k = 1.0f / q;
+        a1 = 1.0f / (1.0f + g * (g + k));
+        a2 = g * a1;
+        a3 = g * a2;
+    }
+
+    float process (float input)
+    {
+        const auto v3 = input - ic2;
+        const auto v1 = a1 * ic1 + a2 * v3;
+        const auto v2 = ic2 + a2 * ic1 + a3 * v3;
+        ic1 = 2.0f * v1 - ic1;
+        ic2 = 2.0f * v2 - ic2;
+        return v1;
+    }
 };
 
-/** A track's worth of test material: a few partials over a tilted noise bed. */
+struct Band
+{
+    float frequencyHz, q, gain;
+};
+
 struct TestSource
 {
+    TestSource (juce::String nameToUse, std::vector<Band> bandsToUse)
+        : name (std::move (nameToUse)), bands (std::move (bandsToUse)) {}
+
     juce::String name;
-    std::vector<Partial> partials;
-    float noiseLevel = 0.0f;
-    float noiseTiltPerBin = 0.0f;   // >0 brightens, <0 darkens
-    std::vector<double> phases;
+    std::vector<Band> bands;
+
+    std::vector<Resonator> resonators;
     juce::Random random;
-    float noiseState = 0.0f;
+    bool prepared = false;
 
     void fill (juce::AudioBuffer<float>& buffer)
     {
-        phases.resize (partials.size(), 0.0);
+        if (! prepared)
+        {
+            resonators.resize (bands.size());
+
+            for (size_t i = 0; i < bands.size(); ++i)
+                resonators[i].set (bands[i].frequencyHz, bands[i].q);
+
+            prepared = true;
+        }
+
         buffer.clear();
 
         for (int n = 0; n < buffer.getNumSamples(); ++n)
         {
+            const auto noise = random.nextFloat() * 2.0f - 1.0f;
             float sample = 0.0f;
 
-            for (size_t p = 0; p < partials.size(); ++p)
-            {
-                sample += partials[p].amplitude * (float) std::sin (phases[p]);
-                phases[p] += 2.0 * juce::MathConstants<double>::pi * (double) partials[p].frequencyHz / sampleRate;
-
-                if (phases[p] > 2.0 * juce::MathConstants<double>::pi)
-                    phases[p] -= 2.0 * juce::MathConstants<double>::pi;
-            }
-
-            if (noiseLevel > 0.0f)
-            {
-                const auto white = random.nextFloat() * 2.0f - 1.0f;
-
-                // One-pole shaping, so each track's noise bed has its own slope.
-                noiseState += (white - noiseState) * (noiseTiltPerBin > 0.0f ? 0.85f : 0.06f);
-                sample += noiseLevel * (noiseTiltPerBin > 0.0f ? white - noiseState : noiseState);
-            }
+            for (size_t i = 0; i < bands.size(); ++i)
+                sample += bands[i].gain * resonators[i].process (noise);
 
             for (int channel = 0; channel < buffer.getNumChannels(); ++channel)
                 buffer.setSample (channel, n, sample);
@@ -65,14 +90,30 @@ struct TestSource
     }
 };
 
-lso::SpectrumView* findSpectrumView (juce::Component& parent)
+template <typename ComponentType>
+ComponentType* findChildOfClass (juce::Component& parent)
 {
     for (auto* child : parent.getChildren())
     {
-        if (auto* view = dynamic_cast<lso::SpectrumView*> (child))
-            return view;
+        if (auto* found = dynamic_cast<ComponentType*> (child))
+            return found;
 
-        if (auto* found = findSpectrumView (*child))
+        if (auto* found = findChildOfClass<ComponentType> (*child))
+            return found;
+    }
+
+    return nullptr;
+}
+
+juce::TextButton* findButton (juce::Component& parent, const juce::String& text)
+{
+    for (auto* child : parent.getChildren())
+    {
+        if (auto* button = dynamic_cast<juce::TextButton*> (child))
+            if (button->getButtonText().startsWith (text))
+                return button;
+
+        if (auto* found = findButton (*child, text))
             return found;
     }
 
@@ -103,12 +144,14 @@ int main (int argc, char** argv)
                                                : juce::File::getCurrentWorkingDirectory().getFullPathName());
     outputDirectory.createDirectory();
 
+    // Deliberately arranged so two pairs compete: kick against bass in the low
+    // end, and vocal against the Rhodes through the presence region.
     std::vector<TestSource> sources {
-        { "Kick",       { { 52.0f, 0.62f }, { 104.0f, 0.16f }, { 156.0f, 0.05f } }, 0.02f, -1.0f, {}, {}, 0.0f },
-        { "Bass",       { { 82.0f, 0.42f }, { 164.0f, 0.22f }, { 246.0f, 0.12f }, { 328.0f, 0.05f } }, 0.01f, -1.0f, {}, {}, 0.0f },
-        { "Lead Vocal", { { 294.0f, 0.30f }, { 588.0f, 0.20f }, { 1176.0f, 0.12f }, { 2352.0f, 0.07f }, { 4704.0f, 0.03f } }, 0.015f, 1.0f, {}, {}, 0.0f },
-        { "Rhodes",     { { 220.0f, 0.24f }, { 440.0f, 0.18f }, { 880.0f, 0.10f }, { 1760.0f, 0.05f } }, 0.008f, 1.0f, {}, {}, 0.0f },
-        { "Hi-Hats",    { { 6300.0f, 0.10f }, { 9400.0f, 0.07f } }, 0.10f, 1.0f, {}, {}, 0.0f }
+        { "Kick",       { { 55.0f, 1.4f, 1.00f }, { 110.0f, 2.0f, 0.45f }, { 2600.0f, 1.0f, 0.05f } } },
+        { "Bass",       { { 85.0f, 1.8f, 0.85f }, { 170.0f, 2.2f, 0.55f }, { 430.0f, 2.5f, 0.20f } } },
+        { "Lead Vocal", { { 240.0f, 2.5f, 0.55f }, { 750.0f, 2.0f, 0.42f }, { 2600.0f, 1.6f, 0.34f }, { 4200.0f, 2.0f, 0.16f } } },
+        { "Rhodes",     { { 420.0f, 2.2f, 0.40f }, { 980.0f, 2.4f, 0.30f }, { 2700.0f, 1.5f, 0.30f }, { 3900.0f, 2.2f, 0.18f } } },
+        { "Hi-Hats",    { { 7200.0f, 0.9f, 0.30f }, { 11500.0f, 1.1f, 0.22f } } }
     };
 
     std::vector<std::unique_ptr<lso::SpectrumOverlayProcessor>> processors;
@@ -156,7 +199,7 @@ int main (int argc, char** argv)
     writePng (*editor, outputDirectory.getChildFile ("overlay-all-tracks.png"));
 
     // The crosshair readout, which is where exact numbers are read off.
-    if (auto* view = findSpectrumView (*editor))
+    if (auto* view = findChildOfClass<lso::SpectrumView> (*editor))
     {
         const auto position = juce::Point<float> ((float) view->getWidth() * 0.42f,
                                                   (float) view->getHeight() * 0.42f);
@@ -175,6 +218,43 @@ int main (int argc, char** argv)
     else
     {
         std::printf ("FAILED to find the spectrum view\n");
+    }
+
+    // The overlaps panel, with the worst one picked out on the plot.
+    if (auto* tab = findButton (*editor, "Overlaps"))
+    {
+        tab->triggerClick();
+        pump (300);
+
+        if (auto* list = findChildOfClass<lso::CollisionListView> (*editor))
+        {
+            list->setHoveredRow (0);
+            pump (120);
+        }
+
+        writePng (*editor, outputDirectory.getChildFile ("overlay-overlaps.png"));
+
+        // The list is a triage tool, so it has to hold still while you read
+        // it. Sample what it says over a couple of seconds.
+        std::printf ("overlap list over time: %s", tab->getButtonText().toRawUTF8());
+
+        for (int i = 0; i < 4; ++i)
+        {
+            pump (500);
+            std::printf (" -> %s", tab->getButtonText().toRawUTF8());
+        }
+
+        std::printf ("\n");
+
+        if (auto* tracksTab = findButton (*editor, "Tracks"))
+        {
+            tracksTab->triggerClick();
+            pump (200);
+        }
+    }
+    else
+    {
+        std::printf ("FAILED to find the overlaps tab\n");
     }
 
     // Two tracks hidden: the show/hide half of the job.
