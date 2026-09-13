@@ -1,0 +1,840 @@
+asset_id,cost_centre,division,site,asset_class,cost,nbv
+FA000001,TP-OPS,Thermal Products,TP-OPS site,IT equipment,57727.42,8386.73
+FA000002,TP-OPS,Thermal Products,TP-OPS site,Fixtures & fittings,80012.65,20577.77
+FA000003,TP-OPS,Thermal Products,TP-OPS site,IT equipment,86357.75,48610.78
+FA000004,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,82158.78,36811.04
+FA000005,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,67977.39,38260.7
+FA000006,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,86906.35,32217.32
+FA000007,TP-OPS,Thermal Products,TP-OPS site,Fixtures & fittings,55304.85,42051.51
+FA000008,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,72740.4,16583.04
+FA000009,TP-OPS,Thermal Products,TP-OPS site,Fixtures & fittings,92698.86,85320.88
+FA000010,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,56190.89,15583.42
+FA000011,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,81132.48,84160.49
+FA000012,TP-OPS,Thermal Products,TP-OPS site,Motor vehicles,64447.4,15253.42
+FA000013,TP-OPS,Thermal Products,TP-OPS site,IT equipment,91656.34,65270.15
+FA000014,TP-OPS,Thermal Products,TP-OPS site,Motor vehicles,88376.79,30616.49
+FA000015,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,64397.26,65098.29
+FA000016,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,74399.97,38718.75
+FA000017,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,70535.1,19232.26
+FA000018,TP-OPS,Thermal Products,TP-OPS site,IT equipment,93150.24,46396.15
+FA000019,TP-OPS,Thermal Products,TP-OPS site,Leasehold improvements,81029.03,50827.51
+FA000020,TP-OPS,Thermal Products,TP-OPS site,Leasehold improvements,54443.12,12501.32
+FA000021,TP-OPS,Thermal Products,TP-OPS site,Fixtures & fittings,77028.34,41194.68
+FA000022,TP-OPS,Thermal Products,TP-OPS site,Leasehold improvements,82676.03,38701.02
+FA000023,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,59377.94,53739.66
+FA000024,TP-OPS,Thermal Products,TP-OPS site,Leasehold improvements,83133.93,30767.08
+FA000025,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,85150.71,52962.32
+FA000026,TP-OPS,Thermal Products,TP-OPS site,IT equipment,97381.33,102944.08
+FA000027,TP-OPS,Thermal Products,TP-OPS site,IT equipment,92894.73,18446.22
+FA000028,TP-OPS,Thermal Products,TP-OPS site,Motor vehicles,61450.5,21066.73
+FA000029,TP-OPS,Thermal Products,TP-OPS site,IT equipment,95964.12,29892.8
+FA000030,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,91457.7,31387.4
+FA000031,TP-OPS,Thermal Products,TP-OPS site,IT equipment,57271.46,21303.52
+FA000032,TP-OPS,Thermal Products,TP-OPS site,Fixtures & fittings,74934.61,39207.01
+FA000033,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,62250.47,38795.5
+FA000034,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,83531.3,35905.68
+FA000035,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,95927.98,22208.17
+FA000036,TP-OPS,Thermal Products,TP-OPS site,Fixtures & fittings,84970.92,24701.81
+FA000037,TP-OPS,Thermal Products,TP-OPS site,Motor vehicles,86147.81,35671.0
+FA000038,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,66198.57,23531.27
+FA000039,TP-OPS,Thermal Products,TP-OPS site,Leasehold improvements,73194.66,38900.76
+FA000040,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,80256.31,46675.99
+FA000041,TP-OPS,Thermal Products,TP-OPS site,Motor vehicles,70911.51,45555.85
+FA000042,TP-OPS,Thermal Products,TP-OPS site,IT equipment,57311.67,144163.24
+FA000043,TP-OPS,Thermal Products,TP-OPS site,Motor vehicles,53465.8,39731.35
+FA000044,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,91134.07,30782.22
+FA000045,TP-OPS,Thermal Products,TP-OPS site,IT equipment,91843.39,42382.74
+FA000046,TP-OPS,Thermal Products,TP-OPS site,Fixtures & fittings,71299.59,42282.25
+FA000047,TP-OPS,Thermal Products,TP-OPS site,IT equipment,80344.53,37605.15
+FA000048,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,71460.16,46910.84
+FA000049,TP-OPS,Thermal Products,TP-OPS site,IT equipment,70721.02,24352.98
+FA000050,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,60229.45,20260.5
+FA000051,TP-OPS,Thermal Products,TP-OPS site,IT equipment,74694.76,53663.95
+FA000052,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,83295.14,43814.64
+FA000053,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,88240.44,38583.03
+FA000054,TP-OPS,Thermal Products,TP-OPS site,Leasehold improvements,76343.37,25986.0
+FA000055,TP-OPS,Thermal Products,TP-OPS site,Fixtures & fittings,94675.42,36586.51
+FA000056,TP-OPS,Thermal Products,TP-OPS site,IT equipment,90020.07,22055.79
+FA000057,TP-OPS,Thermal Products,TP-OPS site,Fixtures & fittings,90647.37,50249.88
+FA000058,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,71963.54,31606.72
+FA000059,TP-OPS,Thermal Products,TP-OPS site,IT equipment,83337.33,43494.92
+FA000060,TP-OPS,Thermal Products,TP-OPS site,Fixtures & fittings,68930.42,21030.94
+FA000061,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,67265.29,23002.41
+FA000062,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,90647.04,29248.45
+FA000063,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,54677.73,19985.57
+FA000064,TP-OPS,Thermal Products,TP-OPS site,Motor vehicles,78427.92,30312.72
+FA000065,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,91966.61,31690.82
+FA000066,TP-OPS,Thermal Products,TP-OPS site,IT equipment,54231.37,29599.71
+FA000067,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,65283.93,39629.12
+FA000068,TP-OPS,Thermal Products,TP-OPS site,IT equipment,81134.9,76531.24
+FA000069,TP-OPS,Thermal Products,TP-OPS site,IT equipment,81240.91,35043.5
+FA000070,TP-OPS,Thermal Products,TP-OPS site,IT equipment,89431.81,78562.4
+FA000071,TP-OPS,Thermal Products,TP-OPS site,Motor vehicles,81535.68,28179.11
+FA000072,TP-OPS,Thermal Products,TP-OPS site,Motor vehicles,64299.99,12510.78
+FA000073,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,86732.64,24750.05
+FA000074,TP-OPS,Thermal Products,TP-OPS site,Motor vehicles,58970.11,16805.54
+FA000075,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,90435.72,37181.69
+FA000076,TP-OPS,Thermal Products,TP-OPS site,IT equipment,73215.21,39711.8
+FA000077,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,94576.36,21880.22
+FA000078,TP-OPS,Thermal Products,TP-OPS site,Fixtures & fittings,56219.21,113891.6
+FA000079,TP-OPS,Thermal Products,TP-OPS site,Motor vehicles,93425.7,65182.53
+FA000080,TP-OPS,Thermal Products,TP-OPS site,Fixtures & fittings,66649.36,20450.06
+FA000081,TP-OPS,Thermal Products,TP-OPS site,Leasehold improvements,58099.3,26900.79
+FA000082,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,95257.52,23100.02
+FA000083,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,76631.05,12181.98
+FA000084,TP-OPS,Thermal Products,TP-OPS site,Leasehold improvements,67391.4,46711.28
+FA000085,TP-OPS,Thermal Products,TP-OPS site,IT equipment,97022.67,14831.17
+FA000086,TP-OPS,Thermal Products,TP-OPS site,Fixtures & fittings,59330.55,25401.99
+FA000087,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,58407.2,38090.24
+FA000088,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,66739.13,37168.5
+FA000089,TP-OPS,Thermal Products,TP-OPS site,Motor vehicles,86364.47,51421.48
+FA000090,TP-OPS,Thermal Products,TP-OPS site,Leasehold improvements,69983.9,26620.2
+FA000091,TP-OPS,Thermal Products,TP-OPS site,IT equipment,79108.75,49344.84
+FA000092,TP-OPS,Thermal Products,TP-OPS site,Leasehold improvements,72970.19,35243.11
+FA000093,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,78499.27,20924.13
+FA000094,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,68294.47,25177.43
+FA000095,TP-OPS,Thermal Products,TP-OPS site,Leasehold improvements,74451.92,37061.92
+FA000096,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,56178.99,27566.37
+FA000097,TP-OPS,Thermal Products,TP-OPS site,IT equipment,93308.22,25432.24
+FA000098,TP-OPS,Thermal Products,TP-OPS site,IT equipment,71059.17,50257.06
+FA000099,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,72276.16,45326.07
+FA000100,TP-OPS,Thermal Products,TP-OPS site,Leasehold improvements,61111.6,18749.75
+FA000101,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,73550.13,49779.43
+FA000102,TP-OPS,Thermal Products,TP-OPS site,IT equipment,97977.6,36557.99
+FA000103,TP-OPS,Thermal Products,TP-OPS site,Motor vehicles,58679.18,24451.52
+FA000104,TP-OPS,Thermal Products,TP-OPS site,Leasehold improvements,63818.35,76647.57
+FA000105,TP-OPS,Thermal Products,TP-OPS site,Leasehold improvements,96885.48,20213.23
+FA000106,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,94357.37,25054.27
+FA000107,TP-OPS,Thermal Products,TP-OPS site,Motor vehicles,65366.45,17571.36
+FA000108,TP-OPS,Thermal Products,TP-OPS site,Motor vehicles,88784.01,19738.75
+FA000109,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,97503.73,12866.61
+FA000110,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,61951.56,72584.29
+FA000111,TP-OPS,Thermal Products,TP-OPS site,IT equipment,73220.94,39179.12
+FA000112,TP-OPS,Thermal Products,TP-OPS site,IT equipment,97446.62,21601.82
+FA000113,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,68278.49,27437.44
+FA000114,TP-OPS,Thermal Products,TP-OPS site,Motor vehicles,89368.98,9645.24
+FA000115,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,97390.39,34441.07
+FA000116,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,91443.76,51875.43
+FA000117,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,83264.81,19015.54
+FA000118,TP-OPS,Thermal Products,TP-OPS site,IT equipment,66304.99,26268.48
+FA000119,TP-OPS,Thermal Products,TP-OPS site,IT equipment,65277.83,82075.14
+FA000120,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,66467.68,39418.89
+FA000121,TP-OPS,Thermal Products,TP-OPS site,Fixtures & fittings,83163.05,60234.08
+FA000122,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,67400.6,54759.01
+FA000123,TP-OPS,Thermal Products,TP-OPS site,IT equipment,70694.62,16982.21
+FA000124,TP-OPS,Thermal Products,TP-OPS site,Leasehold improvements,75250.71,58636.89
+FA000125,TP-OPS,Thermal Products,TP-OPS site,IT equipment,65082.47,24879.94
+FA000126,TP-OPS,Thermal Products,TP-OPS site,Fixtures & fittings,83841.6,37118.5
+FA000127,TP-OPS,Thermal Products,TP-OPS site,Motor vehicles,59168.17,39529.73
+FA000128,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,89352.91,28697.55
+FA000129,TP-OPS,Thermal Products,TP-OPS site,Leasehold improvements,58144.86,68575.57
+FA000130,TP-OPS,Thermal Products,TP-OPS site,IT equipment,95716.76,31609.06
+FA000131,TP-OPS,Thermal Products,TP-OPS site,Fixtures & fittings,91188.03,18813.44
+FA000132,TP-OPS,Thermal Products,TP-OPS site,Motor vehicles,62705.68,31782.32
+FA000133,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,63108.44,13376.76
+FA000134,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,69663.34,30952.68
+FA000135,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,84660.59,48508.14
+FA000136,TP-OPS,Thermal Products,TP-OPS site,Fixtures & fittings,88284.48,10300.11
+FA000137,TP-OPS,Thermal Products,TP-OPS site,Motor vehicles,75700.42,32112.49
+FA000138,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,95004.37,20925.53
+FA000139,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,67617.61,22873.84
+FA000140,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,71297.65,22940.27
+FA000141,TP-OPS,Thermal Products,TP-OPS site,Leasehold improvements,65700.3,17163.36
+FA000142,TP-OPS,Thermal Products,TP-OPS site,Fixtures & fittings,72919.93,42069.44
+FA000143,TP-OPS,Thermal Products,TP-OPS site,Leasehold improvements,80750.76,25790.01
+FA000144,TP-OPS,Thermal Products,TP-OPS site,Fixtures & fittings,91006.06,46784.3
+FA000145,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,83615.85,23628.51
+FA000146,TP-OPS,Thermal Products,TP-OPS site,Leasehold improvements,89582.81,41022.82
+FA000147,TP-OPS,Thermal Products,TP-OPS site,IT equipment,69934.44,34257.91
+FA000148,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,98359.29,20360.7
+FA000149,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,92389.74,27203.28
+FA000150,TP-OPS,Thermal Products,TP-OPS site,Leasehold improvements,95559.38,29250.39
+FA000151,TP-OPS,Thermal Products,TP-OPS site,IT equipment,84864.94,13669.52
+FA000152,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,83132.07,42334.67
+FA000153,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,65986.96,29075.66
+FA000154,TP-OPS,Thermal Products,TP-OPS site,Fixtures & fittings,79785.93,57425.8
+FA000155,TP-OPS,Thermal Products,TP-OPS site,Leasehold improvements,54431.94,32458.66
+FA000156,TP-OPS,Thermal Products,TP-OPS site,IT equipment,53451.48,16026.04
+FA000157,TP-OPS,Thermal Products,TP-OPS site,IT equipment,83982.81,16197.98
+FA000158,TP-OPS,Thermal Products,TP-OPS site,Fixtures & fittings,77517.4,40430.99
+FA000159,TP-OPS,Thermal Products,TP-OPS site,Leasehold improvements,91878.22,58084.56
+FA000160,TP-OPS,Thermal Products,TP-OPS site,IT equipment,59602.55,34737.74
+FA000161,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,85424.3,33350.4
+FA000162,TP-OPS,Thermal Products,TP-OPS site,Fixtures & fittings,74036.8,27588.94
+FA000163,TP-OPS,Thermal Products,TP-OPS site,IT equipment,60094.58,38950.78
+FA000164,TP-OPS,Thermal Products,TP-OPS site,Fixtures & fittings,79645.26,27135.65
+FA000165,TP-OPS,Thermal Products,TP-OPS site,IT equipment,60480.23,33798.98
+FA000166,TP-OPS,Thermal Products,TP-OPS site,Leasehold improvements,94529.09,23572.3
+FA000167,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,64627.52,29915.9
+FA000168,TP-OPS,Thermal Products,TP-OPS site,Fixtures & fittings,93375.1,113929.28
+FA000169,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,88824.23,44263.91
+FA000170,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,86754.94,32630.59
+FA000171,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,54672.79,29224.69
+FA000172,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,87992.87,26578.51
+FA000173,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,62045.03,37100.18
+FA000174,TP-OPS,Thermal Products,TP-OPS site,IT equipment,82565.18,45323.98
+FA000175,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,80356.16,33097.09
+FA000176,TP-OPS,Thermal Products,TP-OPS site,Leasehold improvements,93792.8,21648.31
+FA000177,TP-OPS,Thermal Products,TP-OPS site,Fixtures & fittings,78783.91,38243.54
+FA000178,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,76005.17,17042.44
+FA000179,TP-OPS,Thermal Products,TP-OPS site,Fixtures & fittings,58436.16,23216.55
+FA000180,TP-OPS,Thermal Products,TP-OPS site,Motor vehicles,80000.34,31268.49
+FA000181,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,60624.93,33078.25
+FA000182,TP-OPS,Thermal Products,TP-OPS site,IT equipment,63675.15,41845.62
+FA000183,TP-OPS,Thermal Products,TP-OPS site,Motor vehicles,74909.6,34521.37
+FA000184,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,62622.51,26247.57
+FA000185,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,64575.08,27676.31
+FA000186,TP-OPS,Thermal Products,TP-OPS site,Fixtures & fittings,60677.78,51714.05
+FA000187,TP-OPS,Thermal Products,TP-OPS site,Motor vehicles,61909.46,39829.75
+FA000188,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,74958.24,14961.35
+FA000189,TP-OPS,Thermal Products,TP-OPS site,IT equipment,87477.77,52657.42
+FA000190,TP-OPS,Thermal Products,TP-OPS site,Leasehold improvements,78437.36,12742.0
+FA000191,TP-OPS,Thermal Products,TP-OPS site,IT equipment,83644.72,22343.71
+FA000192,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,84205.4,44551.12
+FA000193,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,61137.42,47157.12
+FA000194,TP-OPS,Thermal Products,TP-OPS site,IT equipment,93282.37,43604.67
+FA000195,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,93536.95,34163.58
+FA000196,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,97851.96,58974.96
+FA000197,TP-OPS,Thermal Products,TP-OPS site,Fixtures & fittings,98114.61,42405.48
+FA000198,TP-OPS,Thermal Products,TP-OPS site,Leasehold improvements,67959.36,67216.09
+FA000199,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,68496.85,56530.93
+FA000200,TP-OPS,Thermal Products,TP-OPS site,Leasehold improvements,98352.49,31230.08
+FA000201,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,75252.22,57107.53
+FA000202,TP-OPS,Thermal Products,TP-OPS site,Motor vehicles,70156.51,14441.7
+FA000203,TP-OPS,Thermal Products,TP-OPS site,Fixtures & fittings,66638.78,23246.48
+FA000204,TP-OPS,Thermal Products,TP-OPS site,Leasehold improvements,81553.01,80543.45
+FA000205,TP-OPS,Thermal Products,TP-OPS site,Fixtures & fittings,74919.41,17800.13
+FA000206,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,57237.1,38406.27
+FA000207,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,70857.26,18355.04
+FA000208,TP-OPS,Thermal Products,TP-OPS site,IT equipment,68777.52,22406.25
+FA000209,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,91874.91,36558.98
+FA000210,TP-OPS,Thermal Products,TP-OPS site,IT equipment,58277.4,18260.89
+FA000211,TP-OPS,Thermal Products,TP-OPS site,IT equipment,73059.84,28757.84
+FA000212,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,72072.87,18818.24
+FA000213,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,80556.55,53481.39
+FA000214,TP-OPS,Thermal Products,TP-OPS site,Fixtures & fittings,68370.49,53509.85
+FA000215,TP-OPS,Thermal Products,TP-OPS site,Fixtures & fittings,75856.67,38936.31
+FA000216,TP-OPS,Thermal Products,TP-OPS site,Fixtures & fittings,63942.88,48345.18
+FA000217,TP-OPS,Thermal Products,TP-OPS site,Leasehold improvements,95069.1,21712.6
+FA000218,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,64264.74,46974.91
+FA000219,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,90552.73,19030.09
+FA000220,TP-OPS,Thermal Products,TP-OPS site,Motor vehicles,71806.04,46752.24
+FA000221,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,69890.0,27300.1
+FA000222,TP-OPS,Thermal Products,TP-OPS site,IT equipment,78594.51,43187.8
+FA000223,TP-OPS,Thermal Products,TP-OPS site,IT equipment,82978.82,33695.89
+FA000224,TP-OPS,Thermal Products,TP-OPS site,IT equipment,55765.06,13838.32
+FA000225,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,74171.03,65837.8
+FA000226,TP-OPS,Thermal Products,TP-OPS site,IT equipment,55338.18,34617.97
+FA000227,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,79687.26,13854.16
+FA000228,TP-OPS,Thermal Products,TP-OPS site,Fixtures & fittings,57869.21,17381.4
+FA000229,TP-OPS,Thermal Products,TP-OPS site,IT equipment,64935.92,67670.78
+FA000230,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,70151.95,31827.22
+FA000231,TP-OPS,Thermal Products,TP-OPS site,IT equipment,89600.61,42834.57
+FA000232,TP-OPS,Thermal Products,TP-OPS site,Leasehold improvements,90228.3,22656.08
+FA000233,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,72841.22,48943.78
+FA000234,TP-OPS,Thermal Products,TP-OPS site,Leasehold improvements,83844.27,56550.86
+FA000235,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,64976.59,26987.06
+FA000236,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,88374.25,105476.06
+FA000237,TP-OPS,Thermal Products,TP-OPS site,Leasehold improvements,79365.95,21228.24
+FA000238,TP-OPS,Thermal Products,TP-OPS site,Motor vehicles,91309.49,16544.29
+FA000239,TP-OPS,Thermal Products,TP-OPS site,IT equipment,91965.42,25061.62
+FA000240,TP-OPS,Thermal Products,TP-OPS site,Leasehold improvements,53960.5,33797.74
+FA000241,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,87392.37,26820.88
+FA000242,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,67900.4,21661.17
+FA000243,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,94879.58,39475.62
+FA000244,TP-OPS,Thermal Products,TP-OPS site,Motor vehicles,86373.19,10940.11
+FA000245,TP-OPS,Thermal Products,TP-OPS site,Leasehold improvements,84744.71,33423.84
+FA000246,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,82821.58,37996.46
+FA000247,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,63800.15,19115.27
+FA000248,TP-OPS,Thermal Products,TP-OPS site,Leasehold improvements,60664.43,17498.13
+FA000249,TP-OPS,Thermal Products,TP-OPS site,IT equipment,80272.98,25930.36
+FA000250,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,56309.12,59476.0
+FA000251,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,74288.88,19936.96
+FA000252,TP-OPS,Thermal Products,TP-OPS site,Leasehold improvements,87128.72,7286.4
+FA000253,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,83310.8,33717.6
+FA000254,TP-OPS,Thermal Products,TP-OPS site,IT equipment,92299.67,75780.73
+FA000255,TP-OPS,Thermal Products,TP-OPS site,Leasehold improvements,71708.27,63145.25
+FA000256,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,62646.6,17008.5
+FA000257,TP-OPS,Thermal Products,TP-OPS site,Fixtures & fittings,92881.73,86018.96
+FA000258,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,99069.7,37630.3
+FA000259,TP-OPS,Thermal Products,TP-OPS site,Fixtures & fittings,73217.92,36754.73
+FA000260,TP-OPS,Thermal Products,TP-OPS site,Leasehold improvements,94600.84,27882.6
+FA000261,TP-OPS,Thermal Products,TP-OPS site,Plant & machinery,88313.78,57520.97
+FA000262,TP-SALES,Thermal Products,TP-SALES site,Leasehold improvements,64607.45,100838.77
+FA000263,TP-SALES,Thermal Products,TP-SALES site,Plant & machinery,94669.29,33438.19
+FA000264,TP-SALES,Thermal Products,TP-SALES site,Plant & machinery,75040.11,34117.72
+FA000265,TP-SALES,Thermal Products,TP-SALES site,Plant & machinery,77765.52,94329.71
+FA000266,TP-SALES,Thermal Products,TP-SALES site,IT equipment,87995.17,44141.87
+FA000267,TP-SALES,Thermal Products,TP-SALES site,Plant & machinery,83159.04,19130.85
+FA000268,TP-SALES,Thermal Products,TP-SALES site,Plant & machinery,78154.15,24705.17
+FA000269,TP-SALES,Thermal Products,TP-SALES site,Plant & machinery,82200.95,28693.74
+FA000270,TP-SALES,Thermal Products,TP-SALES site,IT equipment,98599.2,19728.23
+FA000271,TP-SALES,Thermal Products,TP-SALES site,Plant & machinery,98495.78,39309.12
+FA000272,TP-SALES,Thermal Products,TP-SALES site,Plant & machinery,84161.0,76752.29
+FA000273,TP-SALES,Thermal Products,TP-SALES site,Plant & machinery,69764.35,29309.11
+FA000274,TP-SALES,Thermal Products,TP-SALES site,Plant & machinery,64297.75,25755.38
+FA000275,TP-SALES,Thermal Products,TP-SALES site,IT equipment,69166.83,31391.46
+FA000276,TP-SALES,Thermal Products,TP-SALES site,Leasehold improvements,88343.41,10956.74
+FA000277,TP-SALES,Thermal Products,TP-SALES site,Leasehold improvements,98206.13,73827.38
+FA000278,TP-SALES,Thermal Products,TP-SALES site,Plant & machinery,90902.49,23461.39
+FA000279,TP-SALES,Thermal Products,TP-SALES site,Fixtures & fittings,58193.76,53930.03
+FA000280,TP-SALES,Thermal Products,TP-SALES site,IT equipment,66535.13,49768.0
+FA000281,TP-SALES,Thermal Products,TP-SALES site,Plant & machinery,66110.61,18002.94
+FA000282,TP-SALES,Thermal Products,TP-SALES site,Plant & machinery,94427.28,30567.72
+FA000283,TP-SALES,Thermal Products,TP-SALES site,Fixtures & fittings,68960.47,76717.27
+FA000284,TP-SALES,Thermal Products,TP-SALES site,Plant & machinery,57113.01,15436.1
+FA000285,TP-SALES,Thermal Products,TP-SALES site,Plant & machinery,90671.46,90604.39
+FA000286,TP-SALES,Thermal Products,TP-SALES site,IT equipment,69230.51,117294.48
+FA000287,TP-SALES,Thermal Products,TP-SALES site,Fixtures & fittings,76684.59,41486.18
+FA000288,TP-SALES,Thermal Products,TP-SALES site,Plant & machinery,94964.35,43618.07
+FA000289,TP-SALES,Thermal Products,TP-SALES site,Plant & machinery,93953.52,24702.64
+FA000290,TP-SALES,Thermal Products,TP-SALES site,IT equipment,54950.88,31358.15
+FA000291,TP-SALES,Thermal Products,TP-SALES site,IT equipment,83145.64,23220.17
+FA000292,TP-SALES,Thermal Products,TP-SALES site,Plant & machinery,76589.4,30074.87
+FA000293,TP-SALES,Thermal Products,TP-SALES site,Motor vehicles,76221.53,34942.76
+FA000294,TP-SALES,Thermal Products,TP-SALES site,Fixtures & fittings,75556.5,46174.86
+FA000295,TP-SALES,Thermal Products,TP-SALES site,Plant & machinery,55734.9,30935.16
+FA000296,TP-SALES,Thermal Products,TP-SALES site,Plant & machinery,90057.41,52229.95
+FA000297,TP-SALES,Thermal Products,TP-SALES site,Plant & machinery,54169.08,21533.1
+FA000298,TP-SALES,Thermal Products,TP-SALES site,Plant & machinery,91348.68,18212.4
+FA000299,TP-SALES,Thermal Products,TP-SALES site,Plant & machinery,97857.0,20373.44
+FA000300,TP-SALES,Thermal Products,TP-SALES site,Motor vehicles,70116.43,58600.31
+FA000301,TP-SALES,Thermal Products,TP-SALES site,Plant & machinery,95233.63,36571.58
+FA000302,TP-SALES,Thermal Products,TP-SALES site,Plant & machinery,87705.95,93225.53
+FA000303,TP-SALES,Thermal Products,TP-SALES site,Plant & machinery,71073.55,15584.25
+FA000304,TP-SALES,Thermal Products,TP-SALES site,Motor vehicles,75413.24,47838.02
+FA000305,TP-SALES,Thermal Products,TP-SALES site,Plant & machinery,92959.45,28995.46
+FA000306,TP-SALES,Thermal Products,TP-SALES site,Plant & machinery,87026.06,34149.67
+FA000307,TP-SALES,Thermal Products,TP-SALES site,Leasehold improvements,97159.54,49358.59
+FA000308,TP-SALES,Thermal Products,TP-SALES site,Plant & machinery,66453.14,39068.97
+FA000309,TP-SALES,Thermal Products,TP-SALES site,Leasehold improvements,81027.58,51890.07
+FA000310,TP-SALES,Thermal Products,TP-SALES site,IT equipment,73787.21,17257.7
+FA000311,TP-SALES,Thermal Products,TP-SALES site,Fixtures & fittings,78111.08,40383.76
+FA000312,TP-SALES,Thermal Products,TP-SALES site,Motor vehicles,78636.92,31612.64
+FA000313,TP-SALES,Thermal Products,TP-SALES site,Plant & machinery,66223.36,26498.02
+FA000314,TP-SALES,Thermal Products,TP-SALES site,Plant & machinery,97284.92,65656.48
+FA000315,TP-SALES,Thermal Products,TP-SALES site,IT equipment,69622.13,12758.88
+FA000316,TP-SALES,Thermal Products,TP-SALES site,Leasehold improvements,88501.91,29299.08
+FA000317,TP-SALES,Thermal Products,TP-SALES site,Plant & machinery,70256.0,101552.73
+FA000318,TP-SALES,Thermal Products,TP-SALES site,IT equipment,64084.42,67069.84
+FA000319,TP-SALES,Thermal Products,TP-SALES site,Plant & machinery,55629.72,34077.5
+FA000320,TP-SALES,Thermal Products,TP-SALES site,Leasehold improvements,55659.94,32013.47
+FA000321,TP-SALES,Thermal Products,TP-SALES site,Fixtures & fittings,54146.16,14106.36
+FA000322,TP-SALES,Thermal Products,TP-SALES site,IT equipment,91012.04,37491.19
+FA000323,TP-SALES,Thermal Products,TP-SALES site,IT equipment,81720.76,25850.42
+FA000324,TP-SALES,Thermal Products,TP-SALES site,Fixtures & fittings,65302.89,36660.42
+FA000325,TP-SALES,Thermal Products,TP-SALES site,Plant & machinery,81471.7,80405.86
+FA000326,TP-SALES,Thermal Products,TP-SALES site,Plant & machinery,67231.08,25817.98
+FA000327,TP-SALES,Thermal Products,TP-SALES site,Plant & machinery,60301.88,35452.07
+FA000328,TP-SALES,Thermal Products,TP-SALES site,Motor vehicles,76687.96,43488.48
+FA000329,TP-ENG,Thermal Products,TP-ENG site,IT equipment,57925.86,37174.0
+FA000330,TP-ENG,Thermal Products,TP-ENG site,Plant & machinery,88568.83,26709.21
+FA000331,TP-ENG,Thermal Products,TP-ENG site,Leasehold improvements,70278.56,27298.16
+FA000332,TP-ENG,Thermal Products,TP-ENG site,Fixtures & fittings,95471.83,15512.98
+FA000333,TP-ENG,Thermal Products,TP-ENG site,IT equipment,64676.57,66514.75
+FA000334,TP-ENG,Thermal Products,TP-ENG site,Plant & machinery,73647.12,20821.66
+FA000335,TP-ENG,Thermal Products,TP-ENG site,Leasehold improvements,86707.08,23892.35
+FA000336,TP-ENG,Thermal Products,TP-ENG site,Plant & machinery,74379.78,29828.91
+FA000337,TP-ENG,Thermal Products,TP-ENG site,Plant & machinery,82272.57,23355.7
+FA000338,TP-ENG,Thermal Products,TP-ENG site,Plant & machinery,60220.61,21270.51
+FA000339,TP-ENG,Thermal Products,TP-ENG site,Plant & machinery,89279.46,17850.26
+FA000340,TP-ENG,Thermal Products,TP-ENG site,Fixtures & fittings,53883.37,30800.42
+FA000341,TP-ENG,Thermal Products,TP-ENG site,Plant & machinery,75250.02,21316.91
+FA000342,TP-ENG,Thermal Products,TP-ENG site,Fixtures & fittings,78814.13,14069.4
+FA000343,TP-ENG,Thermal Products,TP-ENG site,IT equipment,90092.06,44558.81
+FA000344,TP-ENG,Thermal Products,TP-ENG site,Plant & machinery,81513.95,12957.61
+FA000345,TP-ENG,Thermal Products,TP-ENG site,IT equipment,65136.6,14182.21
+FA000346,TP-ENG,Thermal Products,TP-ENG site,Plant & machinery,73395.08,27366.28
+FA000347,TP-ENG,Thermal Products,TP-ENG site,Plant & machinery,84100.14,82974.44
+FA000348,TP-ENG,Thermal Products,TP-ENG site,IT equipment,57076.36,30576.03
+FA000349,TP-ENG,Thermal Products,TP-ENG site,Plant & machinery,53908.72,17827.85
+FA000350,TP-ENG,Thermal Products,TP-ENG site,Plant & machinery,85642.66,27368.86
+FA000351,TP-ENG,Thermal Products,TP-ENG site,Plant & machinery,88379.07,55856.03
+FA000352,TP-ENG,Thermal Products,TP-ENG site,Motor vehicles,69016.39,48347.82
+FA000353,TP-ENG,Thermal Products,TP-ENG site,Plant & machinery,57133.08,83780.47
+FA000354,TP-ENG,Thermal Products,TP-ENG site,Leasehold improvements,93955.55,43461.48
+FA000355,TP-ENG,Thermal Products,TP-ENG site,Plant & machinery,94731.29,24613.46
+FA000356,TP-ENG,Thermal Products,TP-ENG site,Leasehold improvements,66075.14,58570.01
+FA000357,TP-ENG,Thermal Products,TP-ENG site,Leasehold improvements,78717.35,17279.58
+FA000358,TP-ENG,Thermal Products,TP-ENG site,IT equipment,72438.87,31909.66
+FA000359,TP-ENG,Thermal Products,TP-ENG site,Plant & machinery,82880.98,69424.86
+FA000360,TP-ENG,Thermal Products,TP-ENG site,Plant & machinery,70081.86,40221.0
+FA000361,TP-ENG,Thermal Products,TP-ENG site,Plant & machinery,90709.98,48806.94
+FA000362,TP-ENG,Thermal Products,TP-ENG site,Plant & machinery,84468.38,18784.33
+FA000363,TP-ENG,Thermal Products,TP-ENG site,Leasehold improvements,63743.13,30783.41
+FA000364,TP-ENG,Thermal Products,TP-ENG site,Plant & machinery,89616.38,63141.64
+FA000365,TP-ENG,Thermal Products,TP-ENG site,IT equipment,74093.94,17337.66
+FA000366,TP-ENG,Thermal Products,TP-ENG site,Plant & machinery,68406.29,20453.71
+FA000367,TP-ENG,Thermal Products,TP-ENG site,IT equipment,69534.85,24181.23
+FA000368,TP-ENG,Thermal Products,TP-ENG site,Plant & machinery,67442.85,43117.56
+FA000369,TP-ENG,Thermal Products,TP-ENG site,Motor vehicles,93732.81,53473.39
+FA000370,TP-ENG,Thermal Products,TP-ENG site,Plant & machinery,76794.32,63778.5
+FA000371,TP-ENG,Thermal Products,TP-ENG site,Leasehold improvements,70628.99,35844.01
+FA000372,TP-ENG,Thermal Products,TP-ENG site,Leasehold improvements,79720.21,32838.97
+FA000373,TP-ENG,Thermal Products,TP-ENG site,Fixtures & fittings,89348.08,38404.24
+FA000374,TP-ENG,Thermal Products,TP-ENG site,Motor vehicles,62249.45,38973.46
+FA000375,TP-ENG,Thermal Products,TP-ENG site,Plant & machinery,95444.89,35229.0
+FA000376,TP-ENG,Thermal Products,TP-ENG site,Plant & machinery,56394.43,25271.23
+FA000377,FC-OPS,Flow Control,FC-OPS site,IT equipment,69000.18,30520.85
+FA000378,FC-OPS,Flow Control,FC-OPS site,Plant & machinery,91214.58,11414.88
+FA000379,FC-OPS,Flow Control,FC-OPS site,Plant & machinery,53590.84,37194.31
+FA000380,FC-OPS,Flow Control,FC-OPS site,Leasehold improvements,66819.99,41890.56
+FA000381,FC-OPS,Flow Control,FC-OPS site,Plant & machinery,74186.73,68138.09
+FA000382,FC-OPS,Flow Control,FC-OPS site,Plant & machinery,77624.36,21927.41
+FA000383,FC-OPS,Flow Control,FC-OPS site,IT equipment,98685.17,121857.32
+FA000384,FC-OPS,Flow Control,FC-OPS site,Fixtures & fittings,84045.09,27702.46
+FA000385,FC-OPS,Flow Control,FC-OPS site,Plant & machinery,83875.4,19788.3
+FA000386,FC-OPS,Flow Control,FC-OPS site,Plant & machinery,98763.13,26640.41
+FA000387,FC-OPS,Flow Control,FC-OPS site,IT equipment,79493.11,30773.22
+FA000388,FC-OPS,Flow Control,FC-OPS site,Plant & machinery,82684.9,62894.36
+FA000389,FC-OPS,Flow Control,FC-OPS site,Motor vehicles,80232.11,23935.04
+FA000390,FC-OPS,Flow Control,FC-OPS site,Leasehold improvements,77901.93,15231.27
+FA000391,FC-OPS,Flow Control,FC-OPS site,IT equipment,92008.98,79089.7
+FA000392,FC-OPS,Flow Control,FC-OPS site,IT equipment,79157.36,32581.61
+FA000393,FC-OPS,Flow Control,FC-OPS site,Plant & machinery,86015.57,44687.73
+FA000394,FC-OPS,Flow Control,FC-OPS site,IT equipment,85258.93,40667.17
+FA000395,FC-OPS,Flow Control,FC-OPS site,IT equipment,63229.95,26543.18
+FA000396,FC-OPS,Flow Control,FC-OPS site,IT equipment,80265.04,115687.29
+FA000397,FC-OPS,Flow Control,FC-OPS site,Motor vehicles,76232.7,27768.6
+FA000398,FC-OPS,Flow Control,FC-OPS site,Plant & machinery,64500.05,19228.34
+FA000399,FC-OPS,Flow Control,FC-OPS site,Leasehold improvements,54471.48,100378.58
+FA000400,FC-OPS,Flow Control,FC-OPS site,Fixtures & fittings,79261.02,20432.95
+FA000401,FC-OPS,Flow Control,FC-OPS site,Fixtures & fittings,62378.1,21042.22
+FA000402,FC-OPS,Flow Control,FC-OPS site,IT equipment,64726.99,53004.63
+FA000403,FC-OPS,Flow Control,FC-OPS site,Plant & machinery,85022.98,13692.26
+FA000404,FC-OPS,Flow Control,FC-OPS site,IT equipment,97989.84,68613.36
+FA000405,FC-OPS,Flow Control,FC-OPS site,Leasehold improvements,79975.43,72578.81
+FA000406,FC-OPS,Flow Control,FC-OPS site,Plant & machinery,63609.4,24568.36
+FA000407,FC-OPS,Flow Control,FC-OPS site,IT equipment,96518.07,28467.37
+FA000408,FC-OPS,Flow Control,FC-OPS site,Plant & machinery,95258.73,27597.48
+FA000409,FC-OPS,Flow Control,FC-OPS site,Plant & machinery,68880.4,44506.48
+FA000410,FC-OPS,Flow Control,FC-OPS site,Motor vehicles,63723.88,35105.16
+FA000411,FC-OPS,Flow Control,FC-OPS site,IT equipment,82556.22,37960.57
+FA000412,FC-OPS,Flow Control,FC-OPS site,Leasehold improvements,84803.52,58026.82
+FA000413,FC-OPS,Flow Control,FC-OPS site,Plant & machinery,86041.48,22405.32
+FA000414,FC-OPS,Flow Control,FC-OPS site,Fixtures & fittings,85087.18,61191.58
+FA000415,FC-OPS,Flow Control,FC-OPS site,Leasehold improvements,67372.75,43202.5
+FA000416,FC-OPS,Flow Control,FC-OPS site,Plant & machinery,64860.47,57524.72
+FA000417,FC-OPS,Flow Control,FC-OPS site,Plant & machinery,58719.33,17200.54
+FA000418,FC-OPS,Flow Control,FC-OPS site,Leasehold improvements,55353.92,49221.98
+FA000419,FC-OPS,Flow Control,FC-OPS site,Plant & machinery,64550.51,53220.01
+FA000420,FC-OPS,Flow Control,FC-OPS site,Plant & machinery,88759.79,42151.96
+FA000421,FC-OPS,Flow Control,FC-OPS site,Plant & machinery,58004.2,52126.12
+FA000422,FC-OPS,Flow Control,FC-OPS site,Plant & machinery,69076.56,40630.69
+FA000423,FC-OPS,Flow Control,FC-OPS site,IT equipment,79796.32,35161.58
+FA000424,FC-OPS,Flow Control,FC-OPS site,Fixtures & fittings,96712.02,28658.68
+FA000425,FC-OPS,Flow Control,FC-OPS site,Plant & machinery,64117.33,69823.62
+FA000426,FC-OPS,Flow Control,FC-OPS site,Leasehold improvements,96016.03,57999.31
+FA000427,FC-OPS,Flow Control,FC-OPS site,IT equipment,70608.19,57363.76
+FA000428,FC-OPS,Flow Control,FC-OPS site,Plant & machinery,62574.15,43216.27
+FA000429,FC-OPS,Flow Control,FC-OPS site,Plant & machinery,86073.94,14929.51
+FA000430,FC-OPS,Flow Control,FC-OPS site,Plant & machinery,80425.14,22438.32
+FA000431,FC-OPS,Flow Control,FC-OPS site,Plant & machinery,77319.6,16203.79
+FA000432,FC-OPS,Flow Control,FC-OPS site,Plant & machinery,90217.27,26066.33
+FA000433,FC-OPS,Flow Control,FC-OPS site,Fixtures & fittings,76533.72,52654.4
+FA000434,FC-OPS,Flow Control,FC-OPS site,Plant & machinery,68089.23,28963.98
+FA000435,FC-OPS,Flow Control,FC-OPS site,Plant & machinery,66374.16,32078.62
+FA000436,FC-OPS,Flow Control,FC-OPS site,IT equipment,65693.86,17573.46
+FA000437,FC-OPS,Flow Control,FC-OPS site,Fixtures & fittings,73870.68,34605.92
+FA000438,FC-OPS,Flow Control,FC-OPS site,Fixtures & fittings,74875.72,58934.24
+FA000439,FC-OPS,Flow Control,FC-OPS site,Plant & machinery,68467.16,37867.72
+FA000440,FC-OPS,Flow Control,FC-OPS site,IT equipment,90679.93,32034.96
+FA000441,FC-OPS,Flow Control,FC-OPS site,Plant & machinery,55181.11,11221.26
+FA000442,FC-OPS,Flow Control,FC-OPS site,Plant & machinery,83199.39,45642.54
+FA000443,FC-OPS,Flow Control,FC-OPS site,IT equipment,62682.05,23540.39
+FA000444,FC-OPS,Flow Control,FC-OPS site,Plant & machinery,58020.16,19147.7
+FA000445,FC-OPS,Flow Control,FC-OPS site,Fixtures & fittings,77791.79,31388.48
+FA000446,FC-OPS,Flow Control,FC-OPS site,Fixtures & fittings,53566.56,60349.17
+FA000447,FC-OPS,Flow Control,FC-OPS site,Plant & machinery,88686.43,34785.54
+FA000448,FC-OPS,Flow Control,FC-OPS site,Plant & machinery,82076.51,35962.35
+FA000449,FC-OPS,Flow Control,FC-OPS site,Fixtures & fittings,94068.8,37970.79
+FA000450,FC-OPS,Flow Control,FC-OPS site,Fixtures & fittings,78353.17,15387.99
+FA000451,FC-OPS,Flow Control,FC-OPS site,Plant & machinery,80331.16,35879.11
+FA000452,FC-OPS,Flow Control,FC-OPS site,IT equipment,85109.93,41293.95
+FA000453,FC-OPS,Flow Control,FC-OPS site,IT equipment,91674.52,24071.7
+FA000454,FC-OPS,Flow Control,FC-OPS site,Plant & machinery,61173.03,31844.12
+FA000455,FC-OPS,Flow Control,FC-OPS site,Fixtures & fittings,76942.5,19903.22
+FA000456,FC-OPS,Flow Control,FC-OPS site,Motor vehicles,58126.43,21623.35
+FA000457,FC-OPS,Flow Control,FC-OPS site,Leasehold improvements,79230.22,31009.0
+FA000458,FC-OPS,Flow Control,FC-OPS site,Plant & machinery,55184.1,38103.91
+FA000459,FC-OPS,Flow Control,FC-OPS site,Fixtures & fittings,96432.75,48682.57
+FA000460,FC-OPS,Flow Control,FC-OPS site,Plant & machinery,64043.63,30620.13
+FA000461,FC-OPS,Flow Control,FC-OPS site,Fixtures & fittings,76336.71,18528.21
+FA000462,FC-OPS,Flow Control,FC-OPS site,Plant & machinery,94992.37,21636.62
+FA000463,FC-OPS,Flow Control,FC-OPS site,Leasehold improvements,88108.47,36247.04
+FA000464,FC-OPS,Flow Control,FC-OPS site,Plant & machinery,81654.62,17335.0
+FA000465,FC-OPS,Flow Control,FC-OPS site,IT equipment,98145.33,44855.78
+FA000466,FC-OPS,Flow Control,FC-OPS site,IT equipment,77547.17,24366.58
+FA000467,FC-OPS,Flow Control,FC-OPS site,IT equipment,84703.66,39944.87
+FA000468,FC-OPS,Flow Control,FC-OPS site,Plant & machinery,79548.1,25112.2
+FA000469,FC-OPS,Flow Control,FC-OPS site,Motor vehicles,81381.96,32506.26
+FA000470,FC-OPS,Flow Control,FC-OPS site,Plant & machinery,65625.5,25223.97
+FA000471,FC-OPS,Flow Control,FC-OPS site,Plant & machinery,96609.31,18482.99
+FA000472,FC-OPS,Flow Control,FC-OPS site,Plant & machinery,98357.52,38355.75
+FA000473,FC-OPS,Flow Control,FC-OPS site,IT equipment,68721.59,22008.85
+FA000474,FC-OPS,Flow Control,FC-OPS site,Fixtures & fittings,78946.44,21701.0
+FA000475,FC-OPS,Flow Control,FC-OPS site,Leasehold improvements,60927.57,48965.38
+FA000476,FC-OPS,Flow Control,FC-OPS site,Plant & machinery,66284.41,68886.35
+FA000477,FC-OPS,Flow Control,FC-OPS site,Plant & machinery,71211.05,27214.57
+FA000478,FC-OPS,Flow Control,FC-OPS site,Motor vehicles,86967.51,50197.18
+FA000479,FC-OPS,Flow Control,FC-OPS site,Motor vehicles,85265.64,33432.28
+FA000480,FC-OPS,Flow Control,FC-OPS site,Plant & machinery,86371.1,63389.69
+FA000481,FC-OPS,Flow Control,FC-OPS site,Leasehold improvements,72617.42,8115.53
+FA000482,FC-OPS,Flow Control,FC-OPS site,IT equipment,83211.37,68767.87
+FA000483,FC-OPS,Flow Control,FC-OPS site,Motor vehicles,82835.55,72635.27
+FA000484,FC-OPS,Flow Control,FC-OPS site,IT equipment,87593.18,12118.27
+FA000485,FC-OPS,Flow Control,FC-OPS site,Plant & machinery,62847.59,78214.5
+FA000486,FC-OPS,Flow Control,FC-OPS site,Fixtures & fittings,89654.73,34002.39
+FA000487,FC-OPS,Flow Control,FC-OPS site,IT equipment,74627.24,33724.91
+FA000488,FC-OPS,Flow Control,FC-OPS site,Plant & machinery,93824.7,33889.16
+FA000489,FC-OPS,Flow Control,FC-OPS site,Plant & machinery,91608.91,51791.13
+FA000490,FC-OPS,Flow Control,FC-OPS site,Fixtures & fittings,60032.69,30117.79
+FA000491,FC-OPS,Flow Control,FC-OPS site,Plant & machinery,65585.34,32149.76
+FA000492,FC-OPS,Flow Control,FC-OPS site,IT equipment,88852.1,116895.65
+FA000493,FC-OPS,Flow Control,FC-OPS site,Plant & machinery,96263.96,15162.6
+FA000494,FC-OPS,Flow Control,FC-OPS site,IT equipment,80404.71,38489.77
+FA000495,FC-OPS,Flow Control,FC-OPS site,Plant & machinery,61677.97,40222.13
+FA000496,FC-OPS,Flow Control,FC-OPS site,Plant & machinery,82454.44,54792.87
+FA000497,FC-OPS,Flow Control,FC-OPS site,Plant & machinery,66012.86,29537.33
+FA000498,FC-OPS,Flow Control,FC-OPS site,Plant & machinery,91554.2,34911.55
+FA000499,FC-OPS,Flow Control,FC-OPS site,Leasehold improvements,75466.07,40396.01
+FA000500,FC-OPS,Flow Control,FC-OPS site,IT equipment,96713.3,31868.5
+FA000501,FC-OPS,Flow Control,FC-OPS site,Motor vehicles,66977.58,56724.13
+FA000502,FC-OPS,Flow Control,FC-OPS site,IT equipment,89079.4,15496.03
+FA000503,FC-OPS,Flow Control,FC-OPS site,Motor vehicles,80081.47,36277.38
+FA000504,FC-OPS,Flow Control,FC-OPS site,Fixtures & fittings,97938.09,98253.85
+FA000505,FC-OPS,Flow Control,FC-OPS site,IT equipment,97473.76,10886.83
+FA000506,FC-SALES,Flow Control,FC-SALES site,IT equipment,75887.25,27095.62
+FA000507,FC-SALES,Flow Control,FC-SALES site,IT equipment,54140.18,28165.53
+FA000508,FC-SALES,Flow Control,FC-SALES site,Motor vehicles,88625.2,28686.61
+FA000509,FC-SALES,Flow Control,FC-SALES site,IT equipment,96202.02,28493.16
+FA000510,FC-SALES,Flow Control,FC-SALES site,Motor vehicles,69678.21,11472.09
+FA000511,FC-SALES,Flow Control,FC-SALES site,Motor vehicles,76073.08,7227.93
+FA000512,FC-SALES,Flow Control,FC-SALES site,IT equipment,78475.5,51485.83
+FA000513,FC-SALES,Flow Control,FC-SALES site,Leasehold improvements,79174.29,35169.37
+FA000514,FC-SALES,Flow Control,FC-SALES site,Fixtures & fittings,58276.84,19161.56
+FA000515,FC-SALES,Flow Control,FC-SALES site,Leasehold improvements,73588.63,36341.02
+FA000516,FC-SALES,Flow Control,FC-SALES site,Leasehold improvements,70139.04,22799.4
+FA000517,FC-SALES,Flow Control,FC-SALES site,Plant & machinery,80184.81,30770.03
+FA000518,FC-SALES,Flow Control,FC-SALES site,Motor vehicles,65883.38,30919.01
+FA000519,FC-SALES,Flow Control,FC-SALES site,Fixtures & fittings,69976.63,76059.69
+FA000520,FC-SALES,Flow Control,FC-SALES site,Fixtures & fittings,80045.1,60371.02
+FA000521,FC-SALES,Flow Control,FC-SALES site,Plant & machinery,75213.61,55549.72
+FA000522,FC-SALES,Flow Control,FC-SALES site,Fixtures & fittings,62140.65,29764.38
+FA000523,FC-SALES,Flow Control,FC-SALES site,Plant & machinery,98557.65,25461.88
+FA000524,FC-SALES,Flow Control,FC-SALES site,IT equipment,65539.62,43359.09
+FA000525,FC-SALES,Flow Control,FC-SALES site,Leasehold improvements,89457.01,46305.72
+FA000526,FC-SALES,Flow Control,FC-SALES site,Fixtures & fittings,69496.33,32123.18
+FA000527,FC-SALES,Flow Control,FC-SALES site,IT equipment,80879.54,28102.18
+FA000528,FC-SALES,Flow Control,FC-SALES site,Fixtures & fittings,97948.84,41252.39
+FA000529,FC-SALES,Flow Control,FC-SALES site,Plant & machinery,74231.15,76897.13
+FA000530,FC-SALES,Flow Control,FC-SALES site,Leasehold improvements,87217.12,33240.44
+FA000531,FC-SALES,Flow Control,FC-SALES site,Plant & machinery,85140.08,78131.69
+FA000532,FC-SALES,Flow Control,FC-SALES site,Plant & machinery,90654.05,21887.12
+FA000533,FC-SALES,Flow Control,FC-SALES site,Plant & machinery,60557.58,53984.31
+FA000534,FC-SALES,Flow Control,FC-SALES site,Leasehold improvements,88403.0,12380.2
+FA000535,FC-SALES,Flow Control,FC-SALES site,Leasehold improvements,58829.01,13045.69
+FA000536,FC-SALES,Flow Control,FC-SALES site,Leasehold improvements,79189.23,48922.62
+FA000537,FC-SALES,Flow Control,FC-SALES site,Plant & machinery,53306.88,14304.34
+FA000538,FC-SALES,Flow Control,FC-SALES site,Motor vehicles,81670.36,54461.49
+FA000539,FC-SALES,Flow Control,FC-SALES site,Plant & machinery,60624.03,14075.1
+FA000540,FC-SALES,Flow Control,FC-SALES site,Plant & machinery,86060.76,102454.53
+FA000541,FC-SALES,Flow Control,FC-SALES site,Plant & machinery,97908.95,35831.88
+FA000542,FC-SALES,Flow Control,FC-SALES site,Motor vehicles,89274.24,82785.8
+FA000543,FC-SALES,Flow Control,FC-SALES site,IT equipment,63990.08,45566.73
+FA000544,FC-SALES,Flow Control,FC-SALES site,IT equipment,61537.65,29023.21
+FA000545,FC-SALES,Flow Control,FC-SALES site,Plant & machinery,89506.58,26221.68
+FA000546,FC-SALES,Flow Control,FC-SALES site,Fixtures & fittings,81039.6,18465.34
+FA000547,FC-SALES,Flow Control,FC-SALES site,Plant & machinery,85679.68,45753.63
+FA000548,FC-SALES,Flow Control,FC-SALES site,Plant & machinery,90835.82,51443.88
+FA000549,FC-SALES,Flow Control,FC-SALES site,IT equipment,85733.57,44338.6
+FA000550,FC-SALES,Flow Control,FC-SALES site,Fixtures & fittings,53377.43,29222.84
+FA000551,FC-SALES,Flow Control,FC-SALES site,Fixtures & fittings,61342.44,70658.87
+FA000552,FC-SALES,Flow Control,FC-SALES site,IT equipment,96636.61,38602.61
+FA000553,FC-SALES,Flow Control,FC-SALES site,IT equipment,87917.87,49439.07
+FA000554,FC-SALES,Flow Control,FC-SALES site,IT equipment,57503.22,24140.14
+FA000555,FC-SALES,Flow Control,FC-SALES site,Leasehold improvements,97272.94,16253.34
+FA000556,FC-SALES,Flow Control,FC-SALES site,Fixtures & fittings,62417.5,26705.21
+FA000557,FC-SALES,Flow Control,FC-SALES site,IT equipment,89229.38,34642.1
+FA000558,FC-SALES,Flow Control,FC-SALES site,Plant & machinery,83671.2,29013.37
+FA000559,FC-SALES,Flow Control,FC-SALES site,Plant & machinery,84260.78,33067.44
+FA000560,FC-SALES,Flow Control,FC-SALES site,Fixtures & fittings,66052.95,21509.05
+FA000561,FC-SALES,Flow Control,FC-SALES site,Plant & machinery,56684.2,52881.1
+FA000562,FC-SALES,Flow Control,FC-SALES site,IT equipment,83912.21,17412.44
+FA000563,FC-SALES,Flow Control,FC-SALES site,Leasehold improvements,86875.95,23192.65
+FA000564,FC-SALES,Flow Control,FC-SALES site,Fixtures & fittings,83412.06,26796.74
+FA000565,FC-SALES,Flow Control,FC-SALES site,Fixtures & fittings,57784.84,14414.1
+FA000566,FC-SALES,Flow Control,FC-SALES site,IT equipment,96151.91,47158.44
+FA000567,FC-SALES,Flow Control,FC-SALES site,Plant & machinery,63202.4,25049.22
+FA000568,FC-SALES,Flow Control,FC-SALES site,Plant & machinery,70791.14,39707.67
+FA000569,FC-SALES,Flow Control,FC-SALES site,Motor vehicles,75994.24,105244.27
+FA000570,FC-SALES,Flow Control,FC-SALES site,Leasehold improvements,90647.18,48898.34
+FA000571,FC-SALES,Flow Control,FC-SALES site,IT equipment,90938.42,19711.46
+FA000572,FC-SALES,Flow Control,FC-SALES site,IT equipment,61278.49,26350.78
+FA000573,FC-SALES,Flow Control,FC-SALES site,Fixtures & fittings,77163.62,32821.46
+FA000574,FC-SALES,Flow Control,FC-SALES site,IT equipment,88057.82,30923.67
+FA000575,FC-SALES,Flow Control,FC-SALES site,Leasehold improvements,86007.26,53414.32
+FA000576,FC-SALES,Flow Control,FC-SALES site,Plant & machinery,82717.51,14047.76
+FA000577,FC-SALES,Flow Control,FC-SALES site,IT equipment,64501.99,64762.65
+FA000578,FC-SALES,Flow Control,FC-SALES site,Fixtures & fittings,74131.49,38563.29
+FA000579,FC-SALES,Flow Control,FC-SALES site,Leasehold improvements,73755.06,32132.04
+FA000580,FC-SALES,Flow Control,FC-SALES site,Leasehold improvements,61151.66,21650.19
+FA000581,FC-SALES,Flow Control,FC-SALES site,Leasehold improvements,62336.47,15981.25
+FA000582,FC-SALES,Flow Control,FC-SALES site,IT equipment,73437.02,28908.42
+FA000583,FC-SALES,Flow Control,FC-SALES site,Plant & machinery,81843.07,24307.69
+FA000584,FC-SALES,Flow Control,FC-SALES site,IT equipment,56452.96,33182.46
+FA000585,FC-SALES,Flow Control,FC-SALES site,Plant & machinery,85337.05,52271.04
+FA000586,FC-SALES,Flow Control,FC-SALES site,Motor vehicles,76250.86,28774.16
+FA000587,FC-SALES,Flow Control,FC-SALES site,Plant & machinery,78399.65,32729.89
+FA000588,FC-SALES,Flow Control,FC-SALES site,Plant & machinery,93978.19,85678.82
+FA000589,FC-SALES,Flow Control,FC-SALES site,Leasehold improvements,63908.71,50856.94
+FA000590,FC-ENG,Flow Control,FC-ENG site,Fixtures & fittings,66751.87,38561.72
+FA000591,FC-ENG,Flow Control,FC-ENG site,Plant & machinery,97497.61,31131.13
+FA000592,FC-ENG,Flow Control,FC-ENG site,Plant & machinery,97482.59,33940.64
+FA000593,FC-ENG,Flow Control,FC-ENG site,Motor vehicles,95825.78,59215.82
+FA000594,FC-ENG,Flow Control,FC-ENG site,Plant & machinery,88731.75,75804.54
+FA000595,FC-ENG,Flow Control,FC-ENG site,IT equipment,61019.11,36860.22
+FA000596,FC-ENG,Flow Control,FC-ENG site,Leasehold improvements,57605.02,44723.94
+FA000597,FC-ENG,Flow Control,FC-ENG site,Motor vehicles,89718.25,25280.07
+FA000598,FC-ENG,Flow Control,FC-ENG site,Leasehold improvements,88099.36,47694.31
+FA000599,FC-ENG,Flow Control,FC-ENG site,Plant & machinery,69243.5,16249.0
+FA000600,FC-ENG,Flow Control,FC-ENG site,Plant & machinery,86028.98,24305.51
+FA000601,FC-ENG,Flow Control,FC-ENG site,Plant & machinery,72044.52,65701.17
+FA000602,FC-ENG,Flow Control,FC-ENG site,Plant & machinery,60882.04,35100.91
+FA000603,FC-ENG,Flow Control,FC-ENG site,Plant & machinery,90928.41,100263.94
+FA000604,FC-ENG,Flow Control,FC-ENG site,Plant & machinery,87163.06,36976.65
+FA000605,FC-ENG,Flow Control,FC-ENG site,Plant & machinery,76542.19,28345.76
+FA000606,FC-ENG,Flow Control,FC-ENG site,Plant & machinery,73157.16,23609.34
+FA000607,FC-ENG,Flow Control,FC-ENG site,IT equipment,86057.24,59158.69
+FA000608,FC-ENG,Flow Control,FC-ENG site,IT equipment,68660.32,60985.13
+FA000609,FC-ENG,Flow Control,FC-ENG site,IT equipment,84532.17,29545.52
+FA000610,FC-ENG,Flow Control,FC-ENG site,Plant & machinery,61262.81,42241.48
+FA000611,FC-ENG,Flow Control,FC-ENG site,IT equipment,74209.74,14129.39
+FA000612,FC-ENG,Flow Control,FC-ENG site,IT equipment,78142.49,61734.83
+FA000613,FC-ENG,Flow Control,FC-ENG site,IT equipment,67762.5,73296.73
+FA000614,FC-ENG,Flow Control,FC-ENG site,IT equipment,56066.98,50793.36
+FA000615,FC-ENG,Flow Control,FC-ENG site,Fixtures & fittings,61833.7,18064.16
+FA000616,FC-ENG,Flow Control,FC-ENG site,Leasehold improvements,95913.81,36960.74
+FA000617,FC-ENG,Flow Control,FC-ENG site,Plant & machinery,82045.88,17566.67
+FA000618,FC-ENG,Flow Control,FC-ENG site,IT equipment,72791.69,38525.72
+FA000619,FC-ENG,Flow Control,FC-ENG site,Fixtures & fittings,92006.02,50306.61
+FA000620,ES-OPS,Electrical Systems,ES-OPS site,IT equipment,56618.37,30254.02
+FA000621,ES-OPS,Electrical Systems,ES-OPS site,Plant & machinery,61061.64,59513.99
+FA000622,ES-OPS,Electrical Systems,ES-OPS site,Plant & machinery,97538.65,35083.23
+FA000623,ES-OPS,Electrical Systems,ES-OPS site,Plant & machinery,97487.13,39052.6
+FA000624,ES-OPS,Electrical Systems,ES-OPS site,Plant & machinery,62660.65,29553.39
+FA000625,ES-OPS,Electrical Systems,ES-OPS site,Plant & machinery,67968.82,26472.09
+FA000626,ES-OPS,Electrical Systems,ES-OPS site,Plant & machinery,83993.42,40380.68
+FA000627,ES-OPS,Electrical Systems,ES-OPS site,IT equipment,89591.42,25467.48
+FA000628,ES-OPS,Electrical Systems,ES-OPS site,Leasehold improvements,85302.92,22408.37
+FA000629,ES-OPS,Electrical Systems,ES-OPS site,Fixtures & fittings,86479.12,45504.96
+FA000630,ES-OPS,Electrical Systems,ES-OPS site,Plant & machinery,65396.39,23024.18
+FA000631,ES-OPS,Electrical Systems,ES-OPS site,Leasehold improvements,93636.83,67328.17
+FA000632,ES-OPS,Electrical Systems,ES-OPS site,IT equipment,66903.83,62382.55
+FA000633,ES-OPS,Electrical Systems,ES-OPS site,IT equipment,99359.19,74805.39
+FA000634,ES-OPS,Electrical Systems,ES-OPS site,Plant & machinery,85442.67,74159.7
+FA000635,ES-OPS,Electrical Systems,ES-OPS site,Leasehold improvements,85294.81,68314.45
+FA000636,ES-OPS,Electrical Systems,ES-OPS site,Leasehold improvements,86079.26,41863.89
+FA000637,ES-OPS,Electrical Systems,ES-OPS site,Plant & machinery,70949.23,27468.03
+FA000638,ES-OPS,Electrical Systems,ES-OPS site,Fixtures & fittings,95236.53,18619.29
+FA000639,ES-OPS,Electrical Systems,ES-OPS site,Leasehold improvements,91830.88,93024.98
+FA000640,ES-OPS,Electrical Systems,ES-OPS site,IT equipment,73440.58,39206.66
+FA000641,ES-OPS,Electrical Systems,ES-OPS site,Plant & machinery,70204.29,29325.3
+FA000642,ES-OPS,Electrical Systems,ES-OPS site,Plant & machinery,97992.6,40074.98
+FA000643,ES-OPS,Electrical Systems,ES-OPS site,Plant & machinery,86765.13,90285.42
+FA000644,ES-OPS,Electrical Systems,ES-OPS site,Fixtures & fittings,88825.32,28273.94
+FA000645,ES-OPS,Electrical Systems,ES-OPS site,Fixtures & fittings,85770.65,24359.55
+FA000646,ES-OPS,Electrical Systems,ES-OPS site,IT equipment,66424.39,25402.17
+FA000647,ES-OPS,Electrical Systems,ES-OPS site,Plant & machinery,83396.54,59208.64
+FA000648,ES-OPS,Electrical Systems,ES-OPS site,Leasehold improvements,73740.88,24196.01
+FA000649,ES-OPS,Electrical Systems,ES-OPS site,Leasehold improvements,58793.92,24121.66
+FA000650,ES-OPS,Electrical Systems,ES-OPS site,Fixtures & fittings,68818.04,35567.97
+FA000651,ES-OPS,Electrical Systems,ES-OPS site,IT equipment,93933.03,29121.02
+FA000652,ES-OPS,Electrical Systems,ES-OPS site,Plant & machinery,90072.35,61735.06
+FA000653,ES-OPS,Electrical Systems,ES-OPS site,IT equipment,64413.3,125380.86
+FA000654,ES-OPS,Electrical Systems,ES-OPS site,Motor vehicles,53700.08,14951.95
+FA000655,ES-OPS,Electrical Systems,ES-OPS site,Plant & machinery,56781.39,20481.58
+FA000656,ES-OPS,Electrical Systems,ES-OPS site,Plant & machinery,67964.82,47765.27
+FA000657,ES-OPS,Electrical Systems,ES-OPS site,Plant & machinery,94037.58,38606.91
+FA000658,ES-OPS,Electrical Systems,ES-OPS site,Fixtures & fittings,65345.93,27900.0
+FA000659,ES-OPS,Electrical Systems,ES-OPS site,Plant & machinery,69245.21,55387.87
+FA000660,ES-OPS,Electrical Systems,ES-OPS site,Plant & machinery,73189.06,43534.29
+FA000661,ES-OPS,Electrical Systems,ES-OPS site,Motor vehicles,93106.93,18627.39
+FA000662,ES-OPS,Electrical Systems,ES-OPS site,Plant & machinery,76057.64,26401.1
+FA000663,ES-OPS,Electrical Systems,ES-OPS site,Leasehold improvements,61699.02,34161.69
+FA000664,ES-OPS,Electrical Systems,ES-OPS site,Plant & machinery,79098.4,27236.76
+FA000665,ES-OPS,Electrical Systems,ES-OPS site,IT equipment,98137.47,22506.46
+FA000666,ES-OPS,Electrical Systems,ES-OPS site,Leasehold improvements,92787.33,21149.61
+FA000667,ES-OPS,Electrical Systems,ES-OPS site,Leasehold improvements,99184.8,48613.47
+FA000668,ES-OPS,Electrical Systems,ES-OPS site,Fixtures & fittings,69869.52,47448.75
+FA000669,ES-OPS,Electrical Systems,ES-OPS site,Plant & machinery,79420.3,39896.52
+FA000670,ES-OPS,Electrical Systems,ES-OPS site,Plant & machinery,72834.28,12899.7
+FA000671,ES-OPS,Electrical Systems,ES-OPS site,Leasehold improvements,81035.85,33271.95
+FA000672,ES-OPS,Electrical Systems,ES-OPS site,Fixtures & fittings,62726.48,29513.99
+FA000673,ES-OPS,Electrical Systems,ES-OPS site,Plant & machinery,58044.01,40124.39
+FA000674,ES-OPS,Electrical Systems,ES-OPS site,IT equipment,78051.6,13558.69
+FA000675,ES-OPS,Electrical Systems,ES-OPS site,Plant & machinery,60635.76,40733.76
+FA000676,ES-OPS,Electrical Systems,ES-OPS site,Plant & machinery,54471.11,34466.06
+FA000677,ES-OPS,Electrical Systems,ES-OPS site,Plant & machinery,73231.56,17722.79
+FA000678,ES-OPS,Electrical Systems,ES-OPS site,Leasehold improvements,67623.97,13613.8
+FA000679,ES-OPS,Electrical Systems,ES-OPS site,Plant & machinery,78106.05,43105.23
+FA000680,ES-OPS,Electrical Systems,ES-OPS site,IT equipment,84781.5,22726.33
+FA000681,ES-OPS,Electrical Systems,ES-OPS site,IT equipment,86561.94,52038.11
+FA000682,ES-OPS,Electrical Systems,ES-OPS site,IT equipment,76889.53,46828.82
+FA000683,ES-OPS,Electrical Systems,ES-OPS site,Leasehold improvements,75364.89,55003.54
+FA000684,ES-OPS,Electrical Systems,ES-OPS site,IT equipment,88299.26,35745.95
+FA000685,ES-OPS,Electrical Systems,ES-OPS site,IT equipment,82823.73,31149.36
+FA000686,ES-OPS,Electrical Systems,ES-OPS site,Leasehold improvements,92808.05,26871.09
+FA000687,ES-OPS,Electrical Systems,ES-OPS site,Plant & machinery,54558.06,38549.8
+FA000688,ES-OPS,Electrical Systems,ES-OPS site,Plant & machinery,83646.05,33675.03
+FA000689,ES-OPS,Electrical Systems,ES-OPS site,Fixtures & fittings,54148.37,89696.82
+FA000690,ES-OPS,Electrical Systems,ES-OPS site,IT equipment,55727.82,77185.7
+FA000691,ES-OPS,Electrical Systems,ES-OPS site,Plant & machinery,92306.8,58652.87
+FA000692,ES-OPS,Electrical Systems,ES-OPS site,Plant & machinery,55029.96,14339.72
+FA000693,ES-OPS,Electrical Systems,ES-OPS site,Leasehold improvements,63941.92,38564.95
+FA000694,ES-OPS,Electrical Systems,ES-OPS site,IT equipment,86971.25,20863.89
+FA000695,ES-OPS,Electrical Systems,ES-OPS site,Plant & machinery,66806.13,21214.19
+FA000696,ES-OPS,Electrical Systems,ES-OPS site,Plant & machinery,71034.32,32452.87
+FA000697,ES-OPS,Electrical Systems,ES-OPS site,Plant & machinery,67122.21,26915.95
+FA000698,ES-OPS,Electrical Systems,ES-OPS site,Plant & machinery,75316.44,30863.82
+FA000699,ES-OPS,Electrical Systems,ES-OPS site,Plant & machinery,94856.65,89261.02
+FA000700,ES-OPS,Electrical Systems,ES-OPS site,Plant & machinery,61800.53,27498.89
+FA000701,ES-OPS,Electrical Systems,ES-OPS site,Fixtures & fittings,59920.74,34206.73
+FA000702,ES-OPS,Electrical Systems,ES-OPS site,Fixtures & fittings,68874.32,14141.6
+FA000703,ES-OPS,Electrical Systems,ES-OPS site,IT equipment,67625.32,38055.23
+FA000704,ES-OPS,Electrical Systems,ES-OPS site,Leasehold improvements,90558.03,24591.51
+FA000705,ES-OPS,Electrical Systems,ES-OPS site,IT equipment,78927.59,28792.86
+FA000706,ES-OPS,Electrical Systems,ES-OPS site,IT equipment,67398.81,51530.35
+FA000707,ES-OPS,Electrical Systems,ES-OPS site,Fixtures & fittings,68002.21,29200.73
+FA000708,ES-OPS,Electrical Systems,ES-OPS site,Plant & machinery,97021.85,58219.9
+FA000709,ES-OPS,Electrical Systems,ES-OPS site,Plant & machinery,54396.26,57583.19
+FA000710,ES-OPS,Electrical Systems,ES-OPS site,Plant & machinery,77416.81,34066.89
+FA000711,ES-OPS,Electrical Systems,ES-OPS site,Leasehold improvements,84144.9,21526.8
+FA000712,ES-OPS,Electrical Systems,ES-OPS site,Plant & machinery,92133.88,26902.96
+FA000713,ES-OPS,Electrical Systems,ES-OPS site,Plant & machinery,95936.8,40504.69
+FA000714,ES-OPS,Electrical Systems,ES-OPS site,Plant & machinery,94759.84,41016.07
+FA000715,ES-OPS,Electrical Systems,ES-OPS site,Fixtures & fittings,94112.0,17311.38
+FA000716,ES-OPS,Electrical Systems,ES-OPS site,Plant & machinery,66054.95,77269.17
+FA000717,ES-OPS,Electrical Systems,ES-OPS site,IT equipment,91971.46,37821.25
+FA000718,ES-OPS,Electrical Systems,ES-OPS site,IT equipment,75868.89,16667.72
+FA000719,ES-OPS,Electrical Systems,ES-OPS site,Plant & machinery,95602.06,76155.63
+FA000720,ES-OPS,Electrical Systems,ES-OPS site,Motor vehicles,91949.24,10125.69
+FA000721,ES-OPS,Electrical Systems,ES-OPS site,Plant & machinery,98729.54,42190.23
+FA000722,ES-OPS,Electrical Systems,ES-OPS site,IT equipment,92801.6,28386.98
+FA000723,ES-OPS,Electrical Systems,ES-OPS site,IT equipment,67803.54,30306.95
+FA000724,ES-OPS,Electrical Systems,ES-OPS site,Plant & machinery,75295.5,28668.82
+FA000725,ES-OPS,Electrical Systems,ES-OPS site,IT equipment,61468.35,46425.96
+FA000726,ES-OPS,Electrical Systems,ES-OPS site,Plant & machinery,66890.78,78159.26
+FA000727,ES-OPS,Electrical Systems,ES-OPS site,Plant & machinery,61287.05,35635.68
+FA000728,ES-OPS,Electrical Systems,ES-OPS site,IT equipment,67945.53,97751.81
+FA000729,ES-OPS,Electrical Systems,ES-OPS site,IT equipment,89024.84,25057.02
+FA000730,ES-OPS,Electrical Systems,ES-OPS site,Leasehold improvements,79702.57,56637.47
+FA000731,ES-OPS,Electrical Systems,ES-OPS site,Plant & machinery,54732.95,13883.07
+FA000732,ES-OPS,Electrical Systems,ES-OPS site,IT equipment,71510.72,19745.52
+FA000733,ES-OPS,Electrical Systems,ES-OPS site,Leasehold improvements,66559.74,22956.25
+FA000734,ES-SALES,Electrical Systems,ES-SALES site,Leasehold improvements,90561.84,19892.73
+FA000735,ES-SALES,Electrical Systems,ES-SALES site,IT equipment,74533.41,15944.24
+FA000736,ES-SALES,Electrical Systems,ES-SALES site,IT equipment,67936.95,57356.26
+FA000737,ES-SALES,Electrical Systems,ES-SALES site,Leasehold improvements,56131.44,30522.97
+FA000738,ES-SALES,Electrical Systems,ES-SALES site,IT equipment,95448.05,27051.54
+FA000739,ES-SALES,Electrical Systems,ES-SALES site,IT equipment,80313.74,24435.28
+FA000740,ES-SALES,Electrical Systems,ES-SALES site,IT equipment,72162.71,29349.46
+FA000741,ES-SALES,Electrical Systems,ES-SALES site,Plant & machinery,78428.4,16996.85
+FA000742,ES-SALES,Electrical Systems,ES-SALES site,Fixtures & fittings,77270.85,47414.83
+FA000743,ES-SALES,Electrical Systems,ES-SALES site,Leasehold improvements,61797.1,31845.56
+FA000744,ES-SALES,Electrical Systems,ES-SALES site,Motor vehicles,66164.53,89278.55
+FA000745,ES-SALES,Electrical Systems,ES-SALES site,Plant & machinery,65967.69,38683.19
+FA000746,ES-SALES,Electrical Systems,ES-SALES site,Motor vehicles,56392.42,55176.19
+FA000747,ES-SALES,Electrical Systems,ES-SALES site,Fixtures & fittings,89064.54,50525.58
+FA000748,ES-SALES,Electrical Systems,ES-SALES site,Leasehold improvements,69988.27,35239.23
+FA000749,ES-SALES,Electrical Systems,ES-SALES site,IT equipment,62565.69,31601.51
+FA000750,ES-SALES,Electrical Systems,ES-SALES site,Fixtures & fittings,72648.53,21162.36
+FA000751,ES-SALES,Electrical Systems,ES-SALES site,Plant & machinery,56963.89,66474.89
+FA000752,ES-SALES,Electrical Systems,ES-SALES site,Motor vehicles,95270.99,38864.94
+FA000753,ES-SALES,Electrical Systems,ES-SALES site,Leasehold improvements,76356.96,69251.69
+FA000754,ES-SALES,Electrical Systems,ES-SALES site,IT equipment,91250.73,40181.83
+FA000755,ES-SALES,Electrical Systems,ES-SALES site,IT equipment,89526.59,30631.03
+FA000756,ES-SALES,Electrical Systems,ES-SALES site,Plant & machinery,91560.15,34152.3
+FA000757,ES-SALES,Electrical Systems,ES-SALES site,Plant & machinery,57975.38,16340.2
+FA000758,ES-SALES,Electrical Systems,ES-SALES site,IT equipment,74755.7,22246.76
+FA000759,ES-SALES,Electrical Systems,ES-SALES site,IT equipment,92860.09,43303.1
+FA000760,ES-SALES,Electrical Systems,ES-SALES site,Fixtures & fittings,70086.45,52269.25
+FA000761,ES-SALES,Electrical Systems,ES-SALES site,Plant & machinery,60595.26,26877.96
+FA000762,ES-SALES,Electrical Systems,ES-SALES site,Plant & machinery,96532.2,67700.21
+FA000763,ES-SALES,Electrical Systems,ES-SALES site,Fixtures & fittings,55164.64,22040.5
+FA000764,ES-SALES,Electrical Systems,ES-SALES site,Plant & machinery,99541.54,68056.96
+FA000765,ES-SALES,Electrical Systems,ES-SALES site,Plant & machinery,86640.2,28141.29
+FA000766,ES-SALES,Electrical Systems,ES-SALES site,Plant & machinery,74262.04,25568.43
+FA000767,ES-SALES,Electrical Systems,ES-SALES site,Plant & machinery,59466.78,80125.23
+FA000768,ES-SALES,Electrical Systems,ES-SALES site,IT equipment,70884.66,47800.02
+FA000769,ES-SALES,Electrical Systems,ES-SALES site,Plant & machinery,55802.49,32159.97
+FA000770,ES-SALES,Electrical Systems,ES-SALES site,Leasehold improvements,65502.6,16683.62
+FA000771,ES-SALES,Electrical Systems,ES-SALES site,Plant & machinery,78726.15,54659.76
+FA000772,ES-SALES,Electrical Systems,ES-SALES site,Leasehold improvements,60917.2,33186.77
+FA000773,ES-SALES,Electrical Systems,ES-SALES site,Motor vehicles,82902.95,32313.25
+FA000774,ES-SALES,Electrical Systems,ES-SALES site,Plant & machinery,92236.59,49400.04
+FA000775,ES-SALES,Electrical Systems,ES-SALES site,Plant & machinery,58747.8,96475.73
+FA000776,ES-SALES,Electrical Systems,ES-SALES site,Plant & machinery,82133.08,40824.77
+FA000777,ES-ENG,Electrical Systems,ES-ENG site,Plant & machinery,62102.54,53611.36
+FA000778,ES-ENG,Electrical Systems,ES-ENG site,Plant & machinery,75860.73,29102.15
+FA000779,ES-ENG,Electrical Systems,ES-ENG site,Plant & machinery,60095.91,32292.11
+FA000780,ES-ENG,Electrical Systems,ES-ENG site,Motor vehicles,63583.78,79089.88
+FA000781,ES-ENG,Electrical Systems,ES-ENG site,Leasehold improvements,58707.12,15640.55
+FA000782,ES-ENG,Electrical Systems,ES-ENG site,Plant & machinery,81073.47,33504.82
+FA000783,ES-ENG,Electrical Systems,ES-ENG site,IT equipment,72628.37,44021.51
+FA000784,ES-ENG,Electrical Systems,ES-ENG site,Plant & machinery,100392.87,43219.65
+FA000785,ES-ENG,Electrical Systems,ES-ENG site,Motor vehicles,72056.01,15598.17
+FA000786,ES-ENG,Electrical Systems,ES-ENG site,IT equipment,56266.88,28371.99
+FA000787,ES-ENG,Electrical Systems,ES-ENG site,Plant & machinery,90883.82,51394.34
+FA000788,ES-ENG,Electrical Systems,ES-ENG site,Plant & machinery,101324.65,70010.19
+FA000789,ES-ENG,Electrical Systems,ES-ENG site,Plant & machinery,80847.13,30273.38
+FA000790,SH-IT,,Shared site,Plant & machinery,82859.46,24170.04
+FA000791,SH-IT,,Shared site,Leasehold improvements,61027.94,57996.93
+FA000792,SH-IT,,Shared site,IT equipment,79889.97,36991.61
+FA000793,SH-IT,,Shared site,Plant & machinery,101932.26,38381.37
+FA000794,SH-IT,,Shared site,Motor vehicles,99559.89,30728.65
+FA000795,SH-IT,,Shared site,Plant & machinery,97295.54,18339.68
+FA000796,SH-HR,,Shared site,Plant & machinery,84912.43,37100.58
+FA000797,SH-HR,,Shared site,Plant & machinery,70038.13,16776.23
+FA000798,SH-HR,,Shared site,Plant & machinery,77542.49,32000.21
+FA000799,SH-HR,,Shared site,Leasehold improvements,80732.74,37523.54
+FA000800,SH-HR,,Shared site,Motor vehicles,66844.47,54280.73
+FA000801,SH-HR,,Shared site,Leasehold improvements,68730.3,39821.22
+FA000802,SH-HR,,Shared site,IT equipment,106214.99,11268.21
+FA000803,SH-FIN,,Shared site,Leasehold improvements,71224.45,44016.37
+FA000804,SH-FIN,,Shared site,IT equipment,86401.46,26637.3
+FA000805,SH-FIN,,Shared site,Plant & machinery,89617.43,26156.39
+FA000806,SH-FIN,,Shared site,Fixtures & fittings,58084.2,44029.42
+FA000807,SH-FIN,,Shared site,Plant & machinery,77737.05,18799.48
+FA000808,SH-FIN,,Shared site,Leasehold improvements,77516.53,39112.52
+FA000809,SH-FIN,,Shared site,Plant & machinery,58431.36,30165.04
+FA000810,SH-FAC,,Shared site,Plant & machinery,72503.84,23504.85
+FA000811,SH-FAC,,Shared site,Plant & machinery,68035.85,21091.47
+FA000812,SH-FAC,,Shared site,Fixtures & fittings,68507.97,8391.0
+FA000813,SH-FAC,,Shared site,IT equipment,90689.13,47930.04
+FA000814,SH-FAC,,Shared site,Plant & machinery,95337.32,26542.83
+FA000815,SH-FAC,,Shared site,Leasehold improvements,63480.9,17356.86
+FA000816,SH-FAC,,Shared site,Plant & machinery,59456.86,24778.67
+FA000817,SH-FAC,,Shared site,Motor vehicles,90024.45,21892.87
+FA000818,SH-FAC,,Shared site,Leasehold improvements,75724.88,40827.71
+FA000819,SH-FAC,,Shared site,Plant & machinery,78386.43,25466.6
+FA000820,SH-FAC,,Shared site,Plant & machinery,97632.02,39224.95
+FA000821,SH-FAC,,Shared site,Fixtures & fittings,94536.64,73532.13
+FA000822,SH-PROC,,Shared site,Plant & machinery,64763.75,27535.7
+FA000823,SH-PROC,,Shared site,Plant & machinery,97994.01,56595.05
+FA000824,SH-PROC,,Shared site,IT equipment,107450.93,52849.33
+FA000825,SH-PROC,,Shared site,IT equipment,82228.27,24369.83
+FA000826,CO-EXEC,,Shared site,IT equipment,61503.69,22514.26
+FA000827,CO-EXEC,,Shared site,Leasehold improvements,73752.8,28354.68
+FA000828,CO-EXEC,,Shared site,Plant & machinery,71693.15,69884.72
+FA000829,CO-EXEC,,Shared site,Fixtures & fittings,67660.23,27422.7
+FA000830,CO-EXEC,,Shared site,Plant & machinery,96939.04,25921.88
+FA000831,CO-LEGAL,,Shared site,Leasehold improvements,49951.13,30217.39
+FA000832,CO-LEGAL,,Shared site,Plant & machinery,57848.18,35875.53
+FA000833,CO-LEGAL,,Shared site,Plant & machinery,70862.68,26965.42
+FA000834,CO-TREAS,,Shared site,Fixtures & fittings,51048.32,18284.44
+FA000835,CO-TREAS,,Shared site,IT equipment,31895.06,43295.13
+FA000836,CO-TREAS,,Shared site,Plant & machinery,54762.09,20409.5
+FA000837,CO-IR,,Shared site,Plant & machinery,32599.98,16158.02
+FA000838,CO-IR,,Shared site,Plant & machinery,23471.03,11374.21
+FA000839,CO-IR,,Shared site,IT equipment,28071.93,24483.36

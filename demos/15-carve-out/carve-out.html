@@ -1,0 +1,1254 @@
+<title>Project Kiln Carve-Out</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;450;500;600;700&display=swap">
+<style>
+:root{
+  --ground:#eef1f5; --surface:#ffffff; --surface-2:#e4e9ef; --surface-3:#f6f8fa;
+  --ink:#101519; --ink-2:#495568; --ink-3:#79869a; --rule:#d5dce5; --rule-2:#c0cad6;
+  --accent:#173a5e; --accent-soft:#dce8f5;
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a;
+  --pos:#2a78d6; --neg:#e34948; --total:#334155;
+  --good:#0ca30c; --warn:#fab219; --serious:#ec835a; --crit:#d03b3b;
+  --chip-good:#e3f4e3; --chip-warn:#fdf1d6; --chip-serious:#fbe7dd; --chip-neutral:#e7ebf1;
+  --shadow:0 1px 2px rgba(16,21,25,.06), 0 8px 24px -12px rgba(16,21,25,.18);
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --ground:#0f1318; --surface:#171c23; --surface-2:#232a34; --surface-3:#1b2129;
+  --ink:#eef2f7; --ink-2:#aab6c6; --ink-3:#78859a; --rule:#2a323d; --rule-2:#3a4450;
+  --accent:#8fb8e2; --accent-soft:#1d2c3d;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70;
+  --pos:#3987e5; --neg:#e66767; --total:#94a3b5;
+  --chip-good:#12301a; --chip-warn:#332709; --chip-serious:#33210f; --chip-neutral:#242b35;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --ground:#0f1318; --surface:#171c23; --surface-2:#232a34; --surface-3:#1b2129;
+  --ink:#eef2f7; --ink-2:#aab6c6; --ink-3:#78859a; --rule:#2a323d; --rule-2:#3a4450;
+  --accent:#8fb8e2; --accent-soft:#1d2c3d;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70;
+  --pos:#3987e5; --neg:#e66767; --total:#94a3b5;
+  --chip-good:#12301a; --chip-warn:#332709; --chip-serious:#33210f; --chip-neutral:#242b35;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--ground); color:var(--ink);
+  font-family:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  font-size:16px; line-height:1.6; -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1120px; margin:0 auto; padding-inline:clamp(16px,4vw,40px)}
+h1,h2,h3{text-wrap:balance; margin:0}
+h1{font-family:Newsreader,Georgia,serif; font-weight:500; font-size:clamp(2rem,4.6vw,2.9rem); line-height:1.1; letter-spacing:-.015em}
+h2{font-family:Newsreader,Georgia,serif; font-weight:500; font-size:clamp(1.4rem,3vw,1.85rem); line-height:1.2; letter-spacing:-.01em}
+h3{font-size:1rem; font-weight:600; letter-spacing:-.005em}
+p{margin:0}
+a{color:var(--accent)}
+.label{font-size:.7rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-3)}
+.lede{font-size:1.06rem; color:var(--ink-2); max-width:66ch}
+.small{font-size:.84rem; color:var(--ink-2)}
+.tiny{font-size:.76rem; color:var(--ink-3)}
+.num{font-family:"IBM Plex Mono",ui-monospace,monospace; font-variant-numeric:tabular-nums}
+
+/* ---------- top bar ---------- */
+.topbar{position:sticky; top:0; z-index:40; background:color-mix(in srgb,var(--ground) 88%,transparent);
+  backdrop-filter:blur(10px); border-bottom:1px solid var(--rule)}
+.topbar .wrap{display:flex; align-items:center; gap:20px; height:52px}
+.brandmark{display:flex; align-items:center; gap:9px; font-weight:600; font-size:.9rem; white-space:nowrap}
+.brandmark i{width:9px; height:9px; border-radius:2px; background:var(--s1); display:block}
+.navlinks{display:flex; gap:18px; margin-left:auto; overflow-x:auto; scrollbar-width:none}
+.navlinks::-webkit-scrollbar{display:none}
+.navlinks a{color:var(--ink-2); text-decoration:none; font-size:.83rem; white-space:nowrap; padding:4px 0; border-bottom:2px solid transparent}
+.navlinks a:hover{color:var(--ink); border-bottom-color:var(--rule-2)}
+@media (max-width:720px){ .navlinks{display:none} }
+
+/* ---------- header ---------- */
+header.hero{padding-block:clamp(34px,6vw,60px) 30px}
+.eyebrow{display:flex; align-items:center; gap:10px; margin-bottom:16px; flex-wrap:wrap}
+.eyebrow span{color:var(--ink-3)}
+.codename{background:var(--accent-soft); color:var(--accent); padding:2px 9px; border-radius:3px; font-weight:600}
+.metarow{display:flex; flex-wrap:wrap; gap:0; margin-top:26px; border-top:1px solid var(--rule); border-bottom:1px solid var(--rule)}
+.metarow div{flex:1 1 165px; padding:13px 18px 13px 0; border-right:1px solid var(--rule)}
+.metarow div:last-child{border-right:0}
+.metarow dt{font-size:.7rem; font-weight:600; letter-spacing:.09em; text-transform:uppercase; color:var(--ink-3); margin-bottom:3px}
+.metarow dd{margin:0; font-size:.9rem; font-weight:450}
+
+/* ---------- verdict ---------- */
+.verdict{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:1px; background:var(--rule);
+  border:1px solid var(--rule); border-radius:6px; overflow:hidden; margin-block:8px 26px}
+.verdict > div{background:var(--surface); padding:24px 26px 22px}
+.verdict .fig{font-size:clamp(2.4rem,6.5vw,3.4rem); font-weight:600; line-height:1; letter-spacing:-.03em; margin:10px 0 6px}
+.verdict .reported .fig{color:var(--ink)}
+.verdict .underlying .fig{color:var(--neg)}
+.verdict .cap{font-size:.85rem; color:var(--ink-2)}
+@media (max-width:620px){ .verdict{grid-template-columns:1fr} }
+.thesis{background:var(--surface); border:1px solid var(--rule); border-left:3px solid var(--s2);
+  border-radius:4px; padding:20px 24px; margin-bottom:40px; font-size:1.02rem; color:var(--ink-2); max-width:none}
+.thesis strong{color:var(--ink); font-weight:600}
+
+/* ---------- sections ---------- */
+section{padding-block:34px; border-top:1px solid var(--rule)}
+.sechead{display:flex; align-items:baseline; gap:16px; flex-wrap:wrap; margin-bottom:8px}
+.sechead .amt{font-family:"IBM Plex Mono",monospace; font-size:.82rem; font-weight:500; color:var(--ink-3);
+  background:var(--surface-2); padding:3px 9px; border-radius:3px; white-space:nowrap}
+.secintro{margin-block:12px 26px}
+@media (max-width:620px){ .sechead .amt{white-space:normal} }
+
+/* ---------- panels & charts ---------- */
+.panel{background:var(--surface); border:1px solid var(--rule); border-radius:6px; padding:22px clamp(14px,2.4vw,24px)}
+.panelhead{display:flex; align-items:flex-start; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-bottom:6px}
+.chart{width:100%; min-height:60px}
+.chart svg{display:block; width:100%; height:auto; overflow:visible}
+figcaption{font-size:.78rem; color:var(--ink-3); margin-top:12px; line-height:1.5}
+.grid2{display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:18px}
+.grid3{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:18px}
+
+/* ---------- controls ---------- */
+.controls{display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-bottom:18px}
+.tabs{display:inline-flex; background:var(--surface-2); border-radius:5px; padding:3px; gap:2px}
+.tabs button{appearance:none; border:0; background:transparent; color:var(--ink-2); font:inherit; font-size:.84rem;
+  font-weight:500; padding:6px 13px; border-radius:3px; cursor:pointer; white-space:nowrap}
+.tabs button[aria-selected="true"]{background:var(--surface); color:var(--ink); box-shadow:0 1px 2px rgba(0,0,0,.10); font-weight:600}
+.tabs button:focus-visible, .toggle:focus-visible{outline:2px solid var(--s1); outline-offset:2px}
+.toggle{appearance:none; border:1px solid var(--rule-2); background:var(--surface); color:var(--ink-2); font:inherit;
+  font-size:.8rem; font-weight:500; padding:6px 12px; border-radius:5px; cursor:pointer; display:inline-flex; align-items:center; gap:7px}
+.toggle[aria-pressed="true"]{border-color:var(--s1); color:var(--ink); background:var(--accent-soft)}
+.toggle i{width:8px; height:8px; border-radius:50%; background:var(--rule-2); display:block}
+.toggle[aria-pressed="true"] i{background:var(--s1)}
+
+/* ---------- legend ---------- */
+.legend{display:flex; gap:16px; flex-wrap:wrap; align-items:center; font-size:.8rem; color:var(--ink-2); margin-top:14px}
+.legend span{display:inline-flex; align-items:center; gap:7px}
+.legend b{width:11px; height:11px; border-radius:2px; display:block}
+
+/* ---------- tables ---------- */
+.tablewrap{overflow-x:auto; margin-top:4px}
+table{border-collapse:collapse; width:100%; font-size:.85rem; min-width:480px}
+th,td{text-align:right; padding:9px 10px; border-bottom:1px solid var(--rule); white-space:nowrap}
+th:first-child,td:first-child{text-align:left; white-space:normal}
+thead th{font-size:.7rem; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-3);
+  border-bottom:1px solid var(--rule-2); vertical-align:bottom}
+tbody tr:last-child td{border-bottom:0}
+tbody tr.totalrow td{border-top:1px solid var(--rule-2); font-weight:600; background:var(--surface-3)}
+td.n{font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums}
+td.neg{color:var(--neg)}
+.bar-cell{position:relative; min-width:96px}
+.bar-cell i{position:absolute; left:10px; top:50%; transform:translateY(-50%); height:9px; border-radius:2px; display:block}
+
+/* ---------- chips ---------- */
+.chip{display:inline-flex; align-items:center; gap:6px; font-size:.74rem; font-weight:600; padding:2px 8px; border-radius:3px; white-space:nowrap}
+.chip i{width:7px; height:7px; border-radius:50%; display:block; flex:none}
+.chip.good{background:var(--chip-good); color:var(--good)} .chip.good i{background:var(--good)}
+.chip.warn{background:var(--chip-warn); color:#8a6200} .chip.warn i{background:var(--warn)}
+.chip.serious{background:var(--chip-serious); color:#a8501f} .chip.serious i{background:var(--serious)}
+.chip.neutral{background:var(--chip-neutral); color:var(--ink-2)} .chip.neutral i{background:var(--ink-3)}
+:root[data-theme="dark"] .chip.warn, :root[data-theme="dark"] .chip.serious{color:var(--ink)}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]) .chip.warn,
+  :root:not([data-theme="light"]) .chip.serious{color:var(--ink)} }
+
+/* ---------- stat tiles ---------- */
+.stats{display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:1px; background:var(--rule);
+  border:1px solid var(--rule); border-radius:6px; overflow:hidden}
+.stat{background:var(--surface); padding:16px 18px}
+.stat .v{font-size:1.6rem; font-weight:600; line-height:1.15; letter-spacing:-.02em; margin:6px 0 3px}
+.stat .k{font-size:.7rem; font-weight:600; letter-spacing:.09em; text-transform:uppercase; color:var(--ink-3)}
+.stat .d{font-size:.78rem; color:var(--ink-3); line-height:1.45}
+
+/* ---------- callout ---------- */
+.callout{border:1px solid var(--rule); border-left:3px solid var(--crit); background:var(--surface);
+  border-radius:4px; padding:18px 22px; display:grid; gap:8px}
+.callout.ok{border-left-color:var(--good)}
+.callout h3{display:flex; align-items:center; gap:9px}
+.callout h3::before{content:""; width:7px; height:7px; border-radius:50%; background:var(--crit); flex:none}
+.callout.ok h3::before{background:var(--good)}
+
+/* ---------- lists ---------- */
+ol.qs{counter-reset:q; list-style:none; padding:0; margin:0; display:grid; gap:14px}
+ol.qs li{counter-increment:q; display:grid; grid-template-columns:auto 1fr; gap:14px; align-items:start}
+ol.qs li::before{content:"Q" counter(q); font-family:"IBM Plex Mono",monospace; font-size:.74rem; font-weight:600;
+  color:var(--accent); background:var(--accent-soft); padding:3px 7px; border-radius:3px; margin-top:2px}
+ul.plain{list-style:none; padding:0; margin:0; display:grid; gap:10px}
+ul.plain li{display:grid; grid-template-columns:auto 1fr; gap:11px; align-items:start; font-size:.9rem; color:var(--ink-2)}
+ul.plain li::before{content:""; width:5px; height:5px; border-radius:50%; background:var(--rule-2); margin-top:9px}
+code{font-family:"IBM Plex Mono",monospace; font-size:.86em; background:var(--surface-2); padding:1px 5px; border-radius:3px}
+.formula{font-family:"IBM Plex Mono",monospace; font-size:.82rem; background:var(--surface-3); border:1px solid var(--rule);
+  border-radius:4px; padding:14px 16px; overflow-x:auto; white-space:pre; line-height:1.7; color:var(--ink-2)}
+
+/* ---------- tooltip ---------- */
+#tip{position:fixed; z-index:80; pointer-events:none; opacity:0; transition:opacity .1s;
+  background:var(--surface); color:var(--ink); border:1px solid var(--rule-2); border-radius:5px;
+  box-shadow:var(--shadow); padding:9px 12px; font-size:.8rem; line-height:1.5; max-width:270px}
+#tip .t{font-weight:600; margin-bottom:3px}
+#tip .r{display:flex; justify-content:space-between; gap:16px}
+#tip .r span:last-child{font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums}
+
+footer{padding-block:34px 60px; border-top:1px solid var(--rule); color:var(--ink-3); font-size:.82rem}
+[hidden]{display:none !important}
+@media (prefers-reduced-motion:reduce){ *{transition:none !important; animation:none !important} }
+
+/* ---------- verdict chips: critical state ---------- */
+.chip.crit{background:var(--chip-crit); color:var(--crit)} .chip.crit i{background:var(--crit)}
+:root{--chip-crit:#fbe3e3}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){--chip-crit:#3a1717} }
+:root[data-theme="dark"]{--chip-crit:#3a1717}
+
+/* ---------- claim scorecard ---------- */
+.claim{border-bottom:1px solid var(--rule)}
+.claim:last-child{border-bottom:0}
+.claimhead{width:100%; appearance:none; background:transparent; border:0; font:inherit; color:inherit;
+  text-align:left; cursor:pointer; display:grid; align-items:center; gap:16px; padding:15px 6px;
+  grid-template-columns:38px minmax(0,1fr) 150px 104px 132px}
+.claimhead:hover{background:var(--surface-3)}
+.claimhead:focus-visible{outline:2px solid var(--s1); outline-offset:-2px}
+.claimhead .cid{font-family:"IBM Plex Mono",monospace; font-size:.76rem; font-weight:600; color:var(--ink-3)}
+.claimhead .ctext{font-size:.93rem; line-height:1.45}
+.claimhead .ctext em{display:block; font-style:normal; font-size:.76rem; color:var(--ink-3); margin-top:3px}
+.divbar{display:block; position:relative; height:22px; background:var(--surface-2); border-radius:3px; overflow:hidden}
+.divbar::before{content:""; position:absolute; left:50%; top:0; bottom:0; width:1px; background:var(--rule-2)}
+.divbar i{position:absolute; top:4px; bottom:4px; border-radius:2px; display:block}
+.divbar b{position:absolute; right:6px; top:50%; transform:translateY(-50%); font-family:"IBM Plex Mono",monospace;
+  font-size:.72rem; font-weight:600; color:var(--ink-2)}
+.meter{display:flex; flex-direction:column; gap:4px}
+.meter u{height:6px; background:var(--surface-2); border-radius:3px; display:block; text-decoration:none; position:relative}
+.meter u i{position:absolute; left:0; top:0; bottom:0; border-radius:3px; background:var(--ink-3); display:block}
+.meter s{text-decoration:none; font-size:.7rem; color:var(--ink-3); font-family:"IBM Plex Mono",monospace}
+.claimbody{padding:2px 6px 20px 56px; display:grid; gap:14px}
+@media (max-width:860px){
+  .claimhead{grid-template-columns:34px minmax(0,1fr); gap:8px 12px}
+  .claimhead .cscore, .claimhead .cconf{grid-column:2}
+  .claimhead .cverdict{grid-column:2; justify-self:start}
+  .claimbody{padding-left:12px}
+}
+
+/* ---------- entity board (bidders, portcos, workstreams) ---------- */
+.board{display:grid}
+.brow{display:grid; gap:14px; align-items:center; padding:16px 6px; border-bottom:1px solid var(--rule);
+  grid-template-columns:minmax(0,1.5fr) 108px 108px minmax(120px,1fr) minmax(0,1.4fr)}
+.brow:last-child{border-bottom:0}
+.brow .who{display:grid; gap:3px}
+.brow .who strong{font-size:.95rem; font-weight:600}
+.brow .who span{font-size:.76rem; color:var(--ink-3)}
+.brow .flags{display:flex; flex-wrap:wrap; gap:6px}
+.brow .mini{display:flex; gap:14px; font-size:.75rem; color:var(--ink-3); flex-wrap:wrap}
+.brow .mini b{display:block; font-family:"IBM Plex Mono",monospace; font-size:.86rem; font-weight:600; color:var(--ink)}
+@media (max-width:900px){ .brow{grid-template-columns:minmax(0,1fr) 100px 100px} 
+  .brow .spark, .brow .flags{grid-column:1 / -1} }
+
+/* ---------- ordinal ramp: stage pipelines, funnel steps, tiers ---------- */
+:root{--ord1:#86b6ef; --ord2:#5598e7; --ord3:#2a78d6; --ord4:#1c5cab; --ord5:#104281}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --ord1:#184f95; --ord2:#256abf; --ord3:#3987e5; --ord4:#86b6ef; --ord5:#cde2fb} }
+:root[data-theme="dark"]{--ord1:#184f95; --ord2:#256abf; --ord3:#3987e5; --ord4:#86b6ef; --ord5:#cde2fb}
+.stagebar{display:flex; height:10px; border-radius:3px; overflow:hidden; gap:2px; background:var(--surface-2)}
+.stagebar i{display:block; min-width:2px}
+
+/* ---------- code ---------- */
+:root{
+  --code-bg:#f6f8fb; --code-rule:#dde4ec; --code-ink:#1c2430;
+  --code-kw:#8250df; --code-str:#0a7a4f; --code-num:#b3541e; --code-com:#79869a;
+  --code-fn:#0550ae; --code-op:#495568; --code-cls:#0b6b6b;
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --code-bg:#10151b; --code-rule:#252d38; --code-ink:#dbe3ec;
+  --code-kw:#c0a6f5; --code-str:#56d4a0; --code-num:#f0883e; --code-com:#7f8a99;
+  --code-fn:#79b8ff; --code-op:#aab6c6; --code-cls:#4fd1c5;
+}}
+:root[data-theme="dark"]{
+  --code-bg:#10151b; --code-rule:#252d38; --code-ink:#dbe3ec;
+  --code-kw:#c0a6f5; --code-str:#56d4a0; --code-num:#f0883e; --code-com:#7f8a99;
+  --code-fn:#79b8ff; --code-op:#aab6c6; --code-cls:#4fd1c5;
+}
+.codewrap{border:1px solid var(--code-rule); border-radius:6px; overflow:hidden; background:var(--code-bg)}
+.codebar{display:flex; align-items:center; gap:8px; padding:7px 10px 7px 12px;
+  border-bottom:1px solid var(--code-rule); background:var(--code-bg)}
+.codebar .lang{font-family:"IBM Plex Mono",monospace; font-size:.7rem; font-weight:600;
+  letter-spacing:.07em; text-transform:uppercase; color:var(--code-com)}
+.codebar .spacer{flex:1}
+.codebar button{appearance:none; border:1px solid transparent; background:transparent; color:var(--code-com);
+  font:inherit; font-size:.72rem; font-weight:600; padding:3px 8px; border-radius:4px; cursor:pointer}
+.codebar button:hover{color:var(--code-ink); border-color:var(--code-rule)}
+.codebar button[aria-selected="true"]{color:var(--code-ink); background:var(--surface); border-color:var(--code-rule)}
+.codebar button:focus-visible{outline:2px solid var(--s1); outline-offset:1px}
+pre.code{margin:0; padding:14px 16px; overflow-x:auto; background:var(--code-bg)}
+pre.code code{font-family:"IBM Plex Mono",ui-monospace,monospace; font-size:.795rem; line-height:1.72;
+  color:var(--code-ink); background:none; padding:0; white-space:pre; display:block; tab-size:4}
+.hljs-keyword,.hljs-literal,.hljs-selector-tag{color:var(--code-kw)}
+.hljs-string,.hljs-meta .hljs-string{color:var(--code-str)}
+.hljs-number{color:var(--code-num)}
+.hljs-comment{color:var(--code-com); font-style:italic}
+.hljs-title,.hljs-title.function_,.hljs-section{color:var(--code-fn); font-weight:600}
+.hljs-title.class_,.hljs-type,.hljs-built_in{color:var(--code-cls)}
+.hljs-params,.hljs-operator,.hljs-punctuation{color:var(--code-op)}
+.hljs-attr,.hljs-variable,.hljs-property{color:var(--code-ink)}
+.hljs-meta{color:var(--code-com)}
+
+/* ---------- tutorial steps ---------- */
+.step{display:grid; grid-template-columns:44px minmax(0,1fr); gap:0 20px; padding-block:30px;
+  border-top:1px solid var(--rule)}
+.step:first-of-type{border-top:0}
+.step .sn{font-family:"IBM Plex Mono",monospace; font-size:.8rem; font-weight:600; color:var(--s1);
+  background:var(--accent-soft); border-radius:4px; height:30px; display:grid; place-items:center}
+.step .body{display:grid; gap:14px; min-width:0}
+.step h3{font-size:1.12rem; font-weight:600; line-height:1.3}
+.step .why{font-size:.95rem; color:var(--ink-2); line-height:1.65; max-width:70ch}
+.step .out{font-family:"IBM Plex Mono",monospace; font-size:.75rem; color:var(--ink-2);
+  background:var(--surface-3); border:1px solid var(--rule); border-left:2px solid var(--rule-2);
+  border-radius:0 4px 4px 0; padding:10px 14px; overflow-x:auto; white-space:pre; line-height:1.6}
+@media (max-width:620px){ .step{grid-template-columns:1fr; gap:12px} .step .sn{width:36px} }
+.pitfall{border:1px solid var(--rule); border-left:3px solid var(--warn); border-radius:0 5px 5px 0;
+  background:var(--surface); padding:16px 20px; display:grid; gap:8px}
+.pitfall h4{margin:0; font-size:.92rem; font-weight:600; display:flex; gap:9px; align-items:center}
+.pitfall h4::before{content:""; width:6px; height:6px; border-radius:50%; background:var(--warn); flex:none}
+.pitfall p{font-size:.86rem; color:var(--ink-2); line-height:1.6}
+.schema td:first-child{font-family:"IBM Plex Mono",monospace; font-size:.8rem}
+.schema th,.schema td{text-align:left}
+.schema td:nth-child(3){white-space:normal; min-width:260px}
+.tocbox{display:grid; gap:2px; margin-top:18px}
+.tocbox a{display:grid; grid-template-columns:30px 1fr; gap:12px; padding:9px 10px; border-radius:5px;
+  text-decoration:none; color:var(--ink-2); font-size:.9rem; align-items:baseline}
+.tocbox a:hover{background:var(--surface-3); color:var(--ink)}
+.tocbox a b{font-family:"IBM Plex Mono",monospace; font-size:.74rem; color:var(--ink-3); font-weight:600}
+
+</style>
+
+<div class="topbar"><div class="wrap">
+  <div class="brandmark"><i></i> Project Kiln</div>
+  <nav class="navlinks">
+    <a href="#problem">The problem</a><a href="#allocate">Allocation</a><a href="#basis">Corporate basis</a>
+    <a href="#bridge">The bridge</a><a href="#standalone">Standalone cost</a><a href="#balance">Balance sheet</a>
+    <a href="#sowhat">So what</a><a href="#method">Method</a><a href="https://claude.ai/code/artifact/d0efaada-1055-480d-84a0-ec3d4cd00b96" target="_blank" rel="noopener">Tutorial ↗</a>
+  </nav>
+</div></div>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="eyebrow label"><span class="codename">Project Kiln</span><span>SPA and transaction support</span><span>&middot;</span><span>Balance sheet carve-out</span></div>
+  <h1>Ashworth Industries: Thermal Products</h1>
+  <p class="lede" style="margin-top:14px">A division that has never had standalone accounts. One ERP, one chart
+     of accounts, five shared functions, a corporate centre and three-way intercompany trading. This is what
+     it looks like separated out.</p>
+  <dl class="metarow" id="metarow"></dl>
+</header>
+
+<div class="verdict">
+  <div class="reported">
+    <div class="label">Divisional EBITDA, as the group reports it</div>
+    <div class="fig num" id="figRep">&mdash;</div>
+    <div class="cap" id="capRep"></div>
+  </div>
+  <div class="underlying">
+    <div class="label">Carve-out EBITDA</div>
+    <div class="fig num" id="figCarve">&mdash;</div>
+    <div class="cap" id="capCarve"></div>
+  </div>
+</div>
+
+<p class="thesis" id="thesis"></p>
+
+<section id="problem">
+  <div class="sechead"><h2>What the ledger actually looks like</h2><span class="amt" id="poolAmt"></span></div>
+  <p class="secintro lede">Most of the P&amp;L segments itself: revenue and direct costs post to a division
+     cost centre and need no judgement at all. The carve-out problem is the remainder &mdash; the cost sitting
+     in shared and corporate cost centres that carries no division tag, and never has.</p>
+  <div class="grid2" style="align-items:start">
+    <div class="panel">
+      <div class="panelhead"><h3>Untagged cost, by cost centre</h3></div>
+      <figure style="margin:0"><div class="chart" id="poolChart"></div>
+        <figcaption id="poolCap"></figcaption></figure>
+    </div>
+    <div class="panel">
+      <div class="panelhead"><h3>Direct versus allocated</h3></div>
+      <div class="stats" style="margin-top:10px" id="problemStats"></div>
+      <p class="small" style="margin-top:16px" id="problemBody"></p>
+    </div>
+  </div>
+</section>
+
+<section id="allocate">
+  <div class="sechead"><h2>Allocating the shared functions</h2></div>
+  <p class="secintro lede">The five shared services do not only serve the divisions &mdash; they serve each
+     other. IT runs the finance and payroll systems; HR runs payroll for IT. A single pass down to the
+     divisions gets that wrong, which is why the reciprocal method exists.</p>
+
+  <div class="panel">
+    <div class="panelhead"><h3>Who consumes each service</h3><span class="tiny">share of the service's output</span></div>
+    <figure style="margin:0"><div class="chart" id="usageChart"></div>
+      <div class="legend" id="usLegend"></div>
+      <figcaption id="usCap"></figcaption></figure>
+  </div>
+
+  <div class="panel" style="margin-top:18px">
+    <div class="panelhead"><h3>The reciprocal solve</h3></div>
+    <p class="small" style="margin-block:8px 12px">Each pool's true cost is its own spend plus what it
+      receives from the others, which is circular and therefore a linear system rather than a sequence:</p>
+    <div class="formula">T = D + M&middot;T          M[i][j] = share of service j consumed by i
+
+  &rArr;  T = (I &minus; M)&#8315;&sup1; D</div>
+    <div class="tablewrap" style="margin-top:16px" id="poolTable"></div>
+  </div>
+
+  <div class="grid2" style="margin-top:18px; align-items:start">
+    <div class="panel">
+      <div class="panelhead"><h3>Three methods, by division</h3></div>
+      <figure style="margin:0"><div class="chart" id="methodChart"></div>
+        <div class="legend" id="mLegend"></div>
+        <figcaption id="methodCap"></figcaption></figure>
+    </div>
+    <div class="panel">
+      <div class="panelhead"><h3>Per service, for the target</h3><span class="tiny">reciprocal less direct</span></div>
+      <figure style="margin:0"><div class="chart" id="serviceChart"></div>
+        <figcaption id="serviceCap"></figcaption></figure>
+    </div>
+  </div>
+  <div class="callout ok" style="margin-top:18px" id="cancelCallout"></div>
+</section>
+
+<section id="basis">
+  <div class="sechead"><h2>The corporate charge is a choice</h2><span class="amt" id="basisAmt"></span></div>
+  <p class="secintro lede">Corporate cost has no usage driver &mdash; nobody consumes a board. So it is spread
+     on a basis, and the basis is a negotiating position rather than a fact. Here is the same cost pool under
+     four conventional bases, and the EBITDA each produces.</p>
+  <div class="panel">
+    <figure style="margin:0"><div class="chart" id="basisChart"></div>
+      <figcaption id="basisCap"></figcaption></figure>
+  </div>
+</section>
+
+<section id="bridge">
+  <div class="sechead"><h2>From divisional result to carve-out</h2><span class="amt" id="bridgeAmt"></span></div>
+  <p class="secintro lede">Three adjustments sit between the number the group reports internally and the
+     number a buyer should underwrite.</p>
+  <div class="panel">
+    <figure style="margin:0"><div class="chart" id="bridgeChart"></div>
+      <div class="legend" id="brLegend"></div>
+      <figcaption id="brCap"></figcaption></figure>
+  </div>
+  <div class="panel" style="margin-top:18px">
+    <div class="panelhead"><h3>Intercompany</h3></div>
+    <div class="grid2" style="align-items:start; margin-top:10px">
+      <div><div class="stats" id="icStats"></div></div>
+      <div><p class="small" id="icBody"></p></div>
+    </div>
+  </div>
+</section>
+
+<section id="standalone">
+  <div class="sechead"><h2>What it costs to stand alone</h2><span class="amt" id="gapAmt"></span></div>
+  <p class="secintro lede">The allocated charge is what the group's functions cost spread across £441m of
+     revenue. Standalone, this division has to run them on £145m &mdash; and some of them do not scale down
+     at all. A board is a board.</p>
+  <div class="panel">
+    <figure style="margin:0"><div class="chart" id="standaloneChart"></div>
+      <div class="legend" id="saLegend"></div>
+      <figcaption id="saCap"></figcaption></figure>
+  </div>
+  <div class="grid2" style="margin-top:18px; align-items:start">
+    <div class="panel">
+      <div class="panelhead"><h3>Stranded in the group</h3><span class="tiny">the other side of the same coin</span></div>
+      <figure style="margin:0"><div class="chart" id="strandedChart"></div>
+        <figcaption id="strCap"></figcaption></figure>
+    </div>
+    <div class="panel">
+      <div class="panelhead"><h3>Function by function</h3></div>
+      <div class="tablewrap" id="saTable"></div>
+    </div>
+  </div>
+</section>
+
+<section id="balance">
+  <div class="sechead"><h2>The balance sheet</h2><span class="amt" id="bsAmt"></span></div>
+  <p class="secintro lede">Every line is taken directly from a sub-ledger wherever that sub-ledger carries a
+     division, and driven off the segmented P&amp;L or a physical driver wherever it does not. The share that
+     is direct is reported alongside the number, because a buyer should price the two differently.</p>
+  <div class="panel"><div class="tablewrap" id="bsTable"></div></div>
+  <div class="stats" style="margin-top:18px" id="wcStats"></div>
+</section>
+
+<section id="sowhat">
+  <div class="sechead"><h2>So what</h2></div>
+  <div class="grid3">
+    <div class="panel"><div class="label">Price</div><h3 style="margin-block:8px 10px">Underwrite the carve-out number</h3>
+      <p class="small" id="soPrice"></p></div>
+    <div class="panel"><div class="label">Negotiation</div><h3 style="margin-block:8px 10px">Know which arguments are worth having</h3>
+      <p class="small" id="soNeg"></p></div>
+    <div class="panel"><div class="label">Separation</div><h3 style="margin-block:8px 10px">The TSA is priced off this</h3>
+      <p class="small" id="soSep"></p></div>
+  </div>
+</section>
+
+<section id="method">
+  <div class="sechead"><h2>How it is built</h2></div>
+  <div class="grid2" style="align-items:start">
+    <div class="panel">
+      <div class="panelhead"><h3>Ingredients</h3></div>
+      <ul class="plain" id="ingredients" style="margin-top:12px"></ul>
+    </div>
+    <div class="panel">
+      <div class="panelhead"><h3>Method notes</h3></div>
+      <ul class="plain" id="notes" style="margin-top:12px"></ul>
+    </div>
+  </div>
+  <div class="panel" style="margin-top:18px">
+    <div class="panelhead"><h3>About this data</h3></div>
+    <p class="small" style="margin-top:8px">Ashworth Industries is synthetic. The generator emits what a
+      carve-out team actually receives: <span class="num" id="nPost"></span> posting-level journal lines
+      across <span class="num" id="nCC"></span> cost centres, a service usage matrix, headcount and floor
+      area, and the sub-ledgers behind receivables, inventory, fixed assets, payables and accruals. Nothing
+      is pre-segmented.</p>
+    <p class="small" style="margin-top:12px">Every reconciliation is asserted in the build: all three
+      allocation methods conserve the pool exactly, corporate spreads completely on every basis, the
+      carve-out bridge ties to <span class="num" id="recon"></span>, and each balance sheet line foots
+      across the three divisions to the group total.</p>
+  </div>
+</section>
+
+<footer>
+  <strong style="color:var(--ink)">Technique 15 &mdash; Balance Sheet Carve-Out.</strong>
+  SPA and transaction support stage of the D&amp;A technique series. All figures synthetic.
+</footer>
+
+</div>
+<div id="tip" role="status" aria-live="polite"></div>
+<script id="payload" type="application/json">{"meta":{"group":"Ashworth Industries plc","target":"Thermal Products","codename":"Project Kiln","sector":"Diversified industrial","stage":"SPA and transaction support","postings":132384,"cost_centres":18,"divisions":3,"services":5,"corporate":4,"group_revenue":441469222.65,"target_revenue":144995354.89,"untagged_pool":21977807.39},"untagged":[{"cost_centre":"SH-IT","name":"IT & Digital","kind":"Shared service","cost":4588130.81},{"cost_centre":"SH-FAC","name":"Facilities & Estates","kind":"Shared service","cost":4012540.91},{"cost_centre":"CO-EXEC","name":"Group executive","kind":"Corporate","cost":2960830.32},{"cost_centre":"SH-FIN","name":"Transactional Finance","kind":"Shared service","cost":2859816.31},{"cost_centre":"SH-HR","name":"HR & Payroll","kind":"Shared service","cost":2372557.74},{"cost_centre":"CO-LEGAL","name":"Legal & compliance","kind":"Corporate","cost":1593650.88},{"cost_centre":"SH-PROC","name":"Group Procurement","kind":"Shared service","cost":1581765.07},{"cost_centre":"CO-TREAS","name":"Treasury & tax","kind":"Corporate","cost":1200555.53},{"cost_centre":"CO-IR","name":"Investor relations","kind":"Corporate","cost":807959.82}],"pl":[{"division":"Thermal Products","revenue":144995354.89,"cogs":93630140.5,"gross_profit":51365214.389999986,"direct_opex":23858961.03,"ebitda_direct":27506253.359999985,"headcount":611,"service":5138844.921002859,"corporate":2296240.7731760745},{"division":"Flow Control","revenue":185804249.65,"cogs":131691180.83,"gross_profit":54113068.82000001,"direct_opex":31315496.41,"ebitda_direct":22797572.410000008,"headcount":742,"service":6600668.4706786405,"corporate":2942516.980625988},{"division":"Electrical Systems","revenue":110669618.11,"cogs":69795186.92,"gross_profit":40874431.19,"direct_opex":18468712.82,"ebitda_direct":22405718.369999997,"headcount":429,"service":3246900.1711139665,"corporate":1752636.0734024707}],"methods":{"pools":[{"service":"SH-FAC","name":"Facilities & Estates","direct_cost":4012540.91,"grossed_up":4494430.31805028,"uplift":0.120095824281647},{"service":"SH-FIN","name":"Transactional Finance","direct_cost":2859816.31,"grossed_up":4275974.976886631,"uplift":0.49519217788034475},{"service":"SH-HR","name":"HR & Payroll","direct_cost":2372557.74,"grossed_up":2961067.7378177186,"uplift":0.24804875678925242},{"service":"SH-IT","name":"IT & Digital","direct_cost":4588130.81,"grossed_up":4942384.062490953,"uplift":0.0772108004677734},{"service":"SH-PROC","name":"Group Procurement","direct_cost":1581765.07,"grossed_up":1877550.5727740186,"uplift":0.18699711378379247}],"per_service":[{"service":"SH-FAC","name":"Facilities & Estates","direct":1976454.324919037,"reciprocal":2173204.358043002,"to_services":0.018345624549314328},{"service":"SH-FIN","name":"Transactional Finance","direct":524562.770469973,"reciprocal":744149.322308899,"to_services":0.05121980660991036},{"service":"SH-HR","name":"HR & Payroll","direct":703697.2577425169,"reciprocal":774701.5620535703,"to_services":0.11790162702281747},{"service":"SH-IT","name":"IT & Digital","direct":1247407.2761607056,"reciprocal":697290.0676383259,"to_services":0.4810751040152064},{"service":"SH-PROC","name":"Group Procurement","direct":670097.3580832133,"reciprocal":749499.6109590626,"to_services":0.05771160365450988}],"spread":[{"division":"Thermal Products","range":16625.933627413586,"by_method":{"Direct":5122218.987375446,"Step-down":5134923.018444516,"Reciprocal":5138844.921002859}},{"division":"Flow Control","range":371761.2007588912,"by_method":{"Direct":6248465.596711947,"Step-down":6620226.797470838,"Reciprocal":6600668.4706786405}},{"division":"Electrical Systems","range":281717.31660942826,"by_method":{"Direct":3515236.5174884275,"Step-down":3233519.200878999,"Reciprocal":3246900.1711139665}}],"by_method":[{"method":"Direct","target":5122218.987375446,"by_div":{"Thermal Products":5122218.987375446,"Flow Control":6248465.596711947,"Electrical Systems":3515236.5174884275}},{"method":"Step-down","target":5134923.018444516,"by_div":{"Thermal Products":5134923.018444516,"Flow Control":6620226.797470838,"Electrical Systems":3233519.200878999}},{"method":"Reciprocal","target":5138844.921002859,"by_div":{"Thermal Products":5138844.921002859,"Flow Control":6600668.4706786405,"Electrical Systems":3246900.1711139665}}],"usage":[{"service":"SH-FAC","name":"Facilities & Estates","cells":[{"consumer":"CO-EXEC","share":0.005889659355666131,"kind":"Corporate"},{"consumer":"CO-IR","share":0.0020203819720977707,"kind":"Corporate"},{"consumer":"CO-LEGAL","share":0.0027954587510245015,"kind":"Corporate"},{"consumer":"CO-TREAS","share":0.0028276131671347844,"kind":"Corporate"},{"consumer":"ES-ENG","share":0.0207217567928609,"kind":"Division"},{"consumer":"ES-OPS","share":0.11153888906841662,"kind":"Division"},{"consumer":"ES-SALES","share":0.022557031061292417,"kind":"Division"},{"consumer":"FC-ENG","share":0.03801975529251839,"kind":"Division"},{"consumer":"FC-OPS","share":0.2429909320947237,"kind":"Division"},{"consumer":"FC-SALES","share":0.048760124160513035,"kind":"Division"},{"consumer":"SH-FIN","share":0.0056317731185109,"kind":"Shared service"},{"consumer":"SH-HR","share":0.003129441249140187,"kind":"Shared service"},{"consumer":"SH-IT","share":0.008217352772582107,"kind":"Shared service"},{"consumer":"SH-PROC","share":0.0013670574090811343,"kind":"Shared service"},{"consumer":"TP-ENG","share":0.07968194121527959,"kind":"Division"},{"consumer":"TP-OPS","share":0.28692016198598785,"kind":"Division"},{"consumer":"TP-SALES","share":0.11693067053317004,"kind":"Division"}]},{"service":"SH-FIN","name":"Transactional Finance","cells":[{"consumer":"CO-EXEC","share":0.005796489785041241,"kind":"Corporate"},{"consumer":"CO-IR","share":0.0018174412822143582,"kind":"Corporate"},{"consumer":"CO-LEGAL","share":0.004334134076849328,"kind":"Corporate"},{"consumer":"CO-TREAS","share":0.0028374103091777484,"kind":"Corporate"},{"consumer":"ES-ENG","share":0.02724110449720815,"kind":"Division"},{"consumer":"ES-OPS","share":0.136801260103299,"kind":"Division"},{"consumer":"ES-SALES","share":0.03135512752670393,"kind":"Division"},{"consumer":"FC-ENG","share":0.06910704164581802,"kind":"Division"},{"consumer":"FC-OPS","share":0.3965105979749289,"kind":"Division"},{"consumer":"FC-SALES","share":0.09894925946071674,"kind":"Division"},{"consumer":"SH-FAC","share":0.011219604315080338,"kind":"Shared service"},{"consumer":"SH-HR","share":0.0073995464001778526,"kind":"Shared service"},{"consumer":"SH-IT","share":0.020750802594088957,"kind":"Shared service"},{"consumer":"SH-PROC","share":0.011849853300563214,"kind":"Shared service"},{"consumer":"TP-ENG","share":0.02066724891182551,"kind":"Division"},{"consumer":"TP-OPS","share":0.11492500783595153,"kind":"Division"},{"consumer":"TP-SALES","share":0.03843806998035543,"kind":"Division"}]},{"service":"SH-HR","name":"HR & Payroll","cells":[{"consumer":"CO-EXEC","share":0.014869562704630409,"kind":"Corporate"},{"consumer":"CO-IR","share":0.004635654961810679,"kind":"Corporate"},{"consumer":"CO-LEGAL","share":0.010674257754480204,"kind":"Corporate"},{"consumer":"CO-TREAS","share":0.007940406953989322,"kind":"Corporate"},{"consumer":"ES-ENG","share":0.02107700169927558,"kind":"Division"},{"consumer":"ES-OPS","share":0.1485195962888985,"kind":"Division"},{"consumer":"ES-SALES","share":0.03703888266495977,"kind":"Division"},{"consumer":"FC-ENG","share":0.044888744686588045,"kind":"Division"},{"consumer":"FC-OPS","share":0.25927182865661585,"kind":"Division"},{"consumer":"FC-SALES","share":0.07155331135514921,"kind":"Division"},{"consumer":"SH-FAC","share":0.024038684554652058,"kind":"Shared service"},{"consumer":"SH-FIN","share":0.02909032827350513,"kind":"Shared service"},{"consumer":"SH-IT","share":0.05490774682136839,"kind":"Shared service"},{"consumer":"SH-PROC","share":0.00986486737329188,"kind":"Shared service"},{"consumer":"TP-ENG","share":0.02858261610314289,"kind":"Division"},{"consumer":"TP-OPS","share":0.17429294117137714,"kind":"Division"},{"consumer":"TP-SALES","share":0.05875356797626489,"kind":"Division"}]},{"service":"SH-IT","name":"IT & Digital","cells":[{"consumer":"CO-EXEC","share":0.014517694896380879,"kind":"Corporate"},{"consumer":"CO-IR","share":0.004300751875403628,"kind":"Corporate"},{"consumer":"CO-LEGAL","share":0.009071908280078677,"kind":"Corporate"},{"consumer":"CO-TREAS","share":0.007219685318640289,"kind":"Corporate"},{"consumer":"ES-ENG","share":0.022262833929618656,"kind":"Division"},{"consumer":"ES-OPS","share":0.10631169870200533,"kind":"Division"},{"consumer":"ES-SALES","share":0.0412006174294941,"kind":"Division"},{"consumer":"FC-ENG","share":0.028176749015760432,"kind":"Division"},{"consumer":"FC-OPS","share":0.11703399840079722,"kind":"Division"},{"consumer":"FC-SALES","share":0.027745210127178562,"kind":"Division"},{"consumer":"SH-FAC","share":0.06726013935112288,"kind":"Shared service"},{"consumer":"SH-FIN","share":0.2620334645078829,"kind":"Shared service"},{"consumer":"SH-HR","share":0.10934021288551478,"kind":"Shared service"},{"consumer":"SH-PROC","share":0.04244128727068593,"kind":"Shared service"},{"consumer":"TP-ENG","share":0.014841066676072216,"kind":"Division"},{"consumer":"TP-OPS","share":0.10585842646415843,"kind":"Division"},{"consumer":"TP-SALES","share":0.020384254869205292,"kind":"Division"}]},{"service":"SH-PROC","name":"Group Procurement","cells":[{"consumer":"CO-EXEC","share":0.00452172683010187,"kind":"Corporate"},{"consumer":"CO-IR","share":0.001165702070688791,"kind":"Corporate"},{"consumer":"CO-LEGAL","share":0.0023877267668359807,"kind":"Corporate"},{"consumer":"CO-TREAS","share":0.0014843534634520373,"kind":"Corporate"},{"consumer":"ES-ENG","share":0.015587026205127547,"kind":"Division"},{"consumer":"ES-OPS","share":0.09470913355498702,"kind":"Division"},{"consumer":"ES-SALES","share":0.030638777502432483,"kind":"Division"},{"consumer":"FC-ENG","share":0.04709914328626101,"kind":"Division"},{"consumer":"FC-OPS","share":0.29269795203929244,"kind":"Division"},{"consumer":"FC-SALES","share":0.05280674926914768,"kind":"Division"},{"consumer":"SH-FAC","share":0.01614286566959416,"kind":"Shared service"},{"consumer":"SH-FIN","share":0.005133605358988064,"kind":"Shared service"},{"consumer":"SH-HR","share":0.0012800408264192111,"kind":"Shared service"},{"consumer":"SH-IT","share":0.035155091799508445,"kind":"Shared service"},{"consumer":"TP-ENG","share":0.039111583232129696,"kind":"Division"},{"consumer":"TP-OPS","share":0.2785880848482239,"kind":"Division"},{"consumer":"TP-SALES","share":0.08149043727680962,"kind":"Division"}]}]},"bases":[{"basis":"Revenue","target":2296240.7731760745,"ebitda":20071167.665821053},{"basis":"Headcount","target":2397161.407644203,"ebitda":19970247.031352922},{"basis":"Gross profit","target":2453760.043273126,"ebitda":19913648.395724002},{"basis":"EBITDA before corporate","target":2709128.207830137,"ebitda":19658280.23116699}],"bridge":[{"label":"Divisional EBITDA as reported","value":20287901.95808688,"kind":"total"},{"label":"Allocation method","value":-216734.2922658315,"kind":"delta","note":"Reciprocal allocation on measured usage, against a flat revenue recharge"},{"label":"Intercompany at arm's length","value":-544321.98036,"kind":"delta","note":"Transfer prices sit 6.2% above market; restated to arm's length"},{"label":"Standalone cost gap","value":-1864644.8894410648,"kind":"delta","note":"What these functions cost a business that has to run them itself"},{"label":"Carve-out EBITDA","value":17662200.796019983,"kind":"total"}],"recon":3.725290298461914e-09,"summary":{"reported":20287901.95808688,"carve_out":17662200.796019983,"simple_recharge":7218351.401913102,"service":5138844.921002859,"corporate":2296240.7731760745,"corp_total":6991393.827204533,"margin_reported":0.13992104763272037,"margin_carve":0.12181218363456764},"intercompany":{"sales":12441459.73,"purchases":3662072.95,"adj":0.062,"sales_adj":-771370.50326,"purchase_adj":227048.5229,"net":-544321.98036,"revenue_at_risk":12441459.73,"counterparties":[{"name":"Electrical Systems","amount":6075123.93},{"name":"Flow Control","amount":6366335.8}]},"standalone":[{"function":"IT & Digital","allocated":697290.0676383259,"standalone":2682414.0654649995,"lo":2247428.0007949998,"hi":3117400.1301349993,"gap":1985123.9978266736},{"function":"Transactional Finance","allocated":744149.322308899,"standalone":1225210.7488205,"lo":1029467.019719,"hi":1420954.4779219998,"gap":481061.42651160096},{"function":"HR & Payroll","allocated":774701.5620535703,"standalone":1014967.4842299998,"lo":840973.0583619998,"hi":1188961.910098,"gap":240265.92217642954},{"function":"Executive & board","allocated":1030099.8298377028,"standalone":1234728.8647495,"lo":1150000.0,"hi":1319457.729499,"gap":204629.03491179727},{"function":"Treasury & tax","allocated":422824.18125558924,"standalone":355243.2645904999,"lo":290000.0,"hi":420486.5291809999,"gap":-67580.91666508932},{"function":"Legal & compliance","allocated":560208.7063709284,"standalone":416492.10331299994,"lo":340000.0,"hi":492984.20662599994,"gap":-143716.6030579285},{"function":"Group Procurement","allocated":749499.6109590626,"standalone":485734.4388814999,"lo":376987.9227139999,"hi":594480.955049,"gap":-263765.17207756266},{"function":"Listed-company costs","allocated":283108.055711854,"standalone":0.0,"lo":0.0,"hi":0.0,"gap":-283108.055711854},{"function":"Facilities & Estates","allocated":2173204.358043002,"standalone":1884939.6135699998,"lo":1623947.9747679997,"hi":2145931.252372,"gap":-288264.74447300215}],"standalone_gap":1864644.8894410648,"stranded":{"allocated_to_target":7435085.694178934,"removable":3281630.638514737,"truly_stranded":4153455.0556641975,"by_function":[{"function":"Executive & board","allocated":1030099.8298377028,"removable_pct":0.1,"stranded":927089.8468539325},{"function":"Facilities & Estates","allocated":2173204.358043002,"removable_pct":0.7,"stranded":651961.3074129007},{"function":"IT & Digital","allocated":697290.0676383259,"removable_pct":0.35,"stranded":453238.54396491183},{"function":"Legal & compliance","allocated":560208.7063709284,"removable_pct":0.25,"stranded":420156.52977819636},{"function":"Group Procurement","allocated":749499.6109590626,"removable_pct":0.45,"stranded":412224.78602748446},{"function":"Treasury & tax","allocated":422824.18125558924,"removable_pct":0.15,"stranded":359400.55406725087},{"function":"HR & Payroll","allocated":774701.5620535703,"removable_pct":0.55,"stranded":348615.7029241066},{"function":"Transactional Finance","allocated":744149.322308899,"removable_pct":0.6,"stranded":297659.7289235596},{"function":"Listed-company costs","allocated":283108.055711854,"removable_pct":0.0,"stranded":283108.055711854}],"pct_of_allocation":0.558629076584284},"balance":{"lines":[{"line":"Trade receivables","basis":"Group-billed accounts split on revenue","direct":21684527.9,"allocated":1953420.0071822137,"total":23637947.907182213,"group":65146796.239999995,"directness":0.917360846429961,"by_div":{"Thermal Products":23637947.907182213,"Flow Control":27252554.793233883,"Electrical Systems":14256293.539583905}},{"line":"Inventory","basis":"Central stores split on cost of sales","direct":20080640.32,"allocated":2069285.654953819,"total":22149925.97495382,"group":56406384.86,"directness":0.9065782135211794,"by_div":{"Thermal Products":22149925.97495382,"Flow Control":23816836.273529634,"Electrical Systems":10439622.611516548}},{"line":"Property, plant & equipment","basis":"Shared-site assets split on floor area","direct":13992249.74,"allocated":779291.8467355714,"total":14771541.58673557,"group":31827496.979999997,"directness":0.9472437022121406,"by_div":{"Thermal Products":14771541.58673557,"Flow Control":9991382.044259287,"Electrical Systems":7064573.34900514}},{"line":"Trade payables","basis":"Shared-cost-centre payables split on cost of sales","direct":17044371.45,"allocated":1053635.8383142033,"total":18098007.2883142,"group":52113573.06999999,"directness":0.94178166570888,"by_div":{"Thermal Products":18098007.2883142,"Flow Control":21493105.415257804,"Electrical Systems":12522460.366427993}},{"line":"Accruals & provisions","basis":"By nature: employee on headcount, property on floor area","direct":3976553.4,"allocated":465329.2630431288,"total":4441882.663043128,"group":13244207.23,"directness":0.8952405323727458,"by_div":{"Thermal Products":4441882.663043128,"Flow Control":5396335.558775945,"Electrical Systems":3405989.008180926}}],"nwc":23247983.930778705,"nwc_pct_revenue":0.1603360600649288,"ppe":14771541.58673557,"directness":0.9239348322075119,"dso":59.50432682941453,"dio":86.34744044689481,"dpo":70.55177558165347}}</script>
+<script>/* House chart toolkit. Shared by every demo in this repo so the whole set reads
+   as one system: same scales, same marks, same tooltip, same validated palette.
+   Exposed as window.V; each demo destructures what it needs. */
+window.V = (() => {
+"use strict";
+const NS = "http://www.w3.org/2000/svg";
+const $ = s => document.querySelector(s);
+const el = (t, a = {}, kids = []) => { const e = document.createElementNS(NS, t);
+  for (const k in a) if (a[k] !== null && a[k] !== undefined) e.setAttribute(k, a[k]);
+  for (const c of [].concat(kids)) e.appendChild(typeof c === "string" ? document.createTextNode(c) : c);
+  return e; };
+const tok = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+
+/* ---------- formatting: deal-desk conventions ---------- */
+const MINUS = "−";
+const m2 = v => (v < 0 ? MINUS : "") + "£" + (Math.abs(v) / 1e6).toFixed(2) + "m";
+const m2s = v => (v < 0 ? MINUS : "+") + "£" + (Math.abs(v) / 1e6).toFixed(2) + "m";
+const m1 = v => (v < 0 ? MINUS : "") + "£" + (Math.abs(v) / 1e6).toFixed(1) + "m";
+const acct = (v, d = 2) => v < 0 ? "(" + (Math.abs(v) / 1e6).toFixed(d) + ")" : (v / 1e6).toFixed(d);
+const pc = (v, d = 1) => (v * 100).toFixed(d) + "%";
+const pcs = (v, d = 1) => (v < 0 ? MINUS : "+") + (Math.abs(v) * 100).toFixed(d) + "%";
+const pp = (v, d = 1) => (v < 0 ? MINUS : "+") + (Math.abs(v) * 100).toFixed(d) + "pp";
+const int = v => Math.round(v).toLocaleString("en-GB");
+
+/* ---------- tooltip ---------- */
+const tip = $("#tip");
+function showTip(e, title, rows) {
+  tip.innerHTML = '<div class="t"></div>' + rows.map(() => '<div class="r"><span></span><span></span></div>').join("");
+  tip.querySelector(".t").textContent = title;
+  tip.querySelectorAll(".r").forEach((r, i) => {
+    r.children[0].textContent = rows[i][0]; r.children[1].textContent = rows[i][1];
+  });
+  tip.style.opacity = 1; moveTip(e);
+}
+function moveTip(e) {
+  const b = tip.getBoundingClientRect();
+  let x = e.clientX + 14, y = e.clientY - b.height - 12;
+  if (x + b.width > innerWidth - 8) x = e.clientX - b.width - 14;
+  if (y < 8) y = e.clientY + 18;
+  tip.style.left = x + "px"; tip.style.top = y + "px";
+}
+const hideTip = () => { tip.style.opacity = 0; };
+function hit(target, title, rows) {
+  target.addEventListener("mouseenter", e => showTip(e, title, rows));
+  target.addEventListener("mousemove", moveTip);
+  target.addEventListener("mouseleave", hideTip);
+}
+
+/* ---------- scales & axes ---------- */
+const lin = (d0, d1, r0, r1) => v => r0 + (v - d0) / (d1 - d0) * (r1 - r0);
+function niceTicks(lo, hi, n = 5) {
+  const raw = (hi - lo) / n, mag = Math.pow(10, Math.floor(Math.log10(raw)));
+  const step = [1, 1.5, 2, 2.5, 3, 4, 5, 7.5, 10].map(x => x * mag).find(x => x >= raw) || 10 * mag;
+  const out = []; for (let t = Math.ceil(lo / step) * step; t <= hi + 1e-9; t += step) out.push(t);
+  return out;
+}
+/** Padded domain first, ticks second. Returns a scale that always contains the data. */
+function axisScale(lo, hi, r0, r1, o = {}) {
+  const span = (hi - lo) || Math.abs(hi) || 1;
+  const dlo = lo - span * (o.padLo ?? 0.08), dhi = hi + span * (o.padHi ?? 0.08);
+  return { y: lin(dlo, dhi, r0, r1), dlo, dhi,
+           ticks: niceTicks(dlo, dhi, o.n ?? 5).filter(t => t >= dlo && t <= dhi) };
+}
+function gridY(g, ticks, y, x0, x1, fmt) {
+  ticks.forEach(t => {
+    g.appendChild(el("line", { x1: x0, x2: x1, y1: y(t), y2: y(t), stroke: tok("--rule"), "stroke-width": 1 }));
+    g.appendChild(el("text", { x: x0 - 9, y: y(t) + 4, "text-anchor": "end", fill: tok("--ink-3"),
+      "font-size": 11, "font-family": "IBM Plex Mono, monospace" }, fmt(t)));
+  });
+}
+function xLabels(g, items, cx, yTop, slot) {
+  const rotate = slot < 94;
+  items.forEach((s, i) => {
+    const x = cx(i);
+    if (rotate) {
+      const t = el("text", { x: 0, y: 0, "text-anchor": "end", fill: tok("--ink-2"), "font-size": 11 }, s);
+      t.setAttribute("transform", `translate(${x},${yTop + 14}) rotate(-40)`); g.appendChild(t);
+    } else {
+      const words = s.split(" "); const lines = words.length > 2
+        ? [words.slice(0, Math.ceil(words.length / 2)).join(" "), words.slice(Math.ceil(words.length / 2)).join(" ")]
+        : [s];
+      lines.forEach((ln, j) => g.appendChild(el("text", { x, y: yTop + 16 + j * 13, "text-anchor": "middle",
+        fill: tok("--ink-2"), "font-size": 11.5 }, ln)));
+    }
+  });
+}
+
+/* ---------- waterfall ---------- */
+function waterfall(w, steps, opt = {}) {
+  const compact = !!opt.compact;
+  const rotate = (w - 66) / steps.length < 94;
+  const H = opt.height || (compact ? 250 : Math.max(330, Math.min(430, w * 0.46)));
+  const M = { t: 30, r: 8, b: rotate ? 74 : (compact ? 44 : 52), l: 58 };
+  const iw = Math.max(40, w - M.l - M.r), ih = H - M.t - M.b;
+  const svg = el("svg", { viewBox: `0 0 ${w} ${H}`, width: w, height: H, role: "img" });
+  const g = el("g", { transform: `translate(${M.l},${M.t})` });
+
+  let cum = 0; const bars = steps.map(s => {
+    if (s.kind === "total") { cum = s.value; return { ...s, lo: 0, hi: s.value, base: true }; }
+    const a = cum, b = cum + s.value; cum = b; return { ...s, lo: Math.min(a, b), hi: Math.max(a, b), end: b };
+  });
+  const vals = bars.flatMap(b => b.base ? [b.value] : [b.lo, b.hi]);
+  const sc = axisScale(Math.min(...vals), Math.max(...vals), ih, 0, { padLo: 0.16, padHi: 0.14, n: 5 });
+  const y = sc.y, floor = sc.dlo;
+  gridY(g, sc.ticks, y, 0, iw, t => (t / 1e6).toFixed(0));
+  g.appendChild(el("text", { x: -M.l + 2, y: -12, fill: tok("--ink-3"), "font-size": 10.5,
+    "font-weight": 600, "letter-spacing": ".06em" }, "£m"));
+
+  const slot = iw / steps.length, bw = Math.min(slot * 0.6, 62);
+  const cx = i => slot * i + slot / 2;
+
+  if (opt.hatch) {
+    const defs = el("defs"); const p = el("pattern", { id: opt.hatchId, width: 6, height: 6,
+      patternUnits: "userSpaceOnUse", patternTransform: "rotate(45)" });
+    p.appendChild(el("rect", { width: 6, height: 6, fill: tok("--surface") }));
+    p.appendChild(el("line", { x1: 0, y1: 0, x2: 0, y2: 6, stroke: "currentColor", "stroke-width": 3.4 }));
+    defs.appendChild(p); svg.appendChild(defs);
+  }
+
+  bars.forEach((b, i) => {
+    const x = cx(i) - bw / 2;
+    const top = y(b.base ? b.value : b.hi), bot = y(b.base ? floor : b.lo);
+    const col = b.base ? tok("--total") : (b.value >= 0 ? tok("--pos") : tok("--neg"));
+    const shade = opt.hatch && !b.base && opt.ratings && opt.ratings[b.label] && opt.ratings[b.label] !== "Recurring";
+    const h = Math.max(2, bot - top);
+    const r = el("rect", { x, y: top, width: bw, height: h, rx: 2.5,
+      fill: shade ? `url(#${opt.hatchId})` : col, color: col,
+      stroke: shade ? col : "none", "stroke-width": shade ? 1.2 : 0 });
+    g.appendChild(r);
+
+    if (i < bars.length - 1) {
+      const nx = cx(i + 1) - bw / 2, ly = y(b.base ? b.value : b.end);
+      g.appendChild(el("line", { x1: x + bw, x2: nx, y1: ly, y2: ly, stroke: tok("--rule-2"), "stroke-width": 1 }));
+    }
+    const lab = b.base ? m2(b.value) : m2s(b.value);
+    const ly = b.value >= 0 || b.base ? top - 9 : bot + 15;
+    g.appendChild(el("text", { x: cx(i), y: ly, "text-anchor": "middle", fill: tok("--ink"),
+      "font-size": compact ? 11 : 12, "font-weight": 600, "font-family": "IBM Plex Mono, monospace" }, lab));
+
+    const hitr = el("rect", { x: cx(i) - slot / 2, y: 0, width: slot, height: ih, fill: "transparent" });
+    const rows = [[b.base ? "Revenue" : "Movement", lab]];
+    if (!b.base) rows.push(["Running total", m2(b.end)]);
+    if (opt.ratings && opt.ratings[b.label]) rows.push(["Durability", opt.ratings[b.label]]);
+    hit(hitr, b.label, rows);
+    if (b.note) hitr.addEventListener("mouseenter", () => {
+      const n = document.createElement("div"); n.className = "tiny";
+      n.style.cssText = "margin-top:6px;padding-top:6px;border-top:1px solid var(--rule)";
+      n.textContent = b.note; tip.appendChild(n);
+    });
+    g.appendChild(hitr);
+  });
+
+  xLabels(g, steps.map(s => s.label), cx, ih, slot);
+  svg.appendChild(g); return svg;
+}
+
+/* ---------- multi-line chart ---------- */
+function lineChart(w, cfg) {
+  const H = cfg.height || Math.max(230, Math.min(320, w * 0.5));
+  const M = { t: 16, r: cfg.rightPad || 44, b: 34, l: 46 };
+  const iw = Math.max(40, w - M.l - M.r), ih = H - M.t - M.b;
+  const svg = el("svg", { viewBox: `0 0 ${w} ${H}`, width: w, height: H, role: "img" });
+  const g = el("g", { transform: `translate(${M.l},${M.t})` });
+  const n = cfg.labels.length;
+  const all = cfg.series.flatMap(s => s.values).filter(v => v !== null && v !== undefined);
+  const sc = axisScale(Math.min(...all), Math.max(...all), ih, 0, { n: 4 });
+  const y = sc.y;
+  const x = i => n === 1 ? iw / 2 : i * (iw / (n - 1));
+  gridY(g, sc.ticks, y, 0, iw, cfg.fmtAxis);
+
+  cfg.labels.forEach((l, i) => { if (i % (cfg.every || 1) === 0)
+    g.appendChild(el("text", { x: x(i), y: ih + 20, "text-anchor": "middle", fill: tok("--ink-3"), "font-size": 10.5 }, l)); });
+
+  if (cfg.markIndex !== undefined && cfg.markIndex !== null) {
+    g.appendChild(el("line", { x1: x(cfg.markIndex), x2: x(cfg.markIndex), y1: 0, y2: ih,
+      stroke: tok("--rule-2"), "stroke-width": 1.5 }));
+    if (cfg.markLabel) g.appendChild(el("text", { x: x(cfg.markIndex) + 6, y: 11,
+      fill: tok("--ink-3"), "font-size": 10.5, "font-weight": 600 }, cfg.markLabel));
+  }
+  cfg.series.forEach(s => {
+    const col = tok(s.token);
+    let pen = false;
+    const d = s.values.map((v, i) => {
+      if (v === null || v === undefined) { pen = false; return ""; }
+      const cmd = (pen ? "L" : "M") + x(i) + "," + y(v); pen = true; return cmd;
+    }).filter(Boolean).join(" ");
+    g.appendChild(el("path", { d, fill: "none", stroke: col, "stroke-width": 2,
+      "stroke-linejoin": "round", "stroke-linecap": "round" }));
+    let li = s.values.length - 1;
+    while (li > 0 && (s.values[li] === null || s.values[li] === undefined)) li--;
+    g.appendChild(el("circle", { cx: x(li), cy: y(s.values[li]), r: 4, fill: col,
+      stroke: tok("--surface"), "stroke-width": 2 }));
+    g.appendChild(el("text", { x: x(li) + 9, y: y(s.values[li]) + 4, fill: tok("--ink-2"),
+      "font-size": 11, "font-weight": 600, "font-family": "IBM Plex Mono, monospace" }, cfg.fmtEnd(s.values[li])));
+  });
+
+  const cross = el("line", { y1: 0, y2: ih, stroke: tok("--rule-2"), "stroke-width": 1, opacity: 0 });
+  g.appendChild(cross);
+  const dots = cfg.series.map(s => { const c = el("circle", { r: 4.5, fill: tok(s.token),
+    stroke: tok("--surface"), "stroke-width": 2, opacity: 0 }); g.appendChild(c); return c; });
+  const surface = el("rect", { x: 0, y: 0, width: iw, height: ih, fill: "transparent" });
+  surface.addEventListener("mousemove", e => {
+    const r = surface.getBoundingClientRect();
+    const i = Math.max(0, Math.min(n - 1, Math.round((e.clientX - r.left) / (iw / Math.max(n - 1, 1)))));
+    cross.setAttribute("x1", x(i)); cross.setAttribute("x2", x(i)); cross.setAttribute("opacity", 1);
+    cfg.series.forEach((s, k) => {
+      const v = s.values[i], ok = v !== null && v !== undefined;
+      dots[k].setAttribute("cx", x(i)); dots[k].setAttribute("cy", ok ? y(v) : 0);
+      dots[k].setAttribute("opacity", ok ? 1 : 0);
+    });
+    showTip(e, cfg.labels[i], cfg.series.filter(s => s.values[i] !== null && s.values[i] !== undefined)
+      .map(s => [s.name, cfg.fmtEnd(s.values[i])]));
+  });
+  surface.addEventListener("mouseleave", () => { hideTip(); cross.setAttribute("opacity", 0);
+    dots.forEach(d => d.setAttribute("opacity", 0)); });
+  g.appendChild(surface);
+  svg.appendChild(g); return svg;
+}
+
+/* ---------- horizontal bars (signed) ---------- */
+function hBars(w, items, cfg) {
+  const rowH = cfg.rowH || 40, M = { t: 6, r: 58, b: 22, l: cfg.left || 128 };
+  const H = M.t + M.b + items.length * rowH;
+  const iw = Math.max(40, w - M.l - M.r);
+  const svg = el("svg", { viewBox: `0 0 ${w} ${H}`, width: w, height: H, role: "img" });
+  const g = el("g", { transform: `translate(${M.l},${M.t})` });
+  const vals = items.map(d => d.value);
+  const lo = Math.min(0, ...vals), hi = Math.max(0, ...vals), span = (hi - lo) || 1;
+  const x = lin(lo - span * 0.04, hi + span * 0.08, 0, iw);
+  const zero = x(0);
+  g.appendChild(el("line", { x1: zero, x2: zero, y1: -2, y2: items.length * rowH - 4,
+    stroke: tok("--rule-2"), "stroke-width": 1 }));
+  items.forEach((d, i) => {
+    const yy = i * rowH, bh = Math.min(19, rowH - 16);
+    const xa = Math.min(zero, x(d.value)), bw = Math.max(2, Math.abs(x(d.value) - zero));
+    const col = tok(d.token || cfg.token || (d.value >= 0 ? "--pos" : "--neg"));
+    g.appendChild(el("rect", { x: xa, y: yy + (rowH - bh) / 2 - 4, width: bw, height: bh, rx: 2.5, fill: col }));
+    g.appendChild(el("text", { x: -12, y: yy + rowH / 2 + 0, "text-anchor": "end", fill: tok("--ink"),
+      "font-size": 12, "font-weight": 500 }, d.label));
+    if (d.sub) g.appendChild(el("text", { x: -12, y: yy + rowH / 2 + 13, "text-anchor": "end",
+      fill: tok("--ink-3"), "font-size": 10.5 }, d.sub));
+    const outside = d.value >= 0 ? xa + bw + 8 : xa - 8;
+    const fits = d.value >= 0 ? true : outside > 34;
+    g.appendChild(el("text", { x: fits ? outside : xa + 7, y: yy + rowH / 2 + 4,
+      "text-anchor": fits ? (d.value >= 0 ? "start" : "end") : "start",
+      fill: fits ? tok("--ink") : "#fff", "font-size": 11.5, "font-weight": 600,
+      "font-family": "IBM Plex Mono, monospace" }, cfg.fmt(d.value)));
+    const hr = el("rect", { x: -M.l, y: yy - 2, width: w - 8, height: rowH, fill: "transparent" });
+    hit(hr, d.label, d.rows || [[cfg.valueName || "Value", cfg.fmt(d.value)]]); g.appendChild(hr);
+  });
+  svg.appendChild(g); return svg;
+}
+
+/* ---------- grouped bars ---------- */
+function groupBars(w, groups, series, cfg) {
+  const H = cfg.height || 260, M = { t: 24, r: 8, b: 42, l: 52 };
+  const iw = Math.max(40, w - M.l - M.r), ih = H - M.t - M.b;
+  const svg = el("svg", { viewBox: `0 0 ${w} ${H}`, width: w, height: H, role: "img" });
+  const g = el("g", { transform: `translate(${M.l},${M.t})` });
+  const all = series.flatMap(s => s.values);
+  const sc = axisScale(Math.min(0, ...all), Math.max(0, ...all), ih, 0, { n: 4 });
+  const y = sc.y;
+  gridY(g, sc.ticks, y, 0, iw, cfg.fmtAxis);
+  const slot = iw / groups.length, bw = Math.min((slot * 0.68) / series.length, 38);
+  groups.forEach((gr, i) => {
+    const cx0 = slot * i + slot / 2;
+    series.forEach((s, k) => {
+      const v = s.values[i];
+      const x = cx0 - (bw * series.length + 2 * (series.length - 1)) / 2 + k * (bw + 2);
+      const top = Math.min(y(v), y(0)), h = Math.max(2, Math.abs(y(v) - y(0)));
+      g.appendChild(el("rect", { x, y: top, width: bw, height: h, rx: 2.5, fill: tok(s.token) }));
+      g.appendChild(el("text", { x: x + bw / 2, y: v >= 0 ? top - 7 : top + h + 14, "text-anchor": "middle",
+        fill: tok("--ink-2"), "font-size": 10.5, "font-weight": 600,
+        "font-family": "IBM Plex Mono, monospace" }, cfg.fmt(v)));
+    });
+    if (!cfg.every || i % cfg.every === 0)
+      g.appendChild(el("text", { x: cx0, y: ih + 20, "text-anchor": "middle", fill: tok("--ink-2"), "font-size": 11.5 }, gr));
+    const hr = el("rect", { x: slot * i, y: 0, width: slot, height: ih, fill: "transparent" });
+    hit(hr, gr, series.map(s => [s.name, cfg.fmt(s.values[i])])); g.appendChild(hr);
+  });
+  g.appendChild(el("line", { x1: 0, x2: iw, y1: y(0), y2: y(0), stroke: tok("--rule-2"), "stroke-width": 1 }));
+  svg.appendChild(g); return svg;
+}
+
+/* ---------- dumbbell ---------- */
+function dumbbell(w, items, cfg) {
+  const rowH = 44, M = { t: 20, r: 22, b: 26, l: cfg.left || 150 };
+  const H = M.t + M.b + items.length * rowH;
+  const iw = Math.max(40, w - M.l - M.r);
+  const svg = el("svg", { viewBox: `0 0 ${w} ${H}`, width: w, height: H, role: "img" });
+  const g = el("g", { transform: `translate(${M.l},${M.t})` });
+  const all = items.flatMap(d => [d.a, d.b]);
+  const sc = axisScale(Math.min(...all), Math.max(...all), 0, iw, { padLo: 0.14, padHi: 0.12, n: 4 });
+  const x = sc.y;
+  sc.ticks.forEach(t => {
+    g.appendChild(el("line", { x1: x(t), x2: x(t), y1: -8, y2: items.length * rowH - 10,
+      stroke: tok("--rule"), "stroke-width": 1 }));
+    g.appendChild(el("text", { x: x(t), y: items.length * rowH + 8, "text-anchor": "middle",
+      fill: tok("--ink-3"), "font-size": 10.5, "font-family": "IBM Plex Mono, monospace" }, pc(t, 0)));
+  });
+  items.forEach((d, i) => {
+    const yy = i * rowH + rowH / 2 - 12, up = d.b >= d.a;
+    const col = tok(up ? "--pos" : "--neg");
+    g.appendChild(el("line", { x1: x(d.a), x2: x(d.b), y1: yy, y2: yy, stroke: col,
+      "stroke-width": 2.5, "stroke-linecap": "round", opacity: .35 }));
+    g.appendChild(el("circle", { cx: x(d.a), cy: yy, r: 5, fill: tok("--surface"),
+      stroke: tok("--ink-3"), "stroke-width": 2 }));
+    g.appendChild(el("circle", { cx: x(d.b), cy: yy, r: 5.5, fill: col, stroke: tok("--surface"), "stroke-width": 2 }));
+    g.appendChild(el("text", { x: -12, y: yy + 4, "text-anchor": "end", fill: tok("--ink"), "font-size": 12 }, d.label));
+    g.appendChild(el("text", { x: -12, y: yy + 17, "text-anchor": "end", fill: tok("--ink-3"),
+      "font-size": 10.5, "font-family": "IBM Plex Mono, monospace" }, d.sub));
+    const hr = el("rect", { x: -M.l, y: i * rowH - 8, width: w - 8, height: rowH, fill: "transparent" });
+    hit(hr, d.label, d.rows); g.appendChild(hr);
+  });
+  svg.appendChild(g); return svg;
+}
+
+/* ---------- sparkline ---------- */
+function spark(w, values, o = {}) {
+  const h = o.height || 34, pad = 3;
+  const svg = el("svg", { viewBox: `0 0 ${w} ${h}`, width: w, height: h, role: "img",
+                          "aria-label": o.label || "trend" });
+  const lo = Math.min(...values), hi = Math.max(...values), span = (hi - lo) || 1;
+  const x = i => pad + i * (w - 2 * pad) / Math.max(values.length - 1, 1);
+  const y = v => h - pad - (v - lo) / span * (h - 2 * pad);
+  const d = values.map((v, i) => (i ? "L" : "M") + x(i) + "," + y(v)).join(" ");
+  const col = tok(o.token || "--s1");
+  svg.appendChild(el("path", { d: `${d} L${x(values.length - 1)},${h} L${x(0)},${h} Z`,
+    fill: col, opacity: .12 }));
+  svg.appendChild(el("path", { d, fill: "none", stroke: col, "stroke-width": 1.8,
+    "stroke-linejoin": "round", "stroke-linecap": "round" }));
+  const li = values.length - 1;
+  svg.appendChild(el("circle", { cx: x(li), cy: y(values[li]), r: 3, fill: col }));
+  return svg;
+}
+
+/* ---------- diverging heatmap ---------- */
+function heatmap(w, cfg) {
+  const cols = cfg.cols, rows = cfg.rows;
+  const M = { t: cfg.top || 86, r: 6, b: 6, l: cfg.left || 54 };
+  const cw = Math.max(30, (w - M.l - M.r) / cols.length);
+  const ch = cfg.cellH || 40;
+  const H = M.t + M.b + rows.length * ch;
+  const svg = el("svg", { viewBox: `0 0 ${w} ${H}`, width: w, height: H, role: "img" });
+  const g = el("g", { transform: `translate(${M.l},${M.t})` });
+
+  cols.forEach((c, j) => {
+    const t = el("text", { x: 0, y: 0, "text-anchor": "start", fill: tok("--ink-2"), "font-size": 11 }, c);
+    t.setAttribute("transform", `translate(${j * cw + cw / 2 - 4},${-10}) rotate(-42)`);
+    g.appendChild(t);
+  });
+  rows.forEach((r, i) => {
+    g.appendChild(el("text", { x: -10, y: i * ch + ch / 2 + 4, "text-anchor": "end",
+      fill: tok("--ink"), "font-size": 12, "font-weight": 500 }, r.label));
+    cols.forEach((c, j) => {
+      const cell = cfg.cell(i, j), x = j * cw + 1, y = i * ch + 1;
+      const wd = cw - 2, hd = ch - 2;
+      if (cell.d === null || cell.d === undefined) {
+        g.appendChild(el("rect", { x, y, width: wd, height: hd, rx: 3, fill: tok("--surface-2") }));
+        g.appendChild(el("text", { x: x + wd / 2, y: y + hd / 2 + 4, "text-anchor": "middle",
+          fill: tok("--ink-3"), "font-size": 11 }, "—"));
+      } else {
+        const col = tok(cell.d >= 0 ? "--pos" : "--neg");
+        g.appendChild(el("rect", { x, y, width: wd, height: hd, rx: 3, fill: tok("--surface-2") }));
+        g.appendChild(el("rect", { x, y, width: wd, height: hd, rx: 3, fill: col,
+          opacity: Math.max(0.14, Math.min(1, Math.abs(cell.d))) }));
+        if (wd > 44) g.appendChild(el("text", { x: x + wd / 2, y: y + hd / 2 + 4, "text-anchor": "middle",
+          fill: Math.abs(cell.d) > 0.55 ? "#fff" : tok("--ink"), "font-size": 10.5, "font-weight": 600,
+          "font-family": "IBM Plex Mono, monospace" },
+          cell.label !== undefined ? cell.label : cell.d.toFixed(2)));
+      }
+      const hr = el("rect", { x, y, width: wd, height: hd, fill: "transparent" });
+      hit(hr, cfg.title(i, j), cfg.rowsOf(i, j)); g.appendChild(hr);
+    });
+  });
+  svg.appendChild(g); return svg;
+}
+
+/* ---------- scatter map: projected points, equal aspect, layered ---------- */
+function scatterMap(w, cfg) {
+  const B = cfg.bounds;
+  const aspect = (B.y1 - B.y0) / (B.x1 - B.x0);
+  const H = cfg.height || Math.round(w * aspect);
+  const svg = el("svg", { viewBox: `0 0 ${w} ${H}`, width: w, height: H, role: "img",
+                          "aria-label": cfg.label || "site map" });
+  svg.appendChild(el("rect", { x: 0, y: 0, width: w, height: H, rx: 5, fill: tok("--surface-3") }));
+  const g = el("g");
+  const sx = v => (v - B.x0) / (B.x1 - B.x0) * w;
+  const sy = v => H - (v - B.y0) / (B.y1 - B.y0) * H;      // north up
+
+  for (const layer of cfg.layers) {
+    if (layer.hidden) continue;
+    for (const d of layer.points) {
+      const r = layer.r(d);
+      if (r <= 0) continue;
+      const c = el("circle", { cx: sx(d.x), cy: sy(d.y), r,
+        fill: layer.fill ? tok(layer.fill(d)) : "none",
+        stroke: layer.stroke ? tok(layer.stroke(d)) : "none",
+        "stroke-width": layer.strokeWidth || 1.4,
+        opacity: layer.opacity ? layer.opacity(d) : 1 });
+      if (layer.tip) {
+        const hitArea = el("circle", { cx: sx(d.x), cy: sy(d.y), r: Math.max(r, 11), fill: "transparent" });
+        hit(hitArea, layer.tip(d).title, layer.tip(d).rows);
+        g.appendChild(c); g.appendChild(hitArea);
+      } else {
+        g.appendChild(c);
+      }
+    }
+  }
+  (cfg.labels || []).forEach(l => {
+    g.appendChild(el("text", { x: sx(l.x), y: sy(l.y) - 20, "text-anchor": "middle",
+      fill: tok("--ink-2"), "font-size": 10, "font-weight": 600, "letter-spacing": ".05em",
+      stroke: tok("--surface-3"), "stroke-width": 3.5, "paint-order": "stroke",
+      "stroke-linejoin": "round" }, l.name.toUpperCase()));
+  });
+  svg.appendChild(g); return svg;
+}
+
+/* ---------- x/y scatter with a reference line ---------- */
+function scatterXY(w, cfg) {
+  const H = cfg.height || Math.max(260, Math.min(340, w * 0.72));
+  const M = { t: 14, r: 14, b: 40, l: 56 };
+  const iw = Math.max(40, w - M.l - M.r), ih = H - M.t - M.b;
+  const svg = el("svg", { viewBox: `0 0 ${w} ${H}`, width: w, height: H, role: "img" });
+  const g = el("g", { transform: `translate(${M.l},${M.t})` });
+  const xs = cfg.points.map(p => p.x), ys = cfg.points.map(p => p.y);
+  const lo = Math.min(...xs, ...ys), hi = Math.max(...xs, ...ys);
+  const sc = axisScale(lo, hi, ih, 0, { n: 4 });
+  const y = sc.y, x = lin(sc.dlo, sc.dhi, 0, iw);
+  gridY(g, sc.ticks, y, 0, iw, cfg.fmtAxis);
+  sc.ticks.forEach(t => {
+    g.appendChild(el("line", { x1: x(t), x2: x(t), y1: 0, y2: ih, stroke: tok("--rule"), "stroke-width": 1 }));
+    g.appendChild(el("text", { x: x(t), y: ih + 20, "text-anchor": "middle", fill: tok("--ink-3"),
+      "font-size": 11, "font-family": "IBM Plex Mono, monospace" }, cfg.fmtAxis(t)));
+  });
+  g.appendChild(el("line", { x1: x(sc.dlo), y1: y(sc.dlo), x2: x(sc.dhi), y2: y(sc.dhi),
+    stroke: tok("--rule-2"), "stroke-width": 1.5 }));
+  cfg.points.forEach(p => {
+    const c = el("circle", { cx: x(p.x), cy: y(p.y), r: 4.5, fill: tok(cfg.token || "--s1"),
+      opacity: .72, stroke: tok("--surface"), "stroke-width": 1.2 });
+    const hr = el("circle", { cx: x(p.x), cy: y(p.y), r: 12, fill: "transparent" });
+    if (cfg.tip) hit(hr, cfg.tip(p).title, cfg.tip(p).rows);
+    g.appendChild(c); g.appendChild(hr);
+  });
+  if (cfg.xLabel) g.appendChild(el("text", { x: iw / 2, y: ih + 36, "text-anchor": "middle",
+    fill: tok("--ink-3"), "font-size": 11 }, cfg.xLabel));
+  svg.appendChild(g); return svg;
+}
+
+/* ---------- legends ---------- */
+function legend(id, items) {
+  const n = $(id); if (!n) return;
+  n.innerHTML = items.map(i => `<span><b style="background:${i.swatch}"></b>${i.name}</span>`).join("");
+}
+
+/* ---------- render registry: resize, theme change and font load all redraw ---------- */
+const charts = [], after = [];
+const reg = (id, fn) => charts.push({ id, fn });
+const onRender = fn => after.push(fn);
+function render() {
+  for (const { id, fn } of charts) {
+    const host = document.getElementById(id); if (!host) continue;
+    host.replaceChildren(fn(Math.max(260, Math.floor(host.clientWidth))));
+  }
+  after.forEach(f => f());
+}
+function boot() {
+  render();
+  let t; const redraw = () => { clearTimeout(t); t = setTimeout(render, 120); };
+  addEventListener("resize", redraw);
+  matchMedia("(prefers-color-scheme: dark)").addEventListener("change", redraw);
+  new MutationObserver(redraw).observe(document.documentElement,
+    { attributes: true, attributeFilter: ["data-theme"] });
+  if (document.fonts) document.fonts.ready.then(render);
+}
+
+return { el, tok, $, MINUS, m2, m2s, m1, acct, pc, pcs, pp, int,
+         showTip, moveTip, hideTip, hit, lin, niceTicks, axisScale, gridY, xLabels,
+         waterfall, lineChart, hBars, groupBars, dumbbell, heatmap, spark, scatterMap, scatterXY, legend,
+         reg, onRender, render, boot };
+})();
+</script>
+<script>
+(() => {
+"use strict";
+const { el, tok, $, pc, pcs, int, hit, waterfall, hBars, groupBars, heatmap, legend, reg, onRender } = window.V;
+const D = JSON.parse(document.getElementById("payload").textContent);
+const S = D.summary, ME = D.methods, IC = D.intercompany, ST = D.stranded, B = D.balance;
+const m2 = v => (v < 0 ? "−" : "") + "£" + (Math.abs(v) / 1e6).toFixed(2) + "m";
+const m1 = v => (v < 0 ? "−" : "") + "£" + (Math.abs(v) / 1e6).toFixed(1) + "m";
+const k0 = v => (v < 0 ? "−" : "") + "£" + Math.round(Math.abs(v) / 1000) + "k";
+const DIVS = D.pl.map(p => p.division);
+const TGT = D.meta.target;
+
+/* ---------------- static ---------------- */
+$("#metarow").innerHTML = [
+  ["Group", `${m1(D.meta.group_revenue)} revenue, ${D.meta.divisions} divisions`],
+  ["Target", `${TGT}, ${m1(D.meta.target_revenue)}`],
+  ["Ledger", `${int(D.meta.postings)} postings, ${D.meta.cost_centres} cost centres`],
+  ["Untagged", `${m1(D.meta.untagged_pool)} across ${D.meta.services + D.meta.corporate} cost centres`]
+].map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join("");
+
+$("#figRep").textContent = m1(S.reported);
+$("#capRep").innerHTML = `${pc(S.margin_reported)} margin. Direct result less a flat revenue recharge.`;
+$("#figCarve").textContent = m1(S.carve_out);
+$("#capCarve").innerHTML = `${pc(S.margin_carve)} margin. ${m2(S.reported - S.carve_out)} lower.`;
+$("#poolAmt").textContent = `${m1(D.meta.untagged_pool)} to place`;
+$("#bridgeAmt").textContent = `${m1(S.reported)} → ${m1(S.carve_out)}`;
+$("#gapAmt").textContent = `${m2(D.standalone_gap)} gap`;
+$("#bsAmt").textContent = `${pc(B.directness, 0)} directly attributable`;
+$("#nPost").textContent = int(D.meta.postings);
+$("#nCC").textContent = D.meta.cost_centres;
+$("#recon").textContent = "£" + Math.abs(D.recon).toFixed(2);
+
+const tgtPL = D.pl.find(p => p.division === TGT);
+$("#thesis").innerHTML = `${m1(D.meta.untagged_pool)} of the group's cost sits in shared and corporate cost
+  centres with no division tag on it. How that is pushed down decides the number a buyer underwrites. Allocated
+  on measured usage rather than a flat revenue recharge, restated for intercompany trading at arm's length, and
+  charged what these functions actually cost a ${m1(D.meta.target_revenue)} business running them itself,
+  divisional EBITDA falls from <strong>${m1(S.reported)}</strong> to <strong>${m1(S.carve_out)}</strong> —
+  from ${pc(S.margin_reported)} to ${pc(S.margin_carve)} of revenue.`;
+
+/* ---------------- the problem ---------------- */
+reg("poolChart", w => hBars(w, D.untagged.map(u => ({
+  label: u.name, sub: u.kind, value: u.cost, token: u.kind === "Corporate" ? "--s2" : "--s1",
+  rows: [["Cost", m2(u.cost)], ["Type", u.kind], ["Cost centre", u.cost_centre]]
+})), { fmt: v => m2(v), left: w < 620 ? 150 : 186, rowH: 40 }));
+$("#poolCap").innerHTML = `Five shared services and four corporate functions. None of it carries a division
+  in the ledger, and no amount of data engineering will make it appear — it has to be allocated, and the
+  allocation has to be defensible.`;
+
+const directCost = tgtPL.cogs + tgtPL.direct_opex;
+const allocShare = (tgtPL.service + tgtPL.corporate) / (directCost + tgtPL.service + tgtPL.corporate);
+$("#problemBody").innerHTML = `The ratio matters more than either number, and on this deal it is
+  reassuring: only ${pc(allocShare, 1)} of the division's cost base is allocated rather than directly
+  attributable. That makes the allocation argument a small one — worth doing properly, but not where the
+  money is. It sits in what these functions cost once the division has to run them itself, which the
+  allocation does not measure at all.`;
+$("#problemStats").innerHTML = [
+  ["Directly attributable", m1(directCost), `${TGT} cost, tagged in the ledger`],
+  ["Allocated", m2(tgtPL.service + tgtPL.corporate), "Shared services and corporate"],
+  ["Share allocated", pc(tgtPL.service + tgtPL.corporate === 0 ? 0 :
+    (tgtPL.service + tgtPL.corporate) / (directCost + tgtPL.service + tgtPL.corporate), 1), "Of total cost"],
+  ["Standalone gap", m2(D.standalone_gap), "Where the money actually is"]
+].map(([k, v, d]) => `<div class="stat"><div class="k">${k}</div><div class="v num">${v}</div><div class="d">${d}</div></div>`).join("");
+
+/* ---------------- usage matrix ---------------- */
+const GROUPS = DIVS.concat(["Shared services", "Corporate"]);
+function groupOf(consumer, kind) {
+  if (kind === "Shared service") return "Shared services";
+  if (kind === "Corporate") return "Corporate";
+  const pre = consumer.split("-")[0];
+  return { TP: DIVS[0], FC: DIVS[1], ES: DIVS[2] }[pre];
+}
+const USE = ME.usage.map(u => {
+  const row = Object.fromEntries(GROUPS.map(g => [g, 0]));
+  u.cells.forEach(c => { row[groupOf(c.consumer, c.kind)] += c.share; });
+  return { name: u.name, row };
+});
+reg("usageChart", w => heatmap(w, {
+  rows: USE.map(u => ({ label: u.name })), cols: GROUPS,
+  left: w < 700 ? 108 : 168, top: 116, cellH: w < 640 ? 36 : 44,
+  cell: (i, j) => ({ d: Math.min(1, USE[i].row[GROUPS[j]] * 2.2),
+                     label: pc(USE[i].row[GROUPS[j]], 0) }),
+  title: (i, j) => `${USE[i].name} → ${GROUPS[j]}`,
+  rowsOf: (i, j) => [["Share of output", pc(USE[i].row[GROUPS[j]], 1)]]
+}));
+const interShare = USE.reduce((a, u) => a + u.row["Shared services"], 0) / USE.length;
+$("#usCap").innerHTML = `Shading is the share of each service's output going to that consumer group.
+  On average ${pc(interShare, 0)} of a service is consumed by the other services — for IT it is
+  ${pc(ME.per_service.find(s => s.name.startsWith("IT")).to_services, 0)}. That is the circularity a single-pass
+  allocation cannot handle.`;
+
+$("#poolTable").innerHTML = `<table style="min-width:520px"><thead><tr><th>Service</th><th>Own cost</th>
+  <th>Grossed up</th><th>Uplift</th><th>Consumed by other services</th></tr></thead><tbody>
+  ${ME.pools.map((p, i) => `<tr><td>${p.name}</td><td class="n">${m2(p.direct_cost)}</td>
+    <td class="n">${m2(p.grossed_up)}</td><td class="n">${pcs(p.uplift, 0)}</td>
+    <td class="n">${pc(ME.per_service[i].to_services, 0)}</td></tr>`).join("")}
+  <tr class="totalrow"><td>Total to place</td><td class="n">${m2(ME.pools.reduce((a, p) => a + p.direct_cost, 0))}</td>
+    <td class="n tiny">not additive</td><td class="n">—</td><td class="n">—</td></tr>
+  </tbody></table><p class="tiny" style="margin-top:8px">The grossed-up column is each pool inclusive of the
+  services it consumes. Only the own-cost column is real money; the uplift is internal and washes out when
+  the pools are pushed down to the divisions.</p>`;
+
+/* ---------------- three methods ---------------- */
+reg("methodChart", w => groupBars(w, DIVS.map(d => d.split(" ")[0]),
+  ME.by_method.map((m, i) => ({ name: m.method, token: ["--total", "--s1", "--s2"][i],
+    values: DIVS.map(d => m.by_div[d]) })),
+  { fmt: v => m1(v), fmtAxis: t => (t / 1e6).toFixed(0), height: 260 }));
+const spread = ME.spread;
+const tgtSpread = spread.find(s => s.division === TGT);
+const maxSpread = spread.reduce((a, s) => s.range > a.range ? s : a);
+$("#methodCap").innerHTML = `Direct ignores inter-service usage; step-down allocates in size order without
+  looking back; reciprocal solves the circularity. For ${TGT} the three agree to within
+  <strong>${k0(tgtSpread.range)}</strong>. For ${maxSpread.division} they differ by
+  <strong>${k0(maxSpread.range)}</strong>.`;
+
+reg("serviceChart", w => hBars(w, ME.per_service.map(s => ({
+  label: s.name, sub: pc(s.to_services, 0) + " to other services",
+  value: s.reciprocal - s.direct,
+  rows: [["Direct", m2(s.direct)], ["Reciprocal", m2(s.reciprocal)],
+         ["Difference", k0(s.reciprocal - s.direct)]]
+})), { fmt: v => k0(v), left: w < 620 ? 150 : 192, rowH: 42 }));
+const it = ME.per_service.reduce((a, s) => Math.abs(s.reciprocal - s.direct) > Math.abs(a.reciprocal - a.direct) ? s : a);
+$("#serviceCap").innerHTML = `Service by service the two methods disagree substantially — ${it.name} alone
+  swings ${k0(Math.abs(it.reciprocal - it.direct))}, because ${pc(it.to_services, 0)} of it is consumed by
+  other services that the direct method never credits.`;
+
+$("#cancelCallout").innerHTML = `<h3>The methods agree here, and that is a coincidence worth knowing</h3>
+  <p class="small">Per service the differences are large and they point in opposite directions: IT is heavily
+  over-allocated to ${TGT} under the direct method, everything else is under-allocated, and for this division's
+  particular usage profile the two almost exactly cancel — a net ${k0(tgtSpread.range)} on a
+  ${m1(D.meta.target_revenue)} business.</p>
+  <p class="small">That is not a general result. The same test moves ${maxSpread.division} by
+  ${k0(maxSpread.range)}. The point of doing the reciprocal calculation is not that it changes the answer.
+  It is that you cannot know whether it changes the answer until you have done it — and "we used a simple
+  allocation because the difference is immaterial" is only a defensible sentence after you have measured
+  the difference.</p>`;
+
+/* ---------------- corporate basis ---------------- */
+reg("basisChart", w => hBars(w, D.bases.map(b => ({
+  label: b.basis, sub: "EBITDA " + m1(b.ebitda), value: b.target, token: "--s1",
+  rows: [["Corporate charge", m2(b.target)], ["Resulting EBITDA", m2(b.ebitda)]]
+})), { fmt: v => m2(v), left: w < 620 ? 150 : 208, rowH: 44 }));
+const lo = Math.min(...D.bases.map(b => b.target)), hi = Math.max(...D.bases.map(b => b.target));
+$("#basisAmt").textContent = `${k0(hi - lo)} spread`;
+$("#basisCap").innerHTML = `The same ${m2(S.corp_total)} pool, spread four conventional ways. The range is
+  <strong>${k0(hi - lo)}</strong> of EBITDA — larger than the entire allocation-method question, and decided
+  by a choice rather than by data. Fix the basis in the SPA rather than discovering it in completion accounts.`;
+
+/* ---------------- bridge ---------------- */
+reg("bridgeChart", w => waterfall(w, D.bridge, {}));
+$("#brCap").innerHTML = `Reconciles to £${Math.abs(D.recon).toFixed(2)}. Vertical axis truncated to make the
+  movements legible.`;
+
+$("#icStats").innerHTML = [
+  ["Sales to sister divisions", m2(IC.sales), pc(IC.sales / D.meta.target_revenue, 1) + " of revenue"],
+  ["Purchases from sisters", m2(IC.purchases), "Restated the same way"],
+  ["Transfer price above market", pc(IC.adj, 1), "Benchmarked to third-party terms"],
+  ["Net EBITDA effect", m2(IC.net), "On restatement to arm's length"]
+].map(([k, v, d]) => `<div class="stat"><div class="k">${k}</div><div class="v num">${v}</div><div class="d">${d}</div></div>`).join("");
+$("#icBody").innerHTML = `${m2(IC.sales)} of the division's revenue is sales to its own sister divisions at
+  transfer prices ${pc(IC.adj, 1)} above market. Restating to arm's length costs ${m2(-IC.net)} of EBITDA.
+  <br><br>The larger point is not the restatement, it is the exposure: ${pc(IC.sales / D.meta.target_revenue, 1)}
+  of revenue depends on counterparties who become third parties on completion and are under no obligation to
+  keep buying. That belongs in the SPA as a supply agreement with volume and term, or in the model as revenue
+  at risk. It should not sit quietly inside the base.`;
+
+/* ---------------- standalone ---------------- */
+reg("standaloneChart", w => groupBars(w, D.standalone.map(s => s.function.split(" ")[0]),
+  [{ name: "Allocated by the group", token: "--s1", values: D.standalone.map(s => s.allocated) },
+   { name: "Standalone estimate", token: "--s2", values: D.standalone.map(s => s.standalone) }],
+  { fmt: v => k0(v), fmtAxis: t => (t / 1e6).toFixed(1), height: 280, every: 1 }));
+$("#saCap").innerHTML = `Standalone estimates are benchmarked as a percentage of revenue for comparable
+  businesses of this size, with a fixed floor where the function does not scale down. The gap is
+  <strong>${m2(D.standalone_gap)}</strong>, and it is a permanent cost of ownership rather than a one-off
+  separation expense.`;
+
+reg("strandedChart", w => hBars(w, ST.by_function.map(f => ({
+  label: f.function, sub: pc(f.removable_pct, 0) + " removable", value: f.stranded, token: "--neg",
+  rows: [["Allocated to target", k0(f.allocated)], ["Removable", pc(f.removable_pct, 0)],
+         ["Stranded", k0(f.stranded)]]
+})), { fmt: v => k0(v), left: w < 620 ? 150 : 192, rowH: 38 }));
+$("#strCap").innerHTML = `${m2(ST.truly_stranded)} of the ${m2(ST.allocated_to_target)} currently charged to
+  the division does not leave with it — ${pc(ST.pct_of_allocation, 0)} of the allocation. That lands on the two
+  remaining divisions, and it is the vendor's problem rather than the buyer's, which is precisely why it never
+  appears in the vendor's own carve-out pack.`;
+
+$("#saTable").innerHTML = `<table style="min-width:420px"><thead><tr><th>Function</th><th>Allocated</th>
+  <th>Standalone</th><th>Range</th><th>Gap</th></tr></thead><tbody>
+  ${D.standalone.map(s => `<tr><td>${s.function}</td><td class="n">${k0(s.allocated)}</td>
+    <td class="n">${k0(s.standalone)}</td>
+    <td class="n tiny">${s.hi ? k0(s.lo) + "–" + k0(s.hi) : "—"}</td>
+    <td class="n ${s.gap > 0 ? "neg" : ""}">${k0(s.gap)}</td></tr>`).join("")}
+  <tr class="totalrow"><td>Total</td><td class="n">${m2(D.standalone.reduce((a, s) => a + s.allocated, 0))}</td>
+    <td class="n">${m2(D.standalone.reduce((a, s) => a + s.standalone, 0))}</td><td></td>
+    <td class="n neg">${m2(D.standalone_gap)}</td></tr></tbody></table>`;
+
+/* ---------------- balance sheet ---------------- */
+$("#bsTable").innerHTML = `<table style="min-width:680px"><thead><tr><th>Line</th><th>Direct</th>
+  <th>Allocated</th><th>Total</th><th>Directly attributable</th><th>Allocation basis</th></tr></thead><tbody>
+  ${B.lines.map(l => `<tr><td>${l.line}</td><td class="n">${m2(l.direct)}</td>
+    <td class="n">${m2(l.allocated)}</td><td class="n">${m2(l.total)}</td>
+    <td class="bar-cell"><i style="width:${(l.directness * 72).toFixed(0)}px; background:var(${l.directness > 0.85 ? "--s1" : "--warn"})"></i>
+      <span style="margin-left:80px" class="num">${pc(l.directness, 0)}</span></td>
+    <td class="tiny" style="white-space:normal">${l.basis}</td></tr>`).join("")}
+  </tbody></table><p class="tiny" style="margin-top:8px">Cash and external debt are excluded: the transaction
+  is on a cash-free debt-free basis, so neither carves out.</p>`;
+
+$("#wcStats").innerHTML = [
+  ["Net working capital", m1(B.nwc), pc(B.nwc_pct_revenue, 1) + " of revenue"],
+  ["Debtor days", B.dso.toFixed(0), "On carved-out revenue"],
+  ["Inventory days", B.dio.toFixed(0), "On carved-out cost of sales"],
+  ["Creditor days", B.dpo.toFixed(0), "On carved-out cost of sales"]
+].map(([k, v, d]) => `<div class="stat"><div class="k">${k}</div><div class="v num">${v}</div><div class="d">${d}</div></div>`).join("");
+
+/* ---------------- so what ---------------- */
+$("#soPrice").innerHTML = `The division's own management accounts show ${m1(S.reported)}. The number a buyer
+  owns on day one is ${m1(S.carve_out)} — ${m2(S.reported - S.carve_out)} lower, and permanently so. At an
+  8× multiple that is ${m1((S.reported - S.carve_out) * 8)} of enterprise value, which is not a rounding
+  difference in a negotiation.`;
+$("#soNeg").innerHTML = `Two of the three adjustments are worth arguing about and one is not. The allocation
+  method moves ${k0(tgtSpread.range)}; the corporate basis moves ${k0(hi - lo)}; the standalone cost gap is
+  ${m2(D.standalone_gap)}. Spend the diligence hours in that order, reversed.`;
+$("#soSep").innerHTML = `The same build prices the transitional services agreement. Every function where
+  standalone exceeds allocated is a function the vendor should provide under TSA and the buyer should exit on
+  a dated plan — and ${m2(ST.truly_stranded)} of stranded cost gives the vendor a reason to want the TSA as
+  much as the buyer does.`;
+
+$("#ingredients").innerHTML = [
+  "<strong>Posting-level general ledger</strong> — account, cost centre, period, amount, and the division tag where one exists. Trial-balance summaries are not enough: the allocation has to be rebuilt from the postings.",
+  "<strong>Cost centre master</strong> — which centres are divisional, which are shared services, which are corporate. This is the map of the problem.",
+  "<strong>Service usage drivers</strong> — tickets, payroll runs, documents processed, floor area occupied. Measured usage, not a headcount proxy, is what makes the allocation defensible.",
+  "<strong>Headcount and floor area by cost centre</strong> — the drivers for anything with no usage record.",
+  "<strong>Sub-ledgers</strong> — AR by customer, inventory by SKU, fixed assets by cost centre, AP by supplier, accruals by nature. The directness of the balance sheet depends entirely on these.",
+  "<strong>Standalone benchmarks</strong> — function cost as a percentage of revenue for comparable independent businesses, with the fixed floor below which a function cannot shrink.",
+].map(s => `<li><span>${s}</span></li>`).join("");
+$("#notes").innerHTML = [
+  "<strong>Reciprocal, not step-down.</strong> Shared services consume each other, so their true cost is a linear system rather than a sequence. Solving it takes one matrix inversion.",
+  "<strong>Every method conserves the pool.</strong> The build asserts that direct, step-down and reciprocal each push out exactly what went in — an allocation that creates or destroys cost is the commonest silent error here.",
+  "<strong>Corporate is spread on a basis, and the basis is disclosed.</strong> Four are computed and shown, because presenting one without the others hides a choice worth " + k0(hi - lo) + ".",
+  "<strong>The balance sheet is driven off the segmented P&L</strong> — receivables on revenue, inventory and payables on cost of sales — and off physical drivers for anything else. Directness is reported per line.",
+  "<strong>Standalone cost is benchmarked, not uplifted.</strong> A percentage uplift on the allocated charge assumes the allocation was right to begin with, which is the thing being tested.",
+].map(s => `<li><span>${s}</span></li>`).join("");
+
+onRender(() => {
+  legend("#usLegend", [{ swatch: tok("--pos"), name: "Share of the service consumed" },
+                       { swatch: tok("--surface-2"), name: "No consumption" }]);
+  legend("#mLegend", [{ swatch: tok("--total"), name: "Direct" }, { swatch: tok("--s1"), name: "Step-down" },
+                      { swatch: tok("--s2"), name: "Reciprocal" }]);
+  legend("#brLegend", [{ swatch: tok("--pos"), name: "Increase" }, { swatch: tok("--neg"), name: "Reduction" },
+                       { swatch: tok("--total"), name: "Position" }]);
+  legend("#saLegend", [{ swatch: tok("--s1"), name: "Allocated by the group" },
+                       { swatch: tok("--s2"), name: "Standalone estimate" }]);
+});
+window.V.boot();
+})();
+</script>

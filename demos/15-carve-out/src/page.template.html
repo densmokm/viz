@@ -1,0 +1,465 @@
+<title>Project Kiln Carve-Out</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;450;500;600;700&display=swap">
+<style>
+__CSS__
+</style>
+
+<div class="topbar"><div class="wrap">
+  <div class="brandmark"><i></i> Project Kiln</div>
+  <nav class="navlinks">
+    <a href="#problem">The problem</a><a href="#allocate">Allocation</a><a href="#basis">Corporate basis</a>
+    <a href="#bridge">The bridge</a><a href="#standalone">Standalone cost</a><a href="#balance">Balance sheet</a>
+    <a href="#sowhat">So what</a><a href="#method">Method</a><a href="https://claude.ai/code/artifact/d0efaada-1055-480d-84a0-ec3d4cd00b96" target="_blank" rel="noopener">Tutorial ↗</a>
+  </nav>
+</div></div>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="eyebrow label"><span class="codename">Project Kiln</span><span>SPA and transaction support</span><span>&middot;</span><span>Balance sheet carve-out</span></div>
+  <h1>Ashworth Industries: Thermal Products</h1>
+  <p class="lede" style="margin-top:14px">A division that has never had standalone accounts. One ERP, one chart
+     of accounts, five shared functions, a corporate centre and three-way intercompany trading. This is what
+     it looks like separated out.</p>
+  <dl class="metarow" id="metarow"></dl>
+</header>
+
+<div class="verdict">
+  <div class="reported">
+    <div class="label">Divisional EBITDA, as the group reports it</div>
+    <div class="fig num" id="figRep">&mdash;</div>
+    <div class="cap" id="capRep"></div>
+  </div>
+  <div class="underlying">
+    <div class="label">Carve-out EBITDA</div>
+    <div class="fig num" id="figCarve">&mdash;</div>
+    <div class="cap" id="capCarve"></div>
+  </div>
+</div>
+
+<p class="thesis" id="thesis"></p>
+
+<section id="problem">
+  <div class="sechead"><h2>What the ledger actually looks like</h2><span class="amt" id="poolAmt"></span></div>
+  <p class="secintro lede">Most of the P&amp;L segments itself: revenue and direct costs post to a division
+     cost centre and need no judgement at all. The carve-out problem is the remainder &mdash; the cost sitting
+     in shared and corporate cost centres that carries no division tag, and never has.</p>
+  <div class="grid2" style="align-items:start">
+    <div class="panel">
+      <div class="panelhead"><h3>Untagged cost, by cost centre</h3></div>
+      <figure style="margin:0"><div class="chart" id="poolChart"></div>
+        <figcaption id="poolCap"></figcaption></figure>
+    </div>
+    <div class="panel">
+      <div class="panelhead"><h3>Direct versus allocated</h3></div>
+      <div class="stats" style="margin-top:10px" id="problemStats"></div>
+      <p class="small" style="margin-top:16px" id="problemBody"></p>
+    </div>
+  </div>
+</section>
+
+<section id="allocate">
+  <div class="sechead"><h2>Allocating the shared functions</h2></div>
+  <p class="secintro lede">The five shared services do not only serve the divisions &mdash; they serve each
+     other. IT runs the finance and payroll systems; HR runs payroll for IT. A single pass down to the
+     divisions gets that wrong, which is why the reciprocal method exists.</p>
+
+  <div class="panel">
+    <div class="panelhead"><h3>Who consumes each service</h3><span class="tiny">share of the service's output</span></div>
+    <figure style="margin:0"><div class="chart" id="usageChart"></div>
+      <div class="legend" id="usLegend"></div>
+      <figcaption id="usCap"></figcaption></figure>
+  </div>
+
+  <div class="panel" style="margin-top:18px">
+    <div class="panelhead"><h3>The reciprocal solve</h3></div>
+    <p class="small" style="margin-block:8px 12px">Each pool's true cost is its own spend plus what it
+      receives from the others, which is circular and therefore a linear system rather than a sequence:</p>
+    <div class="formula">T = D + M&middot;T          M[i][j] = share of service j consumed by i
+
+  &rArr;  T = (I &minus; M)&#8315;&sup1; D</div>
+    <div class="tablewrap" style="margin-top:16px" id="poolTable"></div>
+  </div>
+
+  <div class="grid2" style="margin-top:18px; align-items:start">
+    <div class="panel">
+      <div class="panelhead"><h3>Three methods, by division</h3></div>
+      <figure style="margin:0"><div class="chart" id="methodChart"></div>
+        <div class="legend" id="mLegend"></div>
+        <figcaption id="methodCap"></figcaption></figure>
+    </div>
+    <div class="panel">
+      <div class="panelhead"><h3>Per service, for the target</h3><span class="tiny">reciprocal less direct</span></div>
+      <figure style="margin:0"><div class="chart" id="serviceChart"></div>
+        <figcaption id="serviceCap"></figcaption></figure>
+    </div>
+  </div>
+  <div class="callout ok" style="margin-top:18px" id="cancelCallout"></div>
+</section>
+
+<section id="basis">
+  <div class="sechead"><h2>The corporate charge is a choice</h2><span class="amt" id="basisAmt"></span></div>
+  <p class="secintro lede">Corporate cost has no usage driver &mdash; nobody consumes a board. So it is spread
+     on a basis, and the basis is a negotiating position rather than a fact. Here is the same cost pool under
+     four conventional bases, and the EBITDA each produces.</p>
+  <div class="panel">
+    <figure style="margin:0"><div class="chart" id="basisChart"></div>
+      <figcaption id="basisCap"></figcaption></figure>
+  </div>
+</section>
+
+<section id="bridge">
+  <div class="sechead"><h2>From divisional result to carve-out</h2><span class="amt" id="bridgeAmt"></span></div>
+  <p class="secintro lede">Three adjustments sit between the number the group reports internally and the
+     number a buyer should underwrite.</p>
+  <div class="panel">
+    <figure style="margin:0"><div class="chart" id="bridgeChart"></div>
+      <div class="legend" id="brLegend"></div>
+      <figcaption id="brCap"></figcaption></figure>
+  </div>
+  <div class="panel" style="margin-top:18px">
+    <div class="panelhead"><h3>Intercompany</h3></div>
+    <div class="grid2" style="align-items:start; margin-top:10px">
+      <div><div class="stats" id="icStats"></div></div>
+      <div><p class="small" id="icBody"></p></div>
+    </div>
+  </div>
+</section>
+
+<section id="standalone">
+  <div class="sechead"><h2>What it costs to stand alone</h2><span class="amt" id="gapAmt"></span></div>
+  <p class="secintro lede">The allocated charge is what the group's functions cost spread across £441m of
+     revenue. Standalone, this division has to run them on £145m &mdash; and some of them do not scale down
+     at all. A board is a board.</p>
+  <div class="panel">
+    <figure style="margin:0"><div class="chart" id="standaloneChart"></div>
+      <div class="legend" id="saLegend"></div>
+      <figcaption id="saCap"></figcaption></figure>
+  </div>
+  <div class="grid2" style="margin-top:18px; align-items:start">
+    <div class="panel">
+      <div class="panelhead"><h3>Stranded in the group</h3><span class="tiny">the other side of the same coin</span></div>
+      <figure style="margin:0"><div class="chart" id="strandedChart"></div>
+        <figcaption id="strCap"></figcaption></figure>
+    </div>
+    <div class="panel">
+      <div class="panelhead"><h3>Function by function</h3></div>
+      <div class="tablewrap" id="saTable"></div>
+    </div>
+  </div>
+</section>
+
+<section id="balance">
+  <div class="sechead"><h2>The balance sheet</h2><span class="amt" id="bsAmt"></span></div>
+  <p class="secintro lede">Every line is taken directly from a sub-ledger wherever that sub-ledger carries a
+     division, and driven off the segmented P&amp;L or a physical driver wherever it does not. The share that
+     is direct is reported alongside the number, because a buyer should price the two differently.</p>
+  <div class="panel"><div class="tablewrap" id="bsTable"></div></div>
+  <div class="stats" style="margin-top:18px" id="wcStats"></div>
+</section>
+
+<section id="sowhat">
+  <div class="sechead"><h2>So what</h2></div>
+  <div class="grid3">
+    <div class="panel"><div class="label">Price</div><h3 style="margin-block:8px 10px">Underwrite the carve-out number</h3>
+      <p class="small" id="soPrice"></p></div>
+    <div class="panel"><div class="label">Negotiation</div><h3 style="margin-block:8px 10px">Know which arguments are worth having</h3>
+      <p class="small" id="soNeg"></p></div>
+    <div class="panel"><div class="label">Separation</div><h3 style="margin-block:8px 10px">The TSA is priced off this</h3>
+      <p class="small" id="soSep"></p></div>
+  </div>
+</section>
+
+<section id="method">
+  <div class="sechead"><h2>How it is built</h2></div>
+  <div class="grid2" style="align-items:start">
+    <div class="panel">
+      <div class="panelhead"><h3>Ingredients</h3></div>
+      <ul class="plain" id="ingredients" style="margin-top:12px"></ul>
+    </div>
+    <div class="panel">
+      <div class="panelhead"><h3>Method notes</h3></div>
+      <ul class="plain" id="notes" style="margin-top:12px"></ul>
+    </div>
+  </div>
+  <div class="panel" style="margin-top:18px">
+    <div class="panelhead"><h3>About this data</h3></div>
+    <p class="small" style="margin-top:8px">Ashworth Industries is synthetic. The generator emits what a
+      carve-out team actually receives: <span class="num" id="nPost"></span> posting-level journal lines
+      across <span class="num" id="nCC"></span> cost centres, a service usage matrix, headcount and floor
+      area, and the sub-ledgers behind receivables, inventory, fixed assets, payables and accruals. Nothing
+      is pre-segmented.</p>
+    <p class="small" style="margin-top:12px">Every reconciliation is asserted in the build: all three
+      allocation methods conserve the pool exactly, corporate spreads completely on every basis, the
+      carve-out bridge ties to <span class="num" id="recon"></span>, and each balance sheet line foots
+      across the three divisions to the group total.</p>
+  </div>
+</section>
+
+<footer>
+  <strong style="color:var(--ink)">Technique 15 &mdash; Balance Sheet Carve-Out.</strong>
+  SPA and transaction support stage of the D&amp;A technique series. All figures synthetic.
+</footer>
+
+</div>
+<div id="tip" role="status" aria-live="polite"></div>
+<script id="payload" type="application/json">__DATA__</script>
+<script>__VIZ__</script>
+<script>
+(() => {
+"use strict";
+const { el, tok, $, pc, pcs, int, hit, waterfall, hBars, groupBars, heatmap, legend, reg, onRender } = window.V;
+const D = JSON.parse(document.getElementById("payload").textContent);
+const S = D.summary, ME = D.methods, IC = D.intercompany, ST = D.stranded, B = D.balance;
+const m2 = v => (v < 0 ? "−" : "") + "£" + (Math.abs(v) / 1e6).toFixed(2) + "m";
+const m1 = v => (v < 0 ? "−" : "") + "£" + (Math.abs(v) / 1e6).toFixed(1) + "m";
+const k0 = v => (v < 0 ? "−" : "") + "£" + Math.round(Math.abs(v) / 1000) + "k";
+const DIVS = D.pl.map(p => p.division);
+const TGT = D.meta.target;
+
+/* ---------------- static ---------------- */
+$("#metarow").innerHTML = [
+  ["Group", `${m1(D.meta.group_revenue)} revenue, ${D.meta.divisions} divisions`],
+  ["Target", `${TGT}, ${m1(D.meta.target_revenue)}`],
+  ["Ledger", `${int(D.meta.postings)} postings, ${D.meta.cost_centres} cost centres`],
+  ["Untagged", `${m1(D.meta.untagged_pool)} across ${D.meta.services + D.meta.corporate} cost centres`]
+].map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join("");
+
+$("#figRep").textContent = m1(S.reported);
+$("#capRep").innerHTML = `${pc(S.margin_reported)} margin. Direct result less a flat revenue recharge.`;
+$("#figCarve").textContent = m1(S.carve_out);
+$("#capCarve").innerHTML = `${pc(S.margin_carve)} margin. ${m2(S.reported - S.carve_out)} lower.`;
+$("#poolAmt").textContent = `${m1(D.meta.untagged_pool)} to place`;
+$("#bridgeAmt").textContent = `${m1(S.reported)} → ${m1(S.carve_out)}`;
+$("#gapAmt").textContent = `${m2(D.standalone_gap)} gap`;
+$("#bsAmt").textContent = `${pc(B.directness, 0)} directly attributable`;
+$("#nPost").textContent = int(D.meta.postings);
+$("#nCC").textContent = D.meta.cost_centres;
+$("#recon").textContent = "£" + Math.abs(D.recon).toFixed(2);
+
+const tgtPL = D.pl.find(p => p.division === TGT);
+$("#thesis").innerHTML = `${m1(D.meta.untagged_pool)} of the group's cost sits in shared and corporate cost
+  centres with no division tag on it. How that is pushed down decides the number a buyer underwrites. Allocated
+  on measured usage rather than a flat revenue recharge, restated for intercompany trading at arm's length, and
+  charged what these functions actually cost a ${m1(D.meta.target_revenue)} business running them itself,
+  divisional EBITDA falls from <strong>${m1(S.reported)}</strong> to <strong>${m1(S.carve_out)}</strong> —
+  from ${pc(S.margin_reported)} to ${pc(S.margin_carve)} of revenue.`;
+
+/* ---------------- the problem ---------------- */
+reg("poolChart", w => hBars(w, D.untagged.map(u => ({
+  label: u.name, sub: u.kind, value: u.cost, token: u.kind === "Corporate" ? "--s2" : "--s1",
+  rows: [["Cost", m2(u.cost)], ["Type", u.kind], ["Cost centre", u.cost_centre]]
+})), { fmt: v => m2(v), left: w < 620 ? 150 : 186, rowH: 40 }));
+$("#poolCap").innerHTML = `Five shared services and four corporate functions. None of it carries a division
+  in the ledger, and no amount of data engineering will make it appear — it has to be allocated, and the
+  allocation has to be defensible.`;
+
+const directCost = tgtPL.cogs + tgtPL.direct_opex;
+const allocShare = (tgtPL.service + tgtPL.corporate) / (directCost + tgtPL.service + tgtPL.corporate);
+$("#problemBody").innerHTML = `The ratio matters more than either number, and on this deal it is
+  reassuring: only ${pc(allocShare, 1)} of the division's cost base is allocated rather than directly
+  attributable. That makes the allocation argument a small one — worth doing properly, but not where the
+  money is. It sits in what these functions cost once the division has to run them itself, which the
+  allocation does not measure at all.`;
+$("#problemStats").innerHTML = [
+  ["Directly attributable", m1(directCost), `${TGT} cost, tagged in the ledger`],
+  ["Allocated", m2(tgtPL.service + tgtPL.corporate), "Shared services and corporate"],
+  ["Share allocated", pc(tgtPL.service + tgtPL.corporate === 0 ? 0 :
+    (tgtPL.service + tgtPL.corporate) / (directCost + tgtPL.service + tgtPL.corporate), 1), "Of total cost"],
+  ["Standalone gap", m2(D.standalone_gap), "Where the money actually is"]
+].map(([k, v, d]) => `<div class="stat"><div class="k">${k}</div><div class="v num">${v}</div><div class="d">${d}</div></div>`).join("");
+
+/* ---------------- usage matrix ---------------- */
+const GROUPS = DIVS.concat(["Shared services", "Corporate"]);
+function groupOf(consumer, kind) {
+  if (kind === "Shared service") return "Shared services";
+  if (kind === "Corporate") return "Corporate";
+  const pre = consumer.split("-")[0];
+  return { TP: DIVS[0], FC: DIVS[1], ES: DIVS[2] }[pre];
+}
+const USE = ME.usage.map(u => {
+  const row = Object.fromEntries(GROUPS.map(g => [g, 0]));
+  u.cells.forEach(c => { row[groupOf(c.consumer, c.kind)] += c.share; });
+  return { name: u.name, row };
+});
+reg("usageChart", w => heatmap(w, {
+  rows: USE.map(u => ({ label: u.name })), cols: GROUPS,
+  left: w < 700 ? 108 : 168, top: 116, cellH: w < 640 ? 36 : 44,
+  cell: (i, j) => ({ d: Math.min(1, USE[i].row[GROUPS[j]] * 2.2),
+                     label: pc(USE[i].row[GROUPS[j]], 0) }),
+  title: (i, j) => `${USE[i].name} → ${GROUPS[j]}`,
+  rowsOf: (i, j) => [["Share of output", pc(USE[i].row[GROUPS[j]], 1)]]
+}));
+const interShare = USE.reduce((a, u) => a + u.row["Shared services"], 0) / USE.length;
+$("#usCap").innerHTML = `Shading is the share of each service's output going to that consumer group.
+  On average ${pc(interShare, 0)} of a service is consumed by the other services — for IT it is
+  ${pc(ME.per_service.find(s => s.name.startsWith("IT")).to_services, 0)}. That is the circularity a single-pass
+  allocation cannot handle.`;
+
+$("#poolTable").innerHTML = `<table style="min-width:520px"><thead><tr><th>Service</th><th>Own cost</th>
+  <th>Grossed up</th><th>Uplift</th><th>Consumed by other services</th></tr></thead><tbody>
+  ${ME.pools.map((p, i) => `<tr><td>${p.name}</td><td class="n">${m2(p.direct_cost)}</td>
+    <td class="n">${m2(p.grossed_up)}</td><td class="n">${pcs(p.uplift, 0)}</td>
+    <td class="n">${pc(ME.per_service[i].to_services, 0)}</td></tr>`).join("")}
+  <tr class="totalrow"><td>Total to place</td><td class="n">${m2(ME.pools.reduce((a, p) => a + p.direct_cost, 0))}</td>
+    <td class="n tiny">not additive</td><td class="n">—</td><td class="n">—</td></tr>
+  </tbody></table><p class="tiny" style="margin-top:8px">The grossed-up column is each pool inclusive of the
+  services it consumes. Only the own-cost column is real money; the uplift is internal and washes out when
+  the pools are pushed down to the divisions.</p>`;
+
+/* ---------------- three methods ---------------- */
+reg("methodChart", w => groupBars(w, DIVS.map(d => d.split(" ")[0]),
+  ME.by_method.map((m, i) => ({ name: m.method, token: ["--total", "--s1", "--s2"][i],
+    values: DIVS.map(d => m.by_div[d]) })),
+  { fmt: v => m1(v), fmtAxis: t => (t / 1e6).toFixed(0), height: 260 }));
+const spread = ME.spread;
+const tgtSpread = spread.find(s => s.division === TGT);
+const maxSpread = spread.reduce((a, s) => s.range > a.range ? s : a);
+$("#methodCap").innerHTML = `Direct ignores inter-service usage; step-down allocates in size order without
+  looking back; reciprocal solves the circularity. For ${TGT} the three agree to within
+  <strong>${k0(tgtSpread.range)}</strong>. For ${maxSpread.division} they differ by
+  <strong>${k0(maxSpread.range)}</strong>.`;
+
+reg("serviceChart", w => hBars(w, ME.per_service.map(s => ({
+  label: s.name, sub: pc(s.to_services, 0) + " to other services",
+  value: s.reciprocal - s.direct,
+  rows: [["Direct", m2(s.direct)], ["Reciprocal", m2(s.reciprocal)],
+         ["Difference", k0(s.reciprocal - s.direct)]]
+})), { fmt: v => k0(v), left: w < 620 ? 150 : 192, rowH: 42 }));
+const it = ME.per_service.reduce((a, s) => Math.abs(s.reciprocal - s.direct) > Math.abs(a.reciprocal - a.direct) ? s : a);
+$("#serviceCap").innerHTML = `Service by service the two methods disagree substantially — ${it.name} alone
+  swings ${k0(Math.abs(it.reciprocal - it.direct))}, because ${pc(it.to_services, 0)} of it is consumed by
+  other services that the direct method never credits.`;
+
+$("#cancelCallout").innerHTML = `<h3>The methods agree here, and that is a coincidence worth knowing</h3>
+  <p class="small">Per service the differences are large and they point in opposite directions: IT is heavily
+  over-allocated to ${TGT} under the direct method, everything else is under-allocated, and for this division's
+  particular usage profile the two almost exactly cancel — a net ${k0(tgtSpread.range)} on a
+  ${m1(D.meta.target_revenue)} business.</p>
+  <p class="small">That is not a general result. The same test moves ${maxSpread.division} by
+  ${k0(maxSpread.range)}. The point of doing the reciprocal calculation is not that it changes the answer.
+  It is that you cannot know whether it changes the answer until you have done it — and "we used a simple
+  allocation because the difference is immaterial" is only a defensible sentence after you have measured
+  the difference.</p>`;
+
+/* ---------------- corporate basis ---------------- */
+reg("basisChart", w => hBars(w, D.bases.map(b => ({
+  label: b.basis, sub: "EBITDA " + m1(b.ebitda), value: b.target, token: "--s1",
+  rows: [["Corporate charge", m2(b.target)], ["Resulting EBITDA", m2(b.ebitda)]]
+})), { fmt: v => m2(v), left: w < 620 ? 150 : 208, rowH: 44 }));
+const lo = Math.min(...D.bases.map(b => b.target)), hi = Math.max(...D.bases.map(b => b.target));
+$("#basisAmt").textContent = `${k0(hi - lo)} spread`;
+$("#basisCap").innerHTML = `The same ${m2(S.corp_total)} pool, spread four conventional ways. The range is
+  <strong>${k0(hi - lo)}</strong> of EBITDA — larger than the entire allocation-method question, and decided
+  by a choice rather than by data. Fix the basis in the SPA rather than discovering it in completion accounts.`;
+
+/* ---------------- bridge ---------------- */
+reg("bridgeChart", w => waterfall(w, D.bridge, {}));
+$("#brCap").innerHTML = `Reconciles to £${Math.abs(D.recon).toFixed(2)}. Vertical axis truncated to make the
+  movements legible.`;
+
+$("#icStats").innerHTML = [
+  ["Sales to sister divisions", m2(IC.sales), pc(IC.sales / D.meta.target_revenue, 1) + " of revenue"],
+  ["Purchases from sisters", m2(IC.purchases), "Restated the same way"],
+  ["Transfer price above market", pc(IC.adj, 1), "Benchmarked to third-party terms"],
+  ["Net EBITDA effect", m2(IC.net), "On restatement to arm's length"]
+].map(([k, v, d]) => `<div class="stat"><div class="k">${k}</div><div class="v num">${v}</div><div class="d">${d}</div></div>`).join("");
+$("#icBody").innerHTML = `${m2(IC.sales)} of the division's revenue is sales to its own sister divisions at
+  transfer prices ${pc(IC.adj, 1)} above market. Restating to arm's length costs ${m2(-IC.net)} of EBITDA.
+  <br><br>The larger point is not the restatement, it is the exposure: ${pc(IC.sales / D.meta.target_revenue, 1)}
+  of revenue depends on counterparties who become third parties on completion and are under no obligation to
+  keep buying. That belongs in the SPA as a supply agreement with volume and term, or in the model as revenue
+  at risk. It should not sit quietly inside the base.`;
+
+/* ---------------- standalone ---------------- */
+reg("standaloneChart", w => groupBars(w, D.standalone.map(s => s.function.split(" ")[0]),
+  [{ name: "Allocated by the group", token: "--s1", values: D.standalone.map(s => s.allocated) },
+   { name: "Standalone estimate", token: "--s2", values: D.standalone.map(s => s.standalone) }],
+  { fmt: v => k0(v), fmtAxis: t => (t / 1e6).toFixed(1), height: 280, every: 1 }));
+$("#saCap").innerHTML = `Standalone estimates are benchmarked as a percentage of revenue for comparable
+  businesses of this size, with a fixed floor where the function does not scale down. The gap is
+  <strong>${m2(D.standalone_gap)}</strong>, and it is a permanent cost of ownership rather than a one-off
+  separation expense.`;
+
+reg("strandedChart", w => hBars(w, ST.by_function.map(f => ({
+  label: f.function, sub: pc(f.removable_pct, 0) + " removable", value: f.stranded, token: "--neg",
+  rows: [["Allocated to target", k0(f.allocated)], ["Removable", pc(f.removable_pct, 0)],
+         ["Stranded", k0(f.stranded)]]
+})), { fmt: v => k0(v), left: w < 620 ? 150 : 192, rowH: 38 }));
+$("#strCap").innerHTML = `${m2(ST.truly_stranded)} of the ${m2(ST.allocated_to_target)} currently charged to
+  the division does not leave with it — ${pc(ST.pct_of_allocation, 0)} of the allocation. That lands on the two
+  remaining divisions, and it is the vendor's problem rather than the buyer's, which is precisely why it never
+  appears in the vendor's own carve-out pack.`;
+
+$("#saTable").innerHTML = `<table style="min-width:420px"><thead><tr><th>Function</th><th>Allocated</th>
+  <th>Standalone</th><th>Range</th><th>Gap</th></tr></thead><tbody>
+  ${D.standalone.map(s => `<tr><td>${s.function}</td><td class="n">${k0(s.allocated)}</td>
+    <td class="n">${k0(s.standalone)}</td>
+    <td class="n tiny">${s.hi ? k0(s.lo) + "–" + k0(s.hi) : "—"}</td>
+    <td class="n ${s.gap > 0 ? "neg" : ""}">${k0(s.gap)}</td></tr>`).join("")}
+  <tr class="totalrow"><td>Total</td><td class="n">${m2(D.standalone.reduce((a, s) => a + s.allocated, 0))}</td>
+    <td class="n">${m2(D.standalone.reduce((a, s) => a + s.standalone, 0))}</td><td></td>
+    <td class="n neg">${m2(D.standalone_gap)}</td></tr></tbody></table>`;
+
+/* ---------------- balance sheet ---------------- */
+$("#bsTable").innerHTML = `<table style="min-width:680px"><thead><tr><th>Line</th><th>Direct</th>
+  <th>Allocated</th><th>Total</th><th>Directly attributable</th><th>Allocation basis</th></tr></thead><tbody>
+  ${B.lines.map(l => `<tr><td>${l.line}</td><td class="n">${m2(l.direct)}</td>
+    <td class="n">${m2(l.allocated)}</td><td class="n">${m2(l.total)}</td>
+    <td class="bar-cell"><i style="width:${(l.directness * 72).toFixed(0)}px; background:var(${l.directness > 0.85 ? "--s1" : "--warn"})"></i>
+      <span style="margin-left:80px" class="num">${pc(l.directness, 0)}</span></td>
+    <td class="tiny" style="white-space:normal">${l.basis}</td></tr>`).join("")}
+  </tbody></table><p class="tiny" style="margin-top:8px">Cash and external debt are excluded: the transaction
+  is on a cash-free debt-free basis, so neither carves out.</p>`;
+
+$("#wcStats").innerHTML = [
+  ["Net working capital", m1(B.nwc), pc(B.nwc_pct_revenue, 1) + " of revenue"],
+  ["Debtor days", B.dso.toFixed(0), "On carved-out revenue"],
+  ["Inventory days", B.dio.toFixed(0), "On carved-out cost of sales"],
+  ["Creditor days", B.dpo.toFixed(0), "On carved-out cost of sales"]
+].map(([k, v, d]) => `<div class="stat"><div class="k">${k}</div><div class="v num">${v}</div><div class="d">${d}</div></div>`).join("");
+
+/* ---------------- so what ---------------- */
+$("#soPrice").innerHTML = `The division's own management accounts show ${m1(S.reported)}. The number a buyer
+  owns on day one is ${m1(S.carve_out)} — ${m2(S.reported - S.carve_out)} lower, and permanently so. At an
+  8× multiple that is ${m1((S.reported - S.carve_out) * 8)} of enterprise value, which is not a rounding
+  difference in a negotiation.`;
+$("#soNeg").innerHTML = `Two of the three adjustments are worth arguing about and one is not. The allocation
+  method moves ${k0(tgtSpread.range)}; the corporate basis moves ${k0(hi - lo)}; the standalone cost gap is
+  ${m2(D.standalone_gap)}. Spend the diligence hours in that order, reversed.`;
+$("#soSep").innerHTML = `The same build prices the transitional services agreement. Every function where
+  standalone exceeds allocated is a function the vendor should provide under TSA and the buyer should exit on
+  a dated plan — and ${m2(ST.truly_stranded)} of stranded cost gives the vendor a reason to want the TSA as
+  much as the buyer does.`;
+
+$("#ingredients").innerHTML = [
+  "<strong>Posting-level general ledger</strong> — account, cost centre, period, amount, and the division tag where one exists. Trial-balance summaries are not enough: the allocation has to be rebuilt from the postings.",
+  "<strong>Cost centre master</strong> — which centres are divisional, which are shared services, which are corporate. This is the map of the problem.",
+  "<strong>Service usage drivers</strong> — tickets, payroll runs, documents processed, floor area occupied. Measured usage, not a headcount proxy, is what makes the allocation defensible.",
+  "<strong>Headcount and floor area by cost centre</strong> — the drivers for anything with no usage record.",
+  "<strong>Sub-ledgers</strong> — AR by customer, inventory by SKU, fixed assets by cost centre, AP by supplier, accruals by nature. The directness of the balance sheet depends entirely on these.",
+  "<strong>Standalone benchmarks</strong> — function cost as a percentage of revenue for comparable independent businesses, with the fixed floor below which a function cannot shrink.",
+].map(s => `<li><span>${s}</span></li>`).join("");
+$("#notes").innerHTML = [
+  "<strong>Reciprocal, not step-down.</strong> Shared services consume each other, so their true cost is a linear system rather than a sequence. Solving it takes one matrix inversion.",
+  "<strong>Every method conserves the pool.</strong> The build asserts that direct, step-down and reciprocal each push out exactly what went in — an allocation that creates or destroys cost is the commonest silent error here.",
+  "<strong>Corporate is spread on a basis, and the basis is disclosed.</strong> Four are computed and shown, because presenting one without the others hides a choice worth " + k0(hi - lo) + ".",
+  "<strong>The balance sheet is driven off the segmented P&L</strong> — receivables on revenue, inventory and payables on cost of sales — and off physical drivers for anything else. Directness is reported per line.",
+  "<strong>Standalone cost is benchmarked, not uplifted.</strong> A percentage uplift on the allocated charge assumes the allocation was right to begin with, which is the thing being tested.",
+].map(s => `<li><span>${s}</span></li>`).join("");
+
+onRender(() => {
+  legend("#usLegend", [{ swatch: tok("--pos"), name: "Share of the service consumed" },
+                       { swatch: tok("--surface-2"), name: "No consumption" }]);
+  legend("#mLegend", [{ swatch: tok("--total"), name: "Direct" }, { swatch: tok("--s1"), name: "Step-down" },
+                      { swatch: tok("--s2"), name: "Reciprocal" }]);
+  legend("#brLegend", [{ swatch: tok("--pos"), name: "Increase" }, { swatch: tok("--neg"), name: "Reduction" },
+                       { swatch: tok("--total"), name: "Position" }]);
+  legend("#saLegend", [{ swatch: tok("--s1"), name: "Allocated by the group" },
+                       { swatch: tok("--s2"), name: "Standalone estimate" }]);
+});
+window.V.boot();
+})();
+</script>

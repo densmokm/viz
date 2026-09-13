@@ -1,0 +1,10 @@
+cost_centre,function,pct_lo,pct_hi,fixed_floor,removable_pct
+SH-IT,IT & Digital,0.0155,0.0215,900000,0.35
+SH-HR,HR & Payroll,0.0058,0.0082,420000,0.55
+SH-FIN,Transactional Finance,0.0071,0.0098,510000,0.6
+SH-FAC,Facilities & Estates,0.0112,0.0148,260000,0.7
+SH-PROC,Group Procurement,0.0026,0.0041,180000,0.45
+CO-EXEC,Executive & board,0.0062,0.0091,1150000,0.1
+CO-LEGAL,Legal & compliance,0.0021,0.0034,340000,0.25
+CO-TREAS,Treasury & tax,0.0018,0.0029,290000,0.15
+CO-IR,Listed-company costs,0.0,0.0,0,0.0

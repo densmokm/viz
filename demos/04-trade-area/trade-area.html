@@ -860,7 +860,8 @@ function heatmap(w, cfg) {
           opacity: Math.max(0.14, Math.min(1, Math.abs(cell.d))) }));
         if (wd > 44) g.appendChild(el("text", { x: x + wd / 2, y: y + hd / 2 + 4, "text-anchor": "middle",
           fill: Math.abs(cell.d) > 0.55 ? "#fff" : tok("--ink"), "font-size": 10.5, "font-weight": 600,
-          "font-family": "IBM Plex Mono, monospace" }, cell.d.toFixed(2)));
+          "font-family": "IBM Plex Mono, monospace" },
+          cell.label !== undefined ? cell.label : cell.d.toFixed(2)));
       }
       const hr = el("rect", { x, y, width: wd, height: hd, fill: "transparent" });
       hit(hr, cfg.title(i, j), cfg.rowsOf(i, j)); g.appendChild(hr);

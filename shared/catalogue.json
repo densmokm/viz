@@ -142,8 +142,10 @@
         {
           "n": 15,
           "name": "Balance Sheet Carve-Out",
-          "status": "next",
-          "blurb": "Segment an intermingled P&L from transaction data using explicit allocation bases, then drive the balance sheet off the segmented P&L and headcount."
+          "status": "live",
+          "blurb": "Segment an intermingled group ledger from transactions, allocate shared functions reciprocally, then drive the balance sheet off the segmented P&L. Divisional EBITDA £20.3m becomes £17.7m carved out.",
+          "url": "https://claude.ai/code/artifact/03e43f18-74c5-4df8-ae0a-48d3ea9a8bd5",
+          "tutorial_url": "https://claude.ai/code/artifact/d0efaada-1055-480d-84a0-ec3d4cd00b96"
         },
         {
           "n": 14,

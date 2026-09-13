@@ -1,0 +1,19 @@
+cost_centre,name,kind,division,headcount,floor_area,devices
+TP-OPS,Thermal Products — Ops,Division,Thermal Products,428,19418.0,317.0
+TP-SALES,Thermal Products — Sales,Division,Thermal Products,110,7152.0,69.0
+TP-ENG,Thermal Products — Eng,Division,Thermal Products,73,5315.0,52.0
+FC-OPS,Flow Control — Ops,Division,Flow Control,520,15122.0,460.0
+FC-SALES,Flow Control — Sales,Division,Flow Control,133,3504.0,115.0
+FC-ENG,Flow Control — Eng,Division,Flow Control,89,2815.0,91.0
+ES-OPS,Electrical Systems — Ops,Division,Electrical Systems,301,8802.0,425.0
+ES-SALES,Electrical Systems — Sales,Division,Electrical Systems,77,1828.0,154.0
+ES-ENG,Electrical Systems — Eng,Division,Electrical Systems,51,1400.0,89.0
+SH-IT,IT & Digital,Shared service,,58,566.0,118.0
+SH-HR,HR & Payroll,Shared service,,30,328.0,55.0
+SH-FIN,Transactional Finance,Shared service,,37,454.0,75.0
+SH-FAC,Facilities & Estates,Shared service,,51,502.0,106.0
+SH-PROC,Group Procurement,Shared service,,20,185.0,36.0
+CO-EXEC,Group executive,Corporate,,21,218.0,36.0
+CO-LEGAL,Legal & compliance,Corporate,,12,141.0,22.0
+CO-TREAS,Treasury & tax,Corporate,,9,101.0,14.0
+CO-IR,Investor relations,Corporate,,6,81.0,10.0

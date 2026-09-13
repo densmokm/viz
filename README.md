@@ -19,6 +19,7 @@ partners, PE deal teams and portfolio company CFOs.
 | 01 | [Alt Data Triangulation](demos/01-alt-data-triangulation/) | Commercial DD | [Project Harrier](https://claude.ai/code/artifact/573d0f94-5d11-4e02-8ed7-064c98752cb3) | [How-to](https://claude.ai/code/artifact/902859a7-3384-4a18-8c3e-b6d734b3c9f1) |
 | 04 | [Trade Area & Footfall](demos/04-trade-area/) | Commercial DD | [Project Ferryman](https://claude.ai/code/artifact/5cf358a8-34ea-4190-9b5a-cc7217fd63b4) | [How-to](https://claude.ai/code/artifact/55ce8a12-02a9-4a4f-a926-ec7f7e45ce8d) |
 | 09 | [Revenue Decomposition](demos/09-revenue-decomposition/) | Financial DD | [Meridian Bridge](https://claude.ai/code/artifact/230bde63-86eb-44b4-a8fa-d86185f0a70f) | [How-to](https://claude.ai/code/artifact/2ba6fc7e-e46b-4bba-960f-5a281011aea6) |
+| 15 | [Balance Sheet Carve-Out](demos/15-carve-out/) | SPA & completion | [Project Kiln](https://claude.ai/code/artifact/03e43f18-74c5-4df8-ae0a-48d3ea9a8bd5) | [How-to](https://claude.ai/code/artifact/d0efaada-1055-480d-84a0-ec3d4cd00b96) |
 | 16 | [Data Room Analytics](demos/16-vdr-analytics/) | SPA & completion | [Project Lantern](https://claude.ai/code/artifact/b50804ed-996e-472a-9aa8-df7b184ec06c) | [How-to](https://claude.ai/code/artifact/746bf3be-f3ae-48d2-94bb-8c36f813f3e3) |
 | 18 | [Synergy Tracking](demos/18-synergy-tracking/) | Value creation | [Project Anvil](https://claude.ai/code/artifact/b18eee14-aa3a-497e-8b8c-7c07101062a8) | [How-to](https://claude.ai/code/artifact/58926809-5c81-487f-8011-24b2ebe2cc68) |
 

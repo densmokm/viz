@@ -1,0 +1,64 @@
+cost_centre,division,kind,driver,amount
+TP-OPS,Thermal Products,Employee bonus & holiday pay,headcount,1645546.67
+TP-OPS,Thermal Products,Property & utilities,floor_area,246206.25
+TP-OPS,Thermal Products,Warranty & rectification,revenue,397228.76
+TP-OPS,Thermal Products,Professional fees,headcount,402120.44
+TP-SALES,Thermal Products,Employee bonus & holiday pay,headcount,413480.42
+TP-SALES,Thermal Products,Property & utilities,floor_area,113344.75
+TP-SALES,Thermal Products,Warranty & rectification,revenue,102091.5
+TP-SALES,Thermal Products,Professional fees,headcount,90567.33
+TP-ENG,Thermal Products,Employee bonus & holiday pay,headcount,343395.09
+TP-ENG,Thermal Products,Property & utilities,floor_area,97235.43
+TP-ENG,Thermal Products,Warranty & rectification,revenue,67751.63
+TP-ENG,Thermal Products,Professional fees,headcount,57585.13
+FC-OPS,Flow Control,Employee bonus & holiday pay,headcount,2291044.9
+FC-OPS,Flow Control,Property & utilities,floor_area,174972.76
+FC-OPS,Flow Control,Warranty & rectification,revenue,520000.0
+FC-OPS,Flow Control,Professional fees,headcount,416902.46
+FC-SALES,Flow Control,Employee bonus & holiday pay,headcount,488452.94
+FC-SALES,Flow Control,Property & utilities,floor_area,58837.26
+FC-SALES,Flow Control,Warranty & rectification,revenue,133000.0
+FC-SALES,Flow Control,Professional fees,headcount,134770.52
+FC-ENG,Flow Control,Employee bonus & holiday pay,headcount,396992.72
+FC-ENG,Flow Control,Property & utilities,floor_area,52372.62
+FC-ENG,Flow Control,Warranty & rectification,revenue,89000.0
+FC-ENG,Flow Control,Professional fees,headcount,85094.34
+ES-OPS,Electrical Systems,Employee bonus & holiday pay,headcount,1483372.06
+ES-OPS,Electrical Systems,Property & utilities,floor_area,152258.06
+ES-OPS,Electrical Systems,Warranty & rectification,revenue,307285.38
+ES-OPS,Electrical Systems,Professional fees,headcount,287670.15
+ES-SALES,Electrical Systems,Employee bonus & holiday pay,headcount,349036.14
+ES-SALES,Electrical Systems,Property & utilities,floor_area,25682.03
+ES-SALES,Electrical Systems,Warranty & rectification,revenue,78607.89
+ES-SALES,Electrical Systems,Professional fees,headcount,72814.21
+ES-ENG,Electrical Systems,Employee bonus & holiday pay,headcount,214838.72
+ES-ENG,Electrical Systems,Property & utilities,floor_area,21402.24
+ES-ENG,Electrical Systems,Warranty & rectification,revenue,52064.97
+ES-ENG,Electrical Systems,Professional fees,headcount,40351.46
+SH-IT,,Employee bonus & holiday pay,headcount,280958.76
+SH-IT,,Property & utilities,floor_area,10646.99
+SH-IT,,Professional fees,headcount,54176.03
+SH-HR,,Employee bonus & holiday pay,headcount,119544.06
+SH-HR,,Property & utilities,floor_area,4557.8
+SH-HR,,Professional fees,headcount,29651.26
+SH-FIN,,Employee bonus & holiday pay,headcount,177190.05
+SH-FIN,,Property & utilities,floor_area,5850.19
+SH-FIN,,Professional fees,headcount,28129.29
+SH-FAC,,Employee bonus & holiday pay,headcount,203424.69
+SH-FAC,,Property & utilities,floor_area,6331.95
+SH-FAC,,Professional fees,headcount,51077.15
+SH-PROC,,Employee bonus & holiday pay,headcount,100388.28
+SH-PROC,,Property & utilities,floor_area,2214.56
+SH-PROC,,Professional fees,headcount,21457.76
+CO-EXEC,,Employee bonus & holiday pay,headcount,79250.12
+CO-EXEC,,Property & utilities,floor_area,3527.52
+CO-EXEC,,Professional fees,headcount,19673.86
+CO-LEGAL,,Employee bonus & holiday pay,headcount,52366.77
+CO-LEGAL,,Property & utilities,floor_area,2563.34
+CO-LEGAL,,Professional fees,headcount,12313.56
+CO-TREAS,,Employee bonus & holiday pay,headcount,34261.26
+CO-TREAS,,Property & utilities,floor_area,1649.42
+CO-TREAS,,Professional fees,headcount,8574.02
+CO-IR,,Employee bonus & holiday pay,headcount,25017.32
+CO-IR,,Property & utilities,floor_area,1243.62
+CO-IR,,Professional fees,headcount,4790.37

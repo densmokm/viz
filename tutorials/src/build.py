@@ -29,7 +29,8 @@ def build(name, output):
 if __name__ == "__main__":
     for name, output in [("t09", "revenue-decomposition.html"), ("t01", "alt-data-triangulation.html"),
                          ("t16", "vdr-analytics.html"), ("t18", "synergy-tracking.html"),
-                         ("t04", "trade-area.html")]:
+                         ("t04", "trade-area.html"),
+                         ("t15", "carve-out.html")]:
         if len(sys.argv) > 1 and sys.argv[1] not in name:
             continue
         build(name, output)

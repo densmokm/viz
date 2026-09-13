@@ -1,0 +1,492 @@
+<title>How to carve a division out of a group ledger</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;450;500;600;700&display=swap">
+<style>
+:root{
+  --ground:#eef1f5; --surface:#ffffff; --surface-2:#e4e9ef; --surface-3:#f6f8fa;
+  --ink:#101519; --ink-2:#495568; --ink-3:#79869a; --rule:#d5dce5; --rule-2:#c0cad6;
+  --accent:#173a5e; --accent-soft:#dce8f5;
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a;
+  --pos:#2a78d6; --neg:#e34948; --total:#334155;
+  --good:#0ca30c; --warn:#fab219; --serious:#ec835a; --crit:#d03b3b;
+  --chip-good:#e3f4e3; --chip-warn:#fdf1d6; --chip-serious:#fbe7dd; --chip-neutral:#e7ebf1;
+  --shadow:0 1px 2px rgba(16,21,25,.06), 0 8px 24px -12px rgba(16,21,25,.18);
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --ground:#0f1318; --surface:#171c23; --surface-2:#232a34; --surface-3:#1b2129;
+  --ink:#eef2f7; --ink-2:#aab6c6; --ink-3:#78859a; --rule:#2a323d; --rule-2:#3a4450;
+  --accent:#8fb8e2; --accent-soft:#1d2c3d;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70;
+  --pos:#3987e5; --neg:#e66767; --total:#94a3b5;
+  --chip-good:#12301a; --chip-warn:#332709; --chip-serious:#33210f; --chip-neutral:#242b35;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --ground:#0f1318; --surface:#171c23; --surface-2:#232a34; --surface-3:#1b2129;
+  --ink:#eef2f7; --ink-2:#aab6c6; --ink-3:#78859a; --rule:#2a323d; --rule-2:#3a4450;
+  --accent:#8fb8e2; --accent-soft:#1d2c3d;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70;
+  --pos:#3987e5; --neg:#e66767; --total:#94a3b5;
+  --chip-good:#12301a; --chip-warn:#332709; --chip-serious:#33210f; --chip-neutral:#242b35;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--ground); color:var(--ink);
+  font-family:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  font-size:16px; line-height:1.6; -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1120px; margin:0 auto; padding-inline:clamp(16px,4vw,40px)}
+h1,h2,h3{text-wrap:balance; margin:0}
+h1{font-family:Newsreader,Georgia,serif; font-weight:500; font-size:clamp(2rem,4.6vw,2.9rem); line-height:1.1; letter-spacing:-.015em}
+h2{font-family:Newsreader,Georgia,serif; font-weight:500; font-size:clamp(1.4rem,3vw,1.85rem); line-height:1.2; letter-spacing:-.01em}
+h3{font-size:1rem; font-weight:600; letter-spacing:-.005em}
+p{margin:0}
+a{color:var(--accent)}
+.label{font-size:.7rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-3)}
+.lede{font-size:1.06rem; color:var(--ink-2); max-width:66ch}
+.small{font-size:.84rem; color:var(--ink-2)}
+.tiny{font-size:.76rem; color:var(--ink-3)}
+.num{font-family:"IBM Plex Mono",ui-monospace,monospace; font-variant-numeric:tabular-nums}
+
+/* ---------- top bar ---------- */
+.topbar{position:sticky; top:0; z-index:40; background:color-mix(in srgb,var(--ground) 88%,transparent);
+  backdrop-filter:blur(10px); border-bottom:1px solid var(--rule)}
+.topbar .wrap{display:flex; align-items:center; gap:20px; height:52px}
+.brandmark{display:flex; align-items:center; gap:9px; font-weight:600; font-size:.9rem; white-space:nowrap}
+.brandmark i{width:9px; height:9px; border-radius:2px; background:var(--s1); display:block}
+.navlinks{display:flex; gap:18px; margin-left:auto; overflow-x:auto; scrollbar-width:none}
+.navlinks::-webkit-scrollbar{display:none}
+.navlinks a{color:var(--ink-2); text-decoration:none; font-size:.83rem; white-space:nowrap; padding:4px 0; border-bottom:2px solid transparent}
+.navlinks a:hover{color:var(--ink); border-bottom-color:var(--rule-2)}
+@media (max-width:720px){ .navlinks{display:none} }
+
+/* ---------- header ---------- */
+header.hero{padding-block:clamp(34px,6vw,60px) 30px}
+.eyebrow{display:flex; align-items:center; gap:10px; margin-bottom:16px; flex-wrap:wrap}
+.eyebrow span{color:var(--ink-3)}
+.codename{background:var(--accent-soft); color:var(--accent); padding:2px 9px; border-radius:3px; font-weight:600}
+.metarow{display:flex; flex-wrap:wrap; gap:0; margin-top:26px; border-top:1px solid var(--rule); border-bottom:1px solid var(--rule)}
+.metarow div{flex:1 1 165px; padding:13px 18px 13px 0; border-right:1px solid var(--rule)}
+.metarow div:last-child{border-right:0}
+.metarow dt{font-size:.7rem; font-weight:600; letter-spacing:.09em; text-transform:uppercase; color:var(--ink-3); margin-bottom:3px}
+.metarow dd{margin:0; font-size:.9rem; font-weight:450}
+
+/* ---------- verdict ---------- */
+.verdict{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:1px; background:var(--rule);
+  border:1px solid var(--rule); border-radius:6px; overflow:hidden; margin-block:8px 26px}
+.verdict > div{background:var(--surface); padding:24px 26px 22px}
+.verdict .fig{font-size:clamp(2.4rem,6.5vw,3.4rem); font-weight:600; line-height:1; letter-spacing:-.03em; margin:10px 0 6px}
+.verdict .reported .fig{color:var(--ink)}
+.verdict .underlying .fig{color:var(--neg)}
+.verdict .cap{font-size:.85rem; color:var(--ink-2)}
+@media (max-width:620px){ .verdict{grid-template-columns:1fr} }
+.thesis{background:var(--surface); border:1px solid var(--rule); border-left:3px solid var(--s2);
+  border-radius:4px; padding:20px 24px; margin-bottom:40px; font-size:1.02rem; color:var(--ink-2); max-width:none}
+.thesis strong{color:var(--ink); font-weight:600}
+
+/* ---------- sections ---------- */
+section{padding-block:34px; border-top:1px solid var(--rule)}
+.sechead{display:flex; align-items:baseline; gap:16px; flex-wrap:wrap; margin-bottom:8px}
+.sechead .amt{font-family:"IBM Plex Mono",monospace; font-size:.82rem; font-weight:500; color:var(--ink-3);
+  background:var(--surface-2); padding:3px 9px; border-radius:3px; white-space:nowrap}
+.secintro{margin-block:12px 26px}
+@media (max-width:620px){ .sechead .amt{white-space:normal} }
+
+/* ---------- panels & charts ---------- */
+.panel{background:var(--surface); border:1px solid var(--rule); border-radius:6px; padding:22px clamp(14px,2.4vw,24px)}
+.panelhead{display:flex; align-items:flex-start; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-bottom:6px}
+.chart{width:100%; min-height:60px}
+.chart svg{display:block; width:100%; height:auto; overflow:visible}
+figcaption{font-size:.78rem; color:var(--ink-3); margin-top:12px; line-height:1.5}
+.grid2{display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:18px}
+.grid3{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:18px}
+
+/* ---------- controls ---------- */
+.controls{display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-bottom:18px}
+.tabs{display:inline-flex; background:var(--surface-2); border-radius:5px; padding:3px; gap:2px}
+.tabs button{appearance:none; border:0; background:transparent; color:var(--ink-2); font:inherit; font-size:.84rem;
+  font-weight:500; padding:6px 13px; border-radius:3px; cursor:pointer; white-space:nowrap}
+.tabs button[aria-selected="true"]{background:var(--surface); color:var(--ink); box-shadow:0 1px 2px rgba(0,0,0,.10); font-weight:600}
+.tabs button:focus-visible, .toggle:focus-visible{outline:2px solid var(--s1); outline-offset:2px}
+.toggle{appearance:none; border:1px solid var(--rule-2); background:var(--surface); color:var(--ink-2); font:inherit;
+  font-size:.8rem; font-weight:500; padding:6px 12px; border-radius:5px; cursor:pointer; display:inline-flex; align-items:center; gap:7px}
+.toggle[aria-pressed="true"]{border-color:var(--s1); color:var(--ink); background:var(--accent-soft)}
+.toggle i{width:8px; height:8px; border-radius:50%; background:var(--rule-2); display:block}
+.toggle[aria-pressed="true"] i{background:var(--s1)}
+
+/* ---------- legend ---------- */
+.legend{display:flex; gap:16px; flex-wrap:wrap; align-items:center; font-size:.8rem; color:var(--ink-2); margin-top:14px}
+.legend span{display:inline-flex; align-items:center; gap:7px}
+.legend b{width:11px; height:11px; border-radius:2px; display:block}
+
+/* ---------- tables ---------- */
+.tablewrap{overflow-x:auto; margin-top:4px}
+table{border-collapse:collapse; width:100%; font-size:.85rem; min-width:480px}
+th,td{text-align:right; padding:9px 10px; border-bottom:1px solid var(--rule); white-space:nowrap}
+th:first-child,td:first-child{text-align:left; white-space:normal}
+thead th{font-size:.7rem; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-3);
+  border-bottom:1px solid var(--rule-2); vertical-align:bottom}
+tbody tr:last-child td{border-bottom:0}
+tbody tr.totalrow td{border-top:1px solid var(--rule-2); font-weight:600; background:var(--surface-3)}
+td.n{font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums}
+td.neg{color:var(--neg)}
+.bar-cell{position:relative; min-width:96px}
+.bar-cell i{position:absolute; left:10px; top:50%; transform:translateY(-50%); height:9px; border-radius:2px; display:block}
+
+/* ---------- chips ---------- */
+.chip{display:inline-flex; align-items:center; gap:6px; font-size:.74rem; font-weight:600; padding:2px 8px; border-radius:3px; white-space:nowrap}
+.chip i{width:7px; height:7px; border-radius:50%; display:block; flex:none}
+.chip.good{background:var(--chip-good); color:var(--good)} .chip.good i{background:var(--good)}
+.chip.warn{background:var(--chip-warn); color:#8a6200} .chip.warn i{background:var(--warn)}
+.chip.serious{background:var(--chip-serious); color:#a8501f} .chip.serious i{background:var(--serious)}
+.chip.neutral{background:var(--chip-neutral); color:var(--ink-2)} .chip.neutral i{background:var(--ink-3)}
+:root[data-theme="dark"] .chip.warn, :root[data-theme="dark"] .chip.serious{color:var(--ink)}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]) .chip.warn,
+  :root:not([data-theme="light"]) .chip.serious{color:var(--ink)} }
+
+/* ---------- stat tiles ---------- */
+.stats{display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:1px; background:var(--rule);
+  border:1px solid var(--rule); border-radius:6px; overflow:hidden}
+.stat{background:var(--surface); padding:16px 18px}
+.stat .v{font-size:1.6rem; font-weight:600; line-height:1.15; letter-spacing:-.02em; margin:6px 0 3px}
+.stat .k{font-size:.7rem; font-weight:600; letter-spacing:.09em; text-transform:uppercase; color:var(--ink-3)}
+.stat .d{font-size:.78rem; color:var(--ink-3); line-height:1.45}
+
+/* ---------- callout ---------- */
+.callout{border:1px solid var(--rule); border-left:3px solid var(--crit); background:var(--surface);
+  border-radius:4px; padding:18px 22px; display:grid; gap:8px}
+.callout.ok{border-left-color:var(--good)}
+.callout h3{display:flex; align-items:center; gap:9px}
+.callout h3::before{content:""; width:7px; height:7px; border-radius:50%; background:var(--crit); flex:none}
+.callout.ok h3::before{background:var(--good)}
+
+/* ---------- lists ---------- */
+ol.qs{counter-reset:q; list-style:none; padding:0; margin:0; display:grid; gap:14px}
+ol.qs li{counter-increment:q; display:grid; grid-template-columns:auto 1fr; gap:14px; align-items:start}
+ol.qs li::before{content:"Q" counter(q); font-family:"IBM Plex Mono",monospace; font-size:.74rem; font-weight:600;
+  color:var(--accent); background:var(--accent-soft); padding:3px 7px; border-radius:3px; margin-top:2px}
+ul.plain{list-style:none; padding:0; margin:0; display:grid; gap:10px}
+ul.plain li{display:grid; grid-template-columns:auto 1fr; gap:11px; align-items:start; font-size:.9rem; color:var(--ink-2)}
+ul.plain li::before{content:""; width:5px; height:5px; border-radius:50%; background:var(--rule-2); margin-top:9px}
+code{font-family:"IBM Plex Mono",monospace; font-size:.86em; background:var(--surface-2); padding:1px 5px; border-radius:3px}
+.formula{font-family:"IBM Plex Mono",monospace; font-size:.82rem; background:var(--surface-3); border:1px solid var(--rule);
+  border-radius:4px; padding:14px 16px; overflow-x:auto; white-space:pre; line-height:1.7; color:var(--ink-2)}
+
+/* ---------- tooltip ---------- */
+#tip{position:fixed; z-index:80; pointer-events:none; opacity:0; transition:opacity .1s;
+  background:var(--surface); color:var(--ink); border:1px solid var(--rule-2); border-radius:5px;
+  box-shadow:var(--shadow); padding:9px 12px; font-size:.8rem; line-height:1.5; max-width:270px}
+#tip .t{font-weight:600; margin-bottom:3px}
+#tip .r{display:flex; justify-content:space-between; gap:16px}
+#tip .r span:last-child{font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums}
+
+footer{padding-block:34px 60px; border-top:1px solid var(--rule); color:var(--ink-3); font-size:.82rem}
+[hidden]{display:none !important}
+@media (prefers-reduced-motion:reduce){ *{transition:none !important; animation:none !important} }
+
+/* ---------- verdict chips: critical state ---------- */
+.chip.crit{background:var(--chip-crit); color:var(--crit)} .chip.crit i{background:var(--crit)}
+:root{--chip-crit:#fbe3e3}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){--chip-crit:#3a1717} }
+:root[data-theme="dark"]{--chip-crit:#3a1717}
+
+/* ---------- claim scorecard ---------- */
+.claim{border-bottom:1px solid var(--rule)}
+.claim:last-child{border-bottom:0}
+.claimhead{width:100%; appearance:none; background:transparent; border:0; font:inherit; color:inherit;
+  text-align:left; cursor:pointer; display:grid; align-items:center; gap:16px; padding:15px 6px;
+  grid-template-columns:38px minmax(0,1fr) 150px 104px 132px}
+.claimhead:hover{background:var(--surface-3)}
+.claimhead:focus-visible{outline:2px solid var(--s1); outline-offset:-2px}
+.claimhead .cid{font-family:"IBM Plex Mono",monospace; font-size:.76rem; font-weight:600; color:var(--ink-3)}
+.claimhead .ctext{font-size:.93rem; line-height:1.45}
+.claimhead .ctext em{display:block; font-style:normal; font-size:.76rem; color:var(--ink-3); margin-top:3px}
+.divbar{display:block; position:relative; height:22px; background:var(--surface-2); border-radius:3px; overflow:hidden}
+.divbar::before{content:""; position:absolute; left:50%; top:0; bottom:0; width:1px; background:var(--rule-2)}
+.divbar i{position:absolute; top:4px; bottom:4px; border-radius:2px; display:block}
+.divbar b{position:absolute; right:6px; top:50%; transform:translateY(-50%); font-family:"IBM Plex Mono",monospace;
+  font-size:.72rem; font-weight:600; color:var(--ink-2)}
+.meter{display:flex; flex-direction:column; gap:4px}
+.meter u{height:6px; background:var(--surface-2); border-radius:3px; display:block; text-decoration:none; position:relative}
+.meter u i{position:absolute; left:0; top:0; bottom:0; border-radius:3px; background:var(--ink-3); display:block}
+.meter s{text-decoration:none; font-size:.7rem; color:var(--ink-3); font-family:"IBM Plex Mono",monospace}
+.claimbody{padding:2px 6px 20px 56px; display:grid; gap:14px}
+@media (max-width:860px){
+  .claimhead{grid-template-columns:34px minmax(0,1fr); gap:8px 12px}
+  .claimhead .cscore, .claimhead .cconf{grid-column:2}
+  .claimhead .cverdict{grid-column:2; justify-self:start}
+  .claimbody{padding-left:12px}
+}
+
+/* ---------- entity board (bidders, portcos, workstreams) ---------- */
+.board{display:grid}
+.brow{display:grid; gap:14px; align-items:center; padding:16px 6px; border-bottom:1px solid var(--rule);
+  grid-template-columns:minmax(0,1.5fr) 108px 108px minmax(120px,1fr) minmax(0,1.4fr)}
+.brow:last-child{border-bottom:0}
+.brow .who{display:grid; gap:3px}
+.brow .who strong{font-size:.95rem; font-weight:600}
+.brow .who span{font-size:.76rem; color:var(--ink-3)}
+.brow .flags{display:flex; flex-wrap:wrap; gap:6px}
+.brow .mini{display:flex; gap:14px; font-size:.75rem; color:var(--ink-3); flex-wrap:wrap}
+.brow .mini b{display:block; font-family:"IBM Plex Mono",monospace; font-size:.86rem; font-weight:600; color:var(--ink)}
+@media (max-width:900px){ .brow{grid-template-columns:minmax(0,1fr) 100px 100px} 
+  .brow .spark, .brow .flags{grid-column:1 / -1} }
+
+/* ---------- ordinal ramp: stage pipelines, funnel steps, tiers ---------- */
+:root{--ord1:#86b6ef; --ord2:#5598e7; --ord3:#2a78d6; --ord4:#1c5cab; --ord5:#104281}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --ord1:#184f95; --ord2:#256abf; --ord3:#3987e5; --ord4:#86b6ef; --ord5:#cde2fb} }
+:root[data-theme="dark"]{--ord1:#184f95; --ord2:#256abf; --ord3:#3987e5; --ord4:#86b6ef; --ord5:#cde2fb}
+.stagebar{display:flex; height:10px; border-radius:3px; overflow:hidden; gap:2px; background:var(--surface-2)}
+.stagebar i{display:block; min-width:2px}
+
+/* ---------- code ---------- */
+:root{
+  --code-bg:#f6f8fb; --code-rule:#dde4ec; --code-ink:#1c2430;
+  --code-kw:#8250df; --code-str:#0a7a4f; --code-num:#b3541e; --code-com:#79869a;
+  --code-fn:#0550ae; --code-op:#495568; --code-cls:#0b6b6b;
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --code-bg:#10151b; --code-rule:#252d38; --code-ink:#dbe3ec;
+  --code-kw:#c0a6f5; --code-str:#56d4a0; --code-num:#f0883e; --code-com:#7f8a99;
+  --code-fn:#79b8ff; --code-op:#aab6c6; --code-cls:#4fd1c5;
+}}
+:root[data-theme="dark"]{
+  --code-bg:#10151b; --code-rule:#252d38; --code-ink:#dbe3ec;
+  --code-kw:#c0a6f5; --code-str:#56d4a0; --code-num:#f0883e; --code-com:#7f8a99;
+  --code-fn:#79b8ff; --code-op:#aab6c6; --code-cls:#4fd1c5;
+}
+.codewrap{border:1px solid var(--code-rule); border-radius:6px; overflow:hidden; background:var(--code-bg)}
+.codebar{display:flex; align-items:center; gap:8px; padding:7px 10px 7px 12px;
+  border-bottom:1px solid var(--code-rule); background:var(--code-bg)}
+.codebar .lang{font-family:"IBM Plex Mono",monospace; font-size:.7rem; font-weight:600;
+  letter-spacing:.07em; text-transform:uppercase; color:var(--code-com)}
+.codebar .spacer{flex:1}
+.codebar button{appearance:none; border:1px solid transparent; background:transparent; color:var(--code-com);
+  font:inherit; font-size:.72rem; font-weight:600; padding:3px 8px; border-radius:4px; cursor:pointer}
+.codebar button:hover{color:var(--code-ink); border-color:var(--code-rule)}
+.codebar button[aria-selected="true"]{color:var(--code-ink); background:var(--surface); border-color:var(--code-rule)}
+.codebar button:focus-visible{outline:2px solid var(--s1); outline-offset:1px}
+pre.code{margin:0; padding:14px 16px; overflow-x:auto; background:var(--code-bg)}
+pre.code code{font-family:"IBM Plex Mono",ui-monospace,monospace; font-size:.795rem; line-height:1.72;
+  color:var(--code-ink); background:none; padding:0; white-space:pre; display:block; tab-size:4}
+.hljs-keyword,.hljs-literal,.hljs-selector-tag{color:var(--code-kw)}
+.hljs-string,.hljs-meta .hljs-string{color:var(--code-str)}
+.hljs-number{color:var(--code-num)}
+.hljs-comment{color:var(--code-com); font-style:italic}
+.hljs-title,.hljs-title.function_,.hljs-section{color:var(--code-fn); font-weight:600}
+.hljs-title.class_,.hljs-type,.hljs-built_in{color:var(--code-cls)}
+.hljs-params,.hljs-operator,.hljs-punctuation{color:var(--code-op)}
+.hljs-attr,.hljs-variable,.hljs-property{color:var(--code-ink)}
+.hljs-meta{color:var(--code-com)}
+
+/* ---------- tutorial steps ---------- */
+.step{display:grid; grid-template-columns:44px minmax(0,1fr); gap:0 20px; padding-block:30px;
+  border-top:1px solid var(--rule)}
+.step:first-of-type{border-top:0}
+.step .sn{font-family:"IBM Plex Mono",monospace; font-size:.8rem; font-weight:600; color:var(--s1);
+  background:var(--accent-soft); border-radius:4px; height:30px; display:grid; place-items:center}
+.step .body{display:grid; gap:14px; min-width:0}
+.step h3{font-size:1.12rem; font-weight:600; line-height:1.3}
+.step .why{font-size:.95rem; color:var(--ink-2); line-height:1.65; max-width:70ch}
+.step .out{font-family:"IBM Plex Mono",monospace; font-size:.75rem; color:var(--ink-2);
+  background:var(--surface-3); border:1px solid var(--rule); border-left:2px solid var(--rule-2);
+  border-radius:0 4px 4px 0; padding:10px 14px; overflow-x:auto; white-space:pre; line-height:1.6}
+@media (max-width:620px){ .step{grid-template-columns:1fr; gap:12px} .step .sn{width:36px} }
+.pitfall{border:1px solid var(--rule); border-left:3px solid var(--warn); border-radius:0 5px 5px 0;
+  background:var(--surface); padding:16px 20px; display:grid; gap:8px}
+.pitfall h4{margin:0; font-size:.92rem; font-weight:600; display:flex; gap:9px; align-items:center}
+.pitfall h4::before{content:""; width:6px; height:6px; border-radius:50%; background:var(--warn); flex:none}
+.pitfall p{font-size:.86rem; color:var(--ink-2); line-height:1.6}
+.schema td:first-child{font-family:"IBM Plex Mono",monospace; font-size:.8rem}
+.schema th,.schema td{text-align:left}
+.schema td:nth-child(3){white-space:normal; min-width:260px}
+.tocbox{display:grid; gap:2px; margin-top:18px}
+.tocbox a{display:grid; grid-template-columns:30px 1fr; gap:12px; padding:9px 10px; border-radius:5px;
+  text-decoration:none; color:var(--ink-2); font-size:.9rem; align-items:baseline}
+.tocbox a:hover{background:var(--surface-3); color:var(--ink)}
+.tocbox a b{font-family:"IBM Plex Mono",monospace; font-size:.74rem; color:var(--ink-3); font-weight:600}
+
+</style>
+
+<div class="topbar"><div class="wrap">
+  <div class="brandmark"><i></i> <span id="brand"></span></div>
+  <nav class="navlinks">
+    <a href="#inputs">Inputs</a><a href="#walkthrough">Walkthrough</a><a href="#pitfalls">Pitfalls</a>
+    <a href="#validate">Validation</a><a href="#scale">Scale</a><a id="demoLink" href="#" target="_blank" rel="noopener">Open the demo ↗</a>
+  </nav>
+</div></div>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="eyebrow label"><span class="codename" id="tag"></span><span id="phase"></span><span>&middot;</span><span>Tutorial</span></div>
+  <h1 id="title"></h1>
+  <p class="lede" style="margin-top:14px" id="subtitle"></p>
+  <dl class="metarow" id="metarow"></dl>
+</header>
+
+<section style="border-top:0; padding-top:20px">
+  <div class="grid2" style="align-items:start">
+    <div class="panel">
+      <h3 style="margin-bottom:10px">What you are building</h3>
+      <p class="small" id="intro"></p>
+      <p class="small" style="margin-top:14px"><a id="demoLink2" href="#" target="_blank" rel="noopener"><strong>See the finished analysis ↗</strong></a></p>
+    </div>
+    <div class="panel">
+      <h3 style="margin-bottom:4px">Steps</h3>
+      <div class="tocbox" id="toc"></div>
+    </div>
+  </div>
+</section>
+
+<section id="inputs">
+  <div class="sechead"><h2>The input</h2><span class="amt" id="grainTag"></span></div>
+  <p class="secintro lede" id="inputIntro"></p>
+  <div class="panel"><div class="tablewrap"><table class="schema" id="schema"></table></div></div>
+</section>
+
+<section id="walkthrough">
+  <div class="sechead"><h2>Walkthrough</h2></div>
+  <p class="secintro lede" id="walkIntro"></p>
+  <div class="controls" style="position:sticky; top:60px; z-index:20; padding:8px 0;
+       background:color-mix(in srgb,var(--ground) 92%,transparent); backdrop-filter:blur(6px)">
+    <div class="tabs" role="tablist" aria-label="Code flavour">
+      <button role="tab" aria-selected="true" data-flavour="spark">PySpark</button>
+      <button role="tab" aria-selected="false" data-flavour="pandas">pandas</button>
+    </div>
+    <span class="tiny">Switches every block below. Steps that only make sense one way show that one.</span>
+  </div>
+  <div class="panel" style="padding-block:4px"><div id="steps"></div></div>
+</section>
+
+<section id="pitfalls">
+  <div class="sechead"><h2>What goes wrong</h2></div>
+  <p class="secintro lede">Every one of these is a bug that was actually in this analysis at some point.
+     They are here because they are the failure modes that survive a code review and get caught in a
+     partner meeting instead.</p>
+  <div class="grid2" id="pitfalls" style="align-items:start"></div>
+</section>
+
+<section id="validate">
+  <div class="sechead"><h2>Proving it works</h2></div>
+  <p class="secintro lede" id="validIntro"></p>
+  <div class="panel"><div id="validateBlock"></div></div>
+</section>
+
+<section id="scale">
+  <div class="sechead"><h2>Running it for real</h2></div>
+  <div class="grid2" style="align-items:start">
+    <div class="panel"><h3 style="margin-bottom:12px">Where Spark earns its keep</h3>
+      <p class="small" id="scaleBody"></p></div>
+    <div class="panel"><h3 style="margin-bottom:12px">Practical notes</h3>
+      <ul class="plain" id="scaleNotes"></ul></div>
+  </div>
+</section>
+
+<footer>
+  <strong style="color:var(--ink)" id="footTitle"></strong>
+  <span id="footBody"></span>
+</footer>
+
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script id="payload" type="application/json">{"brand":"Balance Sheet Carve-Out","tag":"Technique 15","phase":"SPA and transaction support","title":"How to carve a division out of a group ledger","subtitle":"Segment the P&L from transactions, allocate the shared functions reciprocally, then drive the balance sheet off the segmented P&L and the physical drivers \u2014 with every line footing back to group.","demo_url":"https://claude.ai/code/artifact/03e43f18-74c5-4df8-ae0a-48d3ea9a8bd5","grain":"one row per journal posting","meta":[["Engine","PySpark for the ledger, NumPy for the allocation"],["Input","GL postings, cost centre master, sub-ledgers"],["Runtime","Minutes on millions of postings"],["Output","Standalone P&L and balance sheet that reconcile"]],"intro":"Standalone financial statements for a division that has never had any. The method is short to describe and easy to get wrong: segment the P&L from transaction data using explicit allocation bases, then drive the balance sheet off the segmented P&L and drivers like headcount. The discipline is that every line has to foot back to the group, and every allocation has to conserve the pool it started with.","input_intro":"A trial balance is not enough. The allocation has to be rebuilt from the postings, because the whole question is which postings belong to the division and a summarised balance has already answered it for you.","inputs":[["journal_id, period","string, date","The grain. Reconcile the extract to the filed accounts before anything else."],["cost_centre","string","<strong>The spine of the whole exercise.<\/strong> Everything hangs off whether a centre is divisional, shared or corporate."],["division","string","Present on divisional postings, blank on shared and corporate ones. The blanks are the problem."],["account, amount","string, decimal","Chart of accounts and value. Watch the sign convention on revenue."],["counterparty","string","Which sister division, on intercompany postings. Without it you cannot eliminate or restate."],["service usage","long","Tickets, payroll runs, documents, square feet. <strong>Measured usage beats a headcount proxy<\/strong> and is what makes an allocation defensible."],["sub-ledgers","tables","AR by customer, inventory by SKU, fixed assets by cost centre, AP by supplier, accruals by nature. These decide how much of the balance sheet is direct."],["standalone benchmarks","table","Function cost as a percentage of revenue for comparable independent businesses, with a floor where it cannot scale down."]],"walk_intro":"Nine steps. The ledger work is genuinely large and belongs in Spark; the allocation itself is a five-by-five matrix inversion that runs in microseconds. Knowing that the hard part is the data and not the maths saves a lot of wasted engineering.","steps":[{"title":"Reconcile before you allocate","why":"Every carve-out argument eventually comes back to whether the extract was complete. Settle it on day one: tie the ledger to the filed accounts, and check that the cost-centre master covers every centre that appears in a posting. A carve-out built on an extract that is 3% light because intercompany was excluded will be discovered at the worst possible moment.","code":{"spark":"from pyspark.sql import SparkSession, functions as F\n\nspark = SparkSession.builder.appName(\"kiln-carveout\").getOrCreate()\n\ngl = (spark.read.parquet(\"s3://kiln/gl/\")\n        .filter(F.col(\"period\").between(\"2024-04-01\", \"2025-03-31\")))\ncc = spark.read.parquet(\"s3://kiln/cost_centres/\")\n\n# every posted cost centre must exist in the master\norphans = gl.join(F.broadcast(cc), \"cost_centre\", \"left_anti\").select(\"cost_centre\").distinct()\nassert orphans.count() == 0, f\"cost centres missing from the master: {orphans.collect()}\"\n\n# and the ledger must tie to the filed numbers\ngroup_revenue = -gl.filter(F.col(\"account\").startswith(\"4\")).agg(F.sum(\"amount\")).first()[0]\nassert abs(group_revenue - FILED_REVENUE) / FILED_REVENUE < 0.001, \"extract does not tie to the accounts\"","pandas":"gl = pd.read_parquet(\"gl.parquet\", dtype={\"account\": str})\ncc = pd.read_parquet(\"cost_centres.parquet\")\n\norphans = set(gl.cost_centre) - set(cc.cost_centre)\nassert not orphans, f\"cost centres missing from the master: {orphans}\"\n\ngroup_revenue = -gl.loc[gl.account.str.startswith(\"4\"), \"amount\"].sum()\nassert abs(group_revenue - FILED_REVENUE) / FILED_REVENUE < 0.001"},"note":"Read account codes as strings. They look numeric, so pandas and Spark will infer int64 and every subsequent <code>account == \u201c4100\u201d<\/code> comparison will silently match nothing. That exact bug wiped out the intercompany adjustment in this build and produced a clean-looking zero."},{"title":"Take the easy 94% first","why":"Most of the P&L segments itself. Revenue and direct costs post to a divisional cost centre and need no judgement at all. Do that first, size what is left, and you know immediately how much of the carve-out is arithmetic and how much is negotiation.","code":{"spark":"tagged = gl.filter(F.col(\"division\") != \"\")\n\ndirect = (tagged.groupBy(\"division\", \"line\")\n                .agg(F.sum(\"amount\").alias(\"amount\"))\n                .groupBy(\"division\").pivot(\"line\").sum(\"amount\")\n                .toPandas().set_index(\"division\").fillna(0.0))\ndirect[\"Revenue\"] = -direct[\"Revenue\"]        # credits post negative\n\n# what is left is the carve-out problem, and its size is the first finding\npool = (gl.filter(F.col(\"division\") == \"\")\n          .groupBy(\"cost_centre\").agg(F.sum(\"amount\").alias(\"cost\"))\n          .toPandas().set_index(\"cost_centre\").cost)\n\nprint(f\"untagged {pool.sum()/1e6:.1f}m across {len(pool)} cost centres\")","pandas":"tagged = gl[gl.division.ne(\"\")]\n\ndirect = (tagged.pivot_table(index=\"division\", columns=\"line\", values=\"amount\", aggfunc=\"sum\")\n                .fillna(0.0))\ndirect[\"Revenue\"] = -direct[\"Revenue\"]\n\npool = gl[gl.division.eq(\"\")].groupby(\"cost_centre\").amount.sum()\nprint(f\"untagged {pool.sum()/1e6:.1f}m across {len(pool)} cost centres\")"},"out":"untagged 22.0m across 9 cost centres   (6.0% of the target's cost base)"},{"title":"Build the usage matrix from measured consumption","why":"An allocation is only defensible if the driver is something the business actually records. Tickets raised, payroll runs processed, documents keyed, square feet occupied. Headcount is the fallback, not the default \u2014 and a headcount proxy for every driver has a specific failure mode covered in the pitfalls below.","code":{"python":"# p[service][consumer] -- the share of each service's output that consumer takes\nP = (usage.pivot(index=\"service\", columns=\"consumer\", values=\"units\")\n          .reindex(index=SERVICES).fillna(0.0))\nP = P.div(P.sum(axis=1), axis=0)\n\nNON_SERVICE = [c for c in P.columns if c not in SERVICES]\n\n# how circular is this? the share of each pool consumed by the other pools\nsigma = P[SERVICES].sum(axis=1)\nprint(sigma.round(3).to_string())"},"out":"SH-FAC   0.018\nSH-FIN   0.051\nSH-HR    0.118\nSH-IT    0.481      <- IT is half-consumed by the other functions\nSH-PROC  0.058"},{"title":"Solve the circularity","why":"IT runs the finance and payroll systems; HR runs payroll for IT. Each pool's true cost is its own spend plus what it receives from the others, which is circular \u2014 a linear system, not a sequence. One matrix inversion settles it.","code":{"python":"def allocate_reciprocal(P, D, SERVICES, NON_SERVICE):\n    \"\"\"\n        T = D + M T        M[i][j] = share of service j consumed by i\n          = (I - M)^-1 D\n\n    Then push the grossed-up pools out to everything that is not a service.\n    \"\"\"\n    M = P.loc[SERVICES, SERVICES].to_numpy().T          # M[i][j] = P[j][i]\n    T = np.linalg.solve(np.eye(len(SERVICES)) - M, D.to_numpy())\n    T = pd.Series(T, index=SERVICES)\n    return P[NON_SERVICE].mul(T, axis=0).sum(axis=0), T\n\nalloc, T = allocate_reciprocal(P, D_SERVICE, SERVICES, NON_SERVICE)\n\n# the grossed-up pools are internal bookkeeping -- what leaves must equal what went in\nassert abs(alloc.sum() - D_SERVICE.sum()) < 1.0"},"out":"                own cost   grossed up   uplift\nFacilities        4.01m        4.49m     +12%\nTransactional Fin 2.86m        4.28m     +50%\nHR & Payroll      2.37m        2.96m     +25%\nIT & Digital      4.59m        4.94m      +8%\nProcurement       1.58m        1.88m     +19%","note":"The grossed-up column does not add up to anything meaningful \u2014 summing it double-counts the transfers between services. Only the own-cost column is real money, and only the allocation out to the divisions has to reconcile."},{"title":"Test the method rather than assuming it","why":"Direct, step-down and reciprocal will give different answers, and the size of that difference is itself a finding. Compute all three. \u201cWe used a simple allocation because the difference is immaterial\u201d is only a defensible sentence after you have measured the difference.","code":{"python":"def allocate_direct(P, D, SERVICES, NON_SERVICE):\n    \"\"\"Ignore inter-service usage; renormalise over the rest. Quick and wrong.\"\"\"\n    Q = P[NON_SERVICE].div(P[NON_SERVICE].sum(axis=1), axis=0)\n    return Q.mul(D, axis=0).sum(axis=0)\n\ndef allocate_stepdown(P, D, SERVICES, NON_SERVICE):\n    \"\"\"Largest pool first, never allocating back up the order.\"\"\"\n    remaining, out, closed = D.copy(), pd.Series(0.0, index=NON_SERVICE), []\n    for s in remaining.sort_values(ascending=False).index:\n        targets = [c for c in P.columns if c not in closed and c != s]\n        spread = (P.loc[s, targets] / P.loc[s, targets].sum()) * remaining[s]\n        for c in targets:\n            if c in NON_SERVICE: out[c] += spread[c]\n            else:                remaining[c] += spread[c]\n        closed.append(s)\n    return out\n\nfor name, fn in [(\"Direct\", allocate_direct), (\"Step-down\", allocate_stepdown)]:\n    a = fn(P, D_SERVICE, SERVICES, NON_SERVICE)\n    assert abs(a.sum() - D_SERVICE.sum()) < 1.0, f\"{name} does not conserve the pool\""},"out":"allocation to the target        Direct 5.12m   Step-down 5.13m   Reciprocal 5.14m   (range 17k)\nallocation to Flow Control      Direct 6.25m   Step-down 6.62m   Reciprocal 6.60m   (range 372k)","note":"Read that carefully. For the target the three methods agree to \u00a317k \u2014 but per service they disagree by hundreds of thousands in opposite directions, and for a sister division the range is \u00a3372k. The near-cancellation is a property of this division's usage profile, not a general result, and you cannot know it without doing the calculation."},{"title":"Corporate has no driver, so disclose the basis","why":"Nobody consumes a board. Corporate cost is spread on a basis, and the basis is a negotiating position rather than a fact. Compute the conventional ones and show them together \u2014 presenting a single basis hides a choice that is usually worth more than the entire allocation-method argument.","code":{"python":"# corporate, grossed up for the shared services it consumes\ncorp_total = D_CORP.sum() + alloc.reindex(CORPORATE).fillna(0).sum()\n\nBASES = {\n    \"Revenue\":                 PL.revenue,\n    \"Headcount\":               PL.headcount,\n    \"Gross profit\":            PL.gross_profit,\n    \"EBITDA before corporate\": PL.ebitda_direct - service_alloc,\n}\nby_basis = pd.DataFrame({k: corp_total * (v / v.sum()) for k, v in BASES.items()})\n\nfor k in by_basis:\n    assert abs(by_basis[k].sum() - corp_total) < 1.0, f\"{k} does not spread completely\""},"out":"Revenue                   2.30m   ->  EBITDA 20.07m\nHeadcount                 2.40m   ->  EBITDA 19.97m\nGross profit              2.45m   ->  EBITDA 19.91m\nEBITDA before corporate   2.71m   ->  EBITDA 19.66m\n\nspread: 410k of EBITDA, decided by a choice"},{"title":"Eliminate and restate intercompany","why":"Trading between divisions disappears on consolidation but does not disappear on carve-out \u2014 it becomes third-party trade, at third-party prices. Two separate questions: what is the margin effect of restating to arm's length, and how much revenue depends on counterparties who are under no obligation to keep buying.","code":{"spark":"ic = (gl.filter(F.col(\"account\").isin(\"4100\", \"5300\") & (F.col(\"division\") == TARGET))\n        .groupBy(\"account\", \"counterparty\").agg(F.sum(\"amount\").alias(\"amount\"))\n        .toPandas())\n\nic_sales = -ic.loc[ic.account == \"4100\", \"amount\"].sum()\nic_buys  =  ic.loc[ic.account == \"5300\", \"amount\"].sum()\n\nARM_ADJ = 0.062      # benchmarked: transfer prices sit this far above market\nnet = -ic_sales * ARM_ADJ + ic_buys * ARM_ADJ\n\nprint(f\"intercompany revenue {ic_sales/1e6:.2f}m \"\n      f\"({ic_sales/target_revenue:.1%} of the division)\")\nprint(f\"arm's length restatement {net/1e6:+.2f}m\")","pandas":"ic = gl[gl.account.isin([\"4100\", \"5300\"]) & gl.division.eq(TARGET)]\n\nic_sales = -ic.loc[ic.account.eq(\"4100\"), \"amount\"].sum()\nic_buys  =  ic.loc[ic.account.eq(\"5300\"), \"amount\"].sum()\n\nARM_ADJ = 0.062\nnet = -ic_sales * ARM_ADJ + ic_buys * ARM_ADJ"},"out":"intercompany revenue 12.44m (8.6% of the division)\narm's length restatement -0.54m","note":"The restatement is the smaller point. The bigger one is that 8.6% of revenue now depends on a supply agreement that does not yet exist. That belongs in the SPA with volume and term, or in the model as revenue at risk \u2014 not sitting quietly inside the base."},{"title":"Benchmark standalone cost; do not uplift the allocation","why":"The allocated charge is what the group's functions cost spread across the whole group. Standalone, the division runs them on its own revenue, and some functions do not scale down at all. The tempting shortcut \u2014 take the allocation and add a percentage \u2014 assumes the allocation was right to begin with, which is the thing being tested.","code":{"python":"rows = []\nfor _, b in BENCH.iterrows():\n    allocated = alloc_by_function.get(b.cost_centre, 0.0)\n    lo = max(target_revenue * b.pct_lo, b.fixed_floor)\n    hi = max(target_revenue * b.pct_hi, b.fixed_floor)\n    rows.append(dict(function=b.function, allocated=allocated,\n                     standalone=(lo + hi) / 2, gap=(lo + hi) / 2 - allocated))\nstandalone = pd.DataFrame(rows)\n\n# the other side of the same coin: what stays behind in the group\nstandalone[\"stranded\"] = standalone.allocated * (1 - BENCH.removable_pct.to_numpy())"},"out":"standalone cost gap      1.86m   (a permanent cost of ownership)\nstranded in the group    4.15m   (56% of what was allocated to the division)","note":"The fixed floor is what makes this work. A \u00a3145m business still needs a finance director, an audit and a board; those costs do not fall by two thirds because the revenue did."},{"title":"Drive the balance sheet off the segmented P&L","why":"Direct from the sub-ledger wherever the sub-ledger carries a division, driven off the segmented P&L or a physical driver wherever it does not. Report the share that is direct alongside every line, because a buyer should price a directly-attributed receivable and an allocated accrual differently.","code":{"python":"cogs_share = PL.cogs / PL.cogs.sum()\nrev_share  = PL.revenue / PL.revenue.sum()\narea_share = PL.floor_area / PL.floor_area.sum()\n\ndef split(direct_by_div, untagged_total, driver, label, basis):\n    d = direct_by_div.reindex(DIVS).fillna(0.0)\n    a = untagged_total * driver.reindex(DIVS).fillna(0.0)\n    total = d + a\n    return dict(line=label, basis=basis, total=float(total[TARGET]),\n                directness=float(d[TARGET] / total[TARGET]),\n                by_div=dict(total))\n\nBS = [\n  split(ar[ar.division != \"\"].groupby(\"division\").amount.sum(),\n        ar[ar.division == \"\"].amount.sum(), rev_share,\n        \"Trade receivables\", \"Group-billed accounts on revenue\"),\n  split(inv[inv.division != \"\"].groupby(\"division\").value.sum(),\n        inv[inv.division == \"\"].value.sum(), cogs_share,\n        \"Inventory\", \"Central stores on cost of sales\"),\n  split(fa[fa.division != \"\"].groupby(\"division\").nbv.sum(),\n        fa[fa.division == \"\"].nbv.sum(), area_share,\n        \"Property, plant & equipment\", \"Shared-site assets on floor area\"),\n]\n\n# cash and external debt do not carve out: the deal is cash-free debt-free"},"out":"line                          total   direct\nTrade receivables            21.4m     92%\nInventory                    18.3m     89%\nProperty, plant & equipment  10.9m     90%\nTrade payables               17.9m     94%\nAccruals & provisions         3.6m     96%\n\nnet working capital 23.2m (16.0% of revenue)   DSO 60  DIO 86  DPO 71"}],"pitfalls":[{"title":"An allocation that does not conserve the pool","body":"The commonest silent error in the whole technique. Renormalising the wrong axis, dropping a consumer that had no usage, or a step-down that closes a service before its cost has been fully distributed \u2014 each quietly creates or destroys cost, and nothing in the output looks wrong. Assert that every method pushes out exactly what went in, for every method, every run."},{"title":"Reading account codes as numbers","body":"Account codes look numeric and both pandas and Spark will infer int64. Every subsequent comparison against a string code then matches nothing, silently. In this build that turned the entire intercompany adjustment into a clean, plausible-looking zero \u2014 which is far more dangerous than an error, because nobody questions a zero."},{"title":"Uplifting the allocated charge to get standalone cost","body":"Taking the allocation and adding 25% is quick and assumes the thing under test. Benchmark independently, as a percentage of the division's own revenue, with a floor for functions that cannot scale down. The two approaches give very different answers precisely when the allocation is wrong, which is when it matters."},{"title":"Presenting one corporate basis as though it were the answer","body":"Revenue, headcount, gross profit and EBITDA-before-corporate produce EBITDA numbers \u00a3410k apart on this deal \u2014 more than the entire allocation-method question. Showing one basis without the others is not a simplification, it is taking a side in a negotiation without saying so. Fix the basis in the SPA rather than discovering it in completion accounts."}],"validate":{"intro":"Four assertions, and they gate the build rather than decorating it. A carve-out whose numbers do not add up is worse than no carve-out, because it goes into a data room.","why":"Conservation catches the allocation errors, the bridge catches an adjustment applied twice or with the wrong sign, and the balance sheet check catches a sub-ledger split that lost rows to nulls \u2014 which is easy to do and almost impossible to see.","code":{"python":"TOL = 50.0      # pounds, against a group of ~440m\n\ndef check():\n    # 1. every method pushes out exactly what went in\n    for name, a in METHODS.items():\n        assert abs(a.sum() - D_SERVICE.sum()) < TOL, f\"{name} does not conserve the pool\"\n\n    # 2. divisions plus corporate absorb the whole service pool\n    assert abs(service_by_div.sum() + corp_from_service - D_SERVICE.sum()) < TOL\n\n    # 3. corporate spreads completely, on every basis\n    for k in by_basis:\n        assert abs(by_basis[k].sum() - corp_total) < TOL, f\"basis {k} does not sum\"\n\n    # 4. the carve-out bridge ties, and every balance sheet line foots to group\n    assert abs(residual) < 1.0, f\"bridge off by {residual:,.2f}\"\n    for b in BS:\n        assert abs(sum(b[\"by_div\"].values()) - b[\"group\"]) < TOL, f\"{b['line']} does not foot\"\n\n    print(\"checks: allocations conserve the pool, bridge ties, balance sheet foots\")"},"out":"checks: allocations conserve the pool, bridge ties, balance sheet foots"},"scale":{"body":"The ledger is the only large object and it is properly large: a mid-market group posts millions of journal lines a year and a listed group considerably more. Filtering, joining the cost-centre master and aggregating to division-by-line belongs in Spark. Everything after that is tiny \u2014 the reciprocal allocation is a five-by-five matrix inversion, the corporate bases are four vectors of length three, and the whole model runs in milliseconds in NumPy. The engineering effort goes into the data, not the mathematics, and it is worth knowing that before anyone proposes building the allocation engine in Spark.","notes":["<strong>Read account and cost centre as strings<\/strong> on every load. It is one dtype argument and it prevents the worst class of silent failure in this technique.","<strong>Broadcast the cost centre master.<\/strong> Tens of rows joined to millions; without the hint Spark plans a shuffle.","<strong>Snapshot the extract with its date<\/strong> and keep it. A carve-out is negotiated over months and the ledger keeps moving; an analysis you cannot reproduce against the version the other side is holding is worthless.","<strong>Keep the allocation bases in a config, not in code.<\/strong> They will be renegotiated, and the difference between rerunning a model and editing a script is the difference between an afternoon and a week.","<strong>Carry the directness percentage all the way to the output.<\/strong> It is the single most useful credibility signal in the pack, and it costs nothing to compute once the split function returns it."]},"foot_title":"Technique 15 \u2014 Balance Sheet Carve-Out.","foot_body":"Tutorial companion to the Project Kiln demo. All figures synthetic."}</script>
+<script>
+(() => {
+"use strict";
+const T = JSON.parse(document.getElementById("payload").textContent);
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const LANG = { spark: "PySpark", pandas: "pandas", python: "Python", sql: "SQL", numpy: "NumPy" };
+let flavour = "spark";
+
+document.title = T.title;
+$("#brand").textContent = T.brand;
+$("#tag").textContent = T.tag;
+$("#phase").textContent = T.phase;
+$("#title").textContent = T.title;
+$("#subtitle").textContent = T.subtitle;
+$("#intro").innerHTML = T.intro;
+$("#inputIntro").innerHTML = T.input_intro;
+$("#walkIntro").innerHTML = T.walk_intro;
+$("#validIntro").innerHTML = T.validate.intro;
+$("#scaleBody").innerHTML = T.scale.body;
+$("#grainTag").textContent = T.grain;
+$("#footTitle").textContent = T.foot_title;
+$("#footBody").textContent = " " + T.foot_body;
+for (const id of ["#demoLink", "#demoLink2"]) $(id).href = T.demo_url;
+$("#metarow").innerHTML = T.meta.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join("");
+$("#schema").innerHTML = `<thead><tr><th>Column</th><th>Type</th><th>Why it matters</th></tr></thead><tbody>
+  ${T.inputs.map(i => `<tr><td>${esc(i[0])}</td><td class="tiny">${esc(i[1])}</td><td class="small">${i[2]}</td></tr>`).join("")}</tbody>`;
+$("#toc").innerHTML = T.steps.map((s, i) => `<a href="#step-${i + 1}"><b>${String(i + 1).padStart(2, "0")}</b><span>${esc(s.title)}</span></a>`).join("");
+$("#pitfalls").innerHTML = T.pitfalls.map(p => `<div class="pitfall"><h4>${esc(p.title)}</h4><p>${p.body}</p></div>`).join("");
+$("#scaleNotes").innerHTML = T.scale.notes.map(n => `<li><span>${n}</span></li>`).join("");
+
+/* ---------- code blocks ---------- */
+let uid = 0;
+function block(variants) {
+  const keys = Object.keys(variants);
+  const id = "cb" + (++uid);
+  const bar = keys.length > 1
+    ? keys.map(k => `<button type="button" role="tab" data-flavour="${k}" data-for="${id}"
+        aria-selected="${k === flavour}">${LANG[k] || k}</button>`).join("")
+    : `<span class="lang">${LANG[keys[0]] || keys[0]}</span>`;
+  const panes = keys.map(k => `<pre class="code" data-flavour="${k}" data-for="${id}"
+      ${keys.length > 1 && k !== flavour ? "hidden" : ""}><code class="language-python">${esc(variants[k])}</code></pre>`).join("");
+  return `<div class="codewrap" id="${id}">
+    <div class="codebar">${bar}<span class="spacer"></span>
+      <button type="button" class="copy" data-for="${id}">Copy</button></div>${panes}</div>`;
+}
+
+$("#steps").innerHTML = T.steps.map((s, i) => `<div class="step" id="step-${i + 1}">
+  <div class="sn">${String(i + 1).padStart(2, "0")}</div>
+  <div class="body">
+    <h3>${esc(s.title)}</h3>
+    <p class="why">${s.why}</p>
+    ${block(s.code)}
+    ${s.out ? `<div class="out">${esc(s.out)}</div>` : ""}
+    ${s.note ? `<p class="tiny" style="line-height:1.6">${s.note}</p>` : ""}
+  </div></div>`).join("");
+$("#validateBlock").innerHTML = `<p class="small" style="margin-bottom:14px">${T.validate.why}</p>`
+  + block(T.validate.code)
+  + (T.validate.out ? `<div class="out" style="margin-top:14px">${esc(T.validate.out)}</div>` : "");
+
+/* ---------- flavour switching, per block and globally ---------- */
+function setFlavour(f, scope) {
+  document.querySelectorAll(scope ? `[data-for="${scope}"]` : "[data-flavour]").forEach(el => {
+    const mine = el.dataset.flavour === f;
+    if (el.tagName === "PRE") {
+      // a block without this flavour keeps whatever it has -- never blank the pane
+      const wrap = el.closest(".codewrap");
+      if (wrap.querySelector(`pre[data-flavour="${f}"]`)) el.hidden = !mine;
+    } else if (el.tagName === "BUTTON") {
+      const wrap = el.closest(".codewrap");
+      if (!wrap || wrap.querySelector(`pre[data-flavour="${f}"]`)) el.setAttribute("aria-selected", String(mine));
+    }
+  });
+}
+document.addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b) return;
+  if (b.classList.contains("copy")) {
+    const pre = document.querySelector(`#${b.dataset.for} pre:not([hidden]) code`);
+    navigator.clipboard?.writeText(pre.textContent).then(() => {
+      b.textContent = "Copied"; setTimeout(() => { b.textContent = "Copy"; }, 1400);
+    }).catch(() => { b.textContent = "Select and copy"; });
+  } else if (b.dataset.flavour) {
+    flavour = b.dataset.flavour;
+    setFlavour(flavour, null);
+  }
+});
+
+if (window.hljs) {
+  hljs.configure({ ignoreUnescapedHTML: true });
+  document.querySelectorAll("pre.code code").forEach(el => hljs.highlightElement(el));
+}
+})();
+</script>

@@ -1,0 +1,14 @@
+account,account_name,line
+4000,Revenue — third party,Revenue
+4100,Revenue — intercompany,Revenue
+5000,Materials,COGS
+5100,Direct labour,COGS
+5200,Subcontract & freight,COGS
+5300,Purchases — intercompany,COGS
+6000,Employment costs,Operating
+6100,Travel & entertainment,Operating
+6200,Professional fees,Operating
+6300,Property & utilities,Operating
+6400,IT & communications,Operating
+6500,Other operating,Operating
+8000,Depreciation & amortisation,D&A

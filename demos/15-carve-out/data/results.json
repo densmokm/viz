@@ -1,0 +1,999 @@
+{
+ "meta": {
+  "group": "Ashworth Industries plc",
+  "target": "Thermal Products",
+  "codename": "Project Kiln",
+  "sector": "Diversified industrial",
+  "stage": "SPA and transaction support",
+  "postings": 132384,
+  "cost_centres": 18,
+  "divisions": 3,
+  "services": 5,
+  "corporate": 4,
+  "group_revenue": 441469222.65,
+  "target_revenue": 144995354.89,
+  "untagged_pool": 21977807.39
+ },
+ "untagged": [
+  {
+   "cost_centre": "SH-IT",
+   "name": "IT & Digital",
+   "kind": "Shared service",
+   "cost": 4588130.81
+  },
+  {
+   "cost_centre": "SH-FAC",
+   "name": "Facilities & Estates",
+   "kind": "Shared service",
+   "cost": 4012540.91
+  },
+  {
+   "cost_centre": "CO-EXEC",
+   "name": "Group executive",
+   "kind": "Corporate",
+   "cost": 2960830.32
+  },
+  {
+   "cost_centre": "SH-FIN",
+   "name": "Transactional Finance",
+   "kind": "Shared service",
+   "cost": 2859816.31
+  },
+  {
+   "cost_centre": "SH-HR",
+   "name": "HR & Payroll",
+   "kind": "Shared service",
+   "cost": 2372557.74
+  },
+  {
+   "cost_centre": "CO-LEGAL",
+   "name": "Legal & compliance",
+   "kind": "Corporate",
+   "cost": 1593650.88
+  },
+  {
+   "cost_centre": "SH-PROC",
+   "name": "Group Procurement",
+   "kind": "Shared service",
+   "cost": 1581765.07
+  },
+  {
+   "cost_centre": "CO-TREAS",
+   "name": "Treasury & tax",
+   "kind": "Corporate",
+   "cost": 1200555.53
+  },
+  {
+   "cost_centre": "CO-IR",
+   "name": "Investor relations",
+   "kind": "Corporate",
+   "cost": 807959.82
+  }
+ ],
+ "pl": [
+  {
+   "division": "Thermal Products",
+   "revenue": 144995354.89,
+   "cogs": 93630140.5,
+   "gross_profit": 51365214.389999986,
+   "direct_opex": 23858961.03,
+   "ebitda_direct": 27506253.359999985,
+   "headcount": 611,
+   "service": 5138844.921002859,
+   "corporate": 2296240.7731760745
+  },
+  {
+   "division": "Flow Control",
+   "revenue": 185804249.65,
+   "cogs": 131691180.83,
+   "gross_profit": 54113068.82000001,
+   "direct_opex": 31315496.41,
+   "ebitda_direct": 22797572.410000008,
+   "headcount": 742,
+   "service": 6600668.4706786405,
+   "corporate": 2942516.980625988
+  },
+  {
+   "division": "Electrical Systems",
+   "revenue": 110669618.11,
+   "cogs": 69795186.92,
+   "gross_profit": 40874431.19,
+   "direct_opex": 18468712.82,
+   "ebitda_direct": 22405718.369999997,
+   "headcount": 429,
+   "service": 3246900.1711139665,
+   "corporate": 1752636.0734024707
+  }
+ ],
+ "methods": {
+  "pools": [
+   {
+    "service": "SH-FAC",
+    "name": "Facilities & Estates",
+    "direct_cost": 4012540.91,
+    "grossed_up": 4494430.31805028,
+    "uplift": 0.120095824281647
+   },
+   {
+    "service": "SH-FIN",
+    "name": "Transactional Finance",
+    "direct_cost": 2859816.31,
+    "grossed_up": 4275974.976886631,
+    "uplift": 0.49519217788034475
+   },
+   {
+    "service": "SH-HR",
+    "name": "HR & Payroll",
+    "direct_cost": 2372557.74,
+    "grossed_up": 2961067.7378177186,
+    "uplift": 0.24804875678925242
+   },
+   {
+    "service": "SH-IT",
+    "name": "IT & Digital",
+    "direct_cost": 4588130.81,
+    "grossed_up": 4942384.062490953,
+    "uplift": 0.0772108004677734
+   },
+   {
+    "service": "SH-PROC",
+    "name": "Group Procurement",
+    "direct_cost": 1581765.07,
+    "grossed_up": 1877550.5727740186,
+    "uplift": 0.18699711378379247
+   }
+  ],
+  "per_service": [
+   {
+    "service": "SH-FAC",
+    "name": "Facilities & Estates",
+    "direct": 1976454.324919037,
+    "reciprocal": 2173204.358043002,
+    "to_services": 0.018345624549314328
+   },
+   {
+    "service": "SH-FIN",
+    "name": "Transactional Finance",
+    "direct": 524562.770469973,
+    "reciprocal": 744149.322308899,
+    "to_services": 0.05121980660991036
+   },
+   {
+    "service": "SH-HR",
+    "name": "HR & Payroll",
+    "direct": 703697.2577425169,
+    "reciprocal": 774701.5620535703,
+    "to_services": 0.11790162702281747
+   },
+   {
+    "service": "SH-IT",
+    "name": "IT & Digital",
+    "direct": 1247407.2761607056,
+    "reciprocal": 697290.0676383259,
+    "to_services": 0.4810751040152064
+   },
+   {
+    "service": "SH-PROC",
+    "name": "Group Procurement",
+    "direct": 670097.3580832133,
+    "reciprocal": 749499.6109590626,
+    "to_services": 0.05771160365450988
+   }
+  ],
+  "spread": [
+   {
+    "division": "Thermal Products",
+    "range": 16625.933627413586,
+    "by_method": {
+     "Direct": 5122218.987375446,
+     "Step-down": 5134923.018444516,
+     "Reciprocal": 5138844.921002859
+    }
+   },
+   {
+    "division": "Flow Control",
+    "range": 371761.2007588912,
+    "by_method": {
+     "Direct": 6248465.596711947,
+     "Step-down": 6620226.797470838,
+     "Reciprocal": 6600668.4706786405
+    }
+   },
+   {
+    "division": "Electrical Systems",
+    "range": 281717.31660942826,
+    "by_method": {
+     "Direct": 3515236.5174884275,
+     "Step-down": 3233519.200878999,
+     "Reciprocal": 3246900.1711139665
+    }
+   }
+  ],
+  "by_method": [
+   {
+    "method": "Direct",
+    "target": 5122218.987375446,
+    "by_div": {
+     "Thermal Products": 5122218.987375446,
+     "Flow Control": 6248465.596711947,
+     "Electrical Systems": 3515236.5174884275
+    }
+   },
+   {
+    "method": "Step-down",
+    "target": 5134923.018444516,
+    "by_div": {
+     "Thermal Products": 5134923.018444516,
+     "Flow Control": 6620226.797470838,
+     "Electrical Systems": 3233519.200878999
+    }
+   },
+   {
+    "method": "Reciprocal",
+    "target": 5138844.921002859,
+    "by_div": {
+     "Thermal Products": 5138844.921002859,
+     "Flow Control": 6600668.4706786405,
+     "Electrical Systems": 3246900.1711139665
+    }
+   }
+  ],
+  "usage": [
+   {
+    "service": "SH-FAC",
+    "name": "Facilities & Estates",
+    "cells": [
+     {
+      "consumer": "CO-EXEC",
+      "share": 0.005889659355666131,
+      "kind": "Corporate"
+     },
+     {
+      "consumer": "CO-IR",
+      "share": 0.0020203819720977707,
+      "kind": "Corporate"
+     },
+     {
+      "consumer": "CO-LEGAL",
+      "share": 0.0027954587510245015,
+      "kind": "Corporate"
+     },
+     {
+      "consumer": "CO-TREAS",
+      "share": 0.0028276131671347844,
+      "kind": "Corporate"
+     },
+     {
+      "consumer": "ES-ENG",
+      "share": 0.0207217567928609,
+      "kind": "Division"
+     },
+     {
+      "consumer": "ES-OPS",
+      "share": 0.11153888906841662,
+      "kind": "Division"
+     },
+     {
+      "consumer": "ES-SALES",
+      "share": 0.022557031061292417,
+      "kind": "Division"
+     },
+     {
+      "consumer": "FC-ENG",
+      "share": 0.03801975529251839,
+      "kind": "Division"
+     },
+     {
+      "consumer": "FC-OPS",
+      "share": 0.2429909320947237,
+      "kind": "Division"
+     },
+     {
+      "consumer": "FC-SALES",
+      "share": 0.048760124160513035,
+      "kind": "Division"
+     },
+     {
+      "consumer": "SH-FIN",
+      "share": 0.0056317731185109,
+      "kind": "Shared service"
+     },
+     {
+      "consumer": "SH-HR",
+      "share": 0.003129441249140187,
+      "kind": "Shared service"
+     },
+     {
+      "consumer": "SH-IT",
+      "share": 0.008217352772582107,
+      "kind": "Shared service"
+     },
+     {
+      "consumer": "SH-PROC",
+      "share": 0.0013670574090811343,
+      "kind": "Shared service"
+     },
+     {
+      "consumer": "TP-ENG",
+      "share": 0.07968194121527959,
+      "kind": "Division"
+     },
+     {
+      "consumer": "TP-OPS",
+      "share": 0.28692016198598785,
+      "kind": "Division"
+     },
+     {
+      "consumer": "TP-SALES",
+      "share": 0.11693067053317004,
+      "kind": "Division"
+     }
+    ]
+   },
+   {
+    "service": "SH-FIN",
+    "name": "Transactional Finance",
+    "cells": [
+     {
+      "consumer": "CO-EXEC",
+      "share": 0.005796489785041241,
+      "kind": "Corporate"
+     },
+     {
+      "consumer": "CO-IR",
+      "share": 0.0018174412822143582,
+      "kind": "Corporate"
+     },
+     {
+      "consumer": "CO-LEGAL",
+      "share": 0.004334134076849328,
+      "kind": "Corporate"
+     },
+     {
+      "consumer": "CO-TREAS",
+      "share": 0.0028374103091777484,
+      "kind": "Corporate"
+     },
+     {
+      "consumer": "ES-ENG",
+      "share": 0.02724110449720815,
+      "kind": "Division"
+     },
+     {
+      "consumer": "ES-OPS",
+      "share": 0.136801260103299,
+      "kind": "Division"
+     },
+     {
+      "consumer": "ES-SALES",
+      "share": 0.03135512752670393,
+      "kind": "Division"
+     },
+     {
+      "consumer": "FC-ENG",
+      "share": 0.06910704164581802,
+      "kind": "Division"
+     },
+     {
+      "consumer": "FC-OPS",
+      "share": 0.3965105979749289,
+      "kind": "Division"
+     },
+     {
+      "consumer": "FC-SALES",
+      "share": 0.09894925946071674,
+      "kind": "Division"
+     },
+     {
+      "consumer": "SH-FAC",
+      "share": 0.011219604315080338,
+      "kind": "Shared service"
+     },
+     {
+      "consumer": "SH-HR",
+      "share": 0.0073995464001778526,
+      "kind": "Shared service"
+     },
+     {
+      "consumer": "SH-IT",
+      "share": 0.020750802594088957,
+      "kind": "Shared service"
+     },
+     {
+      "consumer": "SH-PROC",
+      "share": 0.011849853300563214,
+      "kind": "Shared service"
+     },
+     {
+      "consumer": "TP-ENG",
+      "share": 0.02066724891182551,
+      "kind": "Division"
+     },
+     {
+      "consumer": "TP-OPS",
+      "share": 0.11492500783595153,
+      "kind": "Division"
+     },
+     {
+      "consumer": "TP-SALES",
+      "share": 0.03843806998035543,
+      "kind": "Division"
+     }
+    ]
+   },
+   {
+    "service": "SH-HR",
+    "name": "HR & Payroll",
+    "cells": [
+     {
+      "consumer": "CO-EXEC",
+      "share": 0.014869562704630409,
+      "kind": "Corporate"
+     },
+     {
+      "consumer": "CO-IR",
+      "share": 0.004635654961810679,
+      "kind": "Corporate"
+     },
+     {
+      "consumer": "CO-LEGAL",
+      "share": 0.010674257754480204,
+      "kind": "Corporate"
+     },
+     {
+      "consumer": "CO-TREAS",
+      "share": 0.007940406953989322,
+      "kind": "Corporate"
+     },
+     {
+      "consumer": "ES-ENG",
+      "share": 0.02107700169927558,
+      "kind": "Division"
+     },
+     {
+      "consumer": "ES-OPS",
+      "share": 0.1485195962888985,
+      "kind": "Division"
+     },
+     {
+      "consumer": "ES-SALES",
+      "share": 0.03703888266495977,
+      "kind": "Division"
+     },
+     {
+      "consumer": "FC-ENG",
+      "share": 0.044888744686588045,
+      "kind": "Division"
+     },
+     {
+      "consumer": "FC-OPS",
+      "share": 0.25927182865661585,
+      "kind": "Division"
+     },
+     {
+      "consumer": "FC-SALES",
+      "share": 0.07155331135514921,
+      "kind": "Division"
+     },
+     {
+      "consumer": "SH-FAC",
+      "share": 0.024038684554652058,
+      "kind": "Shared service"
+     },
+     {
+      "consumer": "SH-FIN",
+      "share": 0.02909032827350513,
+      "kind": "Shared service"
+     },
+     {
+      "consumer": "SH-IT",
+      "share": 0.05490774682136839,
+      "kind": "Shared service"
+     },
+     {
+      "consumer": "SH-PROC",
+      "share": 0.00986486737329188,
+      "kind": "Shared service"
+     },
+     {
+      "consumer": "TP-ENG",
+      "share": 0.02858261610314289,
+      "kind": "Division"
+     },
+     {
+      "consumer": "TP-OPS",
+      "share": 0.17429294117137714,
+      "kind": "Division"
+     },
+     {
+      "consumer": "TP-SALES",
+      "share": 0.05875356797626489,
+      "kind": "Division"
+     }
+    ]
+   },
+   {
+    "service": "SH-IT",
+    "name": "IT & Digital",
+    "cells": [
+     {
+      "consumer": "CO-EXEC",
+      "share": 0.014517694896380879,
+      "kind": "Corporate"
+     },
+     {
+      "consumer": "CO-IR",
+      "share": 0.004300751875403628,
+      "kind": "Corporate"
+     },
+     {
+      "consumer": "CO-LEGAL",
+      "share": 0.009071908280078677,
+      "kind": "Corporate"
+     },
+     {
+      "consumer": "CO-TREAS",
+      "share": 0.007219685318640289,
+      "kind": "Corporate"
+     },
+     {
+      "consumer": "ES-ENG",
+      "share": 0.022262833929618656,
+      "kind": "Division"
+     },
+     {
+      "consumer": "ES-OPS",
+      "share": 0.10631169870200533,
+      "kind": "Division"
+     },
+     {
+      "consumer": "ES-SALES",
+      "share": 0.0412006174294941,
+      "kind": "Division"
+     },
+     {
+      "consumer": "FC-ENG",
+      "share": 0.028176749015760432,
+      "kind": "Division"
+     },
+     {
+      "consumer": "FC-OPS",
+      "share": 0.11703399840079722,
+      "kind": "Division"
+     },
+     {
+      "consumer": "FC-SALES",
+      "share": 0.027745210127178562,
+      "kind": "Division"
+     },
+     {
+      "consumer": "SH-FAC",
+      "share": 0.06726013935112288,
+      "kind": "Shared service"
+     },
+     {
+      "consumer": "SH-FIN",
+      "share": 0.2620334645078829,
+      "kind": "Shared service"
+     },
+     {
+      "consumer": "SH-HR",
+      "share": 0.10934021288551478,
+      "kind": "Shared service"
+     },
+     {
+      "consumer": "SH-PROC",
+      "share": 0.04244128727068593,
+      "kind": "Shared service"
+     },
+     {
+      "consumer": "TP-ENG",
+      "share": 0.014841066676072216,
+      "kind": "Division"
+     },
+     {
+      "consumer": "TP-OPS",
+      "share": 0.10585842646415843,
+      "kind": "Division"
+     },
+     {
+      "consumer": "TP-SALES",
+      "share": 0.020384254869205292,
+      "kind": "Division"
+     }
+    ]
+   },
+   {
+    "service": "SH-PROC",
+    "name": "Group Procurement",
+    "cells": [
+     {
+      "consumer": "CO-EXEC",
+      "share": 0.00452172683010187,
+      "kind": "Corporate"
+     },
+     {
+      "consumer": "CO-IR",
+      "share": 0.001165702070688791,
+      "kind": "Corporate"
+     },
+     {
+      "consumer": "CO-LEGAL",
+      "share": 0.0023877267668359807,
+      "kind": "Corporate"
+     },
+     {
+      "consumer": "CO-TREAS",
+      "share": 0.0014843534634520373,
+      "kind": "Corporate"
+     },
+     {
+      "consumer": "ES-ENG",
+      "share": 0.015587026205127547,
+      "kind": "Division"
+     },
+     {
+      "consumer": "ES-OPS",
+      "share": 0.09470913355498702,
+      "kind": "Division"
+     },
+     {
+      "consumer": "ES-SALES",
+      "share": 0.030638777502432483,
+      "kind": "Division"
+     },
+     {
+      "consumer": "FC-ENG",
+      "share": 0.04709914328626101,
+      "kind": "Division"
+     },
+     {
+      "consumer": "FC-OPS",
+      "share": 0.29269795203929244,
+      "kind": "Division"
+     },
+     {
+      "consumer": "FC-SALES",
+      "share": 0.05280674926914768,
+      "kind": "Division"
+     },
+     {
+      "consumer": "SH-FAC",
+      "share": 0.01614286566959416,
+      "kind": "Shared service"
+     },
+     {
+      "consumer": "SH-FIN",
+      "share": 0.005133605358988064,
+      "kind": "Shared service"
+     },
+     {
+      "consumer": "SH-HR",
+      "share": 0.0012800408264192111,
+      "kind": "Shared service"
+     },
+     {
+      "consumer": "SH-IT",
+      "share": 0.035155091799508445,
+      "kind": "Shared service"
+     },
+     {
+      "consumer": "TP-ENG",
+      "share": 0.039111583232129696,
+      "kind": "Division"
+     },
+     {
+      "consumer": "TP-OPS",
+      "share": 0.2785880848482239,
+      "kind": "Division"
+     },
+     {
+      "consumer": "TP-SALES",
+      "share": 0.08149043727680962,
+      "kind": "Division"
+     }
+    ]
+   }
+  ]
+ },
+ "bases": [
+  {
+   "basis": "Revenue",
+   "target": 2296240.7731760745,
+   "ebitda": 20071167.665821053
+  },
+  {
+   "basis": "Headcount",
+   "target": 2397161.407644203,
+   "ebitda": 19970247.031352922
+  },
+  {
+   "basis": "Gross profit",
+   "target": 2453760.043273126,
+   "ebitda": 19913648.395724002
+  },
+  {
+   "basis": "EBITDA before corporate",
+   "target": 2709128.207830137,
+   "ebitda": 19658280.23116699
+  }
+ ],
+ "bridge": [
+  {
+   "label": "Divisional EBITDA as reported",
+   "value": 20287901.95808688,
+   "kind": "total"
+  },
+  {
+   "label": "Allocation method",
+   "value": -216734.2922658315,
+   "kind": "delta",
+   "note": "Reciprocal allocation on measured usage, against a flat revenue recharge"
+  },
+  {
+   "label": "Intercompany at arm's length",
+   "value": -544321.98036,
+   "kind": "delta",
+   "note": "Transfer prices sit 6.2% above market; restated to arm's length"
+  },
+  {
+   "label": "Standalone cost gap",
+   "value": -1864644.8894410648,
+   "kind": "delta",
+   "note": "What these functions cost a business that has to run them itself"
+  },
+  {
+   "label": "Carve-out EBITDA",
+   "value": 17662200.796019983,
+   "kind": "total"
+  }
+ ],
+ "recon": 3.725290298461914e-09,
+ "summary": {
+  "reported": 20287901.95808688,
+  "carve_out": 17662200.796019983,
+  "simple_recharge": 7218351.401913102,
+  "service": 5138844.921002859,
+  "corporate": 2296240.7731760745,
+  "corp_total": 6991393.827204533,
+  "margin_reported": 0.13992104763272037,
+  "margin_carve": 0.12181218363456764
+ },
+ "intercompany": {
+  "sales": 12441459.73,
+  "purchases": 3662072.95,
+  "adj": 0.062,
+  "sales_adj": -771370.50326,
+  "purchase_adj": 227048.5229,
+  "net": -544321.98036,
+  "revenue_at_risk": 12441459.73,
+  "counterparties": [
+   {
+    "name": "Electrical Systems",
+    "amount": 6075123.93
+   },
+   {
+    "name": "Flow Control",
+    "amount": 6366335.8
+   }
+  ]
+ },
+ "standalone": [
+  {
+   "function": "IT & Digital",
+   "allocated": 697290.0676383259,
+   "standalone": 2682414.0654649995,
+   "lo": 2247428.0007949998,
+   "hi": 3117400.1301349993,
+   "gap": 1985123.9978266736
+  },
+  {
+   "function": "Transactional Finance",
+   "allocated": 744149.322308899,
+   "standalone": 1225210.7488205,
+   "lo": 1029467.019719,
+   "hi": 1420954.4779219998,
+   "gap": 481061.42651160096
+  },
+  {
+   "function": "HR & Payroll",
+   "allocated": 774701.5620535703,
+   "standalone": 1014967.4842299998,
+   "lo": 840973.0583619998,
+   "hi": 1188961.910098,
+   "gap": 240265.92217642954
+  },
+  {
+   "function": "Executive & board",
+   "allocated": 1030099.8298377028,
+   "standalone": 1234728.8647495,
+   "lo": 1150000.0,
+   "hi": 1319457.729499,
+   "gap": 204629.03491179727
+  },
+  {
+   "function": "Treasury & tax",
+   "allocated": 422824.18125558924,
+   "standalone": 355243.2645904999,
+   "lo": 290000.0,
+   "hi": 420486.5291809999,
+   "gap": -67580.91666508932
+  },
+  {
+   "function": "Legal & compliance",
+   "allocated": 560208.7063709284,
+   "standalone": 416492.10331299994,
+   "lo": 340000.0,
+   "hi": 492984.20662599994,
+   "gap": -143716.6030579285
+  },
+  {
+   "function": "Group Procurement",
+   "allocated": 749499.6109590626,
+   "standalone": 485734.4388814999,
+   "lo": 376987.9227139999,
+   "hi": 594480.955049,
+   "gap": -263765.17207756266
+  },
+  {
+   "function": "Listed-company costs",
+   "allocated": 283108.055711854,
+   "standalone": 0.0,
+   "lo": 0.0,
+   "hi": 0.0,
+   "gap": -283108.055711854
+  },
+  {
+   "function": "Facilities & Estates",
+   "allocated": 2173204.358043002,
+   "standalone": 1884939.6135699998,
+   "lo": 1623947.9747679997,
+   "hi": 2145931.252372,
+   "gap": -288264.74447300215
+  }
+ ],
+ "standalone_gap": 1864644.8894410648,
+ "stranded": {
+  "allocated_to_target": 7435085.694178934,
+  "removable": 3281630.638514737,
+  "truly_stranded": 4153455.0556641975,
+  "by_function": [
+   {
+    "function": "Executive & board",
+    "allocated": 1030099.8298377028,
+    "removable_pct": 0.1,
+    "stranded": 927089.8468539325
+   },
+   {
+    "function": "Facilities & Estates",
+    "allocated": 2173204.358043002,
+    "removable_pct": 0.7,
+    "stranded": 651961.3074129007
+   },
+   {
+    "function": "IT & Digital",
+    "allocated": 697290.0676383259,
+    "removable_pct": 0.35,
+    "stranded": 453238.54396491183
+   },
+   {
+    "function": "Legal & compliance",
+    "allocated": 560208.7063709284,
+    "removable_pct": 0.25,
+    "stranded": 420156.52977819636
+   },
+   {
+    "function": "Group Procurement",
+    "allocated": 749499.6109590626,
+    "removable_pct": 0.45,
+    "stranded": 412224.78602748446
+   },
+   {
+    "function": "Treasury & tax",
+    "allocated": 422824.18125558924,
+    "removable_pct": 0.15,
+    "stranded": 359400.55406725087
+   },
+   {
+    "function": "HR & Payroll",
+    "allocated": 774701.5620535703,
+    "removable_pct": 0.55,
+    "stranded": 348615.7029241066
+   },
+   {
+    "function": "Transactional Finance",
+    "allocated": 744149.322308899,
+    "removable_pct": 0.6,
+    "stranded": 297659.7289235596
+   },
+   {
+    "function": "Listed-company costs",
+    "allocated": 283108.055711854,
+    "removable_pct": 0.0,
+    "stranded": 283108.055711854
+   }
+  ],
+  "pct_of_allocation": 0.558629076584284
+ },
+ "balance": {
+  "lines": [
+   {
+    "line": "Trade receivables",
+    "basis": "Group-billed accounts split on revenue",
+    "direct": 21684527.9,
+    "allocated": 1953420.0071822137,
+    "total": 23637947.907182213,
+    "group": 65146796.239999995,
+    "directness": 0.917360846429961,
+    "by_div": {
+     "Thermal Products": 23637947.907182213,
+     "Flow Control": 27252554.793233883,
+     "Electrical Systems": 14256293.539583905
+    }
+   },
+   {
+    "line": "Inventory",
+    "basis": "Central stores split on cost of sales",
+    "direct": 20080640.32,
+    "allocated": 2069285.654953819,
+    "total": 22149925.97495382,
+    "group": 56406384.86,
+    "directness": 0.9065782135211794,
+    "by_div": {
+     "Thermal Products": 22149925.97495382,
+     "Flow Control": 23816836.273529634,
+     "Electrical Systems": 10439622.611516548
+    }
+   },
+   {
+    "line": "Property, plant & equipment",
+    "basis": "Shared-site assets split on floor area",
+    "direct": 13992249.74,
+    "allocated": 779291.8467355714,
+    "total": 14771541.58673557,
+    "group": 31827496.979999997,
+    "directness": 0.9472437022121406,
+    "by_div": {
+     "Thermal Products": 14771541.58673557,
+     "Flow Control": 9991382.044259287,
+     "Electrical Systems": 7064573.34900514
+    }
+   },
+   {
+    "line": "Trade payables",
+    "basis": "Shared-cost-centre payables split on cost of sales",
+    "direct": 17044371.45,
+    "allocated": 1053635.8383142033,
+    "total": 18098007.2883142,
+    "group": 52113573.06999999,
+    "directness": 0.94178166570888,
+    "by_div": {
+     "Thermal Products": 18098007.2883142,
+     "Flow Control": 21493105.415257804,
+     "Electrical Systems": 12522460.366427993
+    }
+   },
+   {
+    "line": "Accruals & provisions",
+    "basis": "By nature: employee on headcount, property on floor area",
+    "direct": 3976553.4,
+    "allocated": 465329.2630431288,
+    "total": 4441882.663043128,
+    "group": 13244207.23,
+    "directness": 0.8952405323727458,
+    "by_div": {
+     "Thermal Products": 4441882.663043128,
+     "Flow Control": 5396335.558775945,
+     "Electrical Systems": 3405989.008180926
+    }
+   }
+  ],
+  "nwc": 23247983.930778705,
+  "nwc_pct_revenue": 0.1603360600649288,
+  "ppe": 14771541.58673557,
+  "directness": 0.9239348322075119,
+  "dso": 59.50432682941453,
+  "dio": 86.34744044689481,
+  "dpo": 70.55177558165347
+ }
+}
